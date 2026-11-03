@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Navbar from "@/components/Navbar";
 import HeroCountdown from "@/components/HeroCountdown";
 import BioSection from "@/components/BioSection";
@@ -12,25 +12,10 @@ import SeasonsChartSection from "@/components/SeasonsChartSection";
 import FinalsAndMilestonesSection from "@/components/FinalsAndMilestonesSection";
 import FanVaultStore from "@/components/FanVaultStore";
 import Footer from "@/components/Footer";
-import { cr7CareerSummary } from "@/data/cr7-stats";
+import { useSiteData } from "@/context/SiteDataContext";
 
 export default function HomePage() {
-  const [goals, setGoals] = useState<number>(cr7CareerSummary.totalGoals);
-
-  // Load from localStorage if updated in /admin
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("cr1000_goals_count");
-      if (saved) {
-        const parsed = parseInt(saved, 10);
-        if (!isNaN(parsed) && parsed >= 985) {
-          setGoals(parsed);
-        }
-      }
-    } catch (e) {
-      // LocalStorage access handling
-    }
-  }, []);
+  const { goals } = useSiteData();
 
   return (
     <main className="min-h-screen bg-[#08090C] text-[#F8FAFC] selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">

@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { SiteDataProvider } from "@/context/SiteDataContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
+import { cr7CareerSummary } from "@/data/cr7-stats";
+import { cr7HattrickStats } from "@/data/cr7-hattricks";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -14,7 +16,7 @@ export const viewport: Viewport = {
 export const metadata: Metadata = {
   title: "CR1000 — Đếm ngược Bàn thắng thứ 1000 & Bảo tàng số Cristiano Ronaldo",
   description:
-    "Theo dõi thời gian thực hành trình đến 1.000 bàn thắng chính thức của Cristiano Ronaldo (CR7). Khám phá bảo tàng số: thống kê chi tiết, 66+ hattrick, poker, 5 bàn, các bàn thắng chung kết định đoạt danh hiệu, kỷ lục thế giới và kho lưu trữ toàn bộ sự nghiệp.",
+    `Theo dõi thời gian thực hành trình đến 1.000 bàn thắng chính thức của Cristiano Ronaldo (CR7). Hiện đã ghi ${cr7CareerSummary.totalGoals} bàn (còn ${cr7CareerSummary.countdownTarget - cr7CareerSummary.totalGoals} bàn). Khám phá bảo tàng số: thống kê chi tiết, ${cr7HattrickStats.totalHattricks}+ hattrick, poker, các bàn thắng chung kết định đoạt danh hiệu và kỷ lục thế giới.`,
   keywords: [
     "Cristiano Ronaldo",
     "CR7 1000 goals",
@@ -93,7 +95,7 @@ export default function RootLayout({
             name: "Cristiano Ronaldo hiện đã ghi bao nhiêu bàn thắng chính thức?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Tính đến hiện tại, Cristiano Ronaldo đã ghi 985 bàn thắng chính thức trong sự nghiệp cấp CLB và ĐTQG (theo thống kê chính thức của FIFA/IFFHS/RSSSF)."
+              text: `Tính đến hiện tại, Cristiano Ronaldo đã ghi ${cr7CareerSummary.totalGoals} bàn thắng chính thức trong sự nghiệp cấp CLB và ĐTQG (theo thống kê chính thức của FIFA/IFFHS/RSSSF).`
             }
           },
           {
@@ -101,7 +103,7 @@ export default function RootLayout({
             name: "Cristiano Ronaldo còn cách cột mốc 1000 bàn thắng bao nhiêu bàn?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Cristiano Ronaldo hiện chỉ còn cách cột mốc lịch sử 1.000 bàn thắng đúng 15 bàn thắng nữa."
+              text: `Cristiano Ronaldo hiện chỉ còn cách cột mốc lịch sử 1.000 bàn thắng đúng ${cr7CareerSummary.countdownTarget - cr7CareerSummary.totalGoals} bàn thắng nữa.`
             }
           },
           {
@@ -109,7 +111,7 @@ export default function RootLayout({
             name: "Cristiano Ronaldo đã lập bao nhiêu hat-trick trong sự nghiệp?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Cristiano Ronaldo đã lập 66 cú hat-trick chính thức trong sự nghiệp, trong đó có 10 cú hat-trick cho ĐTQG Bồ Đào Nha và 56 cú hat-trick cấp CLB (bao gồm cả các trận ghi 4 bàn (poker) và 5 bàn)."
+              text: `Cristiano Ronaldo đã lập ${cr7HattrickStats.totalHattricks} cú hat-trick chính thức trong sự nghiệp, trong đó có ${cr7HattrickStats.byTeam.portugal} cú hat-trick cho ĐTQG Bồ Đào Nha và ${cr7HattrickStats.totalHattricks - cr7HattrickStats.byTeam.portugal} cú hat-trick cấp CLB (bao gồm cả các trận ghi 4 bàn (poker) và 5 bàn).`
             }
           },
           {

@@ -2,8 +2,14 @@
 
 import React from "react";
 import { Trophy, ArrowUp, Heart, Sparkles, Share2 } from "lucide-react";
+import { useSiteData } from "@/context/SiteDataContext";
+import { cr7CareerSummary } from "@/data/cr7-stats";
 
 export default function Footer() {
+  const { goals } = useSiteData();
+  const target = cr7CareerSummary.countdownTarget;
+  const remaining = Math.max(0, target - goals);
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -79,11 +85,15 @@ export default function Footer() {
             <div className="space-y-2.5">
               <div>
                 <strong className="text-gray-300 block">Cristiano Ronaldo hiện ghi bao nhiêu bàn?</strong>
-                <span className="text-gray-500 text-[11px]">Đã ghi 985 bàn thắng chính thức cấp CLB và ĐTQG (FIFA/IFFHS/RSSSF).</span>
+                <span className="text-gray-400 text-[11px]">
+                  Đã ghi <strong className="text-white font-mono">{goals}</strong> bàn thắng chính thức cấp CLB và ĐTQG (theo dữ liệu FIFA/IFFHS/RSSSF).
+                </span>
               </div>
               <div>
-                <strong className="text-gray-300 block">CR7 còn cách 1.000 bàn bao nhiêu bàn nữa?</strong>
-                <span className="text-gray-500 text-[11px]">Chỉ còn cách 15 bàn thắng nữa để viết nên trang sử mới.</span>
+                <strong className="text-gray-300 block">CR7 còn cách cột mốc 1.000 bàn bao nhiêu bàn nữa?</strong>
+                <span className="text-gray-400 text-[11px]">
+                  Chỉ còn cách đúng <strong className="text-[#D4AF37] font-mono">{remaining}</strong> bàn thắng nữa để chạm cột mốc lịch sử {target.toLocaleString()} bàn.
+                </span>
               </div>
               <div>
                 <strong className="text-gray-300 block">Nguồn dữ liệu có uy tín không?</strong>
