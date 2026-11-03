@@ -162,7 +162,7 @@ export default function FinalsAndMilestonesSection() {
                   {goal.gearTag && (
                     <div className="mt-4 pt-4 border-t border-gray-800/80 flex items-center justify-between bg-[#11131C] p-3 rounded-xl border border-gray-700/60">
                       <div className="flex items-center gap-2 text-xs">
-                        <Tag className="w-4 h-4 text-[#F3C623] shrink-0" />
+                        <Tag className="w-4 h-4 text-[#D4AF37] shrink-0" />
                         <div>
                           <span className="text-gray-400 text-[10px] block">Vũ khí thi đấu trong trận:</span>
                           <strong className="text-white text-xs">{goal.gearTag.bootName}</strong>
@@ -232,7 +232,7 @@ export default function FinalsAndMilestonesSection() {
                 <div className="flex items-center gap-4 shrink-0 text-right self-end md:self-center">
                   <div>
                     <span className="text-xs font-bold text-gray-300 block">{m.team}</span>
-                    <span className="text-[11px] text-[#F3C623] font-mono">
+                    <span className="text-[11px] text-[#D4AF37] font-mono">
                       {m.minute > 0 ? `Phút ${m.minute}' • ${m.method}` : "Chờ đón..."}
                     </span>
                   </div>

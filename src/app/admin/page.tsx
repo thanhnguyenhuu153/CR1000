@@ -138,7 +138,7 @@ export default function AdminPage() {
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#D4AF37] via-[#E63946] to-[#F59E0B]" />
 
           <div className="text-center mb-8">
-            <div className="w-16 h-16 rounded-2xl bg-[#1A1D27] border border-[#D4AF37]/30 flex items-center justify-center mx-auto mb-4 text-[#F3C623] shadow-lg">
+            <div className="w-16 h-16 rounded-2xl bg-[#1A1D27] border border-[#D4AF37]/30 flex items-center justify-center mx-auto mb-4 text-[#D4AF37] shadow-lg">
               <Lock className="w-8 h-8" />
             </div>
             <h1 className="text-2xl font-black text-white">Quản Trị CR1000</h1>
@@ -480,7 +480,7 @@ export default function AdminPage() {
                   </div>
                   <div className="flex-1 text-xs">
                     <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">3. Real Madrid (Three-peat C1)</strong>
+                      <strong className="text-white block">3. Real Madrid (3 lần liên tiếp vô địch Champions League)</strong>
                       <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
                         <span>📁 Tải từ máy</span>
                         <input
@@ -761,7 +761,7 @@ export default function AdminPage() {
                   type="number"
                   value={goalsInput}
                   onChange={(e) => setGoalsInput(e.target.value)}
-                  className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-4 py-3 text-lg font-mono font-bold text-[#F3C623] focus:outline-none focus:border-[#D4AF37]"
+                  className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-4 py-3 text-lg font-mono font-bold text-[#D4AF37] focus:outline-none focus:border-[#D4AF37]"
                 />
                 <span className="text-[11px] text-gray-400 mt-1 block">
                   Khi bạn đổi số này, bộ đếm trên trang chủ sẽ tự động tính số bàn còn lại tới mốc 1000!

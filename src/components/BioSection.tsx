@@ -148,7 +148,7 @@ export default function BioSection() {
                   </span>
                 </div>
                 <div className="text-center">
-                  <div className="text-2xl sm:text-3xl font-black font-mono text-[#F3C623]">
+                  <div className="text-2xl sm:text-3xl font-black font-mono text-[#D4AF37]">
                     {currentEra.stats.trophies}
                   </div>
                   <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">

@@ -255,7 +255,7 @@ export default function FanVaultStore() {
                     <span className="text-gray-500">({item.reviewsCount} đánh giá)</span>
                   </div>
 
-                  <h3 className="text-base font-bold text-white mb-2 line-clamp-2 group-hover:text-[#F3C623] transition-colors">
+                  <h3 className="text-base font-bold text-white mb-2 line-clamp-2 group-hover:text-[#D4AF37] transition-colors">
                     {item.name}
                   </h3>
 
@@ -266,7 +266,7 @@ export default function FanVaultStore() {
 
                 <div className="pt-4 border-t border-gray-800/80 flex items-center justify-between">
                   <div>
-                    <span className="text-base sm:text-lg font-black font-mono text-[#F3C623] block">
+                    <span className="text-base sm:text-lg font-black font-mono text-[#D4AF37] block">
                       {item.priceText}
                     </span>
                     {item.originalPriceText && (

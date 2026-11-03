@@ -124,17 +124,21 @@ export default function HattrickShowcase() {
 
                 {/* Score & Teams */}
                 <div className="bg-[#090A0F] rounded-xl p-4 border border-white/5 mb-4 text-center">
-                  <div className="text-xs text-[#D4AF37] font-semibold mb-1">
+                  <div className="text-xs text-[#D4AF37] font-semibold mb-2">
                     {match.competition}
                   </div>
-                  <div className="flex items-center justify-between font-extrabold text-sm sm:text-base text-white">
-                    <span className="truncate flex-1 text-right">{match.homeTeam}</span>
-                    <span className="px-3 py-1 mx-2 rounded-lg bg-[#151924] text-white font-mono text-lg shrink-0 border border-white/10">
+                  <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-2.5 text-white">
+                    <span className="text-right font-extrabold text-xs sm:text-sm leading-snug break-words">
+                      {match.homeTeam}
+                    </span>
+                    <span className="px-2.5 py-1 rounded-lg bg-[#151924] text-[#D4AF37] font-mono text-base sm:text-lg font-black shrink-0 border border-white/10 shadow-inner">
                       {match.score}
                     </span>
-                    <span className="truncate flex-1 text-left">{match.awayTeam}</span>
+                    <span className="text-left font-extrabold text-xs sm:text-sm leading-snug break-words">
+                      {match.awayTeam}
+                    </span>
                   </div>
-                  <div className="text-[11px] text-gray-400 mt-2 flex items-center justify-center gap-1">
+                  <div className="text-[11px] text-gray-400 mt-2.5 flex items-center justify-center gap-1">
                     <MapPin className="w-3 h-3 text-gray-500" />
                     <span>{match.stadium}</span>
                   </div>
@@ -163,7 +167,7 @@ export default function HattrickShowcase() {
                 </div>
 
                 {/* Match Context Story */}
-                <p className="text-xs text-gray-400 leading-relaxed italic line-clamp-3 font-light">
+                <p className="text-xs text-gray-300 leading-relaxed italic font-normal min-h-[3.6rem]">
                   &ldquo;{match.description}&rdquo;
                 </p>
               </div>
@@ -215,7 +219,7 @@ export default function HattrickShowcase() {
                 {selectedMatch.goals.map((g, i) => (
                   <li key={i} className="flex items-center justify-between text-gray-300 border-b border-gray-900 pb-1.5 last:border-0">
                     <span className="flex items-center gap-2">
-                      <Flame className="w-4 h-4 text-[#F3C623]" />
+                      <Flame className="w-4 h-4 text-[#D4AF37]" />
                       <strong>Phút {g.minute}&apos;</strong>: {g.type === "penalty" ? "Phạt đền (11m)" : g.type === "free-kick" ? "Đá phạt trực tiếp" : g.type === "header" ? "Đánh đầu" : "Dứt điểm bóng sống"}
                     </span>
                     {g.assistBy && (

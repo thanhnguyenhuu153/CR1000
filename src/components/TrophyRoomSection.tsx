@@ -147,7 +147,7 @@ export default function TrophyRoomSection() {
                       className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 filter brightness-95"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#131520] via-transparent to-transparent" />
-                    <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/70 border border-[#D4AF37]/40 text-[#F3C623] font-mono font-black text-sm backdrop-blur-md">
+                    <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/70 border border-[#D4AF37]/40 text-[#D4AF37] font-mono font-black text-sm backdrop-blur-md">
                       x{trophy.count}
                     </div>
                   </div>

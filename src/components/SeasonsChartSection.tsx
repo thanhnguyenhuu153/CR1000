@@ -113,7 +113,7 @@ export default function SeasonsChartSection() {
                     style={{ height: `${Math.max(8, heightPercent)}%` }}
                   />
                   <span
-                    className={`text-[8px] font-mono mt-2 truncate w-full text-center ${
+                    className={`text-[8px] font-mono mt-2 w-full text-center ${
                       isSelected ? "text-[#D4AF37] font-bold" : "text-gray-400"
                     }`}
                   >

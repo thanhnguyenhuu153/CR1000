@@ -37,7 +37,7 @@ export default function Footer() {
                 </div>
               </div>
               <span className="font-extrabold text-xl text-white tracking-tight">CR1000</span>
-              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D4AF37]/20 text-[#F3C623] border border-[#D4AF37]/30">
+              <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30">
                 LIVING MUSEUM
               </span>
             </div>
@@ -61,14 +61,14 @@ export default function Footer() {
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">Khám phá các chương</h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#countdown" className="hover:text-[#F3C623] transition-colors">Đếm ngược bàn thứ 1000</a></li>
-              <li><a href="#bio" className="hover:text-[#F3C623] transition-colors">Tiểu sử & Các kỷ nguyên</a></li>
-              <li><a href="#anatomy" className="hover:text-[#F3C623] transition-colors">Bóc tách cỗ máy ghi bàn</a></li>
-              <li><a href="#hattricks" className="hover:text-[#F3C623] transition-colors">66 Cú Hattrick & Poker</a></li>
-              <li><a href="#opponents" className="hover:text-[#F3C623] transition-colors">Top con mồi ưa thích</a></li>
-              <li><a href="#trophies" className="hover:text-[#F3C623] transition-colors">Phòng cúp & Kỷ lục Guinness</a></li>
-              <li><a href="#archive" className="hover:text-[#F3C623] transition-colors">Bàn thắng chung kết & Mốc son</a></li>
-              <li><a href="#shop" className="hover:text-[#F3C623] transition-colors">Kỷ vật & Quà tặng Fan</a></li>
+              <li><a href="#countdown" className="hover:text-[#D4AF37] transition-colors">Đếm ngược bàn thứ 1000</a></li>
+              <li><a href="#bio" className="hover:text-[#D4AF37] transition-colors">Tiểu sử & Các kỷ nguyên</a></li>
+              <li><a href="#anatomy" className="hover:text-[#D4AF37] transition-colors">Bóc tách cỗ máy ghi bàn</a></li>
+              <li><a href="#hattricks" className="hover:text-[#D4AF37] transition-colors">66 Cú Hattrick & Poker</a></li>
+              <li><a href="#opponents" className="hover:text-[#D4AF37] transition-colors">Top con mồi ưa thích</a></li>
+              <li><a href="#trophies" className="hover:text-[#D4AF37] transition-colors">Phòng cúp & Kỷ lục Guinness</a></li>
+              <li><a href="#archive" className="hover:text-[#D4AF37] transition-colors">Bàn thắng chung kết & Mốc son</a></li>
+              <li><a href="#shop" className="hover:text-[#D4AF37] transition-colors">Kỷ vật & Quà tặng Fan</a></li>
               <li><a href="/admin" className="text-gray-500 hover:text-[#D4AF37] transition-colors flex items-center gap-1 mt-2 font-mono">🔒 Quản trị viên (Admin Hub)</a></li>
             </ul>
           </div>

@@ -41,7 +41,7 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: "Đếm ngược 1000", href: "#countdown" },
+    { name: "Đếm ngược", href: "#countdown" },
     { name: "Hành trình", href: "#bio" },
     { name: "Bóc tách chỉ số", href: "#anatomy" },
     { name: "Hattrick & Poker", href: "#hattricks" },
@@ -85,12 +85,12 @@ export default function Navbar() {
         </a>
 
         {/* Desktop Navigation */}
-        <nav className="hidden lg:flex items-center gap-6">
+        <nav className="hidden lg:flex items-center gap-4 xl:gap-6">
           {navLinks.map((link) => (
             <a
               key={link.name}
               href={link.href}
-              className="text-xs uppercase tracking-wider font-semibold text-gray-300 hover:text-[#D4AF37] transition-colors"
+              className="text-xs uppercase tracking-wider font-semibold text-gray-300 hover:text-[#D4AF37] transition-colors whitespace-nowrap"
             >
               {link.name}
             </a>
@@ -109,11 +109,22 @@ export default function Navbar() {
             <span>SIUUU!</span>
           </button>
 
-          {/* Language badge */}
-          <div className="flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-[#11131C] border border-white/10 text-gray-300">
-            <span className="text-[#D4AF37]">🇻🇳 VI</span>
-            <span className="text-gray-600 mx-1.5">|</span>
-            <span className="text-gray-400 hover:text-white cursor-pointer" title="Sắp ra mắt phiên bản tiếng Anh">EN</span>
+          {/* Language badge with pixel-perfect SVG flag */}
+          <div className="flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-[#11131C] border border-white/10 text-gray-300 select-none">
+            <div className="flex items-center gap-1.5 text-[#D4AF37] leading-none">
+              <svg className="w-3.5 h-3.5 rounded-full shrink-0 shadow-sm" viewBox="0 0 512 512" aria-hidden="true">
+                <circle cx="256" cy="256" r="256" fill="#DA251D" />
+                <polygon
+                  points="256,92 293.5,207.5 414.9,207.5 316.7,278.9 354.2,394.4 256,323 157.8,394.4 195.3,278.9 97.1,207.5 218.5,207.5"
+                  fill="#FFFF00"
+                />
+              </svg>
+              <span className="font-bold text-[11px] tracking-wider leading-none">VI</span>
+            </div>
+            <span className="text-gray-600 mx-1.5 text-[10px] leading-none">|</span>
+            <span className="text-gray-400 hover:text-white cursor-pointer font-bold text-[11px] tracking-wider leading-none transition-colors" title="Sắp ra mắt phiên bản tiếng Anh">
+              EN
+            </span>
           </div>
 
           {/* Mobile Menu Toggle Button */}
@@ -136,7 +147,7 @@ export default function Navbar() {
                 key={link.name}
                 href={link.href}
                 onClick={() => setMobileMenuOpen(false)}
-                className="text-sm font-medium text-gray-300 hover:text-[#F3C623] py-1 border-b border-gray-800/50"
+                className="text-sm font-medium text-gray-300 hover:text-[#D4AF37] py-1 border-b border-gray-800/50"
               >
                 {link.name}
               </a>

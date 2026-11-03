@@ -67,10 +67,10 @@ export const cr7BioMilestones: BioMilestone[] = [
   {
     year: "2009 - 2018",
     era: "Real Madrid",
-    title: "Bản trường ca vĩ đại & Cú Three-peat Champions League",
+    title: "Bản trường ca vĩ đại & Kỳ tích 3 lần liên tiếp vô địch Champions League",
     subtitle: "450 bàn sau 438 trận – 4 Quả bóng Vàng – 4 Champions League",
     description:
-      "Gia nhập Real Madrid với bản hợp đồng kỷ lục thế giới 94 triệu Euro trước sự chứng kiến của 80.000 khán giả chật kín sân Bernabéu. 9 năm tại thủ đô Tây Ban Nha là thời kỳ đỉnh cao chói lọi nhất lịch sử bóng đá hiện đại. Hiệu suất phi lý 1.03 bàn/trận, xô đổ kỷ lục của Raúl và Di Stéfano, mang về 'La Décima' và cú hat-trick Champions League vô tiền khoáng hậu (2016, 2017, 2018).",
+      "Gia nhập Real Madrid với bản hợp đồng kỷ lục thế giới 94 triệu Euro trước sự chứng kiến của 80.000 khán giả chật kín sân Bernabéu. 9 năm tại thủ đô Tây Ban Nha là thời kỳ đỉnh cao chói lọi nhất lịch sử bóng đá hiện đại. Hiệu suất phi lý 1.03 bàn/trận, xô đổ kỷ lục của Raúl và Di Stéfano, mang về 'La Décima' và kỳ tích 3 mùa giải liên tiếp thống trị đỉnh cao Champions League vô tiền khoáng hậu (2016, 2017, 2018).",
     quote: "Tôi không tìm kiếm kỷ lục. Kỷ lục tự tìm đến tôi.",
     badge: "Huyền thoại bất tử",
     imageUrl: "/images/cr7/era-realmadrid.jpg",
@@ -81,7 +81,7 @@ export const cr7BioMilestones: BioMilestone[] = [
       trophies: 16,
     },
     highlights: [
-      "4 danh hiệu Champions League (2014, 2016, 2017, 2018) với 3 lần liên tiếp vô tiền khoáng hậu",
+      "4 danh hiệu Champions League (2014, 2016, 2017, 2018) với kỳ tích 3 năm liên tiếp vô địch vô tiền khoáng hậu",
       "4 Quả bóng Vàng trong màu áo Real Madrid (2013, 2014, 2016, 2017)",
       "Chân sút số 1 mọi thời đại của Real Madrid: 450 bàn sau 438 trận (1.03 bàn/trận)",
       "Kỷ lục ghi 17 bàn trong 1 mùa giải Champions League (2013-2014)",
