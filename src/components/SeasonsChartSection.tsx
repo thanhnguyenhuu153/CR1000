@@ -2,9 +2,11 @@
 
 import React, { useState } from "react";
 import { cr7SeasonsData, YearRecord } from "@/data/cr7-seasons";
+import { useLanguage } from "@/context/LanguageContext";
 import { BarChart3, TrendingUp, Crown, Calendar, Sparkles, CheckCircle2, Flame, Trophy } from "lucide-react";
 
 export default function SeasonsChartSection() {
+  const { language, t } = useLanguage();
   // Mặc định chọn năm 2013 - Đỉnh cao sự nghiệp với 69 bàn thắng
   const defaultYear = cr7SeasonsData.find((y) => y.year === "2013") || cr7SeasonsData[11];
   const [selectedYear, setSelectedYear] = useState<YearRecord>(defaultYear);
@@ -25,14 +27,13 @@ export default function SeasonsChartSection() {
         <div className="text-center max-w-3xl mx-auto mb-14">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/30 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
             <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
-            Chương 6 • Biểu đồ tiến hóa theo năm dương lịch
+            {t.seasons.chapterBadge}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
-            Ma Trận Bàn Thắng & <span className="gold-gradient-text">Kỷ Lục Từng Năm</span>
+            {t.seasons.title} <span className="gold-gradient-text">{t.seasons.titleGold}</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-gray-300 font-light leading-relaxed">
-            Thống kê hợp nhất toàn diện 25 năm thi đấu chuyên nghiệp (2002 – 2026) cấp Câu lạc bộ & Đội tuyển Quốc gia — 
-            Được kiểm định bởi chuẩn lưu trữ <span className="text-[#D4AF37] font-medium">FIFA, IFFHS & RSSSF</span>.
+            {t.seasons.subtitle}
           </p>
         </div>
 
@@ -45,22 +46,22 @@ export default function SeasonsChartSection() {
             <div>
               <div className="flex items-center gap-3 flex-wrap">
                 <span className="text-xs uppercase font-semibold tracking-widest text-[#D4AF37] flex items-center gap-1.5">
-                  <Calendar className="w-3.5 h-3.5" /> Năm dương lịch được chọn:
+                  <Calendar className="w-3.5 h-3.5" /> {t.seasons.selectedYearBadge}
                 </span>
                 {selectedYear.isPeakYear && (
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/50 text-[#D4AF37] text-[11px] font-bold uppercase tracking-wider animate-pulse">
-                    <Crown className="w-3.5 h-3.5" /> Đỉnh cao lịch sử (All-Time Peak)
+                    <Crown className="w-3.5 h-3.5" /> {t.seasons.peakBadge}
                   </span>
                 )}
                 {selectedYear.year === "2023" && (
                   <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-500/20 border border-amber-500/50 text-amber-300 text-[11px] font-bold uppercase tracking-wider">
-                    <Flame className="w-3.5 h-3.5" /> Vua phá lưới thế giới 2023 (Tuổi 38)
+                    <Flame className="w-3.5 h-3.5" /> {t.seasons.topScorerBadge}
                   </span>
                 )}
               </div>
 
               <h3 className="text-2xl sm:text-4xl font-black text-white mt-2 tracking-tight flex items-center gap-3">
-                <span>Năm {selectedYear.year}</span>
+                <span>{language === "vi" ? `Năm ${selectedYear.year}` : `Year ${selectedYear.year}`}</span>
                 <span className="text-gray-500 font-light text-lg sm:text-2xl">•</span>
                 <span className="text-gray-200 text-lg sm:text-2xl font-bold">{selectedYear.team}</span>
               </h3>
@@ -73,15 +74,15 @@ export default function SeasonsChartSection() {
                 <span className="text-2xl sm:text-3xl font-black font-mono text-[#D4AF37] block">
                   {selectedYear.goals}
                 </span>
-                <span className="text-[10px] uppercase text-gray-400 font-bold tracking-wider">Tổng bàn thắng</span>
+                <span className="text-[10px] uppercase text-gray-400 font-bold tracking-wider">{t.seasons.totalGoals}</span>
               </div>
 
               {/* Club vs Country breakdown */}
               <div className="text-center px-4 py-3 rounded-xl bg-[#0B0D14] border border-white/10">
                 <span className="text-sm sm:text-base font-bold font-mono text-gray-200 block mt-1">
-                  {selectedYear.clubGoals} <span className="text-xs text-gray-400">CLB</span> + {selectedYear.countryGoals} <span className="text-xs text-gray-400">ĐTQG</span>
+                  {selectedYear.clubGoals} <span className="text-xs text-gray-400">{language === "vi" ? "CLB" : "Club"}</span> + {selectedYear.countryGoals} <span className="text-xs text-gray-400">{language === "vi" ? "ĐTQG" : "Country"}</span>
                 </span>
-                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider mt-1 block">Chi tiết bàn</span>
+                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider mt-1 block">{t.seasons.breakdown}</span>
               </div>
 
               {/* Matches */}
@@ -89,7 +90,7 @@ export default function SeasonsChartSection() {
                 <span className="text-2xl sm:text-3xl font-black font-mono text-gray-200 block">
                   {selectedYear.matches}
                 </span>
-                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Số trận</span>
+                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">{t.seasons.matches}</span>
               </div>
 
               {/* Ratio */}
@@ -97,7 +98,7 @@ export default function SeasonsChartSection() {
                 <span className="text-2xl sm:text-3xl font-black font-mono text-emerald-400 block">
                   {selectedYear.ratio}
                 </span>
-                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Bàn / trận</span>
+                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">{t.seasons.ratio}</span>
               </div>
 
               {/* Assists */}
@@ -105,7 +106,7 @@ export default function SeasonsChartSection() {
                 <span className="text-2xl sm:text-3xl font-black font-mono text-cyan-300 block">
                   {selectedYear.assists}
                 </span>
-                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">Kiến tạo</span>
+                <span className="text-[10px] uppercase text-gray-400 font-semibold tracking-wider">{t.seasons.assists}</span>
               </div>
             </div>
           </div>
@@ -114,7 +115,7 @@ export default function SeasonsChartSection() {
           <div className="flex items-start gap-3 bg-[#090A0F]/80 p-4 rounded-xl border border-white/[0.06]">
             <Trophy className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
             <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
-              <span className="font-semibold text-white">Dấu ấn lịch sử: </span>
+              <span className="font-semibold text-white">{t.seasons.historicalHighlight}: </span>
               {selectedYear.milestoneNote}
             </p>
           </div>
@@ -125,17 +126,17 @@ export default function SeasonsChartSection() {
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 pb-4 border-b border-white/[0.06]">
             <span className="text-xs uppercase font-semibold tracking-wider text-gray-300 flex items-center gap-2">
               <BarChart3 className="w-4 h-4 text-[#D4AF37]" /> 
-              Bấm vào từng cột năm (2002 – 2026) để xem chi tiết thông số
+              {t.seasons.instruction}
             </span>
             <div className="flex items-center gap-4 text-xs">
               <span className="flex items-center gap-1.5 text-gray-300">
-                <span className="w-2.5 h-2.5 rounded bg-[#D4AF37]" /> Cột đang chọn
+                <span className="w-2.5 h-2.5 rounded bg-[#D4AF37]" /> {language === "vi" ? "Cột đang chọn" : "Selected Year"}
               </span>
               <span className="flex items-center gap-1.5 text-gray-300">
-                <span className="w-2.5 h-2.5 rounded bg-[#D4AF37]/35" /> Các năm khác
+                <span className="w-2.5 h-2.5 rounded bg-[#D4AF37]/35" /> {language === "vi" ? "Các năm khác" : "Other Years"}
               </span>
               <span className="flex items-center gap-1.5 text-[#D4AF37] font-semibold">
-                <Crown className="w-3.5 h-3.5" /> 2013 (Đỉnh cao 69 bàn)
+                <Crown className="w-3.5 h-3.5" /> {language === "vi" ? "2013 (Đỉnh cao 69 bàn)" : "2013 (Peak 69 Goals)"}
               </span>
             </div>
           </div>
@@ -154,7 +155,7 @@ export default function SeasonsChartSection() {
                     type="button"
                     onClick={() => setSelectedYear(s)}
                     className="flex flex-col items-center h-full justify-end group focus:outline-none relative transition-transform duration-200 hover:-translate-y-1 cursor-pointer"
-                    title={`Năm ${s.year}: ${s.goals} bàn (${s.clubGoals} CLB + ${s.countryGoals} ĐTQG) / ${s.matches} trận`}
+                    title={language === "vi" ? `Năm ${s.year}: ${s.goals} bàn (${s.clubGoals} CLB + ${s.countryGoals} ĐTQG) / ${s.matches} trận` : `Year ${s.year}: ${s.goals} goals (${s.clubGoals} Club + ${s.countryGoals} Country) / ${s.matches} matches`}
                   >
                     {/* Peak Crown Badge for 2013 */}
                     {isPeak && (
@@ -209,9 +210,13 @@ export default function SeasonsChartSection() {
             <div className="flex items-start gap-2.5 p-3 rounded-lg bg-[#090A0F]/70 border border-white/[0.06]">
               <Crown className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
               <div>
-                <strong className="text-white block font-semibold">Đỉnh cao lịch sử (Năm 2013)</strong>
+                <strong className="text-white block font-semibold">{language === "vi" ? "Đỉnh cao lịch sử (Năm 2013)" : "All-Time Peak (2013)"}</strong>
                 <span className="text-gray-400">
-                  <strong>69 bàn thắng</strong> sau 59 trận (59 bàn cho Real Madrid + 10 bàn cho BĐN). Hiệu suất kỷ lục 1.17 bàn/trận.
+                  {language === "vi" ? (
+                    <><strong>69 bàn thắng</strong> sau 59 trận (59 bàn cho Real Madrid + 10 bàn cho BĐN). Hiệu suất kỷ lục 1.17 bàn/trận.</>
+                  ) : (
+                    <><strong>69 goals</strong> in 59 matches (59 Real Madrid + 10 Portugal). Record ratio of 1.17 goals/match.</>
+                  )}
                 </span>
               </div>
             </div>
@@ -219,9 +224,13 @@ export default function SeasonsChartSection() {
             <div className="flex items-start gap-2.5 p-3 rounded-lg bg-[#090A0F]/70 border border-white/[0.06]">
               <Flame className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-white block font-semibold">Vua phá lưới thế giới 2023</strong>
+                <strong className="text-white block font-semibold">{language === "vi" ? "Vua phá lưới thế giới 2023" : "World Top Scorer 2023"}</strong>
                 <span className="text-gray-400">
-                  <strong>54 bàn thắng</strong> sau 59 trận (44 bàn Al Nassr + 10 bàn BĐN) được ghi ở tuổi 38.
+                  {language === "vi" ? (
+                    <><strong>54 bàn thắng</strong> sau 59 trận (44 bàn Al Nassr + 10 bàn BĐN) được ghi ở tuổi 38.</>
+                  ) : (
+                    <><strong>54 goals</strong> in 59 matches (44 Al Nassr + 10 Portugal) scored at age 38.</>
+                  )}
                 </span>
               </div>
             </div>
@@ -229,9 +238,13 @@ export default function SeasonsChartSection() {
             <div className="flex items-start gap-2.5 p-3 rounded-lg bg-[#090A0F]/70 border border-white/[0.06]">
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
               <div>
-                <strong className="text-white block font-semibold">Tổng hợp nhất 25 năm (2002–2026)</strong>
+                <strong className="text-white block font-semibold">{language === "vi" ? "Tổng hợp nhất 25 năm (2002–2026)" : "25-Year Grand Total (2002–2026)"}</strong>
                 <span className="text-gray-400">
-                  <strong>{totalGoals} bàn thắng</strong> ({totalClubGoals} CLB + {totalCountryGoals} ĐTQG) qua <strong>{totalMatches.toLocaleString()} trận đấu chính thức</strong>.
+                  {language === "vi" ? (
+                    <><strong>{totalGoals} bàn thắng</strong> ({totalClubGoals} CLB + {totalCountryGoals} ĐTQG) qua <strong>{totalMatches.toLocaleString()} trận đấu chính thức</strong>.</>
+                  ) : (
+                    <><strong>{totalGoals} goals</strong> ({totalClubGoals} Club + {totalCountryGoals} Country) across <strong>{totalMatches.toLocaleString()} official matches</strong>.</>
+                  )}
                 </span>
               </div>
             </div>

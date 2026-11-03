@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import { SiteDataProvider } from "@/context/SiteDataContext";
+import { LanguageProvider } from "@/context/LanguageContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { cr7CareerSummary } from "@/data/cr7-stats";
@@ -152,7 +153,9 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-[#08090C] text-[#F8FAFC] min-h-screen selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">
-        <SiteDataProvider>{children}</SiteDataProvider>
+        <LanguageProvider>
+          <SiteDataProvider>{children}</SiteDataProvider>
+        </LanguageProvider>
         <SpeedInsights />
         <Analytics />
 

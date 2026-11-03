@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { cr7CareerSummary } from "@/data/cr7-stats";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   Target,
   Clock,
@@ -16,6 +17,7 @@ import {
 } from "lucide-react";
 
 export default function AnatomySection({ currentGoals }: { currentGoals: number }) {
+  const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<"team" | "body" | "method" | "venue">("team");
 
   return (
@@ -24,13 +26,13 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-20">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
-            Chương 2 • Bóc tách cỗ máy săn bàn
+            {t.anatomy.chapterBadge}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
-            Giải mã cỗ máy dứt điểm <span className="gold-gradient-text">Toàn Diện</span>
+            {t.anatomy.title} <span className="gold-gradient-text">{t.anatomy.titleGold}</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-gray-400 leading-relaxed font-light">
-            Từ mọi góc độ cơ thể, mọi phương thức dứt điểm và trên mọi mặt sân. Ronaldo biến việc ghi bàn trở thành một chuẩn mực khoa học chính xác và bền bỉ.
+            {t.anatomy.subtitle}
           </p>
         </div>
 
@@ -40,7 +42,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
           <div className="bg-[#0F121A]/80 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl p-5 sm:p-6 transition-all shadow-xl group">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[11px] uppercase font-semibold tracking-wider text-gray-400">
-                Tổng bàn thắng
+                {t.anatomy.masterGoals}
               </span>
               <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] group-hover:scale-105 transition-transform">
                 <Target className="w-4 h-4" />
@@ -50,7 +52,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
               {currentGoals}
             </div>
             <p className="text-xs text-gray-400 mt-2">
-              Kỷ lục mọi thời đại trong lịch sử bóng đá FIFA
+              {language === "vi" ? "Kỷ lục mọi thời đại trong lịch sử bóng đá FIFA" : "All-time world record in official FIFA football"}
             </p>
           </div>
 
@@ -58,7 +60,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
           <div className="bg-[#0F121A]/80 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl p-5 sm:p-6 transition-all shadow-xl group">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[11px] uppercase font-semibold tracking-wider text-gray-400">
-                Số trận thi đấu
+                {t.anatomy.masterMatches}
               </span>
               <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-300 group-hover:scale-105 transition-transform">
                 <Shield className="w-4 h-4" />
@@ -68,7 +70,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
               {cr7CareerSummary.totalMatches.toLocaleString()}
             </div>
             <p className="text-xs text-gray-400 mt-2">
-              Trận đấu chính thức cấp CLB và ĐTQG
+              {language === "vi" ? "Trận đấu chính thức cấp CLB và ĐTQG" : "Official appearances across Club & Country"}
             </p>
           </div>
 
@@ -76,7 +78,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
           <div className="bg-[#0F121A]/80 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl p-5 sm:p-6 transition-all shadow-xl group">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[11px] uppercase font-semibold tracking-wider text-gray-400">
-                Hiệu suất nổ súng
+                {t.anatomy.masterRate}
               </span>
               <div className="w-8 h-8 rounded-lg bg-[#D4AF37]/10 flex items-center justify-center text-[#D4AF37] group-hover:scale-105 transition-transform">
                 <Clock className="w-4 h-4" />
@@ -84,10 +86,10 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
             </div>
             <div className="text-3xl sm:text-4xl lg:text-5xl font-black font-mono text-white tracking-tight">
               {cr7CareerSummary.minutesPerGoal}
-              <span className="text-sm font-sans font-normal text-gray-400 ml-1.5">phút/bàn</span>
+              <span className="text-sm font-sans font-normal text-gray-400 ml-1.5">{t.anatomy.masterRateUnit}</span>
             </div>
             <p className="text-xs text-gray-400 mt-2">
-              Trung bình ~112 phút lại có 1 bàn thắng ra đời
+              {t.anatomy.minutesSummary}
             </p>
           </div>
 
@@ -95,7 +97,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
           <div className="bg-[#0F121A]/80 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl p-5 sm:p-6 transition-all shadow-xl group">
             <div className="flex items-center justify-between mb-3">
               <span className="text-[11px] uppercase font-semibold tracking-wider text-gray-400">
-                Tổng kiến tạo
+                {t.anatomy.masterAssists}
               </span>
               <div className="w-8 h-8 rounded-lg bg-white/5 flex items-center justify-center text-gray-300 group-hover:scale-105 transition-transform">
                 <TrendingUp className="w-4 h-4" />
@@ -105,7 +107,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
               {cr7CareerSummary.totalAssists}
             </div>
             <p className="text-xs text-gray-400 mt-2">
-              Đóng góp trực tiếp vào 1.240+ bàn thắng
+              {language === "vi" ? "Đóng góp trực tiếp vào 1.240+ bàn thắng" : "Directly involved in 1,240+ goals"}
             </p>
           </div>
         </div>
@@ -113,15 +115,15 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
         {/* Tab Controls for Breakdown */}
         <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
           {[
-            { id: "team", label: "Theo CLB & ĐTQG" },
-            { id: "body", label: "Theo Bộ Phận Cơ Thể" },
-            { id: "method", label: "Theo Tình Huống Ghi Bàn" },
-            { id: "venue", label: "Theo Địa Điểm Sân Đấu" },
+            { id: "team", label: t.anatomy.tabTeam },
+            { id: "body", label: t.anatomy.tabBody },
+            { id: "method", label: t.anatomy.tabMethod },
+            { id: "venue", label: t.anatomy.tabVenue },
           ].map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id as any)}
-              className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all border ${
+              className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold transition-all border cursor-pointer ${
                 activeTab === tab.id
                   ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-lg shadow-[#D4AF37]/20"
                   : "bg-[#11131C] text-gray-400 border-white/10 hover:text-white hover:border-white/20"

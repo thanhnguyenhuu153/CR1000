@@ -4,10 +4,12 @@ import React from "react";
 import Link from "next/link";
 import { Trophy, ArrowUp, Heart, Sparkles, Share2 } from "lucide-react";
 import { useSiteData } from "@/context/SiteDataContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { cr7CareerSummary } from "@/data/cr7-stats";
 
 export default function Footer() {
   const { goals, showFanVault } = useSiteData();
+  const { language, t } = useLanguage();
   const target = cr7CareerSummary.countdownTarget;
   const remaining = Math.max(0, target - goals);
 
@@ -19,14 +21,14 @@ export default function Footer() {
     if (navigator.share) {
       navigator
         .share({
-          title: "CR1000 — Đếm ngược 1.000 Bàn thắng của Cristiano Ronaldo",
-          text: "Khám phá bảo tàng số & hành trình chạm đỉnh 1.000 bàn thắng chính thức của CR7!",
+          title: language === "vi" ? "CR1000 — Đếm ngược 1.000 Bàn thắng của Cristiano Ronaldo" : "CR1000 — Road to 1,000 Goals for Cristiano Ronaldo",
+          text: language === "vi" ? "Khám phá bảo tàng số & hành trình chạm đỉnh 1.000 bàn thắng chính thức của CR7!" : "Explore the interactive digital museum & countdown to CR7's 1,000th goal!",
           url: window.location.href,
         })
         .catch(() => {});
     } else {
       navigator.clipboard.writeText(window.location.href);
-      alert("Đã sao chép liên kết website CR1000 vào bộ nhớ tạm!");
+      alert(t.footer.shareSuccess);
     }
   };
 
@@ -45,62 +47,70 @@ export default function Footer() {
               </div>
               <span className="font-extrabold text-xl text-white tracking-tight">CR1000</span>
               <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30">
-                LIVING MUSEUM
+                {t.footer.brandTag}
               </span>
             </div>
 
             <p className="text-gray-400 leading-relaxed text-xs max-w-sm">
-              Bảo tàng số và hệ thống theo dõi trực tiếp hành trình hướng tới cột mốc 1.000 bàn thắng chính thức chưa từng có của Cristiano Ronaldo. Tôn vinh kỷ luật, ý chí và những khoảnh khắc bất tử.
+              {t.footer.brandDesc}
             </p>
 
             <div className="flex items-center gap-3 pt-2">
               <button
                 onClick={handleShare}
-                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#141720] hover:bg-[#D4AF37] text-gray-300 hover:text-black font-bold border border-gray-800 transition-all text-xs"
+                className="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl bg-[#141720] hover:bg-[#D4AF37] text-gray-300 hover:text-black font-bold border border-gray-800 transition-all text-xs cursor-pointer"
               >
                 <Share2 className="w-3.5 h-3.5" />
-                <span>Chia sẻ trang web</span>
+                <span>{t.footer.shareBtn}</span>
               </button>
             </div>
           </div>
 
           {/* Quick Links */}
           <div className="md:col-span-3 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">Khám phá các chương</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">{t.footer.exploreTitle}</h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#countdown" className="hover:text-[#D4AF37] transition-colors">Đếm ngược bàn thứ 1000</a></li>
-              <li><a href="#bio" className="hover:text-[#D4AF37] transition-colors">Tiểu sử & Các kỷ nguyên</a></li>
-              <li><a href="#anatomy" className="hover:text-[#D4AF37] transition-colors">Bóc tách cỗ máy ghi bàn</a></li>
-              <li><a href="#hattricks" className="hover:text-[#D4AF37] transition-colors">66 Cú Hattrick & Poker</a></li>
-              <li><a href="#opponents" className="hover:text-[#D4AF37] transition-colors">Top con mồi ưa thích</a></li>
-              <li><a href="#trophies" className="hover:text-[#D4AF37] transition-colors">Phòng cúp & Kỷ lục Guinness</a></li>
-              <li><a href="#archive" className="hover:text-[#D4AF37] transition-colors">Bàn thắng chung kết & Mốc son</a></li>
+              <li><a href="#countdown" className="hover:text-[#D4AF37] transition-colors">{t.nav.countdown}</a></li>
+              <li><a href="#bio" className="hover:text-[#D4AF37] transition-colors">{t.nav.journey}</a></li>
+              <li><a href="#anatomy" className="hover:text-[#D4AF37] transition-colors">{t.nav.anatomy}</a></li>
+              <li><a href="#hattricks" className="hover:text-[#D4AF37] transition-colors">{t.nav.hattricks}</a></li>
+              <li><a href="#opponents" className="hover:text-[#D4AF37] transition-colors">{t.nav.opponents}</a></li>
+              <li><a href="#trophies" className="hover:text-[#D4AF37] transition-colors">{t.nav.trophies}</a></li>
+              <li><a href="#archive" className="hover:text-[#D4AF37] transition-colors">{t.nav.archive}</a></li>
               {showFanVault && (
-                <li><a href="#shop" className="hover:text-[#D4AF37] transition-colors">Kỷ vật & Quà tặng Fan</a></li>
+                <li><a href="#shop" className="hover:text-[#D4AF37] transition-colors">{t.nav.shop}</a></li>
               )}
-              <li><Link href="/privacy" className="hover:text-[#D4AF37] transition-colors text-gray-400">Chính sách bảo mật & Pháp lý</Link></li>
+              <li><Link href="/privacy" className="hover:text-[#D4AF37] transition-colors text-gray-400">{t.footer.privacyLink}</Link></li>
             </ul>
           </div>
 
           {/* Quick FAQ for SEO AI Overview */}
           <div className="md:col-span-4 space-y-3">
-            <h4 className="text-xs font-bold uppercase tracking-wider text-white">Câu hỏi thường gặp (FAQ)</h4>
+            <h4 className="text-xs font-bold uppercase tracking-wider text-white">{t.footer.faqTitle}</h4>
             <div className="space-y-2.5">
               <div>
-                <strong className="text-gray-300 block">Cristiano Ronaldo hiện ghi bao nhiêu bàn?</strong>
+                <strong className="text-gray-300 block">{t.footer.faq1Q}</strong>
                 <span className="text-gray-400 text-[11px]">
-                  Đã ghi <strong className="text-white font-mono">{goals}</strong> bàn thắng chính thức cấp CLB và ĐTQG (theo dữ liệu FIFA/IFFHS/RSSSF).
+                  {language === "vi" ? (
+                    <>Đã ghi <strong className="text-white font-mono">{goals}</strong> bàn thắng chính thức cấp CLB và ĐTQG (theo dữ liệu FIFA/IFFHS/RSSSF).</>
+                  ) : (
+                    <>Has scored <strong className="text-white font-mono">{goals}</strong> official goals for club and country (FIFA/IFFHS/RSSSF certified).</>
+                  )}
                 </span>
               </div>
               <div>
-                <strong className="text-gray-300 block">CR7 còn cách cột mốc 1.000 bàn bao nhiêu bàn nữa?</strong>
+                <strong className="text-gray-300 block">{t.footer.faq2Q}</strong>
                 <span className="text-gray-400 text-[11px]">
-                  Chỉ còn cách đúng <strong className="text-[#D4AF37] font-mono">{remaining}</strong> bàn thắng nữa để chạm cột mốc lịch sử {target.toLocaleString()} bàn.
+                  {language === "vi" ? (
+                    <>Chỉ còn cách đúng <strong className="text-[#D4AF37] font-mono">{remaining}</strong> bàn thắng nữa để chạm cột mốc lịch sử {target.toLocaleString()} bàn.</>
+                  ) : (
+                    <>Needs only <strong className="text-[#D4AF37] font-mono">{remaining}</strong> more goals to achieve the historic {target.toLocaleString()}-goal summit.</>
+                  )}
                 </span>
               </div>
               <div>
-                <strong className="text-gray-300 block">Nguồn dữ liệu có uy tín không?</strong>
-                <span className="text-gray-500 text-[11px]">Dữ liệu được đối soát trực tiếp từ FIFA, UEFA, IFFHS, Transfermarkt và Sofascore.</span>
+                <strong className="text-gray-300 block">{t.footer.faq3Q}</strong>
+                <span className="text-gray-500 text-[11px]">{t.footer.faq3A}</span>
               </div>
             </div>
           </div>
@@ -110,24 +120,24 @@ export default function Footer() {
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-4 text-center sm:text-left">
             <p className="text-gray-500 text-[11px]">
-              © {new Date().getFullYear()} CR1000 Digital Museum. Dự án phi lợi nhuận vinh danh sự nghiệp của Cristiano Ronaldo dos Santos Aveiro.
+              © {new Date().getFullYear()} {t.footer.copyright}
             </p>
             <div className="flex items-center gap-3 text-[11px] text-gray-500">
               <Link href="/privacy" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
-                Chính sách bảo mật
+                {language === "vi" ? "Chính sách bảo mật" : "Privacy Policy"}
               </Link>
               <span>•</span>
               <Link href="/privacy#terms" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
-                Điều khoản & Miễn trừ
+                {language === "vi" ? "Điều khoản & Miễn trừ" : "Terms & Disclaimer"}
               </Link>
             </div>
           </div>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#11131A] hover:bg-[#1E2230] text-gray-300 border border-gray-800 transition-all text-xs shrink-0"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#11131A] hover:bg-[#1E2230] text-gray-300 border border-gray-800 transition-all text-xs shrink-0 cursor-pointer"
           >
-            <span>Về đầu trang</span>
+            <span>{t.footer.backToTop}</span>
             <ArrowUp className="w-3.5 h-3.5 text-[#D4AF37]" />
           </button>
         </div>

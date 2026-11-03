@@ -2,22 +2,25 @@
 
 import React from "react";
 import { cr7TopOpponents } from "@/data/cr7-opponents";
+import { useLanguage } from "@/context/LanguageContext";
 import { Target, Skull, Trophy, Flame } from "lucide-react";
 
 export default function OpponentsSection() {
+  const { language, t } = useLanguage();
+
   return (
     <section id="opponents" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
-            Chương 4 • Đối thủ ưa thích
+            {t.opponents.chapterBadge}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
-            Top &ldquo;Con Mồi&rdquo; <span className="gold-gradient-text">Ưa Thích Nhất</span>
+            {t.opponents.title} <span className="gold-gradient-text">{t.opponents.titleGold}</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
-            Từ Sevilla, Atlético Madrid, Barcelona đến Juventus. Càng là đối thủ sừng sỏ và chịu áp lực nghẹt thở, bản lĩnh săn bàn của Ronaldo càng bùng nổ dữ dội.
+            {t.opponents.subtitle}
           </p>
         </div>
 
@@ -57,7 +60,7 @@ export default function OpponentsSection() {
                       {victim.goals}
                     </div>
                     <span className="text-[10px] uppercase tracking-wider text-gray-400">
-                      Bàn thắng
+                      {t.opponents.goalsScored}
                     </span>
                   </div>
                   <div className="border-x border-white/[0.08]">
@@ -65,7 +68,7 @@ export default function OpponentsSection() {
                       {victim.matches}
                     </div>
                     <span className="text-[10px] uppercase tracking-wider text-gray-400">
-                      Trận đấu
+                      {t.opponents.matchesPlayed}
                     </span>
                   </div>
                   <div>
@@ -73,14 +76,16 @@ export default function OpponentsSection() {
                       {victim.hattricks}
                     </div>
                     <span className="text-[10px] uppercase tracking-wider text-gray-400">
-                      Hat-trick
+                      {t.opponents.hattricksCount}
                     </span>
                   </div>
                 </div>
 
                 <div className="mt-4 flex items-center justify-between text-xs">
-                  <span className="text-gray-400 font-light">Hiệu suất dứt điểm:</span>
-                  <span className="font-mono font-bold text-[#D4AF37]">{victim.ratio} bàn/trận</span>
+                  <span className="text-gray-400 font-light">{t.opponents.efficiency}:</span>
+                  <span className="font-mono font-bold text-[#D4AF37]">
+                    {victim.ratio} {language === "vi" ? "bàn/trận" : "goals/match"}
+                  </span>
                 </div>
               </div>
             </div>
@@ -91,9 +96,12 @@ export default function OpponentsSection() {
         <div className="bg-[#0F121A]/90 border border-white/10 rounded-2xl overflow-hidden shadow-xl">
           <div className="p-4 sm:p-5 border-b border-white/[0.08] flex items-center justify-between">
             <h4 className="text-xs sm:text-sm uppercase font-bold tracking-wider text-gray-300 flex items-center gap-2">
-              <Target className="w-4 h-4 text-[#D4AF37]" /> Các đối thủ bị chọc thủng lưới nhiều nhất (Hạng 4 – 10)
+              <Target className="w-4 h-4 text-[#D4AF37]" />{" "}
+              {language === "vi" ? "Các đối thủ bị chọc thủng lưới nhiều nhất (Hạng 4 – 10)" : "Most Punished Opponents (Ranks 4 – 10)"}
             </h4>
-            <span className="text-xs text-gray-500 hidden sm:inline">Nguồn đối soát: Transfermarkt & IFFHS</span>
+            <span className="text-xs text-gray-500 hidden sm:inline">
+              {language === "vi" ? "Nguồn đối soát: Transfermarkt & IFFHS" : "Source: Transfermarkt & IFFHS"}
+            </span>
           </div>
 
           <div className="divide-y divide-white/[0.06]">
@@ -115,15 +123,21 @@ export default function OpponentsSection() {
                 <div className="flex items-center gap-6 justify-between sm:justify-end text-xs">
                   <div className="text-center sm:text-right">
                     <span className="font-mono font-black text-white text-base block">{item.goals}</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-wider">bàn</span>
+                    <span className="text-[10px] text-gray-400 uppercase tracking-wider">
+                      {language === "vi" ? "bàn" : "goals"}
+                    </span>
                   </div>
                   <div className="text-center sm:text-right">
                     <span className="font-mono font-bold text-gray-300 text-base block">{item.matches}</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-wider">trận</span>
+                    <span className="text-[10px] text-gray-400 uppercase tracking-wider">
+                      {language === "vi" ? "trận" : "matches"}
+                    </span>
                   </div>
                   <div className="text-center sm:text-right">
                     <span className="font-mono font-bold text-[#D4AF37] text-base block">{item.ratio}</span>
-                    <span className="text-[10px] text-gray-400 uppercase tracking-wider">bàn/trận</span>
+                    <span className="text-[10px] text-gray-400 uppercase tracking-wider">
+                      {language === "vi" ? "bàn/trận" : "goals/game"}
+                    </span>
                   </div>
                 </div>
               </div>

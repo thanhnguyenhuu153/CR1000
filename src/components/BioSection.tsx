@@ -3,10 +3,12 @@
 import React, { useState } from "react";
 import { cr7BioMilestones } from "@/data/cr7-bio";
 import { useSiteData } from "@/context/SiteDataContext";
+import { useLanguage } from "@/context/LanguageContext";
 import { Award, Target, Trophy, Quote, CheckCircle2, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 export default function BioSection() {
   const { images } = useSiteData();
+  const { language, t } = useLanguage();
   const [activeEraIndex, setActiveEraIndex] = useState(2); // Mặc định mở Real Madrid - thời kỳ rực rỡ nhất
   const currentEra = cr7BioMilestones[activeEraIndex];
 
@@ -28,13 +30,13 @@ export default function BioSection() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
-            Chương 1 • Tiểu sử & Kỷ nguyên
+            {t.bio.chapterBadge}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
-            Hành trình tiến hóa của <span className="gold-gradient-text">Huyền Thoại</span>
+            {t.bio.title} <span className="gold-gradient-text">{t.bio.titleGold}</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
-            Từ một cậu bé mắc hội chứng tim đập nhanh tại hòn đảo Madeira nghèo khó, tới biểu tượng vĩ đại nhất của sự khổ luyện, kỷ luật và ý chí không giới hạn trong lịch sử thể thao.
+            {t.bio.subtitle}
           </p>
         </div>
 
@@ -107,7 +109,7 @@ export default function BioSection() {
                     {currentEra.stats.goals}
                   </div>
                   <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mt-0.5">
-                    Bàn thắng
+                    {t.bio.goals}
                   </span>
                 </div>
                 <div className="text-center border-x border-white/10">
@@ -115,7 +117,7 @@ export default function BioSection() {
                     {currentEra.stats.matches}
                   </div>
                   <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mt-0.5">
-                    Trận đấu
+                    {t.bio.matches}
                   </span>
                 </div>
                 <div className="text-center">
@@ -123,7 +125,7 @@ export default function BioSection() {
                     {currentEra.stats.trophies}
                   </div>
                   <span className="text-[10px] sm:text-[11px] uppercase tracking-wider text-gray-400 font-semibold block mt-0.5">
-                    Danh hiệu
+                    {t.bio.trophies}
                   </span>
                 </div>
               </div>
@@ -156,7 +158,7 @@ export default function BioSection() {
             <div className="flex items-center gap-2 mb-4">
               <Trophy className="w-4 h-4 text-[#D4AF37]" />
               <h4 className="text-xs uppercase font-bold tracking-widest text-[#D4AF37]">
-                Dấu ấn & Chiến tích không thể quên trong kỷ nguyên này
+                {t.bio.notableMilestones}
               </h4>
             </div>
 

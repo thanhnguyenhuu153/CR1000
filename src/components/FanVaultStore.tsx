@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { cr7ShopItems as initialShopItems, ShopItem } from "@/data/cr7-shop";
+import { useLanguage } from "@/context/LanguageContext";
 import {
   ShoppingBag,
   Star,
@@ -19,6 +20,7 @@ import {
 } from "lucide-react";
 
 export default function FanVaultStore() {
+  const { language, t } = useLanguage();
   const [filter, setFilter] = useState<"all" | "jersey" | "boots" | "lifestyle" | "memorabilia">("all");
   const [items, setItems] = useState<ShopItem[]>(initialShopItems);
   const [isAdminMode, setIsAdminMode] = useState(false);
@@ -117,13 +119,13 @@ export default function FanVaultStore() {
         {/* Section Header */}
         <div className="text-center max-w-3xl mx-auto mb-16 relative">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
-            Bảo tàng Kỷ vật • Fan Vault
+            {t.shop.chapterBadge}
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
-            Bộ Sưu Tập Kỷ Vật <span className="gold-gradient-text">CR7 Biểu Tượng</span>
+            {t.shop.title} <span className="gold-gradient-text">{t.shop.titleGold}</span>
           </h2>
           <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
-            Sở hữu các kỷ vật biểu tượng: từ chiếc áo đỏ tay dài đêm Moscow 2008, dòng giày Mercurial săn bàn tới những bức tranh tráng gương ghi dấu bàn thắng thứ 1000.
+            {t.shop.subtitle}
           </p>
 
           {/* Admin Mode Toggle */}
@@ -137,7 +139,7 @@ export default function FanVaultStore() {
               }`}
             >
               <Settings className="w-3.5 h-3.5" />
-              <span>{isAdminMode ? "Đang bật chế độ Quản trị (Admin On)" : "Bật chế độ Quản trị / Sửa sản phẩm"}</span>
+              <span>{isAdminMode ? (language === "vi" ? "Đang bật chế độ Quản trị (Admin On)" : "Admin Mode (ON)") : (language === "vi" ? "Bật chế độ Quản trị / Sửa sản phẩm" : "Admin Mode / Edit Items")}</span>
             </button>
 
             {isAdminMode && (
@@ -147,7 +149,7 @@ export default function FanVaultStore() {
                   className="px-3 py-1.5 rounded-full bg-[#D4AF37] text-black text-xs font-bold flex items-center gap-1 hover:opacity-90"
                 >
                   <Plus className="w-3.5 h-3.5" />
-                  <span>+ Thêm sản phẩm</span>
+                  <span>{language === "vi" ? "+ Thêm sản phẩm" : "+ Add Item"}</span>
                 </button>
                 <button
                   onClick={handleCopyJSON}
@@ -155,7 +157,7 @@ export default function FanVaultStore() {
                   title="Sao chép toàn bộ danh sách sản phẩm dạng JSON"
                 >
                   <Copy className="w-3.5 h-3.5" />
-                  <span>{copiedNotification ? "Đã copy!" : "Copy mã JSON"}</span>
+                  <span>{copiedNotification ? (language === "vi" ? "Đã copy!" : "Copied!") : (language === "vi" ? "Copy mã JSON" : "Copy JSON")}</span>
                 </button>
                 <button
                   onClick={handleResetDefault}
@@ -172,16 +174,16 @@ export default function FanVaultStore() {
         {/* Filter Pills */}
         <div className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2">
           {[
-            { id: "all", label: "Tất Cả Sản Phẩm" },
-            { id: "jersey", label: "Áo Đấu Biểu Tượng" },
-            { id: "boots", label: "Giày Đá Bóng Mercurial" },
-            { id: "lifestyle", label: "Nước Hoa & Thời Trang" },
-            { id: "memorabilia", label: "Tranh & Kỷ Vật Sưu Tầm" },
+            { id: "all", label: t.shop.filterAll },
+            { id: "jersey", label: t.shop.filterJersey },
+            { id: "boots", label: t.shop.filterBoots },
+            { id: "lifestyle", label: t.shop.filterLifestyle },
+            { id: "memorabilia", label: t.shop.filterMemorabilia },
           ].map((cat) => (
             <button
               key={cat.id}
               onClick={() => setFilter(cat.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border cursor-pointer ${
                 filter === cat.id
                   ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-lg shadow-[#D4AF37]/20"
                   : "bg-[#141720] text-gray-300 border-gray-800 hover:border-gray-700"
@@ -255,7 +257,7 @@ export default function FanVaultStore() {
                       ))}
                     </div>
                     <span className="font-bold font-mono">{item.rating}</span>
-                    <span className="text-gray-500">({item.reviewsCount} đánh giá)</span>
+                    <span className="text-gray-500">({item.reviewsCount} {language === "vi" ? "đánh giá" : "reviews"})</span>
                   </div>
 
                   <h3 className="text-base font-bold text-white mb-2 line-clamp-2 group-hover:text-[#D4AF37] transition-colors">
@@ -285,7 +287,7 @@ export default function FanVaultStore() {
                     rel="noopener noreferrer"
                     className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] hover:opacity-90 active:scale-95 text-black font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#D4AF37]/20"
                   >
-                    <span>Xem ưu đãi</span>
+                    <span>{t.shop.buyNow}</span>
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -299,11 +301,13 @@ export default function FanVaultStore() {
           <div className="flex items-center gap-3">
             <ShieldCheck className="w-5 h-5 text-[#D4AF37] shrink-0" />
             <span>
-              Tất cả liên kết sản phẩm được tuyển chọn uy tín dành riêng cho người hâm mộ CR7. Giao dịch trực tiếp qua các sàn thương mại điện tử bảo đảm quyền lợi người mua.
+              {language === "vi"
+                ? "Tất cả liên kết sản phẩm được tuyển chọn uy tín dành riêng cho người hâm mộ CR7. Giao dịch trực tiếp qua các sàn thương mại điện tử bảo đảm quyền lợi người mua."
+                : "All product links are curated for CR7 supporters. Transactions take place directly on authorized commerce platforms ensuring full buyer protection."}
             </span>
           </div>
           <span className="text-gray-500 text-[11px] shrink-0 font-mono">
-            Trải nghiệm mượt mà • Không quảng cáo pop-up
+            {language === "vi" ? "Trải nghiệm mượt mà • Không quảng cáo pop-up" : "Smooth Experience • No Pop-up Ads"}
           </span>
         </div>
       </div>
