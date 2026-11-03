@@ -19,7 +19,7 @@ export default function TrophyRoomSection() {
     if (id === "euro-2016") return images.trophyEuro || defaultUrl;
     if (id === "nations-league") return images.trophyNationsLeague || images.trophyEuro || defaultUrl;
     if (id === "premier-league") return images.trophyPremierLeague || defaultUrl;
-    if (id === "golden-boot") return images.trophyGoldenShoe || defaultUrl;
+    if (id === "golden-boot" || id === "golden-shoe" || id === "spl-golden-boot") return images.trophyGoldenShoe || defaultUrl;
     if (id === "fifa-the-best") return images.trophyFifaTheBest || defaultUrl;
     if (id === "fifa-club-wc") return images.trophyClubWc || defaultUrl;
     if (id === "la-liga") return images.trophyLaLiga || defaultUrl;

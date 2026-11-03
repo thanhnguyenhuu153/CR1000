@@ -15,7 +15,7 @@ export const cr7TrophySummary = {
   totalTeamTrophies: 36, // 33 cấp CLB + 3 ĐTQG (Euro 2016, Nations League 2019, Nations League 2025)
   clubTrophies: 33,
   internationalTrophies: 3,
-  majorIndividualAwards: 32,
+  majorIndividualAwards: 33,
 };
 
 export const cr7Trophies: TrophyItem[] = [
@@ -188,8 +188,20 @@ export const cr7Trophies: TrophyItem[] = [
     category: "individual",
     teamOrOrg: "European Sports Media",
     iconName: "Zap",
-    trophyImageUrl: "/images/trophies/ballon-dor.png",
+    trophyImageUrl: "/images/trophies/golden-shoe.jpg",
     description: "Cầu thủ đầu tiên trong lịch sử đoạt Chiếc giày Vàng châu Âu ở hai giải vô địch quốc gia khác nhau (Premier League & La Liga).",
+    isMajor: true,
+  },
+  {
+    id: "spl-golden-boot",
+    name: "Vua phá lưới Saudi Pro League (Chiếc giày Vàng SPL)",
+    count: 1,
+    years: ["2023–24 (35 bàn - Kỷ lục lịch sử)"],
+    category: "individual",
+    teamOrOrg: "Saudi Pro League (Al Nassr)",
+    iconName: "Zap",
+    trophyImageUrl: "/images/trophies/golden-shoe.jpg",
+    description: "Kỷ lục ghi bàn nhiều nhất trong một mùa giải lịch sử bóng đá Ả Rập Xê Út (35 bàn/31 trận). Giúp CR7 trở thành cầu thủ đầu tiên trong lịch sử thế giới đoạt Vua phá lưới ở 4 quốc gia khác nhau (Anh, Tây Ban Nha, Ý, Saudi Arabia).",
     isMajor: true,
   },
   {
