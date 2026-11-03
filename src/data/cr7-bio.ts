@@ -148,10 +148,11 @@ export const cr7BioMilestones: BioMilestone[] = [
     stats: {
       goals: 138,
       matches: 148,
-      trophies: 1,
+      trophies: 2,
     },
     highlights: [
       "Vô địch Arab Club Champions Cup 2023 (ghi cú đúp trong trận chung kết)",
+      "08/06/2025: Vô địch UEFA Nations League 2024–25 (ghi bàn gỡ hòa 2-2 phút 61 trận chung kết nghẹt thở với Tây Ban Nha tại Allianz Arena, thắng luân lưu 5-3)",
       "Phá kỷ lục ghi nhiều bàn nhất 1 mùa Saudi Pro League (35 bàn)",
       "Chân sút số 1 thế giới trong năm dương lịch 2023 (54 bàn thắng)",
       "Cán mốc 900 bàn thắng chính thức trong trận Bồ Đào Nha vs Croatia",

@@ -25,6 +25,30 @@ export interface IconicGoal {
 export const cr7FinalsAndIconicGoals: IconicGoal[] = [
   // CÁC BÀN THẮNG TRONG TRẬN CHUNG KẾT ĐOẠT CÚP
   {
+    id: "final-nations-league-2025",
+    category: "final",
+    title: "Cú vô-lê phút 61 chung kết Nations League 2025 – Danh hiệu quốc tế thứ 3",
+    match: "Bồ Đào Nha 2 - 2 Tây Ban Nha (Pen 5-3)",
+    date: "08/06/2025",
+    competition: "UEFA Nations League Final 2025",
+    trophyOrAward: "Cúp Vô địch UEFA Nations League 2024–25",
+    minute: 61,
+    scoreBefore: "1 - 2",
+    scoreFinal: "2 - 2 (Thắng Penalty 5-3)",
+    team: "Bồ Đào Nha",
+    opponent: "Tây Ban Nha",
+    stadium: "Allianz Arena (Munich, Đức)",
+    matchImageUrl: "/images/cr7/era-portugal.jpg",
+    description:
+      "Tây Ban Nha hai lần vượt lên dẫn trước tại Munich. Phút 61, từ quả tạt sấm sét của Nuno Mendes, Ronaldo băng cắt đệm bóng cận thành tung nóc lưới Unai Simón gỡ hòa 2-2 trong sự vỡ òa của hàng vạn CĐV Bồ Đào Nha, mở đường cho chiến thắng 5-3 ở loạt luân lưu.",
+    impact: "Mang về danh hiệu Nations League thứ 2 trong lịch sử bóng đá Bồ Đào Nha (2019 & 2025), đưa tổng số danh hiệu quốc tế của CR7 lên con số 3.",
+    gearTag: {
+      bootName: "Nike Mercurial Superfly 10 Elite CR7",
+      description: "Vũ khí định đoạt trận chung kết nghẹt thở tại Allianz Arena",
+      affiliateKeyword: "Nike Mercurial Superfly 10 CR7",
+    },
+  },
+  {
     id: "final-ucl-2008",
     category: "final",
     title: "Cú đánh đầu trong mưa tuyết Moscow – Cúp C1 đầu tiên",

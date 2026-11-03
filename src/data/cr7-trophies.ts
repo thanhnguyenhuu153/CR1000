@@ -12,9 +12,9 @@ export interface TrophyItem {
 }
 
 export const cr7TrophySummary = {
-  totalTeamTrophies: 35,
+  totalTeamTrophies: 36, // 33 cấp CLB + 3 ĐTQG (Euro 2016, Nations League 2019, Nations League 2025)
   clubTrophies: 33,
-  internationalTrophies: 2,
+  internationalTrophies: 3,
   majorIndividualAwards: 32,
 };
 
@@ -129,7 +129,19 @@ export const cr7Trophies: TrophyItem[] = [
     isMajor: false,
   },
 
-  // Đội tuyển Quốc gia
+  // Đội tuyển Quốc gia (3 DANH HIỆU LỚN)
+  {
+    id: "nations-league",
+    name: "UEFA Nations League (Vô địch các quốc gia châu Âu)",
+    count: 2,
+    years: ["2018–19", "2024–25"],
+    category: "international",
+    teamOrOrg: "ĐTQG Bồ Đào Nha",
+    iconName: "Shield",
+    trophyImageUrl: "/images/trophies/euro-trophy.jpg",
+    description: "Bồ Đào Nha là đội tuyển đầu tiên trong lịch sử 2 lần vô địch UEFA Nations League. Ronaldo ghi cú hat-trick ở bán kết 2019 và bàn gỡ hòa 2-2 nghẹt thở ở phút 61 trận chung kết 2025 trước Tây Ban Nha tại Munich.",
+    isMajor: true,
+  },
   {
     id: "euro-2016",
     name: "UEFA European Championship (Euro 2016)",
@@ -140,18 +152,6 @@ export const cr7Trophies: TrophyItem[] = [
     iconName: "Shield",
     trophyImageUrl: "/images/trophies/euro-trophy.jpg",
     description: "Chiếc cúp vô địch châu Âu lịch sử đầu tiên cho bóng đá Bồ Đào Nha. Hình ảnh Ronaldo băng bó đầu gối chỉ đạo như HLV ngoài đường biên trở thành biểu tượng bất diệt.",
-    isMajor: true,
-  },
-  {
-    id: "nations-league",
-    name: "UEFA Nations League",
-    count: 1,
-    years: ["2019"],
-    category: "international",
-    teamOrOrg: "ĐTQG Bồ Đào Nha",
-    iconName: "Shield",
-    trophyImageUrl: "/images/trophies/euro-trophy.jpg",
-    description: "Cú hat-trick ở bán kết trước Thụy Sĩ đưa Bồ Đào Nha lên ngôi vô địch mùa giải Nations League đầu tiên trong lịch sử.",
     isMajor: true,
   },
 

@@ -70,7 +70,7 @@ export default function TrophyRoomSection() {
             <div className="text-4xl font-black font-mono gold-gradient-text mt-1">
               {cr7TrophySummary.totalTeamTrophies}
             </div>
-            <span className="text-[11px] text-gray-400">33 cấp CLB + 2 ĐTQG</span>
+            <span className="text-[11px] text-gray-400">33 cấp CLB + 3 ĐTQG</span>
           </div>
 
           <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-5 text-center">
@@ -102,7 +102,7 @@ export default function TrophyRoomSection() {
         <div className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2">
           {[
             { id: "club", label: "Cúp Câu Lạc Bộ (33)" },
-            { id: "international", label: "Đội Tuyển Quốc Gia (2)" },
+            { id: "international", label: "Đội Tuyển Quốc Gia (3)" },
             { id: "individual", label: "Danh Hiệu Cá Nhân (32+)" },
             { id: "records", label: "Kỷ Lục Thế Giới Guinness" },
           ].map((cat) => (
