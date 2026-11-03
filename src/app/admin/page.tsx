@@ -871,7 +871,7 @@ export default function AdminPage() {
                   </div>
                   <h3 className="text-xl font-black text-white">Hệ Thống Tự Động Quét & Cập Nhật Bàn Thắng</h3>
                   <p className="text-xs text-gray-400 mt-1 max-w-2xl leading-relaxed">
-                    Hệ thống tích hợp sẵn <strong>Vercel Cron Jobs</strong> (chạy ngầm mỗi 4 tiếng) và <strong>Webhook Endpoint</strong> tiếp nhận dữ liệu từ các API Thể thao toàn cầu.
+                    Hệ thống tích hợp <strong>Vercel Cron Jobs</strong> (chạy định kỳ 1 lần/ngày lúc 05:00 sáng VN - ngay sau khi các trận đấu đêm của Al Nassr & ĐTQG kết thúc) và <strong>Webhook Endpoint</strong> tiếp nhận dữ liệu thời gian thực.
                   </p>
                 </div>
 
@@ -904,7 +904,7 @@ export default function AdminPage() {
                   <span className="text-[10px] uppercase font-bold text-gray-400 block mb-1">Vercel Cron Engine</span>
                   <span className="text-emerald-400 font-bold flex items-center gap-1.5">
                     <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                    Đã cấu hình (Mỗi 4 tiếng)
+                    Đã cấu hình (1 lần/ngày • 22:00 UTC / 05:00 sáng VN)
                   </span>
                   <span className="text-[10px] font-mono text-gray-500 block mt-1">/api/cron/sync-cr7</span>
                 </div>

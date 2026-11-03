@@ -30,7 +30,7 @@ export async function GET(request: Request) {
     target: cr7CareerSummary.countdownTarget,
     remaining: cr7CareerSummary.countdownTarget - cr7CareerSummary.totalGoals,
     nextMatch: cr7CareerSummary.nextMatch,
-    cronSchedule: "Every 4 hours (0 */4 * * *)",
+    cronSchedule: "Daily at 22:00 UTC / 05:00 AM VN (0 22 * * *) - Sau giờ bóng lăn đêm của Al Nassr & ĐTQG",
     activeFeeds: [
       {
         provider: "TheSportsDB (Free Tier)",
