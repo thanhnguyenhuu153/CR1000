@@ -148,7 +148,7 @@ export const cr7BioMilestones: BioMilestone[] = [
     imageCaption: "Cristiano Ronaldo rực sáng trong màu áo vàng Al Nassr",
     stats: {
       goals: 138,
-      matches: 148,
+      matches: 160,
       trophies: 1,
     },
     highlights: [
@@ -171,13 +171,13 @@ export const cr7BioMilestones: BioMilestone[] = [
     imageCaption: "Người đội trưởng huyền thoại dẫn dắt Bồ Đào Nha đến đỉnh cao châu Âu (Euro 2016)",
     stats: {
       goals: 146,
-      matches: 220,
+      matches: 232,
       trophies: 3,
     },
     highlights: [
       "3 chức vô địch lớn: Euro 2016, UEFA Nations League 2018–19 và UEFA Nations League 2024–25",
       "Chân sút vĩ đại nhất lịch sử Đội tuyển Quốc gia mọi thời đại: 146 bàn thắng",
-      "Kỷ lục cầu thủ ra sân nhiều nhất lịch sử bóng đá quốc tế (220+ trận)",
+      "Kỷ lục cầu thủ ra sân nhiều nhất lịch sử bóng đá quốc tế (232+ trận)",
       "Cầu thủ duy nhất trong lịch sử ghi bàn tại 5 kỳ FIFA World Cup liên tiếp",
       "Vua phá lưới mọi thời đại của các Vòng chung kết Euro (14 bàn)",
     ],
