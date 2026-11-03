@@ -133,8 +133,13 @@ export default function RootLayout({
   return (
     <html lang="vi" className="dark scroll-smooth">
       <head>
-        {/* Google AdSense Verification */}
+        {/* Google AdSense Verification Meta & Script */}
         <meta name="google-adsense-account" content="ca-pub-5603625442217345" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5603625442217345"
+          crossOrigin="anonymous"
+        />
 
         {/* Preload critical LCP Hero image for maximum Mobile CWV speed */}
         <link rel="preload" as="image" href="/images/cr7/hero-cr7.jpg" fetchPriority="high" />
@@ -158,14 +163,6 @@ export default function RootLayout({
         </LanguageProvider>
         <SpeedInsights />
         <Analytics />
-
-        {/* Google AdSense Script */}
-        <Script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5603625442217345"
-          crossOrigin="anonymous"
-          strategy="afterInteractive"
-        />
       </body>
     </html>
   );
