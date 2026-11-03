@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Plus_Jakarta_Sans } from "next/font/google";
 import { SiteDataProvider } from "@/context/SiteDataContext";
 import { LanguageProvider } from "@/context/LanguageContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -7,6 +8,13 @@ import { Analytics } from "@vercel/analytics/react";
 import { cr7CareerSummary } from "@/data/cr7-stats";
 import { cr7HattrickStats } from "@/data/cr7-hattricks";
 import "./globals.css";
+
+const plusJakartaSans = Plus_Jakarta_Sans({
+  subsets: ["latin", "vietnamese"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+  variable: "--font-plus-jakarta",
+});
 
 export const viewport: Viewport = {
   width: "device-width",
@@ -133,36 +141,29 @@ export default function RootLayout({
   return (
     <html lang="vi" className="dark scroll-smooth">
       <head>
-        {/* Google AdSense Verification Meta & Script */}
+        {/* Google AdSense Official Verification Meta */}
         <meta name="google-adsense-account" content="ca-pub-5603625442217345" />
-        <script
-          async
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5603625442217345"
-          crossOrigin="anonymous"
-        />
 
-        {/* Preload critical LCP Hero image for maximum Mobile CWV speed */}
-        <link rel="preload" as="image" href="/images/cr7/hero-cr7.jpg" fetchPriority="high" />
-        
-        {/* Preconnect to Google Fonts domains */}
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap"
-        />
-
+        {/* Structured Data Schema */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="bg-[#08090C] text-[#F8FAFC] min-h-screen selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">
+      <body className={`${plusJakartaSans.className} ${plusJakartaSans.variable} bg-[#08090C] text-[#F8FAFC] min-h-screen selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]`}>
         <LanguageProvider>
           <SiteDataProvider>{children}</SiteDataProvider>
         </LanguageProvider>
         <SpeedInsights />
         <Analytics />
+
+        {/* Google AdSense - Loaded on idle to protect 100/100 Core Web Vitals */}
+        <Script
+          id="adsbygoogle-init"
+          strategy="lazyOnload"
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5603625442217345"
+          crossOrigin="anonymous"
+        />
       </body>
     </html>
   );

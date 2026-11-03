@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { cr7Trophies, cr7TrophySummary } from "@/data/cr7-trophies";
 import { cr7CareerSummary } from "@/data/cr7-stats";
 import { useSiteData } from "@/context/SiteDataContext";
@@ -44,13 +45,14 @@ export default function TrophyRoomSection() {
         {/* Featured Real Photo Banner: CR7 with Ballon d'Or */}
         <div className="relative max-w-5xl mx-auto mb-16 rounded-3xl overflow-hidden border border-white/10 bg-[#0F121A]/90 p-6 sm:p-8 flex flex-col md:flex-row items-center gap-8 shadow-2xl">
           <div className="w-full md:w-5/12 h-64 sm:h-72 rounded-2xl overflow-hidden border border-white/10 relative shrink-0 bg-[#090A0F]">
-            <img
+            <Image
               src={images.trophyBallonDor}
               alt={language === "vi" ? "Cristiano Ronaldo nhận Quả bóng Vàng" : "Cristiano Ronaldo receiving the Ballon d'Or"}
               width={600}
               height={450}
               loading="lazy"
-              decoding="async"
+              unoptimized={typeof images.trophyBallonDor === "string" && images.trophyBallonDor.startsWith("data:")}
+              sizes="(max-width: 640px) 100vw, 400px"
               className="w-full h-full object-cover object-center filter brightness-95"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -165,13 +167,14 @@ export default function TrophyRoomSection() {
                 {/* Trophy Real Image Header */}
                 {getTrophyImage(trophy.id, trophy.trophyImageUrl) && (
                   <div className="relative h-44 w-full bg-[#08090C] overflow-hidden border-b border-gray-800">
-                    <img
-                      src={getTrophyImage(trophy.id, trophy.trophyImageUrl)}
+                    <Image
+                      src={getTrophyImage(trophy.id, trophy.trophyImageUrl)!}
                       alt={trophy.name}
                       width={400}
                       height={250}
                       loading="lazy"
-                      decoding="async"
+                      unoptimized={typeof getTrophyImage(trophy.id, trophy.trophyImageUrl) === "string" && getTrophyImage(trophy.id, trophy.trophyImageUrl)!.startsWith("data:")}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 350px"
                       className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 filter brightness-95"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#131520] via-transparent to-transparent" />

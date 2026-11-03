@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { cr7BioMilestones } from "@/data/cr7-bio";
 import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -134,13 +135,14 @@ export default function BioSection() {
             {/* Right Column: Striking Full-Height Portrait Photo */}
             <div className="lg:col-span-5 flex flex-col justify-center">
               <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#0E1017] shadow-2xl relative group h-full min-h-[360px] sm:min-h-[420px] flex flex-col justify-end">
-                <img
+                <Image
                   src={activeImageUrl}
                   alt={currentEra.title}
                   width={800}
                   height={600}
                   loading="lazy"
-                  decoding="async"
+                  unoptimized={typeof activeImageUrl === "string" && activeImageUrl.startsWith("data:")}
+                  sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"
                   className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-700 group-hover:scale-105 filter brightness-95"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#090A0F] via-[#090A0F]/20 to-transparent opacity-90" />

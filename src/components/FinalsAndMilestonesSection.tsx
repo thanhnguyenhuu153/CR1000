@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
+import Image from "next/image";
 import { cr7FinalsAndIconicGoals, IconicGoal } from "@/data/cr7-finals-and-iconic";
 import { cr7Milestones, CareerMilestoneGoal } from "@/data/cr7-milestones";
 import { useLanguage } from "@/context/LanguageContext";
@@ -100,13 +101,14 @@ export default function FinalsAndMilestonesSection() {
                 {/* Optional Real Photo Header */}
                 {goal.matchImageUrl && (
                   <div className="relative h-48 w-full bg-[#0E1017] overflow-hidden border-b border-gray-800">
-                    <img
+                    <Image
                       src={goal.matchImageUrl}
                       alt={goal.title}
                       width={600}
                       height={350}
                       loading="lazy"
-                      decoding="async"
+                      unoptimized={typeof goal.matchImageUrl === "string" && goal.matchImageUrl.startsWith("data:")}
+                      sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 550px"
                       className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 filter brightness-95"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#141724] via-transparent to-transparent" />

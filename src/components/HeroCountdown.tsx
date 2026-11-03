@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { cr7CareerSummary } from "@/data/cr7-stats";
 import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
@@ -39,13 +40,14 @@ export default function HeroCountdown({ currentGoals }: HeroCountdownProps) {
         {/* Hero Photo Banner - REAL PHOTO OF CR7 */}
         <div className="relative max-w-4xl mx-auto mb-12 rounded-3xl overflow-hidden border border-white/10 shadow-2xl gold-border-glow">
           <div className="relative h-64 sm:h-80 md:h-[420px] w-full bg-[#0E1017]">
-            <img
+            <Image
               src={images.hero}
               alt="Cristiano Ronaldo - Hành trình 1000 bàn thắng"
               width={1200}
               height={600}
-              fetchPriority="high"
-              decoding="sync"
+              priority
+              unoptimized={typeof images.hero === "string" && images.hero.startsWith("data:")}
+              sizes="(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 1200px"
               className="w-full h-full object-cover object-top filter brightness-95 contrast-105"
             />
             {/* Cinematic Gradient Overlays */}

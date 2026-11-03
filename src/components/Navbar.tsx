@@ -2,7 +2,6 @@
 
 import React, { useState, useEffect } from "react";
 import { Trophy, Flame, Sparkles, Menu, X, Share2, Volume2, VolumeX } from "lucide-react";
-import confetti from "canvas-confetti";
 import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
 
@@ -25,13 +24,16 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const handleCelebrate = () => {
-    confetti({
-      particleCount: 100,
-      spread: 70,
-      origin: { y: 0.6 },
-      colors: ["#D4AF37", "#E63946", "#FFFFFF", "#F59E0B"],
-    });
+  const handleCelebrate = async () => {
+    try {
+      const confetti = (await import("canvas-confetti")).default;
+      confetti({
+        particleCount: 100,
+        spread: 70,
+        origin: { y: 0.6 },
+        colors: ["#D4AF37", "#E63946", "#FFFFFF", "#F59E0B"],
+      });
+    } catch (e) {}
 
     if (soundEnabled) {
       try {
