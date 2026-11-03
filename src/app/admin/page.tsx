@@ -70,9 +70,9 @@ export default function AdminPage() {
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // Default credentials (can be modified by user)
-    const validUser = "admin";
-    const validPass = "cr7@1000";
+    // Default credentials (configured by owner)
+    const validUser = "cr1000";
+    const validPass = "#cr7@1000#";
 
     if (username.trim() === validUser && password === validPass) {
       setIsAuthenticated(true);
@@ -97,6 +97,26 @@ export default function AdminPage() {
     updateImages(imageForm);
     setSaveNotification("Đã lưu và cập nhật toàn bộ hình ảnh trên trang chủ thành công!");
     setTimeout(() => setSaveNotification(""), 3500);
+  };
+
+  const handleFileUpload = (key: keyof CustomImages, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert("File ảnh lớn hơn 3MB. Vui lòng chọn ảnh nhẹ hơn để trang web tải nhanh và mượt!");
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (typeof reader.result === "string") {
+        setImageForm((prev) => ({ ...prev, [key]: reader.result as string }));
+        setSaveNotification(`Đã đọc xong ảnh từ máy của bạn! Hãy bấm nút 'Lưu tất cả ảnh' để hiển thị ra trang chủ.`);
+        setTimeout(() => setSaveNotification(""), 3500);
+      }
+    };
+    reader.readAsDataURL(file);
   };
 
   const handleSaveStats = (e: React.FormEvent) => {
@@ -172,7 +192,7 @@ export default function AdminPage() {
 
           <div className="mt-6 pt-6 border-t border-gray-800/80 text-center">
             <p className="text-[11px] text-gray-400">
-              Tài khoản mặc định ban đầu: <strong className="text-gray-200">admin</strong> • Mật khẩu: <strong className="text-gray-200">cr7@1000</strong>
+              Khu vực bảo mật dành riêng cho Quản trị viên CR1000.
             </p>
             <a href="/" className="inline-block mt-3 text-xs text-[#D4AF37] hover:underline">
               &larr; Quay lại trang chủ Bảo tàng
@@ -305,9 +325,20 @@ export default function AdminPage() {
               </h3>
               <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
                 <div className="md:col-span-8">
-                  <label className="block text-xs font-semibold text-gray-300 mb-1">
-                    Đường dẫn ảnh Hero:
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-semibold text-gray-300">
+                      Đường dẫn ảnh Hero:
+                    </label>
+                    <label className="cursor-pointer text-[11px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#222736] border border-gray-700 transition-all">
+                      <span>📁 Tải file từ máy tính</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => handleFileUpload("hero", e)}
+                        className="hidden"
+                      />
+                    </label>
+                  </div>
                   <input
                     type="text"
                     value={imageForm.hero}
@@ -340,12 +371,24 @@ export default function AdminPage() {
                     <img src={imageForm.eraMadeira} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">1. Madeira & Sporting (1985-2003)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">1. Madeira & Sporting (1985-2003)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("eraMadeira", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.eraMadeira}
                       onChange={(e) => setImageForm({ ...imageForm, eraMadeira: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -356,12 +399,24 @@ export default function AdminPage() {
                     <img src={imageForm.eraManUtd1} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">2. Manchester United Kỳ 1 (2003-2009)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">2. Manchester United Kỳ 1 (2003-2009)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("eraManUtd1", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.eraManUtd1}
                       onChange={(e) => setImageForm({ ...imageForm, eraManUtd1: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -372,12 +427,24 @@ export default function AdminPage() {
                     <img src={imageForm.eraRealMadrid} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">3. Real Madrid (Three-peat C1)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">3. Real Madrid (Three-peat C1)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("eraRealMadrid", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.eraRealMadrid}
                       onChange={(e) => setImageForm({ ...imageForm, eraRealMadrid: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -388,12 +455,24 @@ export default function AdminPage() {
                     <img src={imageForm.eraJuventus} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">4. Juventus (2018-2021)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">4. Juventus (2018-2021)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("eraJuventus", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.eraJuventus}
                       onChange={(e) => setImageForm({ ...imageForm, eraJuventus: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -404,12 +483,24 @@ export default function AdminPage() {
                     <img src={imageForm.eraManUtd2} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">5. Manchester United Kỳ 2 (2021-2022)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">5. Manchester United Kỳ 2 (2021-2022)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("eraManUtd2", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.eraManUtd2}
                       onChange={(e) => setImageForm({ ...imageForm, eraManUtd2: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -420,12 +511,24 @@ export default function AdminPage() {
                     <img src={imageForm.eraAlNassr} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">6. Al Nassr (2023 - Nay)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">6. Al Nassr (2023 - Nay)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("eraAlNassr", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.eraAlNassr}
                       onChange={(e) => setImageForm({ ...imageForm, eraAlNassr: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -436,12 +539,24 @@ export default function AdminPage() {
                     <img src={imageForm.eraPortugal} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">7. ĐTQG Bồ Đào Nha (2003 - Nay • 3 Danh hiệu)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">7. ĐTQG Bồ Đào Nha (2003 - Nay • 3 Danh hiệu)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("eraPortugal", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.eraPortugal}
                       onChange={(e) => setImageForm({ ...imageForm, eraPortugal: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -460,12 +575,24 @@ export default function AdminPage() {
                     <img src={imageForm.trophyUcl} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">Cúp UEFA Champions League (C1)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">Cúp UEFA Champions League (C1)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("trophyUcl", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.trophyUcl}
                       onChange={(e) => setImageForm({ ...imageForm, trophyUcl: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -476,12 +603,24 @@ export default function AdminPage() {
                     <img src={imageForm.trophyBallonDor} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">Quả bóng Vàng (Ballon d&apos;Or)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">Quả bóng Vàng (Ballon d&apos;Or)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("trophyBallonDor", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.trophyBallonDor}
                       onChange={(e) => setImageForm({ ...imageForm, trophyBallonDor: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -492,12 +631,24 @@ export default function AdminPage() {
                     <img src={imageForm.trophyEuro} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">Cúp Vô Địch Euro (Henri Delaunay)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">Cúp Vô Địch Euro (Henri Delaunay)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("trophyEuro", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.trophyEuro}
                       onChange={(e) => setImageForm({ ...imageForm, trophyEuro: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
@@ -508,12 +659,24 @@ export default function AdminPage() {
                     <img src={imageForm.trophyPremierLeague} alt="Preview" className="w-full h-full object-cover" />
                   </div>
                   <div className="flex-1 text-xs">
-                    <strong className="text-white block mb-1">Cúp Ngoại Hạng Anh (Premier League)</strong>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <strong className="text-white block">Cúp Ngoại Hạng Anh (Premier League)</strong>
+                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
+                        <span>📁 Tải từ máy</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => handleFileUpload("trophyPremierLeague", e)}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={imageForm.trophyPremierLeague}
                       onChange={(e) => setImageForm({ ...imageForm, trophyPremierLeague: e.target.value })}
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white"
+                      placeholder="Link ảnh hoặc tải từ máy..."
+                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
                     />
                   </div>
                 </div>
