@@ -2,11 +2,25 @@
 
 import React, { useState } from "react";
 import { cr7BioMilestones } from "@/data/cr7-bio";
+import { useSiteData } from "@/context/SiteDataContext";
 import { Award, Target, Trophy, Quote, CheckCircle2, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 export default function BioSection() {
+  const { images } = useSiteData();
   const [activeEraIndex, setActiveEraIndex] = useState(2); // Mặc định mở Real Madrid - thời kỳ rực rỡ nhất
   const currentEra = cr7BioMilestones[activeEraIndex];
+
+  // Map to customizable images
+  const eraImageMap = [
+    images.eraMadeira,
+    images.eraManUtd1,
+    images.eraRealMadrid,
+    images.eraJuventus,
+    images.eraManUtd2,
+    images.eraAlNassr,
+    images.eraPortugal,
+  ];
+  const activeImageUrl = eraImageMap[activeEraIndex] || currentEra.imageUrl;
 
   return (
     <section id="bio" className="py-20 relative bg-[#0B0C10] border-t border-gray-900">
@@ -104,7 +118,7 @@ export default function BioSection() {
               <div className="rounded-2xl overflow-hidden border border-gray-700/80 bg-[#0E1017] shadow-xl relative group">
                 <div className="relative h-64 sm:h-72 w-full overflow-hidden">
                   <img
-                    src={currentEra.imageUrl}
+                    src={activeImageUrl}
                     alt={currentEra.title}
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />

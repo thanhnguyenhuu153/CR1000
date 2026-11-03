@@ -3,10 +3,20 @@
 import React, { useState } from "react";
 import { cr7Trophies, cr7TrophySummary } from "@/data/cr7-trophies";
 import { cr7CareerSummary } from "@/data/cr7-stats";
+import { useSiteData } from "@/context/SiteDataContext";
 import { Trophy, Award, Crown, Globe, Shield, Star, Sparkles, CheckCircle2 } from "lucide-react";
 
 export default function TrophyRoomSection() {
+  const { images } = useSiteData();
   const [activeCategory, setActiveCategory] = useState<"club" | "international" | "individual" | "records">("club");
+
+  const getTrophyImage = (id: string, defaultUrl?: string) => {
+    if (id === "ucl") return images.trophyUcl;
+    if (id === "ballon-dor") return images.trophyBallonDor;
+    if (id === "euro-2016" || id === "nations-league") return images.trophyEuro;
+    if (id === "premier-league") return images.trophyPremierLeague;
+    return defaultUrl;
+  };
 
   const filteredTrophies = cr7Trophies.filter((t) => {
     if (activeCategory === "records") return false;
@@ -33,7 +43,7 @@ export default function TrophyRoomSection() {
         <div className="relative max-w-5xl mx-auto mb-14 rounded-3xl overflow-hidden border border-[#D4AF37]/30 bg-gradient-to-r from-[#171410] via-[#0E1017] to-[#14120D] p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-2xl">
           <div className="w-full md:w-5/12 h-64 sm:h-72 rounded-2xl overflow-hidden border border-gray-700 relative shrink-0">
             <img
-              src="/images/trophies/cr7-ballon-dor.jpg"
+              src={images.trophyBallonDor}
               alt="Cristiano Ronaldo nhận Quả bóng Vàng"
               className="w-full h-full object-cover object-center filter brightness-95"
             />
@@ -129,10 +139,10 @@ export default function TrophyRoomSection() {
                 className="bg-gradient-to-b from-[#131520] to-[#0D0F16] border border-gray-800 hover:border-[#D4AF37]/50 rounded-2xl overflow-hidden transition-all duration-300 shadow-xl flex flex-col justify-between group"
               >
                 {/* Trophy Real Image Header */}
-                {trophy.trophyImageUrl && (
+                {getTrophyImage(trophy.id, trophy.trophyImageUrl) && (
                   <div className="relative h-44 w-full bg-[#08090C] overflow-hidden border-b border-gray-800">
                     <img
-                      src={trophy.trophyImageUrl}
+                      src={getTrophyImage(trophy.id, trophy.trophyImageUrl)}
                       alt={trophy.name}
                       className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 filter brightness-95"
                     />

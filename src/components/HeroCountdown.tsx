@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { cr7CareerSummary } from "@/data/cr7-stats";
+import { useSiteData } from "@/context/SiteDataContext";
 import { Sparkles, Calendar, MapPin, ChevronRight, Trophy, Flame, Plus } from "lucide-react";
 import confetti from "canvas-confetti";
 
@@ -11,6 +12,7 @@ interface HeroCountdownProps {
 }
 
 export default function HeroCountdown({ currentGoals, onGoalIncrement }: HeroCountdownProps) {
+  const { images, nextMatch } = useSiteData();
   const target = cr7CareerSummary.countdownTarget;
   const remaining = Math.max(0, target - currentGoals);
   const percentage = Math.min(100, (currentGoals / target) * 100);
@@ -60,7 +62,7 @@ export default function HeroCountdown({ currentGoals, onGoalIncrement }: HeroCou
         <div className="relative max-w-4xl mx-auto mb-10 rounded-3xl overflow-hidden border border-[#D4AF37]/40 shadow-2xl gold-border-glow">
           <div className="relative h-64 sm:h-80 md:h-96 w-full bg-[#0E1017]">
             <img
-              src="/images/cr7/hero-cr7.jpg"
+              src={images.hero}
               alt="Cristiano Ronaldo - Hành trình 1000 bàn thắng"
               className="w-full h-full object-cover object-top filter brightness-95 contrast-105"
             />
@@ -176,16 +178,16 @@ export default function HeroCountdown({ currentGoals, onGoalIncrement }: HeroCou
             <div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] uppercase font-bold tracking-wider px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">
-                  {cr7CareerSummary.nextMatch.competition}
+                  {nextMatch.competition}
                 </span>
                 <span className="text-xs text-gray-400">Sắp diễn ra</span>
               </div>
               <h3 className="text-sm font-bold text-white mt-1">
-                {cr7CareerSummary.nextMatch.homeTeam} vs {cr7CareerSummary.nextMatch.awayTeam}
+                {nextMatch.homeTeam} vs {nextMatch.awayTeam}
               </h3>
               <p className="text-xs text-gray-400 flex items-center gap-1 mt-0.5">
                 <MapPin className="w-3 h-3 text-gray-500" />
-                {cr7CareerSummary.nextMatch.stadium}
+                {nextMatch.stadium}
               </p>
             </div>
           </div>
