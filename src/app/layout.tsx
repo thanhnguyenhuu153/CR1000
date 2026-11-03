@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { SiteDataProvider } from "@/context/SiteDataContext";
 import "./globals.css";
 
@@ -133,6 +134,7 @@ export default function RootLayout({
       </head>
       <body className="bg-[#08090C] text-[#F8FAFC] min-h-screen selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">
         <SiteDataProvider>{children}</SiteDataProvider>
+        <SpeedInsights />
       </body>
     </html>
   );
