@@ -149,9 +149,10 @@ export const cr7BioMilestones: BioMilestone[] = [
     stats: {
       goals: 138,
       matches: 160,
-      trophies: 1,
+      trophies: 2,
     },
     highlights: [
+      "Vô địch Saudi Pro League 2025–2026 cùng Al Nassr",
       "Vô địch Arab Club Champions Cup 2023 (ghi cú đúp trong trận chung kết)",
       "Phá kỷ lục ghi nhiều bàn nhất 1 mùa Saudi Pro League (35 bàn)",
       "Chân sút số 1 thế giới trong năm dương lịch 2023 (54 bàn thắng)",

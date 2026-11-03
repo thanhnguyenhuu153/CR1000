@@ -26,6 +26,7 @@ export default function TrophyRoomSection() {
     if (id === "serie-a") return images.trophySerieA || defaultUrl;
     if (id === "copa-del-rey") return images.trophyCopaDelRey || defaultUrl;
     if (id === "arab-club-cup") return images.trophyArabClub || defaultUrl;
+    if (id === "saudi-pro-league") return images.trophyPremierLeague || images.trophyArabClub || defaultUrl;
     return defaultUrl;
   };
 

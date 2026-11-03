@@ -12,8 +12,8 @@ export interface TrophyItem {
 }
 
 export const cr7TrophySummary = {
-  totalTeamTrophies: 36, // 33 cấp CLB + 3 ĐTQG (Euro 2016, Nations League 2019, Nations League 2025)
-  clubTrophies: 33,
+  totalTeamTrophies: 37, // 34 cấp CLB + 3 ĐTQG (Euro 2016, Nations League 2019, Nations League 2025)
+  clubTrophies: 34,
   internationalTrophies: 3,
   majorIndividualAwards: 33,
 };
@@ -78,6 +78,18 @@ export const cr7Trophies: TrophyItem[] = [
     iconName: "Crown",
     trophyImageUrl: "/images/trophies/premier-league.png",
     description: "Thống trị giải đấu khắc nghiệt xứ mì ống ngay trong hai mùa giải đầu tiên đặt chân đến Turin.",
+    isMajor: true,
+  },
+  {
+    id: "saudi-pro-league",
+    name: "Saudi Pro League (Vô địch Ả Rập Xê Út)",
+    count: 1,
+    years: ["2025–26"],
+    category: "club",
+    teamOrOrg: "Al Nassr",
+    iconName: "Crown",
+    trophyImageUrl: "/images/trophies/premier-league.png",
+    description: "Chức vô địch quốc gia lịch sử cùng Al Nassr mùa giải 2025–2026, đưa Ronaldo trở thành huyền thoại đầu tiên trong lịch sử vô địch giải VĐQG ở 4 quốc gia khác nhau (Anh, Tây Ban Nha, Ý, Saudi Arabia).",
     isMajor: true,
   },
   {

@@ -289,6 +289,6 @@ export const cr7SeasonsData: YearRecord[] = [
     matches: 33,
     assists: 5,
     ratio: "0.85",
-    milestoneNote: "Năm 2026: Đã đạt 985 bàn thắng chính thức, chỉ còn cách đúng 15 bàn nữa để chạm đỉnh 1.000 bàn thắng bất tử."
+    milestoneNote: "Vô địch Saudi Pro League 2025–2026 cùng Al Nassr. Đạt mốc 985 bàn thắng chính thức, chỉ còn cách 15 bàn để chạm đỉnh 1.000 bàn thắng lịch sử."
   }
 ];
