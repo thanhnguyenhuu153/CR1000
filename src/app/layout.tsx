@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
 import { Plus_Jakarta_Sans } from "next/font/google";
 import { SiteDataProvider } from "@/context/SiteDataContext";
 import { LanguageProvider } from "@/context/LanguageContext";
@@ -141,8 +140,13 @@ export default function RootLayout({
   return (
     <html lang="vi" className="dark scroll-smooth">
       <head>
-        {/* Google AdSense Official Verification Meta */}
+        {/* Google AdSense Official Verification Meta & Snippet */}
         <meta name="google-adsense-account" content="ca-pub-5603625442217345" />
+        <script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5603625442217345"
+          crossOrigin="anonymous"
+        />
 
         {/* Structured Data Schema */}
         <script
@@ -156,14 +160,6 @@ export default function RootLayout({
         </LanguageProvider>
         <SpeedInsights />
         <Analytics />
-
-        {/* Google AdSense - Loaded on idle to protect 100/100 Core Web Vitals */}
-        <Script
-          id="adsbygoogle-init"
-          strategy="lazyOnload"
-          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5603625442217345"
-          crossOrigin="anonymous"
-        />
       </body>
     </html>
   );
