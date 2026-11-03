@@ -20,21 +20,36 @@ export interface CustomImages {
   eraAlNassr: string;
   eraPortugal: string;
 
-  // 3. Chapter 5: Trophies & World Honors
+  // 3. Chapter 5: Trophies & World Honors (Đầy đủ toàn bộ 27 danh hiệu)
   trophyBallonDor: string;
   trophyUcl: string;
   trophyEuro: string;
   trophyNationsLeague: string;
-  trophyGoldenShoe: string;
-  trophyFifaTheBest: string;
   trophyClubWc: string;
   trophyPremierLeague: string;
   trophyLaLiga: string;
   trophySerieA: string;
+  trophySaudiProLeague: string;
   trophyCopaDelRey: string;
+  trophyFaCup: string;
+  trophyCoppaItalia: string;
+  trophyLeagueCup: string;
+  trophySupercopaEspana: string;
+  trophySupercoppaItaliana: string;
+  trophyUefaSuperCup: string;
+  trophyCommunityShield: string;
+  trophySupertacaPortugal: string;
   trophyArabClub: string;
+  trophyGoldenShoe: string;
+  trophyFifaTheBest: string;
+  trophyPuskasAward: string;
+  trophyUclTopScorer: string;
+  trophySplGoldenBoot: string;
+  trophyPichichi: string;
+  trophyCapocannoniere: string;
+  trophyPlGoldenBoot: string;
 
-  // 4. Chapter 7: Finals & Iconic Moments
+  // 4. Chapter 7: Finals & Iconic Moments (Đầy đủ 11 siêu phẩm & chung kết)
   finalChelsea2008: string;
   finalBarca2011: string;
   finalUcl2014: string;
@@ -42,9 +57,11 @@ export interface CustomImages {
   finalNationsLeague: string;
   finalArab2023: string;
   iconicBicycleJuve: string;
-  iconicFreekickSpain: string;
   iconicPorto40m: string;
+  iconicCalmaCampNou: string;
+  iconicFreekickPortsmouth: string;
   iconicSwedenPlayoff: string;
+  iconicFreekickSpain: string;
 }
 
 export const defaultImages: CustomImages = {
@@ -66,14 +83,29 @@ export const defaultImages: CustomImages = {
   trophyUcl: "/images/trophies/ucl.jpg",
   trophyEuro: "/images/trophies/euro-trophy.jpg",
   trophyNationsLeague: "/images/trophies/euro-trophy.jpg",
-  trophyGoldenShoe: "/images/trophies/golden-shoe.jpg",
-  trophyFifaTheBest: "/images/trophies/ballon-dor.png",
   trophyClubWc: "/images/trophies/ucl.jpg",
   trophyPremierLeague: "/images/trophies/premier-league.png",
   trophyLaLiga: "/images/trophies/premier-league.png",
   trophySerieA: "/images/trophies/premier-league.png",
+  trophySaudiProLeague: "/images/trophies/premier-league.png",
   trophyCopaDelRey: "/images/trophies/ucl.jpg",
+  trophyFaCup: "/images/trophies/premier-league.png",
+  trophyCoppaItalia: "/images/trophies/premier-league.png",
+  trophyLeagueCup: "/images/trophies/premier-league.png",
+  trophySupercopaEspana: "/images/trophies/premier-league.png",
+  trophySupercoppaItaliana: "/images/trophies/premier-league.png",
+  trophyUefaSuperCup: "/images/trophies/ucl.jpg",
+  trophyCommunityShield: "/images/trophies/premier-league.png",
+  trophySupertacaPortugal: "/images/trophies/euro-trophy.jpg",
   trophyArabClub: "/images/trophies/euro-trophy.jpg",
+  trophyGoldenShoe: "/images/trophies/golden-shoe.jpg",
+  trophyFifaTheBest: "/images/trophies/ballon-dor.png",
+  trophyPuskasAward: "/images/trophies/ucl.jpg",
+  trophyUclTopScorer: "/images/trophies/ucl.jpg",
+  trophySplGoldenBoot: "/images/trophies/golden-shoe.jpg",
+  trophyPichichi: "/images/trophies/golden-shoe.jpg",
+  trophyCapocannoniere: "/images/trophies/golden-shoe.jpg",
+  trophyPlGoldenBoot: "/images/trophies/golden-shoe.jpg",
 
   // 4. Finals & Iconic
   finalChelsea2008: "/images/cr7/final-chelsea.jpg",
@@ -83,9 +115,11 @@ export const defaultImages: CustomImages = {
   finalNationsLeague: "/images/cr7/era-portugal.jpg",
   finalArab2023: "/images/cr7/era-alnassr.jpg",
   iconicBicycleJuve: "/images/cr7/era-realmadrid.jpg",
-  iconicFreekickSpain: "/images/cr7/era-portugal.jpg",
   iconicPorto40m: "/images/cr7/era-manutd-1.jpg",
+  iconicCalmaCampNou: "/images/cr7/era-realmadrid.jpg",
+  iconicFreekickPortsmouth: "/images/cr7/era-manutd-1.jpg",
   iconicSwedenPlayoff: "/images/cr7/era-portugal.jpg",
+  iconicFreekickSpain: "/images/cr7/era-portugal.jpg",
 };
 
 interface SiteDataContextType {

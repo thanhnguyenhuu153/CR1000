@@ -19,12 +19,14 @@ export default function FinalsAndMilestonesSection() {
     if (id === "final-copa-2011") return images.finalBarca2011 || defaultUrl;
     if (id === "final-ucl-2014") return images.finalUcl2014 || defaultUrl;
     if (id === "final-ucl-2017") return images.finalUcl2017 || defaultUrl;
-    if (id === "final-nations-league-2025") return images.finalNationsLeague || defaultUrl;
+    if (id === "final-nations-league-2025" || id === "final-nations-league") return images.finalNationsLeague || defaultUrl;
     if (id === "final-arab-2023") return images.finalArab2023 || defaultUrl;
-    if (id === "iconic-bicycle-juve") return images.iconicBicycleJuve || defaultUrl;
+    if (id === "iconic-bicycle-juve-2018" || id === "iconic-bicycle-juve") return images.iconicBicycleJuve || defaultUrl;
+    if (id === "iconic-puskas-porto-2009" || id === "iconic-porto-40m") return images.iconicPorto40m || defaultUrl;
+    if (id === "iconic-calma-campnou-2012") return images.iconicCalmaCampNou || defaultUrl;
+    if (id === "iconic-freekick-portsmouth-2008") return images.iconicFreekickPortsmouth || defaultUrl;
+    if (id === "iconic-sweden-masterclass-2013" || id === "iconic-sweden-playoff") return images.iconicSwedenPlayoff || defaultUrl;
     if (id === "iconic-freekick-spain") return images.iconicFreekickSpain || defaultUrl;
-    if (id === "iconic-porto-40m") return images.iconicPorto40m || defaultUrl;
-    if (id === "iconic-sweden-playoff") return images.iconicSwedenPlayoff || defaultUrl;
     return defaultUrl;
   };
 

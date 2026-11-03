@@ -638,11 +638,11 @@ export default function AdminPage() {
             <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-gray-800">
               <span className="text-xs font-semibold text-gray-400 shrink-0 mr-1">Bộ lọc vị trí:</span>
               {[
-                { id: "all", label: "Tất cả ảnh (31)" },
+                { id: "all", label: "Tất cả ảnh (47)" },
                 { id: "hero", label: "1. Đầu trang & Brand (2)" },
                 { id: "eras", label: "2. 7 Kỷ nguyên sự nghiệp (7)" },
-                { id: "trophies", label: "3. 12 Cúp vàng & Kỷ lục (12)" },
-                { id: "finals", label: "4. 10 Chung kết & Siêu phẩm (10)" },
+                { id: "trophies", label: "3. 27 Cúp vàng & Danh hiệu (27)" },
+                { id: "finals", label: "4. 11 Chung kết & Siêu phẩm (11)" },
               ].map((pill) => (
                 <button
                   key={pill.id}
@@ -723,7 +723,7 @@ export default function AdminPage() {
                   {renderImageInputCard(
                     "eraAlNassr",
                     "6. Al Nassr & Saudi Pro League (2023–Nay)",
-                    "Tiên phong mở đường châu Á, 1000 bàn thắng trong tầm tay"
+                    "Vô địch Saudi Pro League, 1000 bàn thắng trong tầm tay"
                   )}
                   <div className="md:col-span-2">
                     {renderImageInputCard(
@@ -741,83 +741,43 @@ export default function AdminPage() {
               <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
-                    3. Ảnh 12 Chiếc Cúp Vàng & Kỷ Lục Thế Giới (Chương 5)
+                    3. Ảnh 27 Chiếc Cúp Vàng & Danh Hiệu Đỉnh Cao (Chương 5)
                   </h3>
-                  <span className="text-[11px] text-gray-400 font-medium">12 danh hiệu</span>
+                  <span className="text-[11px] text-gray-400 font-medium">27 danh hiệu</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                  {renderImageInputCard(
-                    "trophyBallonDor",
-                    "Quả bóng Vàng (Ballon d'Or)",
-                    "5 lần đoạt Quả bóng Vàng thế giới",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyUcl",
-                    "Cúp UEFA Champions League (C1)",
-                    "5 chức vô địch C1 vĩ đại",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyEuro",
-                    "Cúp Vô Địch Châu Âu (Euro 2016)",
-                    "Vô địch Euro lịch sử tại Paris",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyNationsLeague",
-                    "Cúp UEFA Nations League 2019",
-                    "Danh hiệu châu Âu thứ 2 cùng tuyển Bồ Đào Nha",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyGoldenShoe",
-                    "Chiếc Giày Vàng Châu Âu (Golden Shoe)",
-                    "4 lần Vua phá lưới toàn châu Âu",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyFifaTheBest",
-                    "FIFA The Best / World Player",
-                    "Cầu thủ xuất sắc nhất thế giới của FIFA",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyClubWc",
-                    "FIFA Club World Cup",
-                    "4 lần Vô địch các CLB thế giới",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyPremierLeague",
-                    "Cúp Ngoại Hạng Anh (Premier League)",
-                    "3 chức vô địch Ngoại Hạng Anh",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyLaLiga",
-                    "Cúp Vô Địch Tây Ban Nha (La Liga)",
-                    "2 lần vô địch La Liga cùng Real Madrid",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophySerieA",
-                    "Cúp Vô Địch Ý (Serie A Scudetto)",
-                    "2 chức vô địch Serie A cùng Juventus",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyCopaDelRey",
-                    "Cúp Nhà Vua Tây Ban Nha (Copa del Rey)",
-                    "2 danh hiệu vô địch cúp quốc gia Tây Ban Nha",
-                    "square"
-                  )}
-                  {renderImageInputCard(
-                    "trophyArabClub",
-                    "Arab Club Champions Cup 2023",
-                    "Chiếc cúp vô địch đầu tiên tại Trung Đông",
-                    "square"
-                  )}
+                  {/* Cúp CLB Chính */}
+                  {renderImageInputCard("trophyUcl", "UEFA Champions League (5 Cúp C1)", "5 lần vô địch C1 vĩ đại cùng MU & Real", "square")}
+                  {renderImageInputCard("trophyClubWc", "FIFA Club World Cup (4 cúp)", "4 lần Vô địch các CLB thế giới", "square")}
+                  {renderImageInputCard("trophyUefaSuperCup", "UEFA Super Cup (3 cúp)", "3 lần đoạt Siêu cúp châu Âu cùng Real Madrid", "square")}
+                  {renderImageInputCard("trophyPremierLeague", "Premier League (3 cúp)", "3 chức vô địch Ngoại Hạng Anh liên tiếp", "square")}
+                  {renderImageInputCard("trophyLaLiga", "La Liga (2 cúp)", "2 lần vô địch La Liga cùng Real Madrid", "square")}
+                  {renderImageInputCard("trophySerieA", "Serie A Scudetto (2 cúp)", "2 chức vô địch Serie A cùng Juventus", "square")}
+                  {renderImageInputCard("trophySaudiProLeague", "Saudi Pro League (1 cúp)", "Vô địch giải VĐQG Ả Rập Xê Út 2025–26", "square")}
+                  {renderImageInputCard("trophyArabClub", "Arab Club Champions Cup (1 cúp)", "Chiếc cúp vô địch đầu tiên tại Al Nassr 2023", "square")}
+                  {renderImageInputCard("trophyCopaDelRey", "Copa del Rey (2 cúp)", "2 cúp Nhà Vua Tây Ban Nha", "square")}
+                  {renderImageInputCard("trophyFaCup", "FA Cup (1 cúp)", "Cúp FA nước Anh năm 2004 cùng Man Utd", "square")}
+                  {renderImageInputCard("trophyCoppaItalia", "Coppa Italia (1 cúp)", "Cúp Quốc gia Ý năm 2021 cùng Juventus", "square")}
+                  {renderImageInputCard("trophyLeagueCup", "EFL Cup / League Cup (2 cúp)", "2 Cúp Liên đoàn Anh (2006, 2009)", "square")}
+                  {renderImageInputCard("trophySupercopaEspana", "Supercopa de España (2 cúp)", "2 Siêu cúp Tây Ban Nha (2012, 2017)", "square")}
+                  {renderImageInputCard("trophySupercoppaItaliana", "Supercoppa Italiana (2 cúp)", "2 Siêu cúp Ý (2018, 2020) cùng Juventus", "square")}
+                  {renderImageInputCard("trophyCommunityShield", "FA Community Shield (2 cúp)", "2 Siêu cúp Anh (2007, 2008)", "square")}
+                  {renderImageInputCard("trophySupertacaPortugal", "Supertaça Cândido (1 cúp)", "Siêu cúp Bồ Đào Nha 2002 cùng Sporting", "square")}
+
+                  {/* Cúp ĐTQG */}
+                  {renderImageInputCard("trophyEuro", "UEFA Euro 2016", "Vô địch Châu Âu lịch sử tại Paris", "square")}
+                  {renderImageInputCard("trophyNationsLeague", "UEFA Nations League (2 cúp)", "Vô địch Nations League 2019 & 2025", "square")}
+
+                  {/* Danh Hiệu Cá Nhân */}
+                  {renderImageInputCard("trophyBallonDor", "Quả bóng Vàng (Ballon d'Or)", "5 lần đoạt Quả bóng Vàng thế giới", "square")}
+                  {renderImageInputCard("trophyFifaTheBest", "FIFA The Best / World Player", "3 lần Cầu thủ xuất sắc nhất FIFA", "square")}
+                  {renderImageInputCard("trophyGoldenShoe", "Chiếc Giày Vàng Châu Âu (4 cúp)", "4 lần Vua phá lưới toàn châu Âu", "square")}
+                  {renderImageInputCard("trophyUclTopScorer", "Vua phá lưới Champions League (7 lần)", "Kỷ lục 7 mùa ghi nhiều bàn nhất C1", "square")}
+                  {renderImageInputCard("trophySplGoldenBoot", "Vua phá lưới Saudi Pro League (35 bàn)", "Kỷ lục lịch sử 35 bàn thắng giải SPL", "square")}
+                  {renderImageInputCard("trophyPuskasAward", "FIFA Puskás Award 2009", "Bàn thắng đẹp nhất thế giới (40m vs Porto)", "square")}
+                  {renderImageInputCard("trophyPichichi", "Pichichi La Liga (3 cúp)", "3 lần Vua phá lưới giải VĐQG Tây Ban Nha", "square")}
+                  {renderImageInputCard("trophyCapocannoniere", "Capocannoniere Serie A (1 cúp)", "Vua phá lưới giải VĐQG Ý năm 2021", "square")}
+                  {renderImageInputCard("trophyPlGoldenBoot", "Premier League Golden Boot", "Vua phá lưới giải Ngoại hạng Anh năm 2008", "square")}
                 </div>
               </div>
             )}
@@ -827,9 +787,9 @@ export default function AdminPage() {
               <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
-                    4. Ảnh 10 Trận Chung Kết Lịch Sử & Siêu Phẩm Để Đời (Chương 7)
+                    4. Ảnh 11 Trận Chung Kết Lịch Sử & Siêu Phẩm Để Đời (Chương 7)
                   </h3>
-                  <span className="text-[11px] text-gray-400 font-medium">10 khoảnh khắc</span>
+                  <span className="text-[11px] text-gray-400 font-medium">11 khoảnh khắc</span>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {renderImageInputCard(
@@ -854,8 +814,8 @@ export default function AdminPage() {
                   )}
                   {renderImageInputCard(
                     "finalNationsLeague",
-                    "Bán kết Nations League 2019 (Porto)",
-                    "Hat-trick thần thánh vs Thụy Sĩ đưa Bồ Đào Nha vào chung kết"
+                    "Chung kết Nations League 2025 (Munich)",
+                    "Bàn gỡ 2-2 phút 61 hạ Tây Ban Nha & Hat-trick bán kết 2019"
                   )}
                   {renderImageInputCard(
                     "finalArab2023",
@@ -864,18 +824,23 @@ export default function AdminPage() {
                   )}
                   {renderImageInputCard(
                     "iconicBicycleJuve",
-                    "Tuyệt phẩm Ngả người móc bóng (Juventus 2018)",
+                    "Tuyệt phẩm Ngả người móc bóng 2.38m (Juventus 2018)",
                     "Bàn thắng phi thường khiến cả sân Juventus Stadium đứng dậy tán thưởng"
-                  )}
-                  {renderImageInputCard(
-                    "iconicFreekickSpain",
-                    "Đá phạt hàng rào World Cup 2018 (vs Tây Ban Nha)",
-                    "Cú đá phạt phút 88 gỡ hòa 3-3 hoàn tất cú hat-trick kinh điển"
                   )}
                   {renderImageInputCard(
                     "iconicPorto40m",
                     "Nã đại bác 40 mét Puskás Award (vs Porto 2009)",
                     "Bàn thắng giành giải thưởng Puskás đầu tiên trong lịch sử"
+                  )}
+                  {renderImageInputCard(
+                    "iconicCalmaCampNou",
+                    "Ăn mừng 'Calma Calma' câm lặng 98.000 CĐV Camp Nou (2012)",
+                    "Bàn thắng định đoạt chức vô địch La Liga 100 điểm của Real"
+                  )}
+                  {renderImageInputCard(
+                    "iconicFreekickPortsmouth",
+                    "Đỉnh cao sút phạt Knuckleball (vs Portsmouth 2008)",
+                    "Quả sút phạt không xoáy hoàn hảo nhất lịch sử Premier League"
                   )}
                   {renderImageInputCard(
                     "iconicSwedenPlayoff",
