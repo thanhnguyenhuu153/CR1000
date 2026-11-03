@@ -46,6 +46,8 @@ interface SiteDataContextType {
   saveShopItems: (items: ShopItem[]) => void;
   nextMatch: typeof cr7CareerSummary.nextMatch;
   updateNextMatch: (match: Partial<typeof cr7CareerSummary.nextMatch>) => void;
+  showFanVault: boolean;
+  setShowFanVault: (val: boolean) => void;
 }
 
 const SiteDataContext = createContext<SiteDataContextType | null>(null);
@@ -55,6 +57,7 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
   const [images, setImages] = useState<CustomImages>(defaultImages);
   const [shopItems, setShopItems] = useState<ShopItem[]>(defaultShopItems);
   const [nextMatch, setNextMatchState] = useState(cr7CareerSummary.nextMatch);
+  const [showFanVault, setShowFanVaultState] = useState<boolean>(false);
 
   // Load from localStorage on mount
   useEffect(() => {
@@ -81,6 +84,11 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
       if (savedNextMatch) {
         const parsed = JSON.parse(savedNextMatch);
         setNextMatchState((prev) => ({ ...prev, ...parsed }));
+      }
+
+      const savedShowFanVault = localStorage.getItem("cr1000_show_fan_vault");
+      if (savedShowFanVault !== null) {
+        setShowFanVaultState(savedShowFanVault === "true");
       }
     } catch (e) {}
   }, []);
@@ -129,6 +137,13 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const setShowFanVault = (val: boolean) => {
+    setShowFanVaultState(val);
+    try {
+      localStorage.setItem("cr1000_show_fan_vault", val ? "true" : "false");
+    } catch (e) {}
+  };
+
   return (
     <SiteDataContext.Provider
       value={{
@@ -141,6 +156,8 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
         saveShopItems,
         nextMatch,
         updateNextMatch,
+        showFanVault,
+        setShowFanVault,
       }}
     >
       {children}

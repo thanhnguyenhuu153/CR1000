@@ -15,7 +15,7 @@ import Footer from "@/components/Footer";
 import { useSiteData } from "@/context/SiteDataContext";
 
 export default function HomePage() {
-  const { goals } = useSiteData();
+  const { goals, showFanVault } = useSiteData();
 
   return (
     <main className="min-h-screen bg-[#08090C] text-[#F8FAFC] selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">
@@ -46,8 +46,8 @@ export default function HomePage() {
       {/* Chapter 7: Finals & 1000 Goals Archive */}
       <FinalsAndMilestonesSection />
 
-      {/* Chapter 8: Fan Vault & Memorabilia Store */}
-      <FanVaultStore />
+      {/* Chapter 8: Fan Vault & Memorabilia Store (Controlled via Admin) */}
+      {showFanVault && <FanVaultStore />}
 
       {/* Footer & SEO FAQ */}
       <Footer />

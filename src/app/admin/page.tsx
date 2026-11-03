@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSiteData, defaultImages, CustomImages } from "@/context/SiteDataContext";
+import { ShopItem, cr7ShopItems as defaultShopItems } from "@/data/cr7-shop";
 import {
   Lock,
   Unlock,
@@ -26,6 +27,8 @@ import {
   Activity,
   RefreshCw,
   Send,
+  X,
+  Tag,
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -39,6 +42,8 @@ export default function AdminPage() {
     saveShopItems,
     nextMatch,
     updateNextMatch,
+    showFanVault,
+    setShowFanVault,
   } = useSiteData();
 
   // Authentication State
@@ -46,13 +51,19 @@ export default function AdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [activeTab, setActiveTab] = useState<"images" | "stats" | "autopilot" | "export">("images");
+  const [activeTab, setActiveTab] = useState<"images" | "stats" | "fanvault" | "autopilot" | "export">("images");
 
   // Local Form States
   const [imageForm, setImageForm] = useState<CustomImages>(images);
   const [goalsInput, setGoalsInput] = useState(goals.toString());
   const [matchForm, setMatchForm] = useState(nextMatch);
   const [saveNotification, setSaveNotification] = useState("");
+
+  // Fan Vault & Affiliate States
+  const [localShopItems, setLocalShopItems] = useState<ShopItem[]>(shopItems);
+  const [editingShopItem, setEditingShopItem] = useState<ShopItem | null>(null);
+  const [isShopModalOpen, setIsShopModalOpen] = useState(false);
+  const [shopCategoryFilter, setShopCategoryFilter] = useState<"all" | "jersey" | "boots" | "lifestyle" | "memorabilia">("all");
 
   // Auto-Pilot States
   const [cronLoading, setCronLoading] = useState(false);
@@ -69,6 +80,10 @@ export default function AdminPage() {
   useEffect(() => {
     setGoalsInput(goals.toString());
   }, [goals]);
+
+  useEffect(() => {
+    setLocalShopItems(shopItems);
+  }, [shopItems]);
 
   // Check existing session
   useEffect(() => {
@@ -192,6 +207,89 @@ export default function AdminPage() {
     }
     updateNextMatch(matchForm);
     setSaveNotification("Đã cập nhật số bàn thắng và trận đấu tiếp theo!");
+    setTimeout(() => setSaveNotification(""), 3500);
+  };
+
+  // Fan Vault & Affiliate Handlers
+  const handleToggleFanVault = (publish: boolean) => {
+    setShowFanVault(publish);
+    setSaveNotification(
+      publish
+        ? "🟢 Đã BẬT xuất bản Kỷ vật Fan Vault ra website! Người dùng có thể xem trên trang chủ."
+        : "🔴 Đã TẠM ẨN Kỷ vật Fan Vault khỏi website! Bạn có thể thoải mái chỉnh sửa nội dung, ảnh và link affiliate."
+    );
+    setTimeout(() => setSaveNotification(""), 4500);
+  };
+
+  const handleSaveAllShopItems = () => {
+    saveShopItems(localShopItems);
+    setSaveNotification("✓ Đã lưu toàn bộ danh sách sản phẩm và Affiliate Links vào hệ thống!");
+    setTimeout(() => setSaveNotification(""), 3500);
+  };
+
+  const handleResetShopItems = () => {
+    if (confirm("Bạn có chắc chắn muốn khôi phục danh sách kỷ vật về mặc định ban đầu?")) {
+      setLocalShopItems(defaultShopItems);
+      saveShopItems(defaultShopItems);
+      setSaveNotification("✓ Đã khôi phục danh sách kỷ vật về mặc định ban đầu!");
+      setTimeout(() => setSaveNotification(""), 3500);
+    }
+  };
+
+  const handleDeleteShopItem = (id: string) => {
+    if (confirm("Bạn có chắc muốn xóa sản phẩm này khỏi Fan Vault?")) {
+      const updated = localShopItems.filter((item) => item.id !== id);
+      setLocalShopItems(updated);
+      saveShopItems(updated);
+      setSaveNotification("✓ Đã xóa sản phẩm thành công!");
+      setTimeout(() => setSaveNotification(""), 3000);
+    }
+  };
+
+  const handleOpenAddShopItem = () => {
+    setEditingShopItem({
+      id: "shop-" + Date.now(),
+      name: "",
+      category: "jersey",
+      priceText: "490.000₫ – 890.000₫",
+      originalPriceText: "1.200.000₫",
+      badge: "Xu hướng",
+      description: "Mô tả sản phẩm kỷ vật CR7...",
+      image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop",
+      affiliateUrl: "https://shopee.vn/",
+      platform: "Shopee",
+      rating: 5.0,
+      reviewsCount: 150,
+    });
+    setIsShopModalOpen(true);
+  };
+
+  const handleEditShopItem = (item: ShopItem) => {
+    setEditingShopItem({ ...item });
+    setIsShopModalOpen(true);
+  };
+
+  const handleSaveShopItemModal = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingShopItem) return;
+    if (!editingShopItem.name.trim()) {
+      alert("Vui lòng nhập tên sản phẩm!");
+      return;
+    }
+
+    const exists = localShopItems.some((i) => i.id === editingShopItem.id);
+    let updated: ShopItem[];
+    if (exists) {
+      updated = localShopItems.map((i) => (i.id === editingShopItem.id ? editingShopItem : i));
+    } else {
+      updated = [editingShopItem, ...localShopItems];
+    }
+
+    setLocalShopItems(updated);
+    saveShopItems(updated);
+    setIsShopModalOpen(false);
+    setEditingShopItem(null);
+    setSaveNotification(`✓ Đã lưu sản phẩm "${editingShopItem.name}" thành công!`);
     setTimeout(() => setSaveNotification(""), 3500);
   };
 
@@ -324,7 +422,7 @@ export default function AdminPage() {
             }`}
           >
             <ImageIcon className="w-4 h-4" />
-            <span>1. Quản lý Hình ảnh (Media)</span>
+            <span>1. Hình ảnh (Media)</span>
           </button>
 
           <button
@@ -336,31 +434,56 @@ export default function AdminPage() {
             }`}
           >
             <Flame className="w-4 h-4" />
-            <span>2. Số bàn thắng & Trận đấu</span>
+            <span>2. Bàn thắng & Trận đấu</span>
+          </button>
+
+          <button
+            onClick={() => setActiveTab("fanvault")}
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shrink-0 ${
+              activeTab === "fanvault"
+                ? "bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/20"
+                : "bg-[#141720] text-gray-300 hover:text-white"
+            }`}
+          >
+            <ShoppingBag className="w-4 h-4" />
+            <span>3. Kỷ vật Fan Vault & Affiliate</span>
+            <span
+              className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
+                showFanVault
+                  ? activeTab === "fanvault"
+                    ? "bg-black text-emerald-400 border border-emerald-400"
+                    : "bg-emerald-500/20 text-emerald-400 border border-emerald-500/40"
+                  : activeTab === "fanvault"
+                  ? "bg-black text-red-400 border border-red-400"
+                  : "bg-red-500/20 text-red-400 border border-red-500/40"
+              }`}
+            >
+              {showFanVault ? "● LIVE (ĐÃ BẬT)" : "○ DRAFT (ĐANG ẨN)"}
+            </span>
           </button>
 
           <button
             onClick={() => setActiveTab("autopilot")}
-            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shrink-0 ${
               activeTab === "autopilot"
                 ? "bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/20"
                 : "bg-[#141720] text-gray-300 hover:text-white"
             }`}
           >
             <Sparkles className="w-4 h-4" />
-            <span>3. Tự động hóa Auto-Pilot (Cấp độ 3)</span>
+            <span>4. Auto-Pilot (Cấp độ 3)</span>
           </button>
 
           <button
             onClick={() => setActiveTab("export")}
-            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shrink-0 ${
               activeTab === "export"
                 ? "bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/20"
                 : "bg-[#141720] text-gray-300 hover:text-white"
             }`}
           >
             <Copy className="w-4 h-4" />
-            <span>4. Xuất Code lưu trữ</span>
+            <span>5. Xuất Code lưu trữ</span>
           </button>
         </div>
 
@@ -911,7 +1034,400 @@ export default function AdminPage() {
           </form>
         )}
 
-        {/* TAB 3: AUTO-PILOT AUTOMATION ENGINE */}
+        {/* TAB 3: FAN VAULT & AFFILIATE MANAGEMENT */}
+        {activeTab === "fanvault" && (
+          <div className="space-y-8">
+            {/* Master Publishing Control Banner */}
+            <div
+              className={`p-6 sm:p-8 rounded-3xl border transition-all shadow-2xl relative overflow-hidden ${
+                showFanVault
+                  ? "bg-gradient-to-br from-[#0B1C13] via-[#09140E] to-[#08090C] border-emerald-500/40 shadow-emerald-950/20"
+                  : "bg-gradient-to-br from-[#1C0D11] via-[#140A0D] to-[#08090C] border-red-500/40 shadow-red-950/20"
+              }`}
+            >
+              <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
+                <div className="space-y-2.5">
+                  <div className="flex items-center gap-3 flex-wrap">
+                    <span
+                      className={`inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider ${
+                        showFanVault
+                          ? "bg-emerald-500/20 text-emerald-300 border border-emerald-500/50"
+                          : "bg-red-500/20 text-red-300 border border-red-500/50"
+                      }`}
+                    >
+                      <span className={`w-2.5 h-2.5 rounded-full ${showFanVault ? "bg-emerald-400 animate-pulse" : "bg-red-400"}`} />
+                      {showFanVault ? "● ĐÃ XUẤT BẢN RA WEBSITE (LIVE)" : "○ TẠM ẨN KHỎI WEBSITE (DRAFT)"}
+                    </span>
+                    <span className="text-xs text-gray-400 font-semibold">Chương 8 • Bảo tàng Kỷ vật & Cửa hàng Fan</span>
+                  </div>
+
+                  <h3 className="text-2xl sm:text-3xl font-black text-white tracking-tight">
+                    {showFanVault
+                      ? "Kỷ vật Fan Vault đang hiển thị công khai trên website"
+                      : "Kỷ vật Fan Vault đang được TẠM ẨN để bạn chuẩn bị nội dung"}
+                  </h3>
+                  <p className="text-xs sm:text-sm text-gray-300 max-w-3xl leading-relaxed font-light">
+                    {showFanVault
+                      ? "Khách truy cập cr1000.live có thể xem trọn vẹn danh mục kỷ vật, áo đấu và click mua hàng qua các link tiếp thị liên kết (Affiliate). Menu 'Kỷ vật Fan' trên Navbar và Footer đang hiển thị bình thường."
+                      : "Section này cùng mục 'Kỷ vật Fan' trên Navbar và Footer đã được ẩn hoàn toàn khỏi mắt người xem. Bạn có thể thoải mái thêm sản phẩm, cập nhật link affiliate Shopee, Lazada, TikTok Shop, Nike mà không sợ ảnh hưởng giao diện chính."}
+                  </p>
+                </div>
+
+                <div className="shrink-0">
+                  {showFanVault ? (
+                    <button
+                      type="button"
+                      onClick={() => handleToggleFanVault(false)}
+                      className="px-6 py-3.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-extrabold text-xs sm:text-sm flex items-center gap-2 transition-all shadow-xl shadow-red-950/60 cursor-pointer active:scale-95"
+                    >
+                      <Lock className="w-4 h-4" />
+                      <span>Tạm ẩn khỏi Website (Draft)</span>
+                    </button>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={() => handleToggleFanVault(true)}
+                      className="px-6 py-3.5 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-400 hover:brightness-110 text-black font-black text-xs sm:text-sm flex items-center gap-2 transition-all shadow-xl shadow-emerald-950/60 cursor-pointer active:scale-95"
+                    >
+                      <Unlock className="w-4 h-4" />
+                      <span>Kích hoạt Xuất bản ra Website (Publish Live)</span>
+                    </button>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Catalog Toolbar */}
+            <div className="bg-[#10131E] border border-gray-800 rounded-2xl p-5 shadow-lg">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-gray-800">
+                <div>
+                  <h3 className="text-lg font-black text-white flex items-center gap-2">
+                    <ShoppingBag className="w-5 h-5 text-[#D4AF37]" />
+                    <span>Danh mục Sản phẩm & Affiliate Link ({localShopItems.length} sản phẩm)</span>
+                  </h3>
+                  <p className="text-xs text-gray-400 mt-1">
+                    Gắn link Shopee Affiliate, Lazada, TikTok Shop, Nike hoặc Amazon để nhận hoa hồng mỗi khi fan bóng đá click mua.
+                  </p>
+                </div>
+
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <button
+                    type="button"
+                    onClick={handleOpenAddShopItem}
+                    className="px-4 py-2.5 rounded-xl bg-[#D4AF37] hover:bg-[#F59E0B] text-black font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#D4AF37]/20 cursor-pointer"
+                  >
+                    <Plus className="w-4 h-4" />
+                    <span>Thêm sản phẩm mới</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleResetShopItems}
+                    className="px-3.5 py-2.5 rounded-xl bg-[#1A1D27] hover:bg-[#252A38] text-gray-300 text-xs font-bold border border-gray-700 flex items-center gap-1.5 transition-all cursor-pointer"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5" />
+                    <span>Khôi phục mẫu</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSaveAllShopItems}
+                    className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-extrabold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-emerald-950/40 cursor-pointer"
+                  >
+                    <Save className="w-4 h-4" />
+                    <span>Lưu tất cả sản phẩm</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Category Filter Tabs */}
+              <div className="flex items-center gap-2 overflow-x-auto pb-2">
+                {[
+                  { id: "all", label: "Tất cả sản phẩm" },
+                  { id: "jersey", label: "Áo đấu thi đấu" },
+                  { id: "boots", label: "Giày bóng đá" },
+                  { id: "lifestyle", label: "Thời trang CR7" },
+                  { id: "memorabilia", label: "Kỷ vật lưu niệm" },
+                ].map((tab) => (
+                  <button
+                    key={tab.id}
+                    type="button"
+                    onClick={() => setShopCategoryFilter(tab.id as any)}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                      shopCategoryFilter === tab.id
+                        ? "bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40"
+                        : "bg-[#161924] text-gray-400 hover:text-white border border-transparent"
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Products Grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              {localShopItems
+                .filter((item) => (shopCategoryFilter === "all" ? true : item.category === shopCategoryFilter))
+                .map((item) => (
+                  <div
+                    key={item.id}
+                    className="bg-[#0F121C] border border-gray-800 hover:border-[#D4AF37]/40 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between group shadow-lg"
+                  >
+                    <div>
+                      {/* Thumbnail & Badges */}
+                      <div className="relative aspect-video rounded-xl overflow-hidden bg-black/50 mb-3 border border-white/5">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                          onError={(e) => {
+                            (e.target as any).src = "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop";
+                          }}
+                        />
+                        {item.badge && (
+                          <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-[#D4AF37] text-black text-[10px] font-black uppercase tracking-wider shadow">
+                            {item.badge}
+                          </span>
+                        )}
+                        <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur text-white text-[10px] font-bold border border-white/10">
+                          {item.platform}
+                        </span>
+                      </div>
+
+                      {/* Title & Category */}
+                      <div className="mb-2">
+                        <span className="text-[10px] uppercase font-bold text-gray-400 tracking-wider">
+                          {item.category === "jersey"
+                            ? "Áo đấu"
+                            : item.category === "boots"
+                            ? "Giày thi đấu"
+                            : item.category === "lifestyle"
+                            ? "Đời sống"
+                            : "Kỷ vật"}
+                        </span>
+                        <h4 className="text-sm font-bold text-white line-clamp-2 mt-0.5 group-hover:text-[#D4AF37] transition-colors">
+                          {item.name}
+                        </h4>
+                      </div>
+
+                      {/* Pricing */}
+                      <div className="flex items-baseline gap-2 mb-2">
+                        <span className="text-sm font-extrabold text-[#D4AF37] font-mono">{item.priceText}</span>
+                        {item.originalPriceText && (
+                          <span className="text-xs text-gray-500 line-through font-mono">{item.originalPriceText}</span>
+                        )}
+                      </div>
+
+                      {/* Affiliate Link Preview */}
+                      <div className="bg-[#090A10] p-2 rounded-lg border border-gray-800 text-[11px] text-gray-400 truncate mb-3 flex items-center justify-between gap-2">
+                        <span className="truncate font-mono">{item.affiliateUrl || "Chưa gắn link affiliate"}</span>
+                        {item.affiliateUrl && (
+                          <a
+                            href={item.affiliateUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[#D4AF37] hover:underline shrink-0"
+                            title="Thử mở link affiliate"
+                          >
+                            <ExternalLink className="w-3.5 h-3.5" />
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Action Buttons */}
+                    <div className="flex items-center gap-2 pt-3 border-t border-gray-800">
+                      <button
+                        type="button"
+                        onClick={() => handleEditShopItem(item)}
+                        className="flex-1 py-2 rounded-xl bg-[#1B1F2D] hover:bg-[#252B3D] text-gray-200 hover:text-white font-bold text-xs flex items-center justify-center gap-1.5 transition-all cursor-pointer"
+                      >
+                        <Edit className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        <span>Chỉnh sửa</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteShopItem(item.id)}
+                        className="p-2 rounded-xl bg-red-950/40 hover:bg-red-900/60 text-red-400 hover:text-red-300 transition-all cursor-pointer"
+                        title="Xóa sản phẩm này"
+                      >
+                        <Trash2 className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+            </div>
+
+            {/* Modal Edit / Add Item */}
+            {isShopModalOpen && editingShopItem && (
+              <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 overflow-y-auto">
+                <div className="bg-[#11131E] border border-gray-700 rounded-3xl max-w-xl w-full p-6 shadow-2xl relative my-8">
+                  <div className="flex items-center justify-between pb-4 border-b border-gray-800 mb-5">
+                    <h3 className="text-lg font-black text-white flex items-center gap-2">
+                      <Tag className="w-5 h-5 text-[#D4AF37]" />
+                      <span>{localShopItems.some((i) => i.id === editingShopItem.id) ? "Chỉnh sửa Kỷ vật" : "Thêm Kỷ vật mới"}</span>
+                    </h3>
+                    <button
+                      type="button"
+                      onClick={() => setIsShopModalOpen(false)}
+                      className="p-1.5 rounded-lg bg-gray-800 text-gray-400 hover:text-white"
+                    >
+                      <X className="w-4 h-4" />
+                    </button>
+                  </div>
+
+                  <form onSubmit={handleSaveShopItemModal} className="space-y-4 text-xs">
+                    <div>
+                      <label className="block text-gray-300 font-bold mb-1">Tên sản phẩm kỷ vật (*):</label>
+                      <input
+                        type="text"
+                        required
+                        value={editingShopItem.name}
+                        onChange={(e) => setEditingShopItem({ ...editingShopItem, name: e.target.value })}
+                        placeholder="VD: Áo đấu Real Madrid Final Cardiff 2017 #7 Ronaldo"
+                        className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-gray-300 font-bold mb-1">Phân loại:</label>
+                        <select
+                          value={editingShopItem.category}
+                          onChange={(e) => setEditingShopItem({ ...editingShopItem, category: e.target.value as any })}
+                          className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#D4AF37]"
+                        >
+                          <option value="jersey">Áo đấu thi đấu (Jersey)</option>
+                          <option value="boots">Giày thi đấu (Boots)</option>
+                          <option value="lifestyle">Thời trang & Đời sống (Lifestyle)</option>
+                          <option value="memorabilia">Kỷ vật lưu niệm (Memorabilia)</option>
+                        </select>
+                      </div>
+
+                      <div>
+                        <label className="block text-gray-300 font-bold mb-1">Nền tảng mua hàng:</label>
+                        <select
+                          value={editingShopItem.platform}
+                          onChange={(e) => setEditingShopItem({ ...editingShopItem, platform: e.target.value as any })}
+                          className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#D4AF37]"
+                        >
+                          <option value="Shopee">Shopee</option>
+                          <option value="Lazada">Lazada</option>
+                          <option value="Nike">Nike Official</option>
+                          <option value="Unisport">Unisport</option>
+                          <option value="Amazon">Amazon</option>
+                        </select>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div>
+                        <label className="block text-gray-300 font-bold mb-1">Giá bán hiển thị:</label>
+                        <input
+                          type="text"
+                          value={editingShopItem.priceText}
+                          onChange={(e) => setEditingShopItem({ ...editingShopItem, priceText: e.target.value })}
+                          placeholder="490.000₫ – 890.000₫"
+                          className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs font-mono"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-gray-300 font-bold mb-1">Giá gốc (gạch ngang):</label>
+                        <input
+                          type="text"
+                          value={editingShopItem.originalPriceText || ""}
+                          onChange={(e) => setEditingShopItem({ ...editingShopItem, originalPriceText: e.target.value })}
+                          placeholder="1.200.000₫"
+                          className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs font-mono"
+                        />
+                      </div>
+
+                      <div>
+                        <label className="block text-gray-300 font-bold mb-1">Huy hiệu (Badge):</label>
+                        <input
+                          type="text"
+                          value={editingShopItem.badge || ""}
+                          onChange={(e) => setEditingShopItem({ ...editingShopItem, badge: e.target.value })}
+                          placeholder="Bán chạy nhất / Xu hướng"
+                          className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs"
+                        />
+                      </div>
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-300 font-bold mb-1">Đường dẫn Tiếp thị liên kết (Affiliate URL) (*):</label>
+                      <input
+                        type="url"
+                        required
+                        value={editingShopItem.affiliateUrl}
+                        onChange={(e) => setEditingShopItem({ ...editingShopItem, affiliateUrl: e.target.value })}
+                        placeholder="https://shopee.vn/... hoặc link tiếp thị rút gọn"
+                        className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs font-mono focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-300 font-bold mb-1">Đường dẫn hình ảnh sản phẩm (Image URL):</label>
+                      <input
+                        type="url"
+                        value={editingShopItem.image}
+                        onChange={(e) => setEditingShopItem({ ...editingShopItem, image: e.target.value })}
+                        placeholder="https://images.unsplash.com/... hoặc /images/..."
+                        className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs font-mono focus:outline-none focus:border-[#D4AF37]"
+                      />
+                      {editingShopItem.image && (
+                        <div className="mt-2 flex items-center gap-3 bg-[#0A0C13] p-2 rounded-xl border border-gray-800">
+                          <img
+                            src={editingShopItem.image}
+                            alt="Preview"
+                            className="w-12 h-12 rounded-lg object-cover border border-gray-700"
+                            onError={(e) => {
+                              (e.target as any).src = "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop";
+                            }}
+                          />
+                          <span className="text-[11px] text-gray-400">Xem trước ảnh sản phẩm</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div>
+                      <label className="block text-gray-300 font-bold mb-1">Mô tả sản phẩm:</label>
+                      <textarea
+                        rows={2}
+                        value={editingShopItem.description}
+                        onChange={(e) => setEditingShopItem({ ...editingShopItem, description: e.target.value })}
+                        placeholder="Mô tả ngắn gọn về kỷ vật, chất liệu, ý nghĩa lịch sử..."
+                        className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs focus:outline-none focus:border-[#D4AF37]"
+                      />
+                    </div>
+
+                    <div className="pt-3 flex items-center justify-end gap-3 border-t border-gray-800">
+                      <button
+                        type="button"
+                        onClick={() => setIsShopModalOpen(false)}
+                        className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 font-bold text-xs hover:bg-gray-700"
+                      >
+                        Hủy bỏ
+                      </button>
+
+                      <button
+                        type="submit"
+                        className="px-5 py-2.5 rounded-xl bg-[#D4AF37] hover:bg-[#F59E0B] text-black font-black text-xs shadow-md shadow-[#D4AF37]/20"
+                      >
+                        Lưu Kỷ vật
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* TAB 4: AUTO-PILOT AUTOMATION ENGINE */}
         {activeTab === "autopilot" && (
           <div className="space-y-6">
             {/* Overview Card */}
@@ -1089,15 +1605,15 @@ export default function AdminPage() {
           </div>
         )}
 
-        {/* TAB 4: EXPORT CODE */}
+        {/* TAB 5: EXPORT CODE */}
         {activeTab === "export" && (
           <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
             <h3 className="text-base font-bold text-white">Xuất mã lưu trữ vĩnh viễn vào Codebase</h3>
             <p className="text-xs text-gray-400">
-              Nếu bạn muốn các thay đổi về ảnh và số liệu được nhúng vĩnh viễn vào file git (để deploy lên Vercel cho tất cả khách truy cập không phụ thuộc vào trình duyệt của bạn), bạn chỉ cần copy đoạn JSON cấu hình dưới đây:
+              Nếu bạn muốn các thay đổi về ảnh, số liệu và kỷ vật Fan Vault được nhúng vĩnh viễn vào file git (để deploy lên Vercel cho tất cả khách truy cập không phụ thuộc vào trình duyệt của bạn), bạn chỉ cần copy đoạn JSON cấu hình dưới đây:
             </p>
             <pre className="bg-[#090A10] p-4 rounded-xl border border-gray-800 text-xs font-mono text-gray-300 overflow-x-auto max-h-96">
-              {JSON.stringify({ images: imageForm, currentGoals: parseInt(goalsInput, 10) || 985, nextMatch: matchForm }, null, 2)}
+              {JSON.stringify({ images: imageForm, currentGoals: parseInt(goalsInput, 10) || 985, nextMatch: matchForm, showFanVault, shopItemsCount: localShopItems.length }, null, 2)}
             </pre>
           </div>
         )}

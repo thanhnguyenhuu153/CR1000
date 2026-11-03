@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { Trophy, Flame, Sparkles, Menu, X, Share2, Volume2, VolumeX } from "lucide-react";
 import confetti from "canvas-confetti";
+import { useSiteData } from "@/context/SiteDataContext";
 
 export default function Navbar() {
+  const { showFanVault } = useSiteData();
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [soundEnabled, setSoundEnabled] = useState(false);
@@ -48,7 +50,7 @@ export default function Navbar() {
     { name: "Con mồi ưa thích", href: "#opponents" },
     { name: "Phòng truyền thống", href: "#trophies" },
     { name: "Chung kết & Mốc son", href: "#archive" },
-    { name: "Kỷ vật Fan", href: "#shop" },
+    ...(showFanVault ? [{ name: "Kỷ vật Fan", href: "#shop" }] : []),
   ];
 
   return (
