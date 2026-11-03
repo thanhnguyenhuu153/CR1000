@@ -55,30 +55,30 @@ export default function Navbar() {
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
         isScrolled
-          ? "bg-[#08090C]/90 backdrop-blur-md border-b border-[#232733]/80 py-3 shadow-2xl"
+          ? "bg-[#08090C]/95 backdrop-blur-md border-b border-white/[0.08] py-3.5 shadow-2xl"
           : "bg-transparent py-5"
       }`}
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
         <a href="#countdown" className="flex items-center gap-3 group">
-          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#991B1B] via-[#D4AF37] to-[#F59E0B] p-[2px] transition-transform duration-300 group-hover:scale-105">
+          <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#996515] via-[#D4AF37] to-[#F5E6A3] p-[1.5px] transition-transform duration-300 group-hover:scale-105 shadow-md shadow-[#D4AF37]/15">
             <div className="w-full h-full bg-[#08090C] rounded-full flex items-center justify-center">
-              <span className="font-black text-sm tracking-tighter text-[#FFF7D6] font-mono">
+              <span className="font-black text-xs tracking-wider text-[#D4AF37] font-mono">
                 CR7
               </span>
             </div>
           </div>
           <div>
             <div className="flex items-center gap-1.5">
-              <span className="font-extrabold text-xl tracking-tight text-white group-hover:text-[#F3C623] transition-colors">
+              <span className="font-extrabold text-lg tracking-tight text-white group-hover:text-[#D4AF37] transition-colors">
                 CR1000
               </span>
-              <span className="px-1.5 py-0.5 text-[10px] font-bold rounded bg-[#D4AF37]/20 text-[#F3C623] border border-[#D4AF37]/30">
-                LIVE
+              <span className="px-1.5 py-0.5 text-[9px] font-bold rounded bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 tracking-wider">
+                MUSEUM
               </span>
             </div>
-            <p className="text-[10px] text-gray-400 uppercase tracking-widest font-medium hidden sm:block">
+            <p className="text-[9px] text-gray-400 uppercase tracking-[0.2em] font-medium hidden sm:block">
               Road to 1000 Goals
             </p>
           </div>
@@ -90,7 +90,7 @@ export default function Navbar() {
             <a
               key={link.name}
               href={link.href}
-              className="text-xs uppercase tracking-wider font-semibold text-gray-300 hover:text-[#F3C623] transition-colors"
+              className="text-xs uppercase tracking-wider font-semibold text-gray-300 hover:text-[#D4AF37] transition-colors"
             >
               {link.name}
             </a>
@@ -103,23 +103,23 @@ export default function Navbar() {
           <button
             onClick={handleCelebrate}
             title="Ăn mừng phong cách SIUUU!"
-            className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] text-black hover:opacity-90 active:scale-95 transition-all shadow-md shadow-[#D4AF37]/20"
+            className="hidden sm:flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-bold bg-[#D4AF37] text-black hover:opacity-90 active:scale-95 transition-all shadow-md shadow-[#D4AF37]/20"
           >
             <Sparkles className="w-3.5 h-3.5" />
             <span>SIUUU!</span>
           </button>
 
           {/* Language badge */}
-          <div className="flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-[#161922] border border-[#2B313F] text-gray-300">
-            <span className="text-[#F3C623]">🇻🇳 VI</span>
-            <span className="text-gray-500 mx-1">|</span>
+          <div className="flex items-center text-xs font-semibold px-2.5 py-1 rounded-full bg-[#11131C] border border-white/10 text-gray-300">
+            <span className="text-[#D4AF37]">🇻🇳 VI</span>
+            <span className="text-gray-600 mx-1.5">|</span>
             <span className="text-gray-400 hover:text-white cursor-pointer" title="Sắp ra mắt phiên bản tiếng Anh">EN</span>
           </div>
 
           {/* Mobile Menu Toggle Button */}
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="lg:hidden p-2 rounded-lg bg-[#161922] text-gray-300 hover:text-white border border-[#2B313F]"
+            className="lg:hidden p-2 rounded-lg bg-[#11131C] text-gray-300 hover:text-white border border-white/10"
             aria-label="Toggle Menu"
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}

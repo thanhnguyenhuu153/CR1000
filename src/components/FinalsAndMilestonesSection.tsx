@@ -30,18 +30,18 @@ export default function FinalsAndMilestonesSection() {
   });
 
   return (
-    <section id="archive" className="py-20 bg-[#0B0C10] relative border-t border-gray-900">
+    <section id="archive" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#181B24] border border-gray-800 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
             Chương 7 • Thư viện tra cứu & Khoảnh khắc bất tử
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
             Bàn Thắng Chung Kết & <span className="gold-gradient-text">Mốc Son Lịch Sử</span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-gray-400">
-            Nơi lưu giữ những khoảnh khắc định đoạt ngai vàng cúp C1, các siêu phẩm làm rung chuyển cầu trường thế giới và hành trình từng bước chạm mốc 1000 bàn thắng.
+          <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
+            Nơi lưu giữ những pha lập công định đoạt ngai vàng cúp C1, các siêu phẩm làm rung chuyển cầu trường thế giới và hành trình từng bước chạm mốc 1000 bàn thắng.
           </p>
         </div>
 
@@ -112,10 +112,10 @@ export default function FinalsAndMilestonesSection() {
                   {/* Top Badges */}
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                     <span
-                      className={`px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
                         goal.category === "final"
-                          ? "bg-amber-500/20 text-[#F3C623] border-amber-500/30"
-                          : "bg-red-500/20 text-red-400 border-red-500/30"
+                          ? "bg-[#D4AF37]/15 text-[#D4AF37] border-[#D4AF37]/35"
+                          : "bg-white/10 text-white border-white/20"
                       }`}
                     >
                       {goal.category === "final" ? "CHUNG KẾT ĐOẠT CÚP" : "SIÊU PHẨM BẤT TỬ"}
@@ -125,12 +125,12 @@ export default function FinalsAndMilestonesSection() {
                     </span>
                   </div>
 
-                  <h3 className="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-[#F3C623] transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-black text-white mb-2 group-hover:text-[#D4AF37] transition-colors tracking-tight">
                     {goal.title}
                   </h3>
 
                   {/* Match Information Box */}
-                  <div className="bg-[#090A0F] rounded-2xl p-4 border border-gray-800/80 mb-4">
+                  <div className="bg-[#090A0F] rounded-2xl p-4 border border-white/5 mb-4">
                     <div className="flex items-center justify-between text-xs font-semibold text-[#D4AF37] mb-1">
                       <span>{goal.competition}</span>
                       <span className="font-mono text-white">Phút {goal.minute}&apos;</span>
@@ -138,12 +138,12 @@ export default function FinalsAndMilestonesSection() {
                     <div className="text-sm font-bold text-white">
                       {goal.match}
                     </div>
-                    <div className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                    <div className="text-xs text-gray-400 mt-1 flex items-center gap-1 font-light">
                       <MapPin className="w-3.5 h-3.5 text-gray-500" />
                       <span>{goal.stadium}</span>
                     </div>
                     {goal.trophyOrAward && (
-                      <div className="mt-2.5 pt-2 border-t border-gray-800 flex items-center gap-2 text-xs font-semibold text-emerald-400">
+                      <div className="mt-2.5 pt-2 border-t border-white/[0.08] flex items-center gap-2 text-xs font-semibold text-[#D4AF37]">
                         <Trophy className="w-3.5 h-3.5" />
                         <span>Danh hiệu: {goal.trophyOrAward}</span>
                       </div>
@@ -193,10 +193,10 @@ export default function FinalsAndMilestonesSection() {
                 key={m.goalNumber}
                 className={`rounded-2xl p-5 sm:p-6 border transition-all duration-300 flex flex-col md:flex-row items-start md:items-center justify-between gap-4 ${
                   m.isUpcoming
-                    ? "bg-gradient-to-r from-[#2B2005] via-[#1A1405] to-[#0A0C10] border-[#D4AF37] gold-border-glow animate-pulse"
+                    ? "bg-[#16130A] border-[#D4AF37]/50 gold-border-glow"
                     : m.isSpecialFinal
-                    ? "bg-[#161424] border-purple-900/60"
-                    : "bg-[#11131A] border-gray-800 hover:border-gray-700"
+                    ? "bg-[#0F121A]/95 border-[#D4AF37]/30"
+                    : "bg-[#0F121A]/80 border-white/10 hover:border-white/20"
                 }`}
               >
                 <div className="flex items-center gap-4 sm:gap-6">
@@ -204,7 +204,7 @@ export default function FinalsAndMilestonesSection() {
                     className={`w-16 h-16 rounded-2xl flex items-center justify-center font-black font-mono text-xl sm:text-2xl shrink-0 border ${
                       m.isUpcoming
                         ? "bg-[#D4AF37] text-black border-[#FFF7D6]"
-                        : "bg-[#181B26] text-white border-gray-700"
+                        : "bg-[#161A26] text-white border-white/10"
                     }`}
                   >
                     #{m.goalNumber}
@@ -213,11 +213,11 @@ export default function FinalsAndMilestonesSection() {
                   <div>
                     <div className="flex items-center gap-2">
                       <span className="text-xs font-mono text-gray-400">{m.date}</span>
-                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#1B1E2B] text-[#D4AF37] font-bold border border-gray-700">
+                      <span className="text-[10px] px-2 py-0.5 rounded bg-[#161A26] text-[#D4AF37] font-semibold border border-white/10">
                         {m.competition}
                       </span>
                       {m.isUpcoming && (
-                        <span className="text-[10px] px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-bold border border-emerald-500/40">
+                        <span className="text-[10px] px-2.5 py-0.5 rounded bg-[#D4AF37]/20 text-[#D4AF37] font-bold border border-[#D4AF37]/40">
                           SẮP RA ĐỜI
                         </span>
                       )}

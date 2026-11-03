@@ -16,58 +16,58 @@ export default function HattrickShowcase() {
   });
 
   return (
-    <section id="hattricks" className="py-20 bg-[#0B0C10] relative border-t border-gray-900">
+    <section id="hattricks" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#181B24] border border-gray-800 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-3">
-            Chương 3 • Những đêm diễn điên rồ
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
+            Chương 3 • Những đêm bùng nổ
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
-            66 Cú Hattrick & <span className="gold-gradient-text">Những Đêm Hủy Diệt</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
+            66 Cú Hat-trick & <span className="gold-gradient-text">Những Đêm Lịch Sử</span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-gray-400">
-            66 lần ghi từ 3 bàn trở lên trong một trận đấu chính thức (bao gồm 11 cú Poker 4 bàn và 2 cú Manita 5 bàn). Không một hàng thủ nào có thể ngủ yên.
+          <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
+            66 lần ghi từ 3 bàn trở lên trong một trận chính thức (bao gồm 11 cú Poker 4 bàn và 2 cú Manita 5 bàn). Đỉnh cao của bản năng sát thủ và sự hủy diệt.
           </p>
         </div>
 
         {/* Stats Bar */}
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto mb-12">
-          <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-4 text-center">
-            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 max-w-4xl mx-auto mb-14">
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">
               Tổng Hat-trick
             </span>
-            <div className="text-3xl sm:text-4xl font-black font-mono gold-gradient-text mt-1">
+            <div className="text-3xl sm:text-4xl font-black font-mono gold-gradient-text mt-1.5">
               66
             </div>
             <span className="text-[11px] text-gray-400 mt-1 block">53 lần ghi 3 bàn</span>
           </div>
 
-          <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-4 text-center">
-            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">
-              Cú Poker (4 Bàn)
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">
+              Poker (4 Bàn)
             </span>
-            <div className="text-3xl sm:text-4xl font-black font-mono text-purple-400 mt-1">
+            <div className="text-3xl sm:text-4xl font-black font-mono text-white mt-1.5">
               11
             </div>
             <span className="text-[11px] text-gray-400 mt-1 block">Lần ghi 4 bàn/trận</span>
           </div>
 
-          <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-4 text-center">
-            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">
               Manita (5 Bàn)
             </span>
-            <div className="text-3xl sm:text-4xl font-black font-mono text-[#E63946] mt-1">
+            <div className="text-3xl sm:text-4xl font-black font-mono text-[#D4AF37] mt-1.5">
               2
             </div>
             <span className="text-[11px] text-gray-400 mt-1 block">vs Granada & Espanyol</span>
           </div>
 
-          <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-4 text-center">
-            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-bold">
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase tracking-wider text-gray-400 font-semibold">
               Hat-trick ĐTQG
             </span>
-            <div className="text-3xl sm:text-4xl font-black font-mono text-emerald-400 mt-1">
+            <div className="text-3xl sm:text-4xl font-black font-mono text-white mt-1.5">
               10
             </div>
             <span className="text-[11px] text-gray-400 mt-1 block">Kỷ lục thế giới FIFA</span>
@@ -75,7 +75,7 @@ export default function HattrickShowcase() {
         </div>
 
         {/* Filter Pills */}
-        <div className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2">
+        <div className="flex items-center justify-center gap-2 mb-12 overflow-x-auto pb-2">
           {[
             { id: "all", label: "Tất Cả Trận Tiêu Biểu" },
             { id: "manita", label: "Manita (5 Bàn)" },
@@ -85,10 +85,10 @@ export default function HattrickShowcase() {
             <button
               key={item.id}
               onClick={() => setFilter(item.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all border ${
                 filter === item.id
                   ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-lg shadow-[#D4AF37]/20"
-                  : "bg-[#141720] text-gray-300 border-gray-800 hover:border-gray-700"
+                  : "bg-[#11131C] text-gray-400 border-white/10 hover:text-white hover:border-white/20"
               }`}
             >
               {item.label}
@@ -101,18 +101,18 @@ export default function HattrickShowcase() {
           {filteredMatches.map((match) => (
             <div
               key={match.id}
-              className="bg-gradient-to-b from-[#13151F] to-[#0D0F16] border border-gray-800 hover:border-[#D4AF37]/50 rounded-2xl p-6 transition-all duration-300 shadow-xl flex flex-col justify-between group"
+              className="bg-[#0F121A]/90 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl p-6 transition-all duration-300 shadow-xl flex flex-col justify-between group"
             >
               <div>
                 {/* Match Badges Header */}
                 <div className="flex items-center justify-between mb-4">
                   <span
-                    className={`px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider border ${
+                    className={`px-2.5 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider border ${
                       match.type === "manita"
-                        ? "bg-red-500/20 text-red-400 border-red-500/30"
+                        ? "bg-[#D4AF37]/20 text-[#D4AF37] border-[#D4AF37]/40"
                         : match.type === "poker"
-                        ? "bg-purple-500/20 text-purple-400 border-purple-500/30"
-                        : "bg-amber-500/20 text-amber-400 border-amber-500/30"
+                        ? "bg-white/10 text-white border-white/20"
+                        : "bg-[#D4AF37]/10 text-[#D4AF37] border-[#D4AF37]/25"
                     }`}
                   >
                     {match.type === "manita" && "5 BÀN (MANITA)"}
@@ -123,13 +123,13 @@ export default function HattrickShowcase() {
                 </div>
 
                 {/* Score & Teams */}
-                <div className="bg-[#090A0F] rounded-xl p-4 border border-gray-800/80 mb-4 text-center">
+                <div className="bg-[#090A0F] rounded-xl p-4 border border-white/5 mb-4 text-center">
                   <div className="text-xs text-[#D4AF37] font-semibold mb-1">
                     {match.competition}
                   </div>
-                  <div className="flex items-center justify-between font-black text-sm sm:text-base text-white">
+                  <div className="flex items-center justify-between font-extrabold text-sm sm:text-base text-white">
                     <span className="truncate flex-1 text-right">{match.homeTeam}</span>
-                    <span className="px-3 py-1 mx-2 rounded-lg bg-[#181B26] text-[#F3C623] font-mono text-lg shrink-0 border border-gray-700">
+                    <span className="px-3 py-1 mx-2 rounded-lg bg-[#151924] text-white font-mono text-lg shrink-0 border border-white/10">
                       {match.score}
                     </span>
                     <span className="truncate flex-1 text-left">{match.awayTeam}</span>
@@ -142,38 +142,38 @@ export default function HattrickShowcase() {
 
                 {/* Goals Timeline in this Match */}
                 <div className="space-y-1.5 mb-4">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 block mb-1">
-                    Chi tiết các bàn thắng của CR7:
+                  <span className="text-[10px] uppercase font-semibold tracking-wider text-gray-400 block mb-1">
+                    Bàn thắng của CR7:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {match.goals.map((g, idx) => (
                       <span
                         key={idx}
-                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#1B1F2D] border border-gray-700 text-xs text-gray-200"
+                        className="inline-flex items-center gap-1 px-2 py-0.5 rounded bg-[#151924] border border-white/10 text-xs text-gray-300"
                         title={g.assistBy ? `Kiến tạo: ${g.assistBy}` : `Bàn thắng (${g.type})`}
                       >
-                        <Flame className="w-3 h-3 text-[#F3C623]" />
-                        <span className="font-mono font-bold">{g.minute}&apos;</span>
-                        {g.type === "penalty" && <span className="text-[9px] text-red-400 font-bold">(P)</span>}
-                        {g.type === "free-kick" && <span className="text-[9px] text-amber-400 font-bold">(FK)</span>}
-                        {g.type === "header" && <span className="text-[9px] text-blue-400 font-bold">(Đầu)</span>}
+                        <Flame className="w-3 h-3 text-[#D4AF37]" />
+                        <span className="font-mono font-bold text-white">{g.minute}&apos;</span>
+                        {g.type === "penalty" && <span className="text-[9px] text-gray-400 font-medium">(P)</span>}
+                        {g.type === "free-kick" && <span className="text-[9px] text-[#D4AF37] font-medium">(FK)</span>}
+                        {g.type === "header" && <span className="text-[9px] text-gray-400 font-medium">(Đầu)</span>}
                       </span>
                     ))}
                   </div>
                 </div>
 
                 {/* Match Context Story */}
-                <p className="text-xs text-gray-300 leading-relaxed italic line-clamp-3">
+                <p className="text-xs text-gray-400 leading-relaxed italic line-clamp-3 font-light">
                   &ldquo;{match.description}&rdquo;
                 </p>
               </div>
 
               {/* Card Footer Button */}
-              <div className="mt-5 pt-3 border-t border-gray-800/80 flex items-center justify-between text-xs">
-                <span className="text-gray-400">CLB: <strong className="text-white">{match.cr7Team}</strong></span>
+              <div className="mt-5 pt-3.5 border-t border-white/[0.08] flex items-center justify-between text-xs">
+                <span className="text-gray-400">CLB: <strong className="text-white font-medium">{match.cr7Team}</strong></span>
                 <button
                   onClick={() => setSelectedMatch(match)}
-                  className="text-[#D4AF37] hover:text-white font-bold transition-colors"
+                  className="text-[#D4AF37] hover:text-white font-semibold transition-colors"
                 >
                   Xem chi tiết &rarr;
                 </button>

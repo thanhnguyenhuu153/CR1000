@@ -112,18 +112,18 @@ export default function FanVaultStore() {
   });
 
   return (
-    <section id="shop" className="py-20 bg-[#08090C] relative border-t border-gray-900">
+    <section id="shop" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14 relative">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#181B24] border border-gray-800 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-3">
-            Bảo tàng Kỷ vật • Fan Vault Store
+        <div className="text-center max-w-3xl mx-auto mb-16 relative">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
+            Bảo tàng Kỷ vật • Fan Vault
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
-            Bộ Sưu Tập Kỷ Vật <span className="gold-gradient-text">CR7 Chính Hãng</span>
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
+            Bộ Sưu Tập Kỷ Vật <span className="gold-gradient-text">CR7 Biểu Tượng</span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-gray-400">
-            Sở hữu các kỷ vật biểu tượng: từ chiếc áo đỏ tay dài đêm Moscow 2008, dòng giày Mercurial săn bàn tới những bức tranh tráng gương ghi dấu bàn thắng thứ 1.000.
+          <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
+            Sở hữu các kỷ vật biểu tượng: từ chiếc áo đỏ tay dài đêm Moscow 2008, dòng giày Mercurial săn bàn tới những bức tranh tráng gương ghi dấu bàn thắng thứ 1000.
           </p>
 
           {/* Admin Mode Toggle */}
@@ -292,15 +292,15 @@ export default function FanVaultStore() {
         </div>
 
         {/* Trust & Performance Note */}
-        <div className="bg-[#11131A] border border-gray-800 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
+        <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-gray-400">
           <div className="flex items-center gap-3">
-            <ShieldCheck className="w-5 h-5 text-emerald-400 shrink-0" />
+            <ShieldCheck className="w-5 h-5 text-[#D4AF37] shrink-0" />
             <span>
               Tất cả liên kết sản phẩm được tuyển chọn uy tín dành riêng cho người hâm mộ CR7. Giao dịch trực tiếp qua các sàn thương mại điện tử bảo đảm quyền lợi người mua.
             </span>
           </div>
           <span className="text-gray-500 text-[11px] shrink-0 font-mono">
-            Zero-CLS • Không quảng cáo làm phiền
+            Trải nghiệm mượt mà • Không quảng cáo pop-up
           </span>
         </div>
       </div>

@@ -24,44 +24,44 @@ export default function TrophyRoomSection() {
   });
 
   return (
-    <section id="trophies" className="py-20 bg-[#0B0C10] relative border-t border-gray-900">
+    <section id="trophies" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#181B24] border border-gray-800 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
             Chương 5 • Phòng truyền thống & Kỷ lục
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
             Ngôi Đền Của Những <span className="gold-gradient-text">Chiếc Cúp Vàng</span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-gray-400">
-            35 danh hiệu tập thể đỉnh cao, 5 Quả bóng Vàng danh giá và một kho tàng kỷ lục thế giới đã được ghi vào Sách Kỷ Lục Guinness vĩnh cửu.
+          <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
+            36 danh hiệu tập thể đỉnh cao, 5 Quả bóng Vàng danh giá và một kho tàng kỷ lục thế giới đã được ghi danh vào Sách Kỷ Lục Guinness vĩnh cửu.
           </p>
         </div>
 
         {/* Featured Real Photo Banner: CR7 with Ballon d'Or */}
-        <div className="relative max-w-5xl mx-auto mb-14 rounded-3xl overflow-hidden border border-[#D4AF37]/30 bg-gradient-to-r from-[#171410] via-[#0E1017] to-[#14120D] p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-2xl">
-          <div className="w-full md:w-5/12 h-64 sm:h-72 rounded-2xl overflow-hidden border border-gray-700 relative shrink-0">
+        <div className="relative max-w-5xl mx-auto mb-16 rounded-3xl overflow-hidden border border-white/10 bg-[#0F121A]/90 p-6 sm:p-8 flex flex-col md:flex-row items-center gap-8 shadow-2xl">
+          <div className="w-full md:w-5/12 h-64 sm:h-72 rounded-2xl overflow-hidden border border-white/10 relative shrink-0 bg-[#090A0F]">
             <img
               src={images.trophyBallonDor}
               alt="Cristiano Ronaldo nhận Quả bóng Vàng"
               className="w-full h-full object-cover object-center filter brightness-95"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
-            <span className="absolute bottom-3 left-3 text-[11px] font-semibold text-gray-200 bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-md">
+            <span className="absolute bottom-3 left-3 text-[11px] font-semibold text-gray-200 bg-black/70 px-2.5 py-1 rounded-md backdrop-blur-md border border-white/10">
               🏆 CR7 nâng cao Quả bóng Vàng thế giới
             </span>
           </div>
 
-          <div className="flex-1 space-y-3 text-left">
-            <span className="px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#F3C623] text-xs font-bold uppercase tracking-wider">
+          <div className="flex-1 space-y-3.5 text-left">
+            <span className="px-3 py-1 rounded-full bg-[#D4AF37]/10 border border-[#D4AF37]/30 text-[#D4AF37] text-xs font-semibold uppercase tracking-wider">
               Bộ sưu tập bất tử
             </span>
-            <h3 className="text-2xl sm:text-3xl font-black text-white">
+            <h3 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
               Kỷ Lục 5 Quả Bóng Vàng & 5 Champions League
             </h3>
-            <p className="text-sm text-gray-300 leading-relaxed">
-              Từ danh hiệu Quả bóng Vàng đầu tiên năm 2008 ở tuổi 23 dưới thời Sir Alex Ferguson, tới cú đúp bảo vệ thành công danh hiệu năm 2016 và 2017 cùng Real Madrid. Cristiano Ronaldo là cầu thủ châu Âu duy nhất trong lịch sử đạt tới cột mốc 5 Quả bóng Vàng.
+            <p className="text-sm text-gray-300 leading-relaxed font-light">
+              Từ danh hiệu Quả bóng Vàng đầu tiên năm 2008 ở tuổi 23 dưới thời Sir Alex Ferguson, tới cú đúp bảo vệ thành công danh hiệu năm 2016 và 2017 cùng Real Madrid. Cristiano Ronaldo là cầu thủ châu Âu duy nhất trong lịch sử đoạt tới 5 Quả bóng Vàng.
             </p>
             <div className="pt-2 flex items-center gap-4 text-xs font-mono text-[#D4AF37]">
               <span>★ 2008</span>
@@ -74,42 +74,42 @@ export default function TrophyRoomSection() {
         </div>
 
         {/* Trophy Summary Counters */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
-          <div className="bg-[#12141D] border border-[#D4AF37]/30 rounded-2xl p-5 text-center">
-            <span className="text-xs uppercase font-bold text-gray-400">Danh hiệu tập thể</span>
-            <div className="text-4xl font-black font-mono gold-gradient-text mt-1">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 mb-14">
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase font-semibold text-gray-400">Danh hiệu tập thể</span>
+            <div className="text-4xl font-black font-mono gold-gradient-text mt-1.5">
               {cr7TrophySummary.totalTeamTrophies}
             </div>
-            <span className="text-[11px] text-gray-400">33 cấp CLB + 3 ĐTQG</span>
+            <span className="text-[11px] text-gray-400 mt-1 block">33 CLB + 3 ĐTQG</span>
           </div>
 
-          <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-5 text-center">
-            <span className="text-xs uppercase font-bold text-gray-400">Cúp C1 Champions League</span>
-            <div className="text-4xl font-black font-mono text-white mt-1">
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase font-semibold text-gray-400">UEFA Champions League</span>
+            <div className="text-4xl font-black font-mono text-white mt-1.5">
               5
             </div>
-            <span className="text-[11px] text-gray-400">1 Man Utd + 4 Real Madrid</span>
+            <span className="text-[11px] text-gray-400 mt-1 block">1 Man Utd + 4 Real Madrid</span>
           </div>
 
-          <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-5 text-center">
-            <span className="text-xs uppercase font-bold text-gray-400">Quả bóng Vàng (Ballon d&apos;Or)</span>
-            <div className="text-4xl font-black font-mono text-[#F3C623] mt-1">
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase font-semibold text-gray-400">Quả bóng Vàng (Ballon d&apos;Or)</span>
+            <div className="text-4xl font-black font-mono text-[#D4AF37] mt-1.5">
               5
             </div>
-            <span className="text-[11px] text-gray-400">2008, 2013, 2014, 2016, 2017</span>
+            <span className="text-[11px] text-gray-400 mt-1 block">2008, 2013, 2014, 2016, 2017</span>
           </div>
 
-          <div className="bg-[#12141D] border border-gray-800 rounded-2xl p-5 text-center">
-            <span className="text-xs uppercase font-bold text-gray-400">Chiếc giày Vàng châu Âu</span>
-            <div className="text-4xl font-black font-mono text-amber-400 mt-1">
+          <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 text-center">
+            <span className="text-[11px] uppercase font-semibold text-gray-400">Chiếc giày Vàng châu Âu</span>
+            <div className="text-4xl font-black font-mono text-white mt-1.5">
               4
             </div>
-            <span className="text-[11px] text-gray-400">Kỷ lục tại cả Premier League & La Liga</span>
+            <span className="text-[11px] text-gray-400 mt-1 block">Kỷ lục Premier League & La Liga</span>
           </div>
         </div>
 
         {/* Category Tabs */}
-        <div className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2">
+        <div className="flex items-center justify-center gap-2 mb-12 overflow-x-auto pb-2">
           {[
             { id: "club", label: "Cúp Câu Lạc Bộ (33)" },
             { id: "international", label: "Đội Tuyển Quốc Gia (3)" },
@@ -119,10 +119,10 @@ export default function TrophyRoomSection() {
             <button
               key={cat.id}
               onClick={() => setActiveCategory(cat.id as any)}
-              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border ${
+              className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all border ${
                 activeCategory === cat.id
                   ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-lg shadow-[#D4AF37]/20"
-                  : "bg-[#141720] text-gray-300 border-gray-800 hover:border-gray-700"
+                  : "bg-[#11131C] text-gray-400 border-white/10 hover:text-white hover:border-white/20"
               }`}
             >
               {cat.label}
@@ -136,7 +136,7 @@ export default function TrophyRoomSection() {
             {filteredTrophies.map((trophy) => (
               <div
                 key={trophy.id}
-                className="bg-gradient-to-b from-[#131520] to-[#0D0F16] border border-gray-800 hover:border-[#D4AF37]/50 rounded-2xl overflow-hidden transition-all duration-300 shadow-xl flex flex-col justify-between group"
+                className="bg-[#0F121A]/90 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl overflow-hidden transition-all duration-300 shadow-xl flex flex-col justify-between group"
               >
                 {/* Trophy Real Image Header */}
                 {getTrophyImage(trophy.id, trophy.trophyImageUrl) && (
@@ -194,7 +194,7 @@ export default function TrophyRoomSection() {
               >
                 <div className="flex items-start justify-between gap-4 mb-3">
                   <div>
-                    <span className="text-[10px] font-bold uppercase tracking-wider text-emerald-400 px-2 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20">
+                    <span className="text-[10px] font-bold uppercase tracking-wider text-[#D4AF37] px-2.5 py-0.5 rounded bg-[#D4AF37]/10 border border-[#D4AF37]/25">
                       Xác nhận: {record.verifiedBy}
                     </span>
                     <h3 className="text-lg font-bold text-white mt-2">{record.title}</h3>

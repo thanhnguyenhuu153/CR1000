@@ -23,33 +23,33 @@ export default function BioSection() {
   const activeImageUrl = eraImageMap[activeEraIndex] || currentEra.imageUrl;
 
   return (
-    <section id="bio" className="py-20 relative bg-[#0B0C10] border-t border-gray-900">
+    <section id="bio" className="py-28 sm:py-36 relative bg-[#08090C] border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#181B24] border border-gray-800 text-[#D4AF37] text-xs font-bold uppercase tracking-widest mb-3">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
             Chương 1 • Tiểu sử & Kỷ nguyên
           </div>
-          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase">
+          <h2 className="text-3xl sm:text-5xl font-black text-white tracking-tight uppercase leading-tight">
             Hành trình tiến hóa của <span className="gold-gradient-text">Huyền Thoại</span>
           </h2>
-          <p className="mt-4 text-sm sm:text-base text-gray-400">
-            Từ một cậu bé mắc bệnh tim tại hòn đảo Madeira nghèo khó, tới biểu tượng vĩ đại nhất của sự khổ luyện và ý chí không giới hạn trong lịch sử thể thao.
+          <p className="mt-4 text-sm sm:text-base text-gray-400 font-light leading-relaxed">
+            Từ một cậu bé mắc hội chứng tim đập nhanh tại hòn đảo Madeira nghèo khó, tới biểu tượng vĩ đại nhất của sự khổ luyện, kỷ luật và ý chí không giới hạn trong lịch sử thể thao.
           </p>
         </div>
 
         {/* Era Navigation Pills */}
-        <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-10 no-scrollbar">
+        <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-12 no-scrollbar">
           {cr7BioMilestones.map((era, index) => {
             const isActive = activeEraIndex === index;
             return (
               <button
                 key={era.era}
                 onClick={() => setActiveEraIndex(index)}
-                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all duration-300 border ${
+                className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-semibold whitespace-nowrap transition-all duration-300 border ${
                   isActive
-                    ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-lg shadow-[#D4AF37]/20 scale-105"
-                    : "bg-[#141720] text-gray-300 border-gray-800 hover:border-gray-700 hover:text-white"
+                    ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-lg shadow-[#D4AF37]/20"
+                    : "bg-[#11131C] text-gray-400 border-white/10 hover:text-white hover:border-white/20"
                 }`}
               >
                 <span className="block text-[10px] font-mono opacity-80">{era.year}</span>
@@ -60,15 +60,15 @@ export default function BioSection() {
         </div>
 
         {/* Active Era Featured Showcase Card */}
-        <div className="bg-gradient-to-br from-[#141722] via-[#0E1017] to-[#0A0C10] border border-gray-800 rounded-3xl p-6 sm:p-10 shadow-2xl transition-all">
+        <div className="bg-[#0F121A]/90 border border-white/10 rounded-3xl p-6 sm:p-10 shadow-2xl transition-all">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
             {/* Left Column: Story & Narrative */}
             <div className="lg:col-span-7 space-y-6">
               <div className="flex flex-wrap items-center gap-3">
-                <span className="px-3 py-1 rounded-full bg-[#D4AF37]/15 text-[#F3C623] border border-[#D4AF37]/30 text-xs font-bold uppercase tracking-wider">
+                <span className="px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 text-xs font-semibold uppercase tracking-wider">
                   {currentEra.badge}
                 </span>
-                <span className="text-sm font-mono text-gray-400">{currentEra.year}</span>
+                <span className="text-xs font-mono text-gray-400">{currentEra.year}</span>
               </div>
 
               <div>
@@ -80,31 +80,31 @@ export default function BioSection() {
                 </p>
               </div>
 
-              <p className="text-sm sm:text-base text-gray-300 leading-relaxed">
+              <p className="text-sm sm:text-base text-gray-300 leading-relaxed font-light">
                 {currentEra.description}
               </p>
 
               {currentEra.quote && (
-                <div className="relative p-4 sm:p-5 rounded-2xl bg-[#1B1F2B]/60 border-l-4 border-[#D4AF37] text-gray-200">
+                <div className="relative p-5 rounded-2xl bg-[#141724]/60 border-l-2 border-[#D4AF37] text-gray-200">
                   <Quote className="w-5 h-5 text-[#D4AF37] opacity-60 mb-2" />
-                  <p className="text-sm sm:text-base italic font-serif leading-relaxed">
+                  <p className="text-sm sm:text-base italic font-serif leading-relaxed text-gray-300">
                     &ldquo;{currentEra.quote}&rdquo;
                   </p>
-                  <span className="block text-right text-xs font-bold text-gray-400 mt-2">
+                  <span className="block text-right text-xs font-semibold text-gray-400 mt-2">
                     — Cristiano Ronaldo
                   </span>
                 </div>
               )}
 
               {/* Milestones in this Era */}
-              <div className="space-y-3 bg-[#11131B]/80 p-5 rounded-2xl border border-gray-800/80">
+              <div className="space-y-3 bg-[#131622]/80 p-5 rounded-2xl border border-white/5">
                 <h4 className="text-xs uppercase font-bold tracking-widest text-[#D4AF37] flex items-center gap-2">
                   <Trophy className="w-4 h-4" /> Dấu ấn không thể quên
                 </h4>
                 <ul className="space-y-2.5">
                   {currentEra.highlights.map((highlight, i) => (
                     <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-300">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <CheckCircle2 className="w-4 h-4 text-[#D4AF37] shrink-0 mt-0.5" />
                       <span>{highlight}</span>
                     </li>
                   ))}
@@ -115,7 +115,7 @@ export default function BioSection() {
             {/* Right Column: REAL PHOTO OF CR7 IN THIS ERA + Stats */}
             <div className="lg:col-span-5 space-y-6">
               {/* Real Era Photo */}
-              <div className="rounded-2xl overflow-hidden border border-gray-700/80 bg-[#0E1017] shadow-xl relative group">
+              <div className="rounded-2xl overflow-hidden border border-white/10 bg-[#0E1017] shadow-xl relative group">
                 <div className="relative h-64 sm:h-72 w-full overflow-hidden">
                   <img
                     src={activeImageUrl}
@@ -123,14 +123,14 @@ export default function BioSection() {
                     className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0E1017] via-transparent to-transparent opacity-80" />
-                  <span className="absolute bottom-3 left-3 right-3 text-xs text-gray-200 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-700">
+                  <span className="absolute bottom-3 left-3 right-3 text-xs text-gray-300 bg-black/70 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/10">
                     📸 {currentEra.imageCaption}
                   </span>
                 </div>
               </div>
 
               {/* Quick Numbers in this Era */}
-              <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#11131B] border border-gray-800">
+              <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#131622]/80 border border-white/10">
                 <div className="text-center">
                   <div className="text-2xl sm:text-3xl font-black font-mono text-white">
                     {currentEra.stats.goals}
