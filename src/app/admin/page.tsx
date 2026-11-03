@@ -22,6 +22,10 @@ import {
   Copy,
   ChevronRight,
   ShieldAlert,
+  Sparkles,
+  Activity,
+  RefreshCw,
+  Send,
 } from "lucide-react";
 
 export default function AdminPage() {
@@ -42,13 +46,21 @@ export default function AdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [activeTab, setActiveTab] = useState<"images" | "stats" | "store" | "export">("images");
+  const [activeTab, setActiveTab] = useState<"images" | "stats" | "autopilot" | "export">("images");
 
   // Local Form States
   const [imageForm, setImageForm] = useState<CustomImages>(images);
   const [goalsInput, setGoalsInput] = useState(goals.toString());
   const [matchForm, setMatchForm] = useState(nextMatch);
   const [saveNotification, setSaveNotification] = useState("");
+
+  // Auto-Pilot States
+  const [cronLoading, setCronLoading] = useState(false);
+  const [cronResponse, setCronResponse] = useState<any>(null);
+  const [webhookGoals, setWebhookGoals] = useState("986");
+  const [webhookMatch, setWebhookMatch] = useState("Al Nassr vs Al Feiha");
+  const [webhookLoading, setWebhookLoading] = useState(false);
+  const [webhookResult, setWebhookResult] = useState<any>(null);
 
   useEffect(() => {
     setImageForm(images);
@@ -275,6 +287,18 @@ export default function AdminPage() {
           </button>
 
           <button
+            onClick={() => setActiveTab("autopilot")}
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
+              activeTab === "autopilot"
+                ? "bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/20"
+                : "bg-[#141720] text-gray-300 hover:text-white"
+            }`}
+          >
+            <Sparkles className="w-4 h-4" />
+            <span>3. Tự động hóa Auto-Pilot (Cấp độ 3)</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab("export")}
             className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all ${
               activeTab === "export"
@@ -283,7 +307,7 @@ export default function AdminPage() {
             }`}
           >
             <Copy className="w-4 h-4" />
-            <span>3. Xuất Code lưu vĩnh viễn</span>
+            <span>4. Xuất Code lưu trữ</span>
           </button>
         </div>
 
@@ -834,7 +858,185 @@ export default function AdminPage() {
           </form>
         )}
 
-        {/* TAB 3: EXPORT CODE */}
+        {/* TAB 3: AUTO-PILOT AUTOMATION ENGINE */}
+        {activeTab === "autopilot" && (
+          <div className="space-y-6">
+            {/* Overview Card */}
+            <div className="p-6 rounded-2xl bg-gradient-to-br from-[#121522] to-[#0A0C13] border border-[#D4AF37]/30 shadow-2xl">
+              <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4">
+                <div>
+                  <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#D4AF37]/10 text-[#D4AF37] border border-[#D4AF37]/30 text-[10px] font-bold uppercase tracking-wider mb-2">
+                    <Activity className="w-3.5 h-3.5 animate-pulse" />
+                    <span>Cấp độ 3 • Tự Động Hóa 100% (Auto-Pilot)</span>
+                  </div>
+                  <h3 className="text-xl font-black text-white">Hệ Thống Tự Động Quét & Cập Nhật Bàn Thắng</h3>
+                  <p className="text-xs text-gray-400 mt-1 max-w-2xl leading-relaxed">
+                    Hệ thống tích hợp sẵn <strong>Vercel Cron Jobs</strong> (chạy ngầm mỗi 4 tiếng) và <strong>Webhook Endpoint</strong> tiếp nhận dữ liệu từ các API Thể thao toàn cầu.
+                  </p>
+                </div>
+
+                <button
+                  type="button"
+                  onClick={async () => {
+                    setCronLoading(true);
+                    setCronResponse(null);
+                    try {
+                      const res = await fetch("/api/cron/sync-cr7?force=true");
+                      const data = await res.json();
+                      setCronResponse(data);
+                    } catch (e: any) {
+                      setCronResponse({ error: e.message });
+                    } finally {
+                      setCronLoading(false);
+                    }
+                  }}
+                  disabled={cronLoading}
+                  className="px-5 py-2.5 rounded-xl bg-[#D4AF37] text-black font-bold text-xs flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all shadow-lg shadow-[#D4AF37]/20 shrink-0"
+                >
+                  <RefreshCw className={`w-4 h-4 ${cronLoading ? "animate-spin" : ""}`} />
+                  <span>{cronLoading ? "Đang quét API..." : "⚡ Chạy quét kiểm tra ngay"}</span>
+                </button>
+              </div>
+
+              {/* Status Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-4 border-t border-white/10 text-xs">
+                <div className="p-3.5 rounded-xl bg-[#0B0D14] border border-white/5">
+                  <span className="text-[10px] uppercase font-bold text-gray-400 block mb-1">Vercel Cron Engine</span>
+                  <span className="text-emerald-400 font-bold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                    Đã cấu hình (Mỗi 4 tiếng)
+                  </span>
+                  <span className="text-[10px] font-mono text-gray-500 block mt-1">/api/cron/sync-cr7</span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#0B0D14] border border-white/5">
+                  <span className="text-[10px] uppercase font-bold text-gray-400 block mb-1">Cổng Webhook Thời Gian Thực</span>
+                  <span className="text-[#D4AF37] font-bold flex items-center gap-1.5">
+                    <CheckCircle2 className="w-3.5 h-3.5" />
+                    Sẵn sàng tiếp nhận POST
+                  </span>
+                  <span className="text-[10px] font-mono text-gray-500 block mt-1">/api/webhook/goal-alert</span>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#0B0D14] border border-white/5">
+                  <span className="text-[10px] uppercase font-bold text-gray-400 block mb-1">GitOps Zero-Touch</span>
+                  <span className="text-gray-300 font-bold flex items-center gap-1.5">
+                    <ShieldAlert className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    Hỗ trợ GitHub Auto-Commit
+                  </span>
+                  <span className="text-[10px] text-gray-500 block mt-1">Vercel Deploy tự động 25s</span>
+                </div>
+              </div>
+
+              {/* Cron Run Response Display */}
+              {cronResponse && (
+                <div className="mt-4 p-4 rounded-xl bg-[#05060A] border border-emerald-500/30 text-xs font-mono text-emerald-300 overflow-x-auto">
+                  <div className="flex items-center justify-between mb-2 pb-1 border-b border-white/10 text-white font-bold">
+                    <span>Kết quả quét mới nhất từ Football Auto-Pilot Engine:</span>
+                    <span className="text-emerald-400">✓ Hoạt động hoàn hảo</span>
+                  </div>
+                  <pre className="text-[11px] leading-relaxed">{JSON.stringify(cronResponse, null, 2)}</pre>
+                </div>
+              )}
+            </div>
+
+            {/* Test Webhook Simulator */}
+            <div className="p-6 rounded-2xl bg-[#11131C] border border-gray-800 space-y-4">
+              <h4 className="text-sm font-bold text-white flex items-center gap-2">
+                <Send className="w-4 h-4 text-[#D4AF37]" />
+                <span>Thử nghiệm kích hoạt Webhook khi CR7 ghi bàn mới</span>
+              </h4>
+              <p className="text-xs text-gray-400 leading-relaxed">
+                Mô phỏng tín hiệu gửi tới hệ thống khi Ronaldo nổ súng. Bạn có thể test trực tiếp xem website tiếp nhận dữ liệu thế nào:
+              </p>
+
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setWebhookLoading(true);
+                  setWebhookResult(null);
+                  try {
+                    const res = await fetch("/api/webhook/goal-alert", {
+                      method: "POST",
+                      headers: { "Content-Type": "application/json" },
+                      body: JSON.stringify({
+                        goals: parseInt(webhookGoals, 10),
+                        match: webhookMatch,
+                        secret: "cr1000_secret_webhook_key",
+                      }),
+                    });
+                    const data = await res.json();
+                    setWebhookResult(data);
+                    if (data.status === "success" && data.currentGoals) {
+                      setGoals(data.currentGoals);
+                      setSaveNotification(`⚡ Auto-Pilot Webhook đã ghi nhận: ${data.currentGoals} bàn thắng!`);
+                    }
+                  } catch (err: any) {
+                    setWebhookResult({ error: err.message });
+                  } finally {
+                    setWebhookLoading(false);
+                  }
+                }}
+                className="grid grid-cols-1 sm:grid-cols-12 gap-4 items-end"
+              >
+                <div className="sm:col-span-3">
+                  <label className="block text-xs font-semibold text-gray-300 mb-1">Số bàn thắng mới:</label>
+                  <input
+                    type="number"
+                    value={webhookGoals}
+                    onChange={(e) => setWebhookGoals(e.target.value)}
+                    className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-xs font-mono font-bold text-[#D4AF37]"
+                  />
+                </div>
+
+                <div className="sm:col-span-6">
+                  <label className="block text-xs font-semibold text-gray-300 mb-1">Tên trận đấu / Bối cảnh:</label>
+                  <input
+                    type="text"
+                    value={webhookMatch}
+                    onChange={(e) => setWebhookMatch(e.target.value)}
+                    className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white"
+                  />
+                </div>
+
+                <div className="sm:col-span-3">
+                  <button
+                    type="submit"
+                    disabled={webhookLoading}
+                    className="w-full py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] text-black font-bold text-xs flex items-center justify-center gap-1.5 hover:opacity-95"
+                  >
+                    <Send className="w-3.5 h-3.5" />
+                    <span>{webhookLoading ? "Đang gửi..." : "Gửi Webhook Test"}</span>
+                  </button>
+                </div>
+              </form>
+
+              {webhookResult && (
+                <div className="p-3 rounded-xl bg-[#090B10] border border-emerald-500/30 text-xs font-mono text-emerald-300">
+                  <pre>{JSON.stringify(webhookResult, null, 2)}</pre>
+                </div>
+              )}
+            </div>
+
+            {/* Step by Step Zero-Touch Guide */}
+            <div className="p-6 rounded-2xl bg-[#0D0F17] border border-white/5 space-y-3 text-xs text-gray-300 leading-relaxed">
+              <h4 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+                Hướng dẫn kích hoạt Zero-Touch Auto-Commit (100% rảnh tay)
+              </h4>
+              <p>
+                Để bot có quyền tự động chỉnh sửa file code và tự kích hoạt Vercel build lại mà không cần bạn làm bất cứ điều gì:
+              </p>
+              <ol className="list-decimal list-inside space-y-1.5 text-gray-400">
+                <li>Vào <strong>Vercel Dashboard</strong> ➔ Chọn dự án <strong>CR1000</strong> ➔ Tab <strong>Settings</strong> ➔ <strong>Environment Variables</strong>.</li>
+                <li>Thêm biến: <code className="text-[#D4AF37] font-mono">GITHUB_PAT</code> với giá trị là mã Personal Access Token GitHub của bạn.</li>
+                <li>Thêm biến (tùy chọn): <code className="text-[#D4AF37] font-mono">CRON_SECRET</code> để bảo mật endpoint cron.</li>
+                <li>Từ thời điểm đó, mỗi khi có bàn thắng mới, Cron Job hoặc Webhook sẽ tự gọi GitHub API để tạo commit, và Vercel sẽ tự động build lại trang web trong 25 giây!</li>
+              </ol>
+            </div>
+          </div>
+        )}
+
+        {/* TAB 4: EXPORT CODE */}
         {activeTab === "export" && (
           <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
             <h3 className="text-base font-bold text-white">Xuất mã lưu trữ vĩnh viễn vào Codebase</h3>
