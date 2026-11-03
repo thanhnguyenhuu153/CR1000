@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { SiteDataProvider } from "@/context/SiteDataContext";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
@@ -131,6 +132,9 @@ export default function RootLayout({
   return (
     <html lang="vi" className="dark scroll-smooth">
       <head>
+        {/* Google AdSense Verification */}
+        <meta name="google-adsense-account" content="ca-pub-5603625442217345" />
+
         {/* Preload critical LCP Hero image for maximum Mobile CWV speed */}
         <link rel="preload" as="image" href="/images/cr7/hero-cr7.jpg" fetchPriority="high" />
         
@@ -151,6 +155,14 @@ export default function RootLayout({
         <SiteDataProvider>{children}</SiteDataProvider>
         <SpeedInsights />
         <Analytics />
+
+        {/* Google AdSense Script */}
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5603625442217345"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
       </body>
     </html>
   );

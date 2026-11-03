@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
 import { Trophy, ArrowUp, Heart, Sparkles, Share2 } from "lucide-react";
 import { useSiteData } from "@/context/SiteDataContext";
 import { cr7CareerSummary } from "@/data/cr7-stats";
@@ -104,13 +105,24 @@ export default function Footer() {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-gray-500 text-[11px] text-center sm:text-left">
-            © {new Date().getFullYear()} CR1000 Digital Museum. Dự án phi lợi nhuận vinh danh sự nghiệp của Cristiano Ronaldo dos Santos Aveiro.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-2 sm:gap-4 text-center sm:text-left">
+            <p className="text-gray-500 text-[11px]">
+              © {new Date().getFullYear()} CR1000 Digital Museum. Dự án phi lợi nhuận vinh danh sự nghiệp của Cristiano Ronaldo dos Santos Aveiro.
+            </p>
+            <div className="flex items-center gap-3 text-[11px] text-gray-500">
+              <Link href="/privacy" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
+                Chính sách bảo mật
+              </Link>
+              <span>•</span>
+              <Link href="/privacy#terms" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
+                Điều khoản & Miễn trừ
+              </Link>
+            </div>
+          </div>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#11131A] hover:bg-[#1E2230] text-gray-300 border border-gray-800 transition-all text-xs"
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#11131A] hover:bg-[#1E2230] text-gray-300 border border-gray-800 transition-all text-xs shrink-0"
           >
             <span>Về đầu trang</span>
             <ArrowUp className="w-3.5 h-3.5 text-[#D4AF37]" />
