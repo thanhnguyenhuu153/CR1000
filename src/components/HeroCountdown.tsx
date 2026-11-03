@@ -29,13 +29,11 @@ export default function HeroCountdown({ currentGoals, onGoalIncrement }: HeroCou
   };
 
   return (
-    <section id="countdown" className="relative min-h-[92vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
-      {/* Background Lighting & Glows */}
+    <section id="countdown" className="relative min-h-[96vh] flex items-center justify-center pt-24 pb-16 overflow-hidden">
+      {/* Background Lighting & Real Image Silhouette Backdrop */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[650px] bg-gradient-to-b from-[#D4AF37]/12 via-[#E63946]/8 to-transparent rounded-full blur-[140px]" />
-        <div className="absolute bottom-10 left-10 w-96 h-96 bg-[#161922]/50 rounded-full blur-[100px]" />
-        <div className="absolute top-20 right-10 w-80 h-80 bg-[#E63946]/10 rounded-full blur-[120px]" />
-        <div className="absolute inset-0 bg-[radial-gradient(#262B36_1px,transparent_1px)] [background-size:32px_32px] opacity-25" />
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] bg-gradient-to-b from-[#D4AF37]/15 via-[#E63946]/10 to-transparent rounded-full blur-[140px]" />
+        <div className="absolute inset-0 bg-[radial-gradient(#262B36_1px,transparent_1px)] [background-size:32px_32px] opacity-30" />
       </div>
 
       <div className="relative max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
@@ -54,9 +52,44 @@ export default function HeroCountdown({ currentGoals, onGoalIncrement }: HeroCou
           <span className="gold-gradient-text block sm:inline">1.000 Bàn</span>
         </h1>
 
-        <p className="max-w-3xl mx-auto text-base sm:text-xl text-gray-300 font-light mb-12 leading-relaxed">
+        <p className="max-w-3xl mx-auto text-base sm:text-xl text-gray-300 font-light mb-10 leading-relaxed">
           Chứng kiến từng bước chân của <strong className="text-white font-semibold">Cristiano Ronaldo</strong> – Cầu thủ ghi nhiều bàn thắng chính thức nhất mọi thời đại trong nỗ lực chinh phục đỉnh Everest chưa từng có của bóng đá nhân loại.
         </p>
+
+        {/* Hero Photo Banner - REAL PHOTO OF CR7 */}
+        <div className="relative max-w-4xl mx-auto mb-10 rounded-3xl overflow-hidden border border-[#D4AF37]/40 shadow-2xl gold-border-glow">
+          <div className="relative h-64 sm:h-80 md:h-96 w-full bg-[#0E1017]">
+            <img
+              src="/images/cr7/hero-cr7.jpg"
+              alt="Cristiano Ronaldo - Hành trình 1000 bàn thắng"
+              className="w-full h-full object-cover object-top filter brightness-95 contrast-105"
+            />
+            {/* Cinematic Gradient Overlays */}
+            <div className="absolute inset-0 bg-gradient-to-t from-[#0F1117] via-[#0F1117]/40 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-[#0F1117]/80 via-transparent to-[#0F1117]/80" />
+
+            {/* In-image Caption Overlay */}
+            <div className="absolute bottom-6 left-6 right-6 flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 text-left">
+              <div>
+                <span className="px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#F3C623] text-xs font-bold uppercase tracking-wider backdrop-blur-md">
+                  Chân dung Huyền Thoại
+                </span>
+                <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">
+                  Cristiano Ronaldo dos Santos Aveiro
+                </h2>
+                <p className="text-xs sm:text-sm text-gray-300">
+                  Madeira, Bồ Đào Nha • Sinh ngày 05/02/1985 • Đang thi đấu cho Al Nassr & ĐTQG
+                </p>
+              </div>
+
+              <div className="shrink-0">
+                <span className="text-xs uppercase font-mono font-bold text-[#F3C623] px-3 py-1 rounded-lg bg-black/60 border border-gray-700 backdrop-blur-md">
+                  Ảnh tư liệu Wikimedia Commons
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {/* Main Countdown Display Card */}
         <div className="relative max-w-3xl mx-auto bg-gradient-to-b from-[#161922]/90 to-[#0F1117]/95 border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-10 shadow-2xl gold-border-glow backdrop-blur-xl mb-12">

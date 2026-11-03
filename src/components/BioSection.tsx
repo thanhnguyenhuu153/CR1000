@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { cr7BioMilestones } from "@/data/cr7-bio";
-import { Award, Target, Trophy, Quote, CheckCircle2, ChevronRight } from "lucide-react";
+import { Award, Target, Trophy, Quote, CheckCircle2, ChevronRight, Image as ImageIcon } from "lucide-react";
 
 export default function BioSection() {
   const [activeEraIndex, setActiveEraIndex] = useState(2); // Mặc định mở Real Madrid - thời kỳ rực rỡ nhất
@@ -81,10 +81,40 @@ export default function BioSection() {
                   </span>
                 </div>
               )}
+
+              {/* Milestones in this Era */}
+              <div className="space-y-3 bg-[#11131B]/80 p-5 rounded-2xl border border-gray-800/80">
+                <h4 className="text-xs uppercase font-bold tracking-widest text-[#D4AF37] flex items-center gap-2">
+                  <Trophy className="w-4 h-4" /> Dấu ấn không thể quên
+                </h4>
+                <ul className="space-y-2.5">
+                  {currentEra.highlights.map((highlight, i) => (
+                    <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-300">
+                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
+                      <span>{highlight}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
-            {/* Right Column: Era Stats & Highlights */}
+            {/* Right Column: REAL PHOTO OF CR7 IN THIS ERA + Stats */}
             <div className="lg:col-span-5 space-y-6">
+              {/* Real Era Photo */}
+              <div className="rounded-2xl overflow-hidden border border-gray-700/80 bg-[#0E1017] shadow-xl relative group">
+                <div className="relative h-64 sm:h-72 w-full overflow-hidden">
+                  <img
+                    src={currentEra.imageUrl}
+                    alt={currentEra.title}
+                    className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#0E1017] via-transparent to-transparent opacity-80" />
+                  <span className="absolute bottom-3 left-3 right-3 text-xs text-gray-200 bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-lg border border-gray-700">
+                    📸 {currentEra.imageCaption}
+                  </span>
+                </div>
+              </div>
+
               {/* Quick Numbers in this Era */}
               <div className="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#11131B] border border-gray-800">
                 <div className="text-center">
@@ -111,21 +141,6 @@ export default function BioSection() {
                     Danh hiệu
                   </span>
                 </div>
-              </div>
-
-              {/* Milestones in this Era */}
-              <div className="space-y-3 bg-[#11131B]/80 p-5 rounded-2xl border border-gray-800/80">
-                <h4 className="text-xs uppercase font-bold tracking-widest text-[#D4AF37] flex items-center gap-2">
-                  <Trophy className="w-4 h-4" /> Dấu ấn không thể quên
-                </h4>
-                <ul className="space-y-2.5">
-                  {currentEra.highlights.map((highlight, i) => (
-                    <li key={i} className="flex items-start gap-2.5 text-xs sm:text-sm text-gray-300">
-                      <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-                      <span>{highlight}</span>
-                    </li>
-                  ))}
-                </ul>
               </div>
             </div>
           </div>

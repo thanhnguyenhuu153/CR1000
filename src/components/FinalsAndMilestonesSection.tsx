@@ -91,9 +91,24 @@ export default function FinalsAndMilestonesSection() {
             {filteredFinals.map((goal) => (
               <div
                 key={goal.id}
-                className="bg-gradient-to-b from-[#141724] to-[#0D0F17] border border-gray-800 hover:border-[#D4AF37]/50 rounded-3xl p-6 sm:p-7 transition-all duration-300 shadow-2xl flex flex-col justify-between group"
+                className="bg-gradient-to-b from-[#141724] to-[#0D0F17] border border-gray-800 hover:border-[#D4AF37]/50 rounded-3xl overflow-hidden transition-all duration-300 shadow-2xl flex flex-col justify-between group"
               >
-                <div>
+                {/* Optional Real Photo Header */}
+                {goal.matchImageUrl && (
+                  <div className="relative h-48 w-full bg-[#0E1017] overflow-hidden border-b border-gray-800">
+                    <img
+                      src={goal.matchImageUrl}
+                      alt={goal.title}
+                      className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 filter brightness-95"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#141724] via-transparent to-transparent" />
+                    <span className="absolute bottom-3 left-4 text-xs font-semibold text-gray-200 bg-black/60 px-3 py-1 rounded-lg backdrop-blur-md">
+                      📸 Khoảnh khắc lịch sử
+                    </span>
+                  </div>
+                )}
+
+                <div className="p-6 sm:p-7">
                   {/* Top Badges */}
                   <div className="flex flex-wrap items-center justify-between gap-2 mb-4">
                     <span
@@ -142,29 +157,29 @@ export default function FinalsAndMilestonesSection() {
                   <p className="text-xs text-[#D4AF37] italic font-medium mb-4">
                     Ý nghĩa: {goal.impact}
                   </p>
-                </div>
 
-                {/* Contextual Gear Tag (Monetization & Immersion) */}
-                {goal.gearTag && (
-                  <div className="mt-4 pt-4 border-t border-gray-800/80 flex items-center justify-between bg-[#11131C] p-3 rounded-xl border border-gray-700/60">
-                    <div className="flex items-center gap-2 text-xs">
-                      <Tag className="w-4 h-4 text-[#F3C623] shrink-0" />
-                      <div>
-                        <span className="text-gray-400 text-[10px] block">Vũ khí thi đấu trong trận:</span>
-                        <strong className="text-white text-xs">{goal.gearTag.bootName}</strong>
+                  {/* Contextual Gear Tag (Monetization & Immersion) */}
+                  {goal.gearTag && (
+                    <div className="mt-4 pt-4 border-t border-gray-800/80 flex items-center justify-between bg-[#11131C] p-3 rounded-xl border border-gray-700/60">
+                      <div className="flex items-center gap-2 text-xs">
+                        <Tag className="w-4 h-4 text-[#F3C623] shrink-0" />
+                        <div>
+                          <span className="text-gray-400 text-[10px] block">Vũ khí thi đấu trong trận:</span>
+                          <strong className="text-white text-xs">{goal.gearTag.bootName}</strong>
+                        </div>
                       </div>
+                      <a
+                        href={`https://shopee.vn/search?keyword=${encodeURIComponent(goal.gearTag.affiliateKeyword)}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-3 py-1.5 rounded-lg bg-[#222736] hover:bg-[#D4AF37] text-gray-200 hover:text-black text-xs font-bold transition-all flex items-center gap-1 shrink-0"
+                      >
+                        <span>Khám phá</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
                     </div>
-                    <a
-                      href={`https://shopee.vn/search?keyword=${encodeURIComponent(goal.gearTag.affiliateKeyword)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-3 py-1.5 rounded-lg bg-[#222736] hover:bg-[#D4AF37] text-gray-200 hover:text-black text-xs font-bold transition-all flex items-center gap-1 shrink-0"
-                    >
-                      <span>Khám phá</span>
-                      <ExternalLink className="w-3 h-3" />
-                    </a>
-                  </div>
-                )}
+                  )}
+                </div>
               </div>
             ))}
           </div>

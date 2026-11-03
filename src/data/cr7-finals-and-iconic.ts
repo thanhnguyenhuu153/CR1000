@@ -14,6 +14,7 @@ export interface IconicGoal {
   stadium: string;
   description: string;
   impact: string;
+  matchImageUrl?: string;
   gearTag?: {
     bootName: string;
     description: string;
@@ -37,6 +38,7 @@ export const cr7FinalsAndIconicGoals: IconicGoal[] = [
     team: "Manchester United",
     opponent: "Chelsea FC",
     stadium: "Luzhniki Stadium (Moscow, Nga)",
+    matchImageUrl: "/images/cr7/final-chelsea.jpg",
     description:
       "Từ quả tạt của Wes Brown, Ronaldo bật nhảy cao hơn Michael Essien nửa thân người, dừng lại trên không trung một khoảnh khắc rồi lắc đầu găm bóng vào góc hiểm của Petr Čech.",
     impact: "Mở ra chức vô địch Champions League đầu tiên trong sự nghiệp và đảm bảo Quả bóng Vàng 2008.",
@@ -106,6 +108,7 @@ export const cr7FinalsAndIconicGoals: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "Juventus FC",
     stadium: "Millennium Stadium (Cardiff, Xứ Wales)",
+    matchImageUrl: "/images/cr7/era-realmadrid.jpg",
     description:
       "Ghi bàn mở tỷ số với pha đệm bóng một chạm đẳng cấp từ đường chuyền của Carvajal, sau đó nâng tỷ số lên 3-1 với pha băng cắt tinh quái hạ gục thủ thành Gianluigi Buffon.",
     impact: "Giúp Real Madrid trở thành đội bóng đầu tiên trong lịch sử bảo vệ thành công chức vô địch Champions League trong kỷ nguyên hiện đại.",
@@ -231,6 +234,7 @@ export const cr7FinalsAndIconicGoals: IconicGoal[] = [
     team: "Bồ Đào Nha",
     opponent: "Thụy Điển",
     stadium: "Friends Arena (Solna, Thụy Điển)",
+    matchImageUrl: "/images/cr7/era-portugal.jpg",
     description:
       "Trong trận đấu sinh tử trước 2 bàn thắng của Zlatan Ibrahimovic, Ronaldo đáp trả bằng 3 pha bứt tốc phản công chớp nhoáng với 3 cú dứt điểm lạnh lùng bằng chân trái và chân phải.",
     impact: "Đưa Bồ Đào Nha đến World Cup và đóng vai trò quyết định giúp Ronaldo đoạt Quả bóng Vàng 2013.",

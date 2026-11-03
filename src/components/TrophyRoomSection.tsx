@@ -29,6 +29,40 @@ export default function TrophyRoomSection() {
           </p>
         </div>
 
+        {/* Featured Real Photo Banner: CR7 with Ballon d'Or */}
+        <div className="relative max-w-5xl mx-auto mb-14 rounded-3xl overflow-hidden border border-[#D4AF37]/30 bg-gradient-to-r from-[#171410] via-[#0E1017] to-[#14120D] p-6 sm:p-8 flex flex-col md:flex-row items-center gap-6 shadow-2xl">
+          <div className="w-full md:w-5/12 h-64 sm:h-72 rounded-2xl overflow-hidden border border-gray-700 relative shrink-0">
+            <img
+              src="/images/trophies/cr7-ballon-dor.jpg"
+              alt="Cristiano Ronaldo nhận Quả bóng Vàng"
+              className="w-full h-full object-cover object-center filter brightness-95"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            <span className="absolute bottom-3 left-3 text-[11px] font-semibold text-gray-200 bg-black/60 px-2.5 py-1 rounded-md backdrop-blur-md">
+              🏆 CR7 nâng cao Quả bóng Vàng thế giới
+            </span>
+          </div>
+
+          <div className="flex-1 space-y-3 text-left">
+            <span className="px-3 py-1 rounded-full bg-[#D4AF37]/20 border border-[#D4AF37]/40 text-[#F3C623] text-xs font-bold uppercase tracking-wider">
+              Bộ sưu tập bất tử
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-black text-white">
+              Kỷ Lục 5 Quả Bóng Vàng & 5 Champions League
+            </h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              Từ danh hiệu Quả bóng Vàng đầu tiên năm 2008 ở tuổi 23 dưới thời Sir Alex Ferguson, tới cú đúp bảo vệ thành công danh hiệu năm 2016 và 2017 cùng Real Madrid. Cristiano Ronaldo là cầu thủ châu Âu duy nhất trong lịch sử đạt tới cột mốc 5 Quả bóng Vàng.
+            </p>
+            <div className="pt-2 flex items-center gap-4 text-xs font-mono text-[#D4AF37]">
+              <span>★ 2008</span>
+              <span>★ 2013</span>
+              <span>★ 2014</span>
+              <span>★ 2016</span>
+              <span>★ 2017</span>
+            </div>
+          </div>
+        </div>
+
         {/* Trophy Summary Counters */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-12">
           <div className="bg-[#12141D] border border-[#D4AF37]/30 rounded-2xl p-5 text-center">
@@ -86,54 +120,55 @@ export default function TrophyRoomSection() {
           ))}
         </div>
 
-        {/* Trophies Grid Display */}
+        {/* Trophies Grid Display with REAL TROPHY PHOTOS */}
         {activeCategory !== "records" ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredTrophies.map((trophy) => (
               <div
                 key={trophy.id}
-                className="bg-gradient-to-b from-[#131520] to-[#0D0F16] border border-gray-800 hover:border-[#D4AF37]/50 rounded-2xl p-6 transition-all duration-300 shadow-xl flex flex-col justify-between group"
+                className="bg-gradient-to-b from-[#131520] to-[#0D0F16] border border-gray-800 hover:border-[#D4AF37]/50 rounded-2xl overflow-hidden transition-all duration-300 shadow-xl flex flex-col justify-between group"
               >
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-[#1B1E2B] border border-gray-700 flex items-center justify-center text-[#F3C623] group-hover:scale-110 transition-transform">
-                      {trophy.iconName === "Trophy" && <Trophy className="w-6 h-6" />}
-                      {trophy.iconName === "Crown" && <Crown className="w-6 h-6" />}
-                      {trophy.iconName === "Globe" && <Globe className="w-6 h-6" />}
-                      {trophy.iconName === "Award" && <Award className="w-6 h-6" />}
-                      {trophy.iconName === "Shield" && <Shield className="w-6 h-6" />}
-                      {trophy.iconName === "Star" && <Star className="w-6 h-6" />}
-                      {trophy.iconName === "Sparkles" && <Sparkles className="w-6 h-6" />}
+                {/* Trophy Real Image Header */}
+                {trophy.trophyImageUrl && (
+                  <div className="relative h-44 w-full bg-[#08090C] overflow-hidden border-b border-gray-800">
+                    <img
+                      src={trophy.trophyImageUrl}
+                      alt={trophy.name}
+                      className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 filter brightness-95"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#131520] via-transparent to-transparent" />
+                    <div className="absolute top-3 right-3 px-3 py-1 rounded-full bg-black/70 border border-[#D4AF37]/40 text-[#F3C623] font-mono font-black text-sm backdrop-blur-md">
+                      x{trophy.count}
                     </div>
-                    <div className="text-right">
-                      <span className="text-3xl font-black font-mono gold-gradient-text block">
-                        x{trophy.count}
-                      </span>
-                      <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400">
-                        {trophy.teamOrOrg}
-                      </span>
-                    </div>
+                  </div>
+                )}
+
+                <div className="p-6">
+                  <div className="flex items-center justify-between mb-2">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-[#D4AF37]">
+                      {trophy.teamOrOrg}
+                    </span>
                   </div>
 
                   <h3 className="text-lg font-bold text-white mb-2">{trophy.name}</h3>
                   <p className="text-xs text-gray-300 leading-relaxed mb-4">
                     {trophy.description}
                   </p>
-                </div>
 
-                <div className="pt-3 border-t border-gray-800/80">
-                  <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 block mb-1.5">
-                    Các năm nâng cúp:
-                  </span>
-                  <div className="flex flex-wrap gap-1.5">
-                    {trophy.years.map((y, idx) => (
-                      <span
-                        key={idx}
-                        className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#1A1D27] text-gray-200 border border-gray-700"
-                      >
-                        {y}
-                      </span>
-                    ))}
+                  <div className="pt-3 border-t border-gray-800/80">
+                    <span className="text-[10px] uppercase font-bold tracking-wider text-gray-400 block mb-1.5">
+                      Các năm nâng cúp:
+                    </span>
+                    <div className="flex flex-wrap gap-1.5">
+                      {trophy.years.map((y, idx) => (
+                        <span
+                          key={idx}
+                          className="text-[11px] font-mono font-medium px-2 py-0.5 rounded bg-[#1A1D27] text-gray-200 border border-gray-700"
+                        >
+                          {y}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
