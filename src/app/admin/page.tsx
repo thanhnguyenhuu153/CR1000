@@ -318,6 +318,58 @@ export default function AdminPage() {
               </div>
             </div>
 
+            {/* Image Specs & Guidelines Card */}
+            <div className="bg-[#10131E] border border-[#D4AF37]/30 rounded-2xl p-5 shadow-lg">
+              <div className="flex items-center gap-2 mb-3">
+                <div className="w-6 h-6 rounded-lg bg-[#D4AF37]/20 border border-[#D4AF37]/40 flex items-center justify-center text-[#D4AF37] text-xs font-black">
+                  ℹ️
+                </div>
+                <h3 className="text-sm font-extrabold text-[#D4AF37] uppercase tracking-wide">
+                  Quy chuẩn kích thước & Định dạng ảnh tối ưu cho CR1000
+                </h3>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
+                <div className="p-3.5 rounded-xl bg-[#161926] border border-gray-800">
+                  <div className="font-bold text-white mb-1 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-amber-400"></span>
+                    <span>1. Banner Hero (Đầu trang)</span>
+                  </div>
+                  <ul className="text-gray-400 space-y-1 text-[11px] list-disc list-inside">
+                    <li>Kích thước: <strong className="text-gray-200">1920 × 1080 px</strong> (tỷ lệ 16:9)</li>
+                    <li>Định dạng: <strong className="text-gray-200">JPG, WebP, PNG</strong></li>
+                    <li>Dung lượng: <strong className="text-emerald-400">&lt; 1.5 MB</strong> (tốt nhất: 300–800 KB)</li>
+                  </ul>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#161926] border border-gray-800">
+                  <div className="font-bold text-white mb-1 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-blue-400"></span>
+                    <span>2. 7 Kỷ nguyên sự nghiệp</span>
+                  </div>
+                  <ul className="text-gray-400 space-y-1 text-[11px] list-disc list-inside">
+                    <li>Kích thước: <strong className="text-gray-200">800 × 600 px</strong> hoặc <strong className="text-gray-200">1200 × 800 px</strong></li>
+                    <li>Định dạng: <strong className="text-gray-200">JPG, WebP</strong></li>
+                    <li>Dung lượng: <strong className="text-emerald-400">&lt; 1.0 MB</strong> (tốt nhất: 200–500 KB)</li>
+                  </ul>
+                </div>
+
+                <div className="p-3.5 rounded-xl bg-[#161926] border border-gray-800">
+                  <div className="font-bold text-white mb-1 flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    <span>3. Cúp & Kỷ vật bảo tàng</span>
+                  </div>
+                  <ul className="text-gray-400 space-y-1 text-[11px] list-disc list-inside">
+                    <li>Kích thước: <strong className="text-gray-200">600 × 600 px</strong> hoặc <strong className="text-gray-200">800 × 800 px</strong> (1:1)</li>
+                    <li>Định dạng: <strong className="text-gray-200">PNG</strong> (tách nền trong suốt) hoặc JPG</li>
+                    <li>Dung lượng: <strong className="text-emerald-400">&lt; 800 KB</strong> (tốt nhất: 150–400 KB)</li>
+                  </ul>
+                </div>
+              </div>
+              <p className="text-[11px] text-gray-500 mt-3 pt-3 border-t border-gray-800/80">
+                💡 <em>Mẹo tối ưu:</em> Để website tải nhanh như chớp trên cả điện thoại 4G/5G, bạn có thể nén ảnh miễn phí qua các trang như <span className="text-[#D4AF37]">TinyPNG.com</span> hoặc <span className="text-[#D4AF37]">Squoosh.app</span> trước khi tải lên.
+              </p>
+            </div>
+
             {/* Hero Image */}
             <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6">
               <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 text-[#D4AF37]">
