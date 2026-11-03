@@ -102,7 +102,7 @@ export default function HeroCountdown({ currentGoals, onGoalIncrement }: HeroCou
                 Đã ghi chính thức
               </span>
               <div
-                className={`text-6xl sm:text-7xl lg:text-8xl font-black font-mono tracking-tighter text-white transition-transform duration-300 ${
+                className={`text-6xl sm:text-7xl lg:text-8xl font-black font-mono tracking-tighter text-white transition-transform duration-300 whitespace-nowrap ${
                   animating ? "scale-110 text-[#F59E0B]" : ""
                 }`}
               >
@@ -131,8 +131,8 @@ export default function HeroCountdown({ currentGoals, onGoalIncrement }: HeroCou
               <span className="text-xs uppercase tracking-widest text-gray-400 font-semibold">
                 Mục tiêu vĩ đại
               </span>
-              <div className="text-6xl sm:text-7xl lg:text-8xl font-black font-mono tracking-tighter gold-gradient-text">
-                1.000
+              <div className="text-6xl sm:text-7xl lg:text-8xl font-black font-mono tracking-tighter gold-gradient-text whitespace-nowrap">
+                1000
               </div>
               <span className="text-xs font-medium text-[#F3C623] flex items-center justify-center gap-1">
                 <Sparkles className="w-3.5 h-3.5" /> Bất khả chiến bại
