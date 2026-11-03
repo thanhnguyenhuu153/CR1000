@@ -45,6 +45,10 @@ export default function TrophyRoomSection() {
             <img
               src={images.trophyBallonDor}
               alt="Cristiano Ronaldo nhận Quả bóng Vàng"
+              width={600}
+              height={450}
+              loading="lazy"
+              decoding="async"
               className="w-full h-full object-cover object-center filter brightness-95"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
@@ -144,6 +148,10 @@ export default function TrophyRoomSection() {
                     <img
                       src={getTrophyImage(trophy.id, trophy.trophyImageUrl)}
                       alt={trophy.name}
+                      width={400}
+                      height={250}
+                      loading="lazy"
+                      decoding="async"
                       className="w-full h-full object-cover object-center transition-transform duration-500 group-hover:scale-105 filter brightness-95"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-[#131520] via-transparent to-transparent" />

@@ -40,6 +40,10 @@ export default function HeroCountdown({ currentGoals }: HeroCountdownProps) {
             <img
               src={images.hero}
               alt="Cristiano Ronaldo - Hành trình 1000 bàn thắng"
+              width={1200}
+              height={600}
+              fetchPriority="high"
+              decoding="sync"
               className="w-full h-full object-cover object-top filter brightness-95 contrast-105"
             />
             {/* Cinematic Gradient Overlays */}
