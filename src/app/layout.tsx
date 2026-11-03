@@ -14,6 +14,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.cr1000.live"),
   title: "CR1000 — Đếm ngược Bàn thắng thứ 1000 & Bảo tàng số Cristiano Ronaldo",
   description:
     `Theo dõi thời gian thực hành trình đến 1.000 bàn thắng chính thức của Cristiano Ronaldo (CR7). Hiện đã ghi ${cr7CareerSummary.totalGoals} bàn (còn ${cr7CareerSummary.countdownTarget - cr7CareerSummary.totalGoals} bàn). Khám phá bảo tàng số: thống kê chi tiết, ${cr7HattrickStats.totalHattricks}+ hattrick, poker, các bàn thắng chung kết định đoạt danh hiệu và kỷ lục thế giới.`,
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     title: "CR1000 — Hành trình chạm đỉnh 1000 bàn thắng của Cristiano Ronaldo",
     description:
       "Bảo tàng số & Đồng hồ đếm ngược bàn thắng thứ 1.000 của huyền thoại vĩ đại nhất lịch sử bóng đá. Phân tích số liệu, kỷ lục thế giới và các khoảnh khắc bất tử.",
-    url: "https://cr1000.vercel.app",
+    url: "https://www.cr1000.live",
     siteName: "CR1000 Live Museum",
     locale: "vi_VN",
     type: "website",
@@ -58,7 +59,7 @@ export default function RootLayout({
     "@graph": [
       {
         "@type": "Person",
-        "@id": "https://cr1000.vercel.app/#cr7",
+        "@id": "https://www.cr1000.live/#cr7",
         name: "Cristiano Ronaldo",
         alternateName: ["CR7", "Cristiano Ronaldo dos Santos Aveiro", "El Bicho"],
         nationality: "Portugal",
@@ -80,15 +81,15 @@ export default function RootLayout({
       },
       {
         "@type": "WebSite",
-        "@id": "https://cr1000.vercel.app/#website",
-        url: "https://cr1000.vercel.app",
+        "@id": "https://www.cr1000.live/#website",
+        url: "https://www.cr1000.live",
         name: "CR1000 Countdown & Digital Museum",
         description: "Official interactive digital museum and real-time countdown to Cristiano Ronaldo's 1000th career goal.",
         inLanguage: "vi-VN"
       },
       {
         "@type": "FAQPage",
-        "@id": "https://cr1000.vercel.app/#faq",
+        "@id": "https://www.cr1000.live/#faq",
         mainEntity: [
           {
             "@type": "Question",

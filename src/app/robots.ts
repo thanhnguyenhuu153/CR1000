@@ -5,7 +5,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
+      disallow: ["/admin", "/api/"],
     },
-    sitemap: "https://cr1000.vercel.app/sitemap.xml",
+    sitemap: "https://www.cr1000.live/sitemap.xml",
   };
 }

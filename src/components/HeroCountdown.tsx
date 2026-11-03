@@ -24,15 +24,6 @@ export default function HeroCountdown({ currentGoals }: HeroCountdownProps) {
       </div>
 
       <div className="relative max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
-        {/* Curated Kicker Badge */}
-        <div className="inline-flex items-center gap-2.5 px-4 py-1.5 rounded-full bg-[#121520]/90 border border-[#D4AF37]/30 shadow-lg shadow-black/40 mb-8 backdrop-blur-md">
-          <span className="w-2 h-2 rounded-full bg-[#D4AF37] animate-pulse" />
-          <span className="text-[11px] uppercase tracking-[0.2em] font-semibold text-gray-300">
-            Hồ sơ số chính thức • FIFA & IFFHS Archive
-          </span>
-          <span className="text-[#D4AF37] font-black text-xs">CR1000</span>
-        </div>
-
         {/* Hero Title */}
         <h1 className="text-4xl sm:text-6xl md:text-7xl font-black tracking-tight text-white mb-6 uppercase leading-tight">
           Hành trình chạm đỉnh{" "}
