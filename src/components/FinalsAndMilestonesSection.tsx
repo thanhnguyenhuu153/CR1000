@@ -4,13 +4,29 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { cr7FinalsAndIconicGoals, IconicGoal } from "@/data/cr7-finals-and-iconic";
 import { cr7Milestones, CareerMilestoneGoal } from "@/data/cr7-milestones";
+import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Trophy, Sparkles, Flame, Calendar, MapPin, Tag, Search, ExternalLink, ShieldCheck } from "lucide-react";
 
 export default function FinalsAndMilestonesSection() {
+  const { images } = useSiteData();
   const { language, t } = useLanguage();
   const [subTab, setSubTab] = useState<"finals" | "milestones">("finals");
   const [filterQuery, setFilterQuery] = useState("");
+
+  const getMatchImageUrl = (id: string, defaultUrl?: string) => {
+    if (id === "final-ucl-2008") return images.finalChelsea2008 || defaultUrl;
+    if (id === "final-copa-2011") return images.finalBarca2011 || defaultUrl;
+    if (id === "final-ucl-2014") return images.finalUcl2014 || defaultUrl;
+    if (id === "final-ucl-2017") return images.finalUcl2017 || defaultUrl;
+    if (id === "final-nations-league-2025") return images.finalNationsLeague || defaultUrl;
+    if (id === "final-arab-2023") return images.finalArab2023 || defaultUrl;
+    if (id === "iconic-bicycle-juve") return images.iconicBicycleJuve || defaultUrl;
+    if (id === "iconic-freekick-spain") return images.iconicFreekickSpain || defaultUrl;
+    if (id === "iconic-porto-40m") return images.iconicPorto40m || defaultUrl;
+    if (id === "iconic-sweden-playoff") return images.iconicSwedenPlayoff || defaultUrl;
+    return defaultUrl;
+  };
 
   const filteredFinals = cr7FinalsAndIconicGoals.filter((item) => {
     const q = filterQuery.toLowerCase();
@@ -93,21 +109,23 @@ export default function FinalsAndMilestonesSection() {
         {/* TAB 1: FINALS & ICONIC GOALS */}
         {subTab === "finals" && (
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {filteredFinals.map((goal) => (
+            {filteredFinals.map((goal) => {
+              const matchImg = getMatchImageUrl(goal.id, goal.matchImageUrl);
+              return (
               <div
                 key={goal.id}
                 className="bg-gradient-to-b from-[#141724] to-[#0D0F17] border border-gray-800 hover:border-[#D4AF37]/50 rounded-3xl overflow-hidden transition-all duration-300 shadow-2xl flex flex-col justify-between group"
               >
                 {/* Optional Real Photo Header */}
-                {goal.matchImageUrl && (
+                {matchImg && (
                   <div className="relative h-48 w-full bg-[#0E1017] overflow-hidden border-b border-gray-800">
                     <Image
-                      src={goal.matchImageUrl}
+                      src={matchImg}
                       alt={goal.title}
                       width={600}
                       height={350}
                       loading="lazy"
-                      unoptimized={typeof goal.matchImageUrl === "string" && goal.matchImageUrl.startsWith("data:")}
+                      unoptimized={typeof matchImg === "string" && matchImg.startsWith("data:")}
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 550px"
                       className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-105 filter brightness-95"
                     />
@@ -197,7 +215,8 @@ export default function FinalsAndMilestonesSection() {
                   )}
                 </div>
               </div>
-            ))}
+            );
+          })}
           </div>
         )}
 

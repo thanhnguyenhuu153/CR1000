@@ -55,6 +55,7 @@ export default function AdminPage() {
 
   // Local Form States
   const [imageForm, setImageForm] = useState<CustomImages>(images);
+  const [imageCategoryFilter, setImageCategoryFilter] = useState<"all" | "hero" | "eras" | "trophies" | "finals">("all");
   const [goalsInput, setGoalsInput] = useState(goals.toString());
   const [matchForm, setMatchForm] = useState(nextMatch);
   const [saveNotification, setSaveNotification] = useState("");
@@ -291,6 +292,69 @@ export default function AdminPage() {
     setEditingShopItem(null);
     setSaveNotification(`✓ Đã lưu sản phẩm "${editingShopItem.name}" thành công!`);
     setTimeout(() => setSaveNotification(""), 3500);
+  };
+
+  const renderImageInputCard = (
+    key: keyof CustomImages,
+    title: string,
+    subtitle: string,
+    aspectRatio: "video" | "square" | "wide" = "video"
+  ) => {
+    const aspectClass =
+      aspectRatio === "square"
+        ? "w-20 h-20 sm:w-24 sm:h-24"
+        : aspectRatio === "wide"
+        ? "w-32 h-20 sm:w-36 sm:h-24"
+        : "w-28 h-20 sm:w-32 sm:h-20";
+
+    return (
+      <div
+        key={key}
+        className="p-4 rounded-xl bg-[#161822] border border-gray-800/80 hover:border-gray-700 transition-all flex flex-col sm:flex-row gap-4 items-start sm:items-center"
+      >
+        <div
+          className={`${aspectClass} rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black relative flex items-center justify-center`}
+        >
+          {imageForm[key] ? (
+            <img
+              src={imageForm[key]}
+              alt={title}
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.currentTarget as HTMLImageElement).src =
+                  "https://placehold.co/400x300/111827/d4af37?text=CR7";
+              }}
+            />
+          ) : (
+            <span className="text-[10px] text-gray-500">Chưa có ảnh</span>
+          )}
+        </div>
+        <div className="flex-1 w-full text-xs">
+          <div className="flex items-center justify-between mb-1.5 flex-wrap gap-1">
+            <div>
+              <strong className="text-white block font-semibold">{title}</strong>
+              <span className="text-[11px] text-gray-400 block">{subtitle}</span>
+            </div>
+            <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#222736] border border-gray-700 hover:border-[#D4AF37] transition-all">
+              <span>📁 Tải từ máy</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => handleFileUpload(key, e)}
+                className="hidden"
+              />
+            </label>
+          </div>
+          <input
+            type="text"
+            value={imageForm[key] || ""}
+            onChange={(e) => setImageForm({ ...imageForm, [key]: e.target.value })}
+            placeholder="Link ảnh hoặc tải từ máy..."
+            className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37] transition-colors"
+          />
+        </div>
+      </div>
+    );
   };
 
   // If Not Authenticated -> Show Login Portal
@@ -570,370 +634,257 @@ export default function AdminPage() {
               </p>
             </div>
 
-            {/* Hero Image */}
-            <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 text-[#D4AF37]">
-                Ảnh Banner Đầu Trang (Hero Showcase)
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
-                <div className="md:col-span-8">
-                  <div className="flex items-center justify-between mb-1">
-                    <label className="text-xs font-semibold text-gray-300">
-                      Đường dẫn ảnh Hero:
-                    </label>
-                    <label className="cursor-pointer text-[11px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2.5 py-1 rounded-lg bg-[#222736] border border-gray-700 transition-all">
-                      <span>📁 Tải file từ máy tính</span>
-                      <input
-                        type="file"
-                        accept="image/*"
-                        onChange={(e) => handleFileUpload("hero", e)}
-                        className="hidden"
-                      />
-                    </label>
-                  </div>
-                  <input
-                    type="text"
-                    value={imageForm.hero}
-                    onChange={(e) => setImageForm({ ...imageForm, hero: e.target.value })}
-                    className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                  />
-                  <span className="text-[11px] text-gray-500 mt-1 block">
-                    Đường dẫn hiện tại: {imageForm.hero}
-                  </span>
-                </div>
-                <div className="md:col-span-4 h-36 rounded-xl overflow-hidden border border-gray-700 bg-black">
-                  <img
-                    src={imageForm.hero}
-                    alt="Hero Preview"
-                    className="w-full h-full object-cover object-top"
-                  />
-                </div>
-              </div>
+            {/* Filter Pills for Image Sections */}
+            <div className="flex items-center gap-2 overflow-x-auto pb-2 border-b border-gray-800">
+              <span className="text-xs font-semibold text-gray-400 shrink-0 mr-1">Bộ lọc vị trí:</span>
+              {[
+                { id: "all", label: "Tất cả ảnh (31)" },
+                { id: "hero", label: "1. Đầu trang & Brand (2)" },
+                { id: "eras", label: "2. 7 Kỷ nguyên sự nghiệp (7)" },
+                { id: "trophies", label: "3. 12 Cúp vàng & Kỷ lục (12)" },
+                { id: "finals", label: "4. 10 Chung kết & Siêu phẩm (10)" },
+              ].map((pill) => (
+                <button
+                  key={pill.id}
+                  type="button"
+                  onClick={() => setImageCategoryFilter(pill.id as any)}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all shrink-0 ${
+                    imageCategoryFilter === pill.id
+                      ? "bg-[#D4AF37] text-black shadow-md shadow-[#D4AF37]/20"
+                      : "bg-[#181B26] text-gray-300 hover:text-white hover:bg-[#202534] border border-gray-800"
+                  }`}
+                >
+                  {pill.label}
+                </button>
+              ))}
             </div>
 
-            {/* 7 Eras Images */}
-            <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 text-[#D4AF37]">
-                Ảnh 7 Kỷ Nguyên Sự Nghiệp (Chương 1)
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* 1. Madeira */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.eraMadeira} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">1. Madeira & Sporting (1985-2003)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("eraMadeira", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.eraMadeira}
-                      onChange={(e) => setImageForm({ ...imageForm, eraMadeira: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
+            {/* 1. HERO & BRANDING */}
+            {(imageCategoryFilter === "all" || imageCategoryFilter === "hero") && (
+              <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+                    1. Ảnh Đầu Trang & Nhận Diện Thương Hiệu (Hero & Share Preview)
+                  </h3>
+                  <span className="text-[11px] text-gray-400 font-medium">2 vị trí</span>
                 </div>
-
-                {/* 2. MU 1 */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.eraManUtd1} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">2. Manchester United Kỳ 1 (2003-2009)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("eraManUtd1", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.eraManUtd1}
-                      onChange={(e) => setImageForm({ ...imageForm, eraManUtd1: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {renderImageInputCard(
+                    "hero",
+                    "Banner Hero Đầu Trang (Hero Showcase)",
+                    "Hiển thị đầu trang chủ, đếm ngược 1000 bàn thắng",
+                    "wide"
+                  )}
+                  {renderImageInputCard(
+                    "ogImage",
+                    "Ảnh OpenGraph Thumbnail Chia Sẻ (Facebook, Zalo, X)",
+                    "Kích thước chuẩn 1200 × 630 px khi chia sẻ link website",
+                    "wide"
+                  )}
                 </div>
+              </div>
+            )}
 
-                {/* 3. Real Madrid */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.eraRealMadrid} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">3. Real Madrid (3 lần liên tiếp vô địch Champions League)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("eraRealMadrid", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.eraRealMadrid}
-                      onChange={(e) => setImageForm({ ...imageForm, eraRealMadrid: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
+            {/* 2. 7 ERAS */}
+            {(imageCategoryFilter === "all" || imageCategoryFilter === "eras") && (
+              <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+                    2. Ảnh 7 Kỷ Nguyên Sự Nghiệp Huyền Thoại (Chương 1)
+                  </h3>
+                  <span className="text-[11px] text-gray-400 font-medium">7 giai đoạn</span>
                 </div>
-
-                {/* 4. Juventus */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.eraJuventus} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">4. Juventus (2018-2021)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("eraJuventus", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.eraJuventus}
-                      onChange={(e) => setImageForm({ ...imageForm, eraJuventus: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
-                </div>
-
-                {/* 5. MU 2 */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.eraManUtd2} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">5. Manchester United Kỳ 2 (2021-2022)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("eraManUtd2", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.eraManUtd2}
-                      onChange={(e) => setImageForm({ ...imageForm, eraManUtd2: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
-                </div>
-
-                {/* 6. Al Nassr */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.eraAlNassr} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">6. Al Nassr (2023 - Nay)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("eraAlNassr", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.eraAlNassr}
-                      onChange={(e) => setImageForm({ ...imageForm, eraAlNassr: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
-                </div>
-
-                {/* 7. Portugal */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center md:col-span-2">
-                  <div className="w-24 h-24 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.eraPortugal} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">7. ĐTQG Bồ Đào Nha (2003 - Nay • 3 Danh hiệu)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("eraPortugal", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.eraPortugal}
-                      onChange={(e) => setImageForm({ ...imageForm, eraPortugal: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {renderImageInputCard(
+                    "eraMadeira",
+                    "1. Madeira & Sporting CP (1985–2003)",
+                    "Thời niên thiếu & khởi đầu giấc mơ chuyên nghiệp tại Bồ Đào Nha"
+                  )}
+                  {renderImageInputCard(
+                    "eraManUtd1",
+                    "2. Manchester United Kỳ 1 (2003–2009)",
+                    "Số 7 huyền thoại, QBV đầu tiên & Champions League 2008"
+                  )}
+                  {renderImageInputCard(
+                    "eraRealMadrid",
+                    "3. Real Madrid Galáctico (2009–2018)",
+                    "450 bàn/438 trận, 4 Champions League, 4 Quả bóng Vàng"
+                  )}
+                  {renderImageInputCard(
+                    "eraJuventus",
+                    "4. Juventus & Serie A (2018–2021)",
+                    "101 bàn thắng, thống trị bóng đá Ý & kỷ lục Capocannoniere"
+                  )}
+                  {renderImageInputCard(
+                    "eraManUtd2",
+                    "5. Manchester United Kỳ 2 (2021–2022)",
+                    "Cú tái xuất Old Trafford & mốc 800 bàn thắng lịch sử"
+                  )}
+                  {renderImageInputCard(
+                    "eraAlNassr",
+                    "6. Al Nassr & Saudi Pro League (2023–Nay)",
+                    "Tiên phong mở đường châu Á, 1000 bàn thắng trong tầm tay"
+                  )}
+                  <div className="md:col-span-2">
+                    {renderImageInputCard(
+                      "eraPortugal",
+                      "7. Đội Tuyển Quốc Gia Bồ Đào Nha (2003–Nay)",
+                      "Đội trưởng vĩ đại, Vô địch Euro 2016, 217+ lần khoác áo tuyển"
+                    )}
                   </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* Trophy Images */}
-            <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider mb-4 text-[#D4AF37]">
-                Ảnh Các Chiếc Cúp & Danh Hiệu (Chương 5)
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* UCL */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.trophyUcl} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">Cúp UEFA Champions League (C1)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("trophyUcl", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.trophyUcl}
-                      onChange={(e) => setImageForm({ ...imageForm, trophyUcl: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
+            {/* 3. TROPHIES */}
+            {(imageCategoryFilter === "all" || imageCategoryFilter === "trophies") && (
+              <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+                    3. Ảnh 12 Chiếc Cúp Vàng & Kỷ Lục Thế Giới (Chương 5)
+                  </h3>
+                  <span className="text-[11px] text-gray-400 font-medium">12 danh hiệu</span>
                 </div>
-
-                {/* Ballon d'Or */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.trophyBallonDor} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">Quả bóng Vàng (Ballon d&apos;Or)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("trophyBallonDor", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.trophyBallonDor}
-                      onChange={(e) => setImageForm({ ...imageForm, trophyBallonDor: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
-                </div>
-
-                {/* Euro */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.trophyEuro} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">Cúp Vô Địch Euro (Henri Delaunay)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("trophyEuro", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.trophyEuro}
-                      onChange={(e) => setImageForm({ ...imageForm, trophyEuro: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
-                </div>
-
-                {/* Premier League */}
-                <div className="p-4 rounded-xl bg-[#161822] border border-gray-800 flex gap-4 items-center">
-                  <div className="w-20 h-20 rounded-lg overflow-hidden shrink-0 border border-gray-700 bg-black">
-                    <img src={imageForm.trophyPremierLeague} alt="Preview" className="w-full h-full object-cover" />
-                  </div>
-                  <div className="flex-1 text-xs">
-                    <div className="flex items-center justify-between mb-1.5">
-                      <strong className="text-white block">Cúp Ngoại Hạng Anh (Premier League)</strong>
-                      <label className="cursor-pointer text-[10px] font-bold text-[#D4AF37] hover:text-white flex items-center gap-1 px-2 py-0.5 rounded bg-[#222736] border border-gray-700 transition-all">
-                        <span>📁 Tải từ máy</span>
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={(e) => handleFileUpload("trophyPremierLeague", e)}
-                          className="hidden"
-                        />
-                      </label>
-                    </div>
-                    <input
-                      type="text"
-                      value={imageForm.trophyPremierLeague}
-                      onChange={(e) => setImageForm({ ...imageForm, trophyPremierLeague: e.target.value })}
-                      placeholder="Link ảnh hoặc tải từ máy..."
-                      className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                    />
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                  {renderImageInputCard(
+                    "trophyBallonDor",
+                    "Quả bóng Vàng (Ballon d'Or)",
+                    "5 lần đoạt Quả bóng Vàng thế giới",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyUcl",
+                    "Cúp UEFA Champions League (C1)",
+                    "5 chức vô địch C1 vĩ đại",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyEuro",
+                    "Cúp Vô Địch Châu Âu (Euro 2016)",
+                    "Vô địch Euro lịch sử tại Paris",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyNationsLeague",
+                    "Cúp UEFA Nations League 2019",
+                    "Danh hiệu châu Âu thứ 2 cùng tuyển Bồ Đào Nha",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyGoldenShoe",
+                    "Chiếc Giày Vàng Châu Âu (Golden Shoe)",
+                    "4 lần Vua phá lưới toàn châu Âu",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyFifaTheBest",
+                    "FIFA The Best / World Player",
+                    "Cầu thủ xuất sắc nhất thế giới của FIFA",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyClubWc",
+                    "FIFA Club World Cup",
+                    "4 lần Vô địch các CLB thế giới",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyPremierLeague",
+                    "Cúp Ngoại Hạng Anh (Premier League)",
+                    "3 chức vô địch Ngoại Hạng Anh",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyLaLiga",
+                    "Cúp Vô Địch Tây Ban Nha (La Liga)",
+                    "2 lần vô địch La Liga cùng Real Madrid",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophySerieA",
+                    "Cúp Vô Địch Ý (Serie A Scudetto)",
+                    "2 chức vô địch Serie A cùng Juventus",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyCopaDelRey",
+                    "Cúp Nhà Vua Tây Ban Nha (Copa del Rey)",
+                    "2 danh hiệu vô địch cúp quốc gia Tây Ban Nha",
+                    "square"
+                  )}
+                  {renderImageInputCard(
+                    "trophyArabClub",
+                    "Arab Club Champions Cup 2023",
+                    "Chiếc cúp vô địch đầu tiên tại Trung Đông",
+                    "square"
+                  )}
                 </div>
               </div>
-            </div>
+            )}
+
+            {/* 4. FINALS & ICONIC MOMENTS */}
+            {(imageCategoryFilter === "all" || imageCategoryFilter === "finals") && (
+              <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
+                <div className="flex items-center justify-between">
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+                    4. Ảnh 10 Trận Chung Kết Lịch Sử & Siêu Phẩm Để Đời (Chương 7)
+                  </h3>
+                  <span className="text-[11px] text-gray-400 font-medium">10 khoảnh khắc</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {renderImageInputCard(
+                    "finalChelsea2008",
+                    "Chung kết Champions League 2008 (Moscow)",
+                    "Đánh đầu mở tỷ số vs Chelsea & vô địch C1 đầu tiên"
+                  )}
+                  {renderImageInputCard(
+                    "finalBarca2011",
+                    "Chung kết Cúp Nhà Vua 2011 (Mestalla)",
+                    "Cú bật cao đánh đầu phút 103 hạ Barcelona"
+                  )}
+                  {renderImageInputCard(
+                    "finalUcl2014",
+                    "Chung kết Champions League 2014 (Lisbon)",
+                    "La Décima lịch sử của Real Madrid vs Atletico"
+                  )}
+                  {renderImageInputCard(
+                    "finalUcl2017",
+                    "Chung kết Champions League 2017 (Cardiff)",
+                    "Cú đúp đẳng cấp hủy diệt Juventus 4-1"
+                  )}
+                  {renderImageInputCard(
+                    "finalNationsLeague",
+                    "Bán kết Nations League 2019 (Porto)",
+                    "Hat-trick thần thánh vs Thụy Sĩ đưa Bồ Đào Nha vào chung kết"
+                  )}
+                  {renderImageInputCard(
+                    "finalArab2023",
+                    "Chung kết Arab Club Cup 2023 (Taif)",
+                    "Cú đúp 10 người quả cảm vs Al-Hilal đăng quang vô địch"
+                  )}
+                  {renderImageInputCard(
+                    "iconicBicycleJuve",
+                    "Tuyệt phẩm Ngả người móc bóng (Juventus 2018)",
+                    "Bàn thắng phi thường khiến cả sân Juventus Stadium đứng dậy tán thưởng"
+                  )}
+                  {renderImageInputCard(
+                    "iconicFreekickSpain",
+                    "Đá phạt hàng rào World Cup 2018 (vs Tây Ban Nha)",
+                    "Cú đá phạt phút 88 gỡ hòa 3-3 hoàn tất cú hat-trick kinh điển"
+                  )}
+                  {renderImageInputCard(
+                    "iconicPorto40m",
+                    "Nã đại bác 40 mét Puskás Award (vs Porto 2009)",
+                    "Bàn thắng giành giải thưởng Puskás đầu tiên trong lịch sử"
+                  )}
+                  {renderImageInputCard(
+                    "iconicSwedenPlayoff",
+                    "Hat-trick Play-off World Cup 2014 (vs Thụy Điển)",
+                    "Màn so tài rực lửa vs Ibrahimovic đưa Bồ Đào Nha tới Brazil"
+                  )}
+                </div>
+              </div>
+            )}
 
             <div className="pt-2 text-right">
               <button

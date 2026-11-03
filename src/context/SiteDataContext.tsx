@@ -7,7 +7,11 @@ import { cr7Trophies, TrophyItem } from "@/data/cr7-trophies";
 import { cr7ShopItems as defaultShopItems, ShopItem } from "@/data/cr7-shop";
 
 export interface CustomImages {
+  // 1. Hero & Branding
   hero: string;
+  ogImage?: string;
+
+  // 2. Chapter 1: 7 Career Eras
   eraMadeira: string;
   eraManUtd1: string;
   eraRealMadrid: string;
@@ -15,14 +19,40 @@ export interface CustomImages {
   eraManUtd2: string;
   eraAlNassr: string;
   eraPortugal: string;
-  trophyUcl: string;
+
+  // 3. Chapter 5: Trophies & World Honors
   trophyBallonDor: string;
+  trophyUcl: string;
   trophyEuro: string;
+  trophyNationsLeague: string;
+  trophyGoldenShoe: string;
+  trophyFifaTheBest: string;
+  trophyClubWc: string;
   trophyPremierLeague: string;
+  trophyLaLiga: string;
+  trophySerieA: string;
+  trophyCopaDelRey: string;
+  trophyArabClub: string;
+
+  // 4. Chapter 7: Finals & Iconic Moments
+  finalChelsea2008: string;
+  finalBarca2011: string;
+  finalUcl2014: string;
+  finalUcl2017: string;
+  finalNationsLeague: string;
+  finalArab2023: string;
+  iconicBicycleJuve: string;
+  iconicFreekickSpain: string;
+  iconicPorto40m: string;
+  iconicSwedenPlayoff: string;
 }
 
 export const defaultImages: CustomImages = {
+  // 1. Hero & Branding
   hero: "/images/cr7/hero-cr7.jpg",
+  ogImage: "/images/cr7/hero-cr7.jpg",
+
+  // 2. 7 Eras
   eraMadeira: "/images/cr7/era-madeira.jpg",
   eraManUtd1: "/images/cr7/era-manutd-1.jpg",
   eraRealMadrid: "/images/cr7/era-realmadrid.jpg",
@@ -30,10 +60,32 @@ export const defaultImages: CustomImages = {
   eraManUtd2: "/images/cr7/era-manutd-2.jpg",
   eraAlNassr: "/images/cr7/era-alnassr.jpg",
   eraPortugal: "/images/cr7/era-portugal.jpg",
-  trophyUcl: "/images/trophies/ucl.jpg",
+
+  // 3. Trophies
   trophyBallonDor: "/images/trophies/cr7-ballon-dor.jpg",
+  trophyUcl: "/images/trophies/ucl.jpg",
   trophyEuro: "/images/trophies/euro-trophy.jpg",
+  trophyNationsLeague: "/images/trophies/euro-trophy.jpg",
+  trophyGoldenShoe: "/images/trophies/golden-shoe.jpg",
+  trophyFifaTheBest: "/images/trophies/ballon-dor.png",
+  trophyClubWc: "/images/trophies/ucl.jpg",
   trophyPremierLeague: "/images/trophies/premier-league.png",
+  trophyLaLiga: "/images/trophies/premier-league.png",
+  trophySerieA: "/images/trophies/premier-league.png",
+  trophyCopaDelRey: "/images/trophies/ucl.jpg",
+  trophyArabClub: "/images/trophies/euro-trophy.jpg",
+
+  // 4. Finals & Iconic
+  finalChelsea2008: "/images/cr7/final-chelsea.jpg",
+  finalBarca2011: "/images/cr7/era-realmadrid.jpg",
+  finalUcl2014: "/images/cr7/era-realmadrid.jpg",
+  finalUcl2017: "/images/cr7/era-realmadrid.jpg",
+  finalNationsLeague: "/images/cr7/era-portugal.jpg",
+  finalArab2023: "/images/cr7/era-alnassr.jpg",
+  iconicBicycleJuve: "/images/cr7/era-realmadrid.jpg",
+  iconicFreekickSpain: "/images/cr7/era-portugal.jpg",
+  iconicPorto40m: "/images/cr7/era-manutd-1.jpg",
+  iconicSwedenPlayoff: "/images/cr7/era-portugal.jpg",
 };
 
 interface SiteDataContextType {

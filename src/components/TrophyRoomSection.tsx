@@ -14,10 +14,18 @@ export default function TrophyRoomSection() {
   const [activeCategory, setActiveCategory] = useState<"club" | "international" | "individual" | "records">("club");
 
   const getTrophyImage = (id: string, defaultUrl?: string) => {
-    if (id === "ucl") return images.trophyUcl;
-    if (id === "ballon-dor") return images.trophyBallonDor;
-    if (id === "euro-2016" || id === "nations-league") return images.trophyEuro;
-    if (id === "premier-league") return images.trophyPremierLeague;
+    if (id === "ucl") return images.trophyUcl || defaultUrl;
+    if (id === "ballon-dor") return images.trophyBallonDor || defaultUrl;
+    if (id === "euro-2016") return images.trophyEuro || defaultUrl;
+    if (id === "nations-league") return images.trophyNationsLeague || images.trophyEuro || defaultUrl;
+    if (id === "premier-league") return images.trophyPremierLeague || defaultUrl;
+    if (id === "golden-boot") return images.trophyGoldenShoe || defaultUrl;
+    if (id === "fifa-the-best") return images.trophyFifaTheBest || defaultUrl;
+    if (id === "fifa-club-wc") return images.trophyClubWc || defaultUrl;
+    if (id === "la-liga") return images.trophyLaLiga || defaultUrl;
+    if (id === "serie-a") return images.trophySerieA || defaultUrl;
+    if (id === "copa-del-rey") return images.trophyCopaDelRey || defaultUrl;
+    if (id === "arab-club-cup") return images.trophyArabClub || defaultUrl;
     return defaultUrl;
   };
 
