@@ -76,6 +76,7 @@ export default function Footer() {
               <li><a href="#trophies" className="hover:text-[#D4AF37] transition-colors">Phòng cúp & Kỷ lục Guinness</a></li>
               <li><a href="#archive" className="hover:text-[#D4AF37] transition-colors">Bàn thắng chung kết & Mốc son</a></li>
               <li><a href="#shop" className="hover:text-[#D4AF37] transition-colors">Kỷ vật & Quà tặng Fan</a></li>
+              <li><Link href="/privacy" className="hover:text-[#D4AF37] transition-colors text-gray-400">Chính sách bảo mật & Pháp lý</Link></li>
             </ul>
           </div>
 
