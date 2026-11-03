@@ -111,24 +111,77 @@ export default function AdminPage() {
     setTimeout(() => setSaveNotification(""), 3500);
   };
 
-  const handleFileUpload = (key: keyof CustomImages, e: React.ChangeEvent<HTMLInputElement>) => {
+  /**
+   * Tự động nén và resize hình ảnh ngay trên trình duyệt trước khi lưu
+   * Giúp trang web luôn giữ tốc độ cao, không bao giờ bị phình to dung lượng
+   */
+  const compressClientImage = (
+    file: File,
+    maxWidth = 1200,
+    quality = 0.82
+  ): Promise<{ dataUrl: string; originalKb: number; compressedKb: number }> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const img = new Image();
+        img.src = e.target?.result as string;
+        img.onload = () => {
+          let width = img.width;
+          let height = img.height;
+
+          // Resize giữ nguyên tỷ lệ nếu kích thước vượt quá 1200px
+          if (width > maxWidth || height > maxWidth) {
+            if (width > height) {
+              height = Math.round((height * maxWidth) / width);
+              width = maxWidth;
+            } else {
+              width = Math.round((width * maxWidth) / height);
+              height = maxWidth;
+            }
+          }
+
+          const canvas = document.createElement("canvas");
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext("2d");
+          if (!ctx) {
+            const kb = Math.round(file.size / 1024);
+            resolve({ dataUrl: img.src, originalKb: kb, compressedKb: kb });
+            return;
+          }
+
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", quality);
+          const originalKb = Math.round(file.size / 1024);
+          const compressedKb = Math.round((compressedDataUrl.length * 3) / 4 / 1024);
+
+          resolve({ dataUrl: compressedDataUrl, originalKb, compressedKb });
+        };
+        img.onerror = reject;
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handleFileUpload = async (key: keyof CustomImages, e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
-    if (file.size > 3 * 1024 * 1024) {
-      alert("File ảnh lớn hơn 3MB. Vui lòng chọn ảnh nhẹ hơn để trang web tải nhanh và mượt!");
-      return;
-    }
+    try {
+      setSaveNotification("⚡ Đang tự động nén và tối ưu hóa hình ảnh...");
+      const { dataUrl, originalKb, compressedKb } = await compressClientImage(file, 1200, 0.82);
+      setImageForm((prev) => ({ ...prev, [key]: dataUrl }));
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      if (typeof reader.result === "string") {
-        setImageForm((prev) => ({ ...prev, [key]: reader.result as string }));
-        setSaveNotification(`Đã đọc xong ảnh từ máy của bạn! Hãy bấm nút 'Lưu tất cả ảnh' để hiển thị ra trang chủ.`);
-        setTimeout(() => setSaveNotification(""), 3500);
-      }
-    };
-    reader.readAsDataURL(file);
+      const savedPercent = Math.max(0, Math.round(((originalKb - compressedKb) / originalKb) * 100));
+      setSaveNotification(
+        `✓ Đã tự động nén & tối ưu: ${originalKb} KB ➔ ${compressedKb} KB (Tiết kiệm ${savedPercent}% dung lượng)! Bấm nút 'Lưu Thay Đổi Hình Ảnh' để áp dụng.`
+      );
+      setTimeout(() => setSaveNotification(""), 4500);
+    } catch (err) {
+      alert("Không thể đọc file ảnh này. Vui lòng thử lại với định dạng JPG, PNG hoặc WebP.");
+      setSaveNotification("");
+    }
   };
 
   const handleSaveStats = (e: React.FormEvent) => {
