@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -31,6 +31,14 @@ export default function TrophiesPage() {
   const { images } = useSiteData();
   const [activeCategory, setActiveCategory] = useState<"all" | "club" | "international" | "individual">("all");
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+
+  // Sync document title dynamically with active language
+  useEffect(() => {
+    document.title =
+      language === "vi"
+        ? "Toàn Bộ 37 Chiếc Cúp & Danh Hiệu Của Cristiano Ronaldo | CR1000"
+        : "Cristiano Ronaldo: Complete 37 Trophies & World Honors | CR1000";
+  }, [language]);
 
   const trophies = getCr7Trophies(language);
   const faqs = language === "vi" ? cr7TrophiesFaqVi : cr7TrophiesFaqEn;
@@ -82,7 +90,7 @@ export default function TrophiesPage() {
           {
             "@type": "ListItem",
             position: 1,
-            name: "CR1000 Home",
+            name: language === "vi" ? "Trang chủ CR1000" : "CR1000 Home",
             item: "https://www.cr1000.live",
           },
           {
@@ -95,6 +103,7 @@ export default function TrophiesPage() {
       },
       {
         "@type": "FAQPage",
+        inLanguage: language === "vi" ? "vi-VN" : "en-US",
         mainEntity: faqs.map((f) => ({
           "@type": "Question",
           name: f.question,
@@ -129,7 +138,7 @@ export default function TrophiesPage() {
 
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="px-3 py-1 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 text-xs font-black uppercase tracking-widest">
-              CHƯƠNG 5 • PHÒNG TRUYỀN THỐNG BẢO TÀNG SỐ
+              {language === "vi" ? "CHƯƠNG 5 • PHÒNG TRUYỀN THỐNG BẢO TÀNG SỐ" : "CHAPTER 5 • DIGITAL MUSEUM TROPHY ROOM"}
             </span>
             <span className="text-xs text-gray-400 font-mono">ALL-TIME OFFICIAL SILVERWARE</span>
           </div>
@@ -161,7 +170,7 @@ export default function TrophiesPage() {
                 {cr7TrophySummary.totalTeamTrophies}
               </div>
               <span className="text-[10px] text-[#D4AF37] mt-1 block font-semibold">
-                34 CLB • 3 ĐTQG
+                {language === "vi" ? "34 CLB • 3 ĐTQG" : "34 Club • 3 Country"}
               </span>
             </div>
 
@@ -191,7 +200,7 @@ export default function TrophiesPage() {
 
             <div className="p-5 rounded-2xl bg-[#0F121A]/90 border border-white/10 text-center">
               <span className="text-[11px] text-gray-400 uppercase font-semibold block">
-                Chiếc giày Vàng châu Âu
+                {language === "vi" ? "Chiếc giày Vàng châu Âu" : "European Golden Shoe"}
               </span>
               <div className="text-3xl sm:text-4xl font-black font-mono text-white mt-1">
                 4
@@ -232,6 +241,13 @@ export default function TrophiesPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredTrophies.map((trophy) => {
             const imgSrc = getTrophyImage(trophy.id, trophy.trophyImageUrl);
+            const categoryLabel =
+              trophy.category === "club"
+                ? (language === "vi" ? "Cúp CLB" : "Club Trophy")
+                : trophy.category === "international"
+                ? (language === "vi" ? "Quốc tế" : "International")
+                : (language === "vi" ? "Cá nhân" : "Individual");
+
             return (
               <div
                 key={trophy.id}
@@ -260,7 +276,7 @@ export default function TrophiesPage() {
                       {trophy.teamOrOrg}
                     </span>
                     <span className="text-[10px] text-gray-500 uppercase font-semibold">
-                      {trophy.category}
+                      {categoryLabel}
                     </span>
                   </div>
 
@@ -297,7 +313,7 @@ export default function TrophiesPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <span className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">
-              FAQ • CÂU HỎI THƯỜNG GẶP
+              {language === "vi" ? "FAQ • CÂU HỎI THƯỜNG GẶP" : "FAQ • FREQUENTLY ASKED QUESTIONS"}
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">
               {language === "vi" ? "Hỏi Đáp Về Phòng Truyền Thống Của CR7" : "Cristiano Ronaldo Trophies FAQ"}

@@ -1,8 +1,14 @@
 export interface FreeKickGoal {
   id: string;
   opponent: string;
+  opponentVi: string;
+  opponentEn: string;
   team: string;
+  teamVi: string;
+  teamEn: string;
   competition: string;
+  competitionVi: string;
+  competitionEn: string;
   date: string;
   distanceMeters: number;
   speedKmh?: number;
@@ -34,8 +40,14 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   {
     id: "fk-portsmouth-2008",
     opponent: "Portsmouth",
+    opponentVi: "Portsmouth",
+    opponentEn: "Portsmouth",
     team: "Manchester United",
+    teamVi: "Manchester United",
+    teamEn: "Manchester United",
     competition: "Premier League",
+    competitionVi: "Premier League",
+    competitionEn: "Premier League",
     date: "30/01/2008",
     distanceMeters: 28,
     speedKmh: 102,
@@ -50,9 +62,15 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   },
   {
     id: "fk-spain-2018",
-    opponent: "Tây Ban Nha (Spain)",
-    team: "Bồ Đào Nha (Portugal)",
+    opponent: "Tây Ban Nha",
+    opponentVi: "Tây Ban Nha",
+    opponentEn: "Spain",
+    team: "Bồ Đào Nha",
+    teamVi: "Bồ Đào Nha",
+    teamEn: "Portugal",
     competition: "FIFA World Cup 2018",
+    competitionVi: "FIFA World Cup 2018 (Vòng bảng)",
+    competitionEn: "FIFA World Cup 2018 (Group Stage)",
     date: "15/06/2018",
     distanceMeters: 25,
     speedKmh: 98,
@@ -68,8 +86,14 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   {
     id: "fk-arsenal-2009",
     opponent: "Arsenal",
+    opponentVi: "Arsenal",
+    opponentEn: "Arsenal",
     team: "Manchester United",
+    teamVi: "Manchester United",
+    teamEn: "Manchester United",
     competition: "UEFA Champions League Bán kết",
+    competitionVi: "UEFA Champions League (Bán kết)",
+    competitionEn: "UEFA Champions League (Semi-Final)",
     date: "05/05/2009",
     distanceMeters: 38,
     speedKmh: 105,
@@ -84,8 +108,14 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   {
     id: "fk-wolfsburg-2016",
     opponent: "VfL Wolfsburg",
+    opponentVi: "VfL Wolfsburg",
+    opponentEn: "VfL Wolfsburg",
     team: "Real Madrid",
+    teamVi: "Real Madrid",
+    teamEn: "Real Madrid",
     competition: "UEFA Champions League Tứ kết",
+    competitionVi: "UEFA Champions League (Tứ kết)",
+    competitionEn: "UEFA Champions League (Quarter-Final)",
     date: "12/04/2016",
     distanceMeters: 26,
     speedKmh: 92,
@@ -100,8 +130,14 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   {
     id: "fk-atletico-2012",
     opponent: "Atlético Madrid",
+    opponentVi: "Atlético Madrid",
+    opponentEn: "Atlético Madrid",
     team: "Real Madrid",
-    competition: "La Liga",
+    teamVi: "Real Madrid",
+    teamEn: "Real Madrid",
+    competition: "La Liga (Derby Madrid)",
+    competitionVi: "La Liga (Derby Madrid)",
+    competitionEn: "La Liga (Madrid Derby)",
     date: "11/04/2012",
     distanceMeters: 32,
     speedKmh: 100,
@@ -116,8 +152,14 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   {
     id: "fk-abha-2023",
     opponent: "Abha Club",
+    opponentVi: "Abha Club",
+    opponentEn: "Abha Club",
     team: "Al Nassr",
+    teamVi: "Al Nassr",
+    teamEn: "Al Nassr",
     competition: "Saudi Pro League",
+    competitionVi: "Saudi Pro League",
+    competitionEn: "Saudi Pro League",
     date: "18/03/2023",
     distanceMeters: 35,
     speedKmh: 102,
@@ -131,9 +173,15 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   },
   {
     id: "fk-marseille-2009",
-    opponent: "Olympique de Marseille",
+    opponent: "Marseille",
+    opponentVi: "Marseille",
+    opponentEn: "Marseille",
     team: "Real Madrid",
+    teamVi: "Real Madrid",
+    teamEn: "Real Madrid",
     competition: "UEFA Champions League",
+    competitionVi: "UEFA Champions League (Vòng bảng)",
+    competitionEn: "UEFA Champions League (Group Stage)",
     date: "08/12/2009",
     distanceMeters: 33,
     speedKmh: 103,
@@ -148,8 +196,14 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
   {
     id: "fk-torino-2020",
     opponent: "Torino",
+    opponentVi: "Torino",
+    opponentEn: "Torino",
     team: "Juventus",
+    teamVi: "Juventus",
+    teamEn: "Juventus",
     competition: "Serie A (Derby della Mole)",
+    competitionVi: "Serie A (Derby della Mole)",
+    competitionEn: "Serie A (Turin Derby)",
     date: "04/07/2020",
     distanceMeters: 27,
     speedKmh: 89,
@@ -162,6 +216,16 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
     isIconic: true,
   },
 ];
+
+export const getCr7IconicFreeKicks = (lang: "vi" | "en") => {
+  return cr7IconicFreeKicks.map((fk) => ({
+    ...fk,
+    opponent: lang === "vi" ? fk.opponentVi : fk.opponentEn,
+    team: lang === "vi" ? fk.teamVi : fk.teamEn,
+    competition: lang === "vi" ? fk.competitionVi : fk.competitionEn,
+    description: lang === "vi" ? fk.descriptionVi : fk.descriptionEn,
+  }));
+};
 
 export const cr7FreeKickFaqVi = [
   {

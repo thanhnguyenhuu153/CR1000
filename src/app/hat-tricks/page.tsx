@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
@@ -23,7 +23,6 @@ import {
   Sparkles,
   Search,
   Filter,
-  CheckCircle2,
 } from "lucide-react";
 
 export default function HattricksPage() {
@@ -32,19 +31,31 @@ export default function HattricksPage() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
+  // Sync document title dynamically with active language
+  useEffect(() => {
+    document.title =
+      language === "vi"
+        ? "66+ Cú Hat-trick Huyền Thoại Của Cristiano Ronaldo | CR1000"
+        : "Cristiano Ronaldo: All 66+ Career Hat-tricks & Pokers | CR1000";
+  }, [language]);
+
   const matches = getCr7HattrickMatches(language);
   const faqs = language === "vi" ? cr7HattrickFaqVi : cr7HattrickFaqEn;
 
   const filteredMatches = matches.filter((m) => {
     const matchTeam =
       filterTeam === "all" ||
-      (filterTeam === "portugal" && m.cr7Team.toLowerCase().includes("bồ đào nha") || m.cr7Team.toLowerCase().includes("portugal")) ||
+      (filterTeam === "portugal" &&
+        (m.cr7Team.toLowerCase().includes("bồ đào nha") ||
+          m.cr7Team.toLowerCase().includes("portugal"))) ||
       (filterTeam === "real" && m.cr7Team.toLowerCase().includes("real")) ||
-      (filterTeam === "mu" && (m.cr7Team.toLowerCase().includes("manchester") || m.cr7Team.toLowerCase().includes("man utd"))) ||
+      (filterTeam === "mu" &&
+        (m.cr7Team.toLowerCase().includes("manchester") ||
+          m.cr7Team.toLowerCase().includes("man utd"))) ||
       (filterTeam === "juventus" && m.cr7Team.toLowerCase().includes("juventus")) ||
       (filterTeam === "alnassr" && m.cr7Team.toLowerCase().includes("nassr"));
 
-    const query = searchQuery.toLowerCase();
+    const query = searchQuery.toLowerCase().trim();
     const matchQuery =
       !query ||
       m.opponent.toLowerCase().includes(query) ||
@@ -64,7 +75,7 @@ export default function HattricksPage() {
           {
             "@type": "ListItem",
             position: 1,
-            name: "CR1000 Home",
+            name: language === "vi" ? "Trang chủ CR1000" : "CR1000 Home",
             item: "https://www.cr1000.live",
           },
           {
@@ -77,6 +88,7 @@ export default function HattricksPage() {
       },
       {
         "@type": "FAQPage",
+        inLanguage: language === "vi" ? "vi-VN" : "en-US",
         mainEntity: faqs.map((f) => ({
           "@type": "Question",
           name: f.question,
@@ -111,7 +123,7 @@ export default function HattricksPage() {
 
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="px-3 py-1 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 text-xs font-black uppercase tracking-widest">
-              CHƯƠNG 3 • CHUYÊN ĐỀ KỶ LỤC
+              {language === "vi" ? "CHƯƠNG 3 • CHUYÊN ĐỀ KỶ LỤC" : "CHAPTER 3 • SPECIAL RECORD FEATURE"}
             </span>
             <span className="text-xs text-gray-400 font-mono">FIFA & IFFHS CERTIFIED</span>
           </div>
@@ -194,7 +206,7 @@ export default function HattricksPage() {
             {[
               { id: "all", label: language === "vi" ? "Tất cả (66)" : "All (66)" },
               { id: "real", label: `Real Madrid (${cr7HattrickStats.byTeam.realMadrid})` },
-              { id: "portugal", label: `Bồ Đào Nha (${cr7HattrickStats.byTeam.portugal})` },
+              { id: "portugal", label: `${language === "vi" ? "Bồ Đào Nha" : "Portugal"} (${cr7HattrickStats.byTeam.portugal})` },
               { id: "alnassr", label: `Al Nassr (${cr7HattrickStats.byTeam.alNassr})` },
               { id: "mu", label: `Man Utd (${cr7HattrickStats.byTeam.manUtd})` },
               { id: "juventus", label: `Juventus (${cr7HattrickStats.byTeam.juventus})` },
@@ -285,7 +297,7 @@ export default function HattricksPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <span className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">
-              FAQ • CÂU HỎI THƯỜNG GẶP
+              {language === "vi" ? "FAQ • CÂU HỎI THƯỜNG GẶP" : "FAQ • FREQUENTLY ASKED QUESTIONS"}
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">
               {language === "vi" ? "Hỏi Đáp Về Các Kỷ Lục Hat-trick Của CR7" : "Cristiano Ronaldo Hat-tricks FAQ"}

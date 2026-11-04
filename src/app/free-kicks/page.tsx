@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Navbar from "@/components/Navbar";
@@ -9,7 +9,7 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useSiteData } from "@/context/SiteDataContext";
 import {
   cr7FreeKickSummary,
-  cr7IconicFreeKicks,
+  getCr7IconicFreeKicks,
   cr7FreeKickFaqVi,
   cr7FreeKickFaqEn,
   FreeKickGoal,
@@ -32,7 +32,16 @@ export default function FreeKicksPage() {
   const { images } = useSiteData();
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
+  // Sync document title dynamically with active language
+  useEffect(() => {
+    document.title =
+      language === "vi"
+        ? "Tuyệt Kỹ Sút Phạt & 64+ Siêu Phẩm Knuckleball Của CR7 | CR1000"
+        : "Cristiano Ronaldo: 64+ Career Free-kicks & Knuckleball Science | CR1000";
+  }, [language]);
+
   const faqs = language === "vi" ? cr7FreeKickFaqVi : cr7FreeKickFaqEn;
+  const iconicKicks = getCr7IconicFreeKicks(language);
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -43,7 +52,7 @@ export default function FreeKicksPage() {
           {
             "@type": "ListItem",
             position: 1,
-            name: "CR1000 Home",
+            name: language === "vi" ? "Trang chủ CR1000" : "CR1000 Home",
             item: "https://www.cr1000.live",
           },
           {
@@ -56,6 +65,7 @@ export default function FreeKicksPage() {
       },
       {
         "@type": "FAQPage",
+        inLanguage: language === "vi" ? "vi-VN" : "en-US",
         mainEntity: faqs.map((f) => ({
           "@type": "Question",
           name: f.question,
@@ -90,7 +100,7 @@ export default function FreeKicksPage() {
 
           <div className="flex flex-wrap items-center gap-3 mb-4">
             <span className="px-3 py-1 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 text-xs font-black uppercase tracking-widest">
-              CHUYÊN ĐỀ ĐẶC BIỆT • TUYỆT KỸ BÓNG ĐÁ
+              {language === "vi" ? "CHUYÊN ĐỀ ĐẶC BIỆT • TUYỆT KỸ BÓNG ĐÁ" : "SPECIAL FEATURE • THE ICONIC SET-PIECE"}
             </span>
             <span className="text-xs text-gray-400 font-mono">THE LEGENDARY KNUCKLEBALL</span>
           </div>
@@ -180,8 +190,8 @@ export default function FreeKicksPage() {
           {[
             { team: "Real Madrid", count: cr7FreeKickSummary.byTeam.realMadrid, desc: "2009–2018" },
             { team: "Man United", count: cr7FreeKickSummary.byTeam.manchesterUnited, desc: "2003–2009, 2021" },
-            { team: "Bồ Đào Nha", count: cr7FreeKickSummary.byTeam.portugal, desc: "2003–Nay" },
-            { team: "Al Nassr", count: cr7FreeKickSummary.byTeam.alNassr, desc: "2023–Nay" },
+            { team: language === "vi" ? "Bồ Đào Nha" : "Portugal", count: cr7FreeKickSummary.byTeam.portugal, desc: language === "vi" ? "2003–Nay" : "2003–Present" },
+            { team: "Al Nassr", count: cr7FreeKickSummary.byTeam.alNassr, desc: language === "vi" ? "2023–Nay" : "2023–Present" },
             { team: "Juventus", count: cr7FreeKickSummary.byTeam.juventus, desc: "2018–2021" },
           ].map((item, idx) => (
             <div key={idx} className="p-4 rounded-xl bg-[#0E1018] border border-white/10 text-center">
@@ -200,7 +210,7 @@ export default function FreeKicksPage() {
         <div className="bg-gradient-to-br from-[#121522] to-[#0B0D14] border border-[#D4AF37]/30 rounded-3xl p-6 sm:p-10 shadow-2xl">
           <div className="max-w-3xl">
             <span className="px-3 py-1 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 text-xs font-black uppercase tracking-wider">
-              KHOA HỌC THỂ THAO • BIỂU TƯỢNG CR7
+              {language === "vi" ? "KHOA HỌC THỂ THAO • BIỂU TƯỢNG CR7" : "SPORTS SCIENCE • THE CR7 TRADEMARK"}
             </span>
             <h2 className="text-2xl sm:text-3xl font-extrabold text-white mt-4 tracking-tight">
               {language === "vi"
@@ -258,7 +268,7 @@ export default function FreeKicksPage() {
       <section className="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-12">
           <span className="text-xs font-bold text-[#D4AF37] uppercase tracking-widest">
-            BỘ SƯU TẬP SIÊU PHẨM
+            {language === "vi" ? "BỘ SƯU TẬP SIÊU PHẨM" : "ICONIC FREE-KICK SHOWCASE"}
           </span>
           <h2 className="text-2xl sm:text-3xl font-black text-white mt-1">
             {language === "vi" ? "Những Cú Sút Phạt Đi Vào Lịch Sử" : "Iconic Career Free-kicks"}
@@ -266,7 +276,7 @@ export default function FreeKicksPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {cr7IconicFreeKicks.map((fk) => (
+          {iconicKicks.map((fk) => (
             <div
               key={fk.id}
               className="bg-[#0F121A]/90 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl p-6 shadow-xl transition-all duration-300 flex flex-col justify-between group"
@@ -290,7 +300,7 @@ export default function FreeKicksPage() {
                 </div>
 
                 <p className="text-xs text-gray-300 leading-relaxed mt-3">
-                  {language === "vi" ? fk.descriptionVi : fk.descriptionEn}
+                  {fk.description}
                 </p>
               </div>
 
@@ -316,7 +326,7 @@ export default function FreeKicksPage() {
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <span className="text-xs font-bold uppercase tracking-widest text-[#D4AF37]">
-              FAQ • CÂU HỎI THƯỜNG GẶP
+              {language === "vi" ? "FAQ • CÂU HỎI THƯỜNG GẶP" : "FAQ • FREQUENTLY ASKED QUESTIONS"}
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-white mt-2">
               {language === "vi" ? "Hỏi Đáp Về Tuyệt Kỹ Sút Phạt Của CR7" : "Cristiano Ronaldo Free-kicks FAQ"}
