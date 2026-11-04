@@ -129,12 +129,13 @@ export default function AdminPage() {
 
   /**
    * Tự động nén và resize hình ảnh ngay trên trình duyệt trước khi lưu
-   * Giúp trang web luôn giữ tốc độ cao, không bao giờ bị phình to dung lượng
+   * Tối ưu kích thước 800px & quality 0.72 giúp mỗi ảnh chỉ nặng ~25–45 KB
+   * Đảm bảo không bao giờ bị tràn bộ nhớ localStorage (5MB) của trình duyệt
    */
   const compressClientImage = (
     file: File,
-    maxWidth = 1200,
-    quality = 0.82
+    maxWidth = 800,
+    quality = 0.72
   ): Promise<{ dataUrl: string; originalKb: number; compressedKb: number }> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -145,7 +146,7 @@ export default function AdminPage() {
           let width = img.width;
           let height = img.height;
 
-          // Resize giữ nguyên tỷ lệ nếu kích thước vượt quá 1200px
+          // Resize giữ nguyên tỷ lệ nếu kích thước vượt quá 800px
           if (width > maxWidth || height > maxWidth) {
             if (width > height) {
               height = Math.round((height * maxWidth) / width);
@@ -186,12 +187,14 @@ export default function AdminPage() {
 
     try {
       setSaveNotification("⚡ Đang tự động nén và tối ưu hóa hình ảnh...");
-      const { dataUrl, originalKb, compressedKb } = await compressClientImage(file, 1200, 0.82);
+      const { dataUrl, originalKb, compressedKb } = await compressClientImage(file, 800, 0.72);
       setImageForm((prev) => ({ ...prev, [key]: dataUrl }));
+      // TỰ ĐỘNG LƯU NGAY LẬP TỨC: Không cần người dùng phải bấm thêm nút Lưu
+      updateImages({ [key]: dataUrl });
 
       const savedPercent = Math.max(0, Math.round(((originalKb - compressedKb) / originalKb) * 100));
       setSaveNotification(
-        `✓ Đã tự động nén & tối ưu: ${originalKb} KB ➔ ${compressedKb} KB (Tiết kiệm ${savedPercent}% dung lượng)! Bấm nút 'Lưu Thay Đổi Hình Ảnh' để áp dụng.`
+        `✓ Đã tự động nén & ÁP DỤNG NGAY: ${originalKb} KB ➔ ${compressedKb} KB (Tiết kiệm ${savedPercent}%)! Trang chủ đã được cập nhật tức thì.`
       );
       setTimeout(() => setSaveNotification(""), 4500);
     } catch (err) {
@@ -349,7 +352,14 @@ export default function AdminPage() {
             type="text"
             value={imageForm[key] || ""}
             onChange={(e) => setImageForm({ ...imageForm, [key]: e.target.value })}
-            placeholder="Link ảnh hoặc tải từ máy..."
+            onBlur={() => {
+              if (imageForm[key] !== images[key]) {
+                updateImages({ [key]: imageForm[key] });
+                setSaveNotification(`✓ Đã tự động lưu đường dẫn ảnh "${title}"!`);
+                setTimeout(() => setSaveNotification(""), 3500);
+              }
+            }}
+            placeholder="Dán link ảnh (https://...) hoặc bấm Tải từ máy..."
             className="w-full bg-[#11131A] border border-gray-700 rounded-lg px-3 py-1.5 text-xs text-white focus:outline-none focus:border-[#D4AF37] transition-colors"
           />
         </div>

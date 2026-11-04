@@ -145,38 +145,68 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
   const [nextMatch, setNextMatchState] = useState(cr7CareerSummary.nextMatch);
   const [showFanVault, setShowFanVaultState] = useState<boolean>(false);
 
-  // Load from localStorage on mount
+  // Load from localStorage on mount & listen to cross-tab storage events
   useEffect(() => {
-    try {
-      const savedGoals = localStorage.getItem("cr1000_goals_count");
-      if (savedGoals) {
-        const parsed = parseInt(savedGoals, 10);
-        if (!isNaN(parsed) && parsed >= 985) setGoalsState(parsed);
-      }
+    const loadFromStorage = () => {
+      try {
+        const savedGoals = localStorage.getItem("cr1000_goals_count");
+        if (savedGoals) {
+          const parsed = parseInt(savedGoals, 10);
+          if (!isNaN(parsed) && parsed >= 985) setGoalsState(parsed);
+        }
 
-      const savedImages = localStorage.getItem("cr1000_custom_images");
-      if (savedImages) {
-        const parsed = JSON.parse(savedImages);
-        setImages((prev) => ({ ...prev, ...parsed }));
-      }
+        const savedImages = localStorage.getItem("cr1000_custom_images");
+        if (savedImages) {
+          const parsed = JSON.parse(savedImages);
+          setImages((prev) => ({ ...prev, ...parsed }));
+        }
 
-      const savedShop = localStorage.getItem("cr1000_shop_items");
-      if (savedShop) {
-        const parsed = JSON.parse(savedShop);
-        if (Array.isArray(parsed) && parsed.length > 0) setShopItems(parsed);
-      }
+        const savedShop = localStorage.getItem("cr1000_shop_items");
+        if (savedShop) {
+          const parsed = JSON.parse(savedShop);
+          if (Array.isArray(parsed) && parsed.length > 0) setShopItems(parsed);
+        }
 
-      const savedNextMatch = localStorage.getItem("cr1000_next_match");
-      if (savedNextMatch) {
-        const parsed = JSON.parse(savedNextMatch);
-        setNextMatchState((prev) => ({ ...prev, ...parsed }));
-      }
+        const savedNextMatch = localStorage.getItem("cr1000_next_match");
+        if (savedNextMatch) {
+          const parsed = JSON.parse(savedNextMatch);
+          setNextMatchState((prev) => ({ ...prev, ...parsed }));
+        }
 
-      const savedShowFanVault = localStorage.getItem("cr1000_show_fan_vault");
-      if (savedShowFanVault !== null) {
-        setShowFanVaultState(savedShowFanVault === "true");
+        const savedShowFanVault = localStorage.getItem("cr1000_show_fan_vault");
+        if (savedShowFanVault !== null) {
+          setShowFanVaultState(savedShowFanVault === "true");
+        }
+      } catch (e) {}
+    };
+
+    loadFromStorage();
+
+    // Listen to changes made in other tabs (e.g. from /admin tab to / home tab)
+    const handleStorageChange = (e: StorageEvent) => {
+      if (e.key === "cr1000_custom_images" && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          setImages((prev) => ({ ...prev, ...parsed }));
+        } catch (err) {}
       }
-    } catch (e) {}
+      if (e.key === "cr1000_goals_count" && e.newValue) {
+        const parsed = parseInt(e.newValue, 10);
+        if (!isNaN(parsed)) setGoalsState(parsed);
+      }
+      if (e.key === "cr1000_next_match" && e.newValue) {
+        try {
+          const parsed = JSON.parse(e.newValue);
+          setNextMatchState((prev) => ({ ...prev, ...parsed }));
+        } catch (err) {}
+      }
+      if (e.key === "cr1000_show_fan_vault" && e.newValue !== null) {
+        setShowFanVaultState(e.newValue === "true");
+      }
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
   }, []);
 
   const setGoals = (val: number | ((prev: number) => number)) => {
@@ -194,7 +224,14 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
       const updated = { ...prev, ...newImages };
       try {
         localStorage.setItem("cr1000_custom_images", JSON.stringify(updated));
-      } catch (e) {}
+      } catch (e: any) {
+        console.warn("Storage quota warning:", e);
+        if (typeof window !== "undefined") {
+          alert(
+            "⚠️ Bộ nhớ trình duyệt tạm thời đầy do tải nhiều file ảnh quá nặng. Khuyến khích bạn dán đường dẫn link ảnh trực tiếp (từ Imgur, Cloudinary, ImgBB, Unsplash) để đảm bảo hình ảnh hiển thị siêu nhẹ và ổn định vĩnh viễn!"
+          );
+        }
+      }
       return updated;
     });
   };
