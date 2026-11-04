@@ -49,12 +49,21 @@ export const metadata: Metadata = {
     siteName: "CR1000 Live Museum",
     locale: "vi_VN",
     type: "website",
+    images: [
+      {
+        url: "/images/cr7/og-share.jpg",
+        width: 1200,
+        height: 630,
+        alt: "CR1000 — Cristiano Ronaldo 1000 Goals Countdown & Digital Museum",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "CR1000 — Đếm ngược Bàn thắng thứ 1000 của CR7",
     description:
       "Thống kê chi tiết, 66+ hattrick, các bàn thắng chung kết và kho lưu trữ bàn thắng của Cristiano Ronaldo.",
+    images: ["/images/cr7/og-share.jpg"],
   },
 };
 

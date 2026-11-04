@@ -26,7 +26,7 @@ export const cr7BioMilestonesVi: BioMilestone[] = [
       "Sinh ra trong một gia đình lao động nghèo ở Santo António, Funchal, Madeira. Từ những con dốc gập ghềnh với quả bóng cao su rách, cậu bé Cristiano rời quê hương năm 12 tuổi sang thủ đô Lisbon một mình. Vượt qua nỗi cô đơn và chứng tim đập nhanh năm 15 tuổi, Ronaldo trui rèn kỷ luật và ý chí sắt đá không gì khuất phục.",
     quote: "Tài năng không đi cùng sự chăm chỉ thì chẳng có ý nghĩa gì cả.",
     badge: "Bắt đầu giấc mơ",
-    imageUrl: "/images/cr7/era-madeira.jpg",
+    imageUrl: "/images/cr7/era-madeira.webp",
     imageCaption: "Cậu thiếu niên Cristiano Ronaldo tạo địa chấn tại Bồ Đào Nha (2003-2004)",
     stats: {
       goals: 5,
@@ -49,7 +49,7 @@ export const cr7BioMilestonesVi: BioMilestone[] = [
       "Kế thừa chiếc áo số 7 linh thiêng của George Best, Eric Cantona và David Beckham. Từ một chàng trai trẻ với những pha đảo chân rườm rà, Ronaldo lột xác thành cỗ máy săn bàn hủy diệt. Mùa giải 2007-2008 bùng nổ với 42 bàn thắng, đưa Quỷ Đỏ lên đỉnh Premier League và Champions League, đoạt Quả bóng Vàng đầu tiên ở tuổi 23.",
     quote: "Sir Alex là người cha thứ hai của tôi trong bóng đá. Ông ấy dạy tôi cách chiến thắng.",
     badge: "Vươn tầm thế giới",
-    imageUrl: "/images/cr7/era-manutd-1.jpg",
+    imageUrl: "/images/cr7/era-manutd-1.webp",
     imageCaption: "Cristiano Ronaldo bùng nổ trong màu áo đỏ Manchester United năm 2008",
     stats: {
       goals: 118,
@@ -97,7 +97,7 @@ export const cr7BioMilestonesVi: BioMilestone[] = [
       "Chuyển đến nước Ý ở tuổi 33 với mức phí 100 triệu Euro, Ronaldo tiếp tục chứng minh sự thích nghi vô song tại giải đấu phòng ngự khét tiếng nhất thế giới. Anh trở thành cầu thủ nhanh nhất lịch sử Juventus chạm mốc 100 bàn thắng (chỉ sau 131 trận), ẵm trọn 2 Scudetto và để lại cú bật cao 2.56m đánh đầu tung lưới Sampdoria chấn động thế giới.",
     quote: "Tôi cần một thử thách mới để đẩy giới hạn bản thân đi xa hơn.",
     badge: "Chinh phục nước Ý",
-    imageUrl: "/images/cr7/era-juventus.jpg",
+    imageUrl: "/images/cr7/era-juventus.webp",
     imageCaption: "Ronaldo trong trang phục sọc trắng đen truyền thống của Juventus",
     stats: {
       goals: 101,
@@ -121,7 +121,7 @@ export const cr7BioMilestonesVi: BioMilestone[] = [
       "Ngày 11/9/2021, Cristiano bước ra mặt cỏ Old Trafford trong tiếng gầm vang của 74.000 khán giả, lập ngay cú đúp vào lưới Newcastle. Dù đội bóng trải qua giai đoạn biến động, Ronaldo ở tuổi 37 vẫn là chân sút số 1 của CLB với 24 bàn thắng trên mọi đấu trường và chính thức cán mốc 800 bàn thắng trong sự nghiệp.",
     quote: "Tôi trở về nơi mình thuộc về. Tình yêu với Manchester United không bao giờ phai nhạt.",
     badge: "Ký ức Nhà hát",
-    imageUrl: "/images/cr7/era-manutd-2.jpg",
+    imageUrl: "/images/cr7/era-manutd-2.webp",
     imageCaption: "Ronaldo ăn mừng bùng nổ cùng Bruno Fernandes trong trận thắng Newcastle 4-1 (11/09/2021)",
     stats: {
       goals: 27,
@@ -168,7 +168,7 @@ export const cr7BioMilestonesVi: BioMilestone[] = [
       "Hơn hai thập kỷ cống hiến trọn vẹn cho màu cờ sắc áo Bồ Đào Nha. Từ giọt nước mắt nghẹn ngào của chàng trai 19 tuổi trong trận chung kết Euro 2004 tại Lisbon, Ronaldo biến nỗi đau thành động lực phi thường. Anh vươn lên thành đội trưởng mẫu mực, dẫn dắt Bồ Đào Nha đoạt chiếc cúp Euro 2016 lịch sử và 2 danh hiệu UEFA Nations League (2019 & 2025), trở thành chân sút vĩ đại nhất lịch sử bóng đá quốc tế với 146 bàn thắng.",
     quote: "Thi đấu cho ĐTQG Bồ Đào Nha là niềm tự hào lớn nhất trong cuộc đời tôi.",
     badge: "Tượng đài Quốc gia",
-    imageUrl: "/images/cr7/era-portugal.jpg",
+    imageUrl: "/images/cr7/era-portugal.webp",
     imageCaption: "Người đội trưởng huyền thoại dẫn dắt Bồ Đào Nha đến đỉnh cao châu Âu (Euro 2016)",
     stats: {
       goals: 146,
@@ -195,7 +195,7 @@ export const cr7BioMilestonesEn: BioMilestone[] = [
       "Born into a working-class family in Santo António, Funchal, Madeira. Honing his skills on steep cobblestone slopes with a worn-out ball, 12-year-old Cristiano moved alone to Lisbon. Overcoming intense loneliness and a racing heart condition at age 15, Ronaldo forged an unbreakable discipline and relentless work ethic.",
     quote: "Talent without hard work is nothing.",
     badge: "The Dream Begins",
-    imageUrl: "/images/cr7/era-madeira.jpg",
+    imageUrl: "/images/cr7/era-madeira.webp",
     imageCaption: "Teenager Cristiano Ronaldo creating shockwaves across Portuguese football (2003-2004)",
     stats: {
       goals: 5,
@@ -218,7 +218,7 @@ export const cr7BioMilestonesEn: BioMilestone[] = [
       "Inheriting the sacred No. 7 shirt previously worn by Best, Cantona, and Beckham. Evolving from an exuberant trickster into an unstoppable goal machine. A monumental 42-goal campaign in 2007-08 propelled United to Premier League and Champions League glory, sealing his first Ballon d'Or at age 23.",
     quote: "Sir Alex was my second father in football. He taught me the true meaning of winning.",
     badge: "Global Ascendance",
-    imageUrl: "/images/cr7/era-manutd-1.jpg",
+    imageUrl: "/images/cr7/era-manutd-1.webp",
     imageCaption: "Cristiano Ronaldo taking the world by storm in Manchester United red in 2008",
     stats: {
       goals: 118,
@@ -266,7 +266,7 @@ export const cr7BioMilestonesEn: BioMilestone[] = [
       "Moving to Italy at age 33 for €100m, Ronaldo demonstrated unmatched adaptability in the world's most defensive league. He became the fastest player in Juventus history to reach 100 goals (in just 131 matches), claimed two Scudettos, and delivered a physics-defying 2.56m leap with 0.92-second hang-time against Sampdoria that captivated the globe.",
     quote: "I needed a new challenge to push my boundaries even further.",
     badge: "Italian Conquest",
-    imageUrl: "/images/cr7/era-juventus.jpg",
+    imageUrl: "/images/cr7/era-juventus.webp",
     imageCaption: "Ronaldo in the iconic black and white bianconeri stripes of Juventus",
     stats: {
       goals: 101,
@@ -290,7 +290,7 @@ export const cr7BioMilestonesEn: BioMilestone[] = [
       "On September 11, 2021, Cristiano strode out onto the Old Trafford turf to a thunderous standing ovation from 74,000 spectators, announcing his return with an explosive brace against Newcastle. Despite a turbulent season, 37-year-old Ronaldo finished as United's top scorer with 24 goals across all competitions and officially crossed 800 career goals.",
     quote: "I'm back where I belong. My love for Manchester United will never fade.",
     badge: "Theatre Memories",
-    imageUrl: "/images/cr7/era-manutd-2.jpg",
+    imageUrl: "/images/cr7/era-manutd-2.webp",
     imageCaption: "Ronaldo celebrating alongside Bruno Fernandes in a 4-1 triumph over Newcastle (11/09/2021)",
     stats: {
       goals: 27,
@@ -337,7 +337,7 @@ export const cr7BioMilestonesEn: BioMilestone[] = [
       "Over two decades of selfless dedication to Portugal's badge. From the tears of a 19-year-old in the Euro 2004 final in Lisbon, Ronaldo transformed sorrow into an unrelenting competitive fire. Captaining his country with exemplary passion, he led Portugal to historic glory at Euro 2016 in Paris and two UEFA Nations League titles (2019 & 2025), reigning as the greatest international marksman in history with 146 goals.",
     quote: "Representing Portugal is the greatest pride and honor of my life.",
     badge: "National Monument",
-    imageUrl: "/images/cr7/era-portugal.jpg",
+    imageUrl: "/images/cr7/era-portugal.webp",
     imageCaption: "The legendary captain lifting Portugal to European glory (Euro 2016)",
     stats: {
       goals: 146,
