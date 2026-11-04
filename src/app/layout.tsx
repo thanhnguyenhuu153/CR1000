@@ -6,6 +6,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Analytics } from "@vercel/analytics/react";
 import { cr7CareerSummary } from "@/data/cr7-stats";
 import { cr7HattrickStats } from "@/data/cr7-hattricks";
+import FloatingShareButton from "@/components/FloatingShareButton";
 import "./globals.css";
 
 const plusJakartaSans = Plus_Jakarta_Sans({
@@ -149,6 +150,29 @@ export default function RootLayout({
   return (
     <html lang="vi" className="dark scroll-smooth">
       <head>
+        {/* Google Analytics 4 (GA4) */}
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <>
+            <script
+              async
+              src={`https://www.googletagmanager.com/gtag/js?id=${process.env.NEXT_PUBLIC_GA_ID}`}
+            />
+            <script
+              id="google-analytics"
+              dangerouslySetInnerHTML={{
+                __html: `
+                  window.dataLayer = window.dataLayer || [];
+                  function gtag(){dataLayer.push(arguments);}
+                  gtag('js', new Date());
+                  gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
+                    page_path: window.location.pathname,
+                  });
+                `,
+              }}
+            />
+          </>
+        )}
+
         {/* Google AdSense Official Verification Meta & Snippet */}
         <meta name="google-adsense-account" content="ca-pub-5603625442217345" />
         <script
@@ -165,7 +189,10 @@ export default function RootLayout({
       </head>
       <body className={`${plusJakartaSans.className} ${plusJakartaSans.variable} bg-[#08090C] text-[#F8FAFC] min-h-screen selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]`}>
         <LanguageProvider>
-          <SiteDataProvider>{children}</SiteDataProvider>
+          <SiteDataProvider>
+            {children}
+            <FloatingShareButton />
+          </SiteDataProvider>
         </LanguageProvider>
         <SpeedInsights />
         <Analytics />

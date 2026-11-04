@@ -736,3 +736,59 @@ export const getCr7Trophies = (lang: "vi" | "en"): TrophyItem[] => {
 
 // Default export for backwards compatibility
 export const cr7Trophies = cr7TrophiesVi;
+
+export const cr7TrophiesFaqVi = [
+  {
+    question: "Cristiano Ronaldo đã giành được tổng cộng bao nhiêu danh hiệu trong sự nghiệp?",
+    answer:
+      "Cristiano Ronaldo đã giành được tổng cộng 37 danh hiệu tập thể lớn (34 danh hiệu cấp câu lạc bộ cùng Sporting CP, Manchester United, Real Madrid, Juventus, Al Nassr và 3 danh hiệu quốc tế cùng ĐTQG Bồ Đào Nha). Ngoài ra, anh sở hữu hơn 35 giải thưởng cá nhân danh giá nhất hành tinh.",
+  },
+  {
+    question: "Cristiano Ronaldo đã vô địch UEFA Champions League (Cúp C1) bao nhiêu lần?",
+    answer:
+      "Ronaldo đã 5 lần vô địch UEFA Champions League (1 lần cùng Manchester United năm 2008 và 4 lần cùng Real Madrid vào các năm 2014, 2016, 2017, 2018), trở thành cầu thủ đầu tiên ghi bàn trong 3 trận chung kết C1 khác nhau ở kỷ nguyên hiện đại.",
+  },
+  {
+    question: "Cristiano Ronaldo đã giành bao nhiêu Quả bóng Vàng (Ballon d'Or)?",
+    answer:
+      "Cristiano Ronaldo đã 5 lần đoạt Quả bóng Vàng thế giới vào các năm 2008, 2013, 2014, 2016 và 2017.",
+  },
+  {
+    question: "Ronaldo đã giành được những danh hiệu nào cùng ĐTQG Bồ Đào Nha?",
+    answer:
+      "Ronaldo đã dẫn dắt ĐTQG Bồ Đào Nha giành 3 danh hiệu quốc tế lịch sử: chức vô địch UEFA Euro 2016 tại Pháp và 2 danh hiệu UEFA Nations League vào các năm 2019 và 2025.",
+  },
+  {
+    question: "Ronaldo có bao nhiêu Chiếc giày Vàng châu Âu (European Golden Shoe)?",
+    answer:
+      "Cristiano Ronaldo đã 4 lần đoạt Chiếc giày Vàng châu Âu dành cho chân sút xuất sắc nhất các giải VĐQG châu Âu (mùa giải 2007-08 tại Man Utd, và các mùa 2010-11, 2013-14, 2014-15 tại Real Madrid).",
+  },
+];
+
+export const cr7TrophiesFaqEn = [
+  {
+    question: "How many trophies has Cristiano Ronaldo won in his career?",
+    answer:
+      "Cristiano Ronaldo has won 37 major team trophies (34 club titles across Sporting CP, Manchester United, Real Madrid, Juventus, Al Nassr and 3 international titles with Portugal), alongside over 35 premier individual honors.",
+  },
+  {
+    question: "How many UEFA Champions League titles has Cristiano Ronaldo won?",
+    answer:
+      "Ronaldo has won 5 UEFA Champions League titles (2008 with Manchester United, and 2014, 2016, 2017, 2018 with Real Madrid), reigning as the competition's all-time top goalscorer with 140 goals.",
+  },
+  {
+    question: "How many Ballon d'Or awards has Cristiano Ronaldo won?",
+    answer:
+      "Cristiano Ronaldo has won the prestigious Ballon d'Or 5 times: in 2008, 2013, 2014, 2016, and 2017.",
+  },
+  {
+    question: "What trophies has Ronaldo won with the Portugal national team?",
+    answer:
+      "Ronaldo has captained Portugal to 3 historic international trophies: the UEFA European Championship in 2016 (Euro 2016), and two UEFA Nations League titles in 2019 and 2025.",
+  },
+  {
+    question: "How many European Golden Shoes has Ronaldo won?",
+    answer:
+      "Cristiano Ronaldo has claimed 4 European Golden Shoe awards as the continent's top domestic league goalscorer (2007-08 with Man Utd, and 2010-11, 2013-14, 2014-15 with Real Madrid).",
+  },
+];

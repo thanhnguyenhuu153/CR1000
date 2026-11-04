@@ -1,16 +1,37 @@
 import type { MetadataRoute } from "next";
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const baseUrl = "https://www.cr1000.live";
+  const now = new Date();
+
   return [
     {
-      url: "https://www.cr1000.live",
-      lastModified: new Date(),
+      url: baseUrl,
+      lastModified: now,
       changeFrequency: "hourly",
       priority: 1.0,
     },
     {
-      url: "https://www.cr1000.live/privacy",
-      lastModified: new Date(),
+      url: `${baseUrl}/hat-tricks`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/trophies`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/free-kicks`,
+      lastModified: now,
+      changeFrequency: "daily",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/privacy`,
+      lastModified: now,
       changeFrequency: "monthly",
       priority: 0.5,
     },

@@ -667,3 +667,59 @@ export const getCr7HattrickMatches = (lang: "vi" | "en"): HattrickMatch[] => {
 
 // Default export for backwards compatibility
 export const cr7HattrickMatches = cr7HattrickMatchesVi;
+
+export const cr7HattrickFaqVi = [
+  {
+    question: "Cristiano Ronaldo đã lập bao nhiêu cú hat-trick trong sự nghiệp?",
+    answer:
+      "Tính đến thời điểm hiện tại, Cristiano Ronaldo đã ghi được 66 cú hat-trick chính thức trong sự nghiệp, bao gồm 56 cú hat-trick cấp CLB và 10 cú hat-trick cho ĐTQG Bồ Đào Nha.",
+  },
+  {
+    question: "Cristiano Ronaldo có bao nhiêu trận ghi 4 bàn (Poker) và 5 bàn?",
+    answer:
+      "Trong 66 cú hat-trick của mình, Cristiano Ronaldo đã có tới 11 trận ghi 4 bàn thắng (Poker) và 2 trận ghi 5 bàn thắng (Repoker) trong màu áo Real Madrid (trận thắng Granada 9-1 năm 2015 và thắng Espanyol 6-0 năm 2015).",
+  },
+  {
+    question: "Cú hat-trick hoàn hảo (Perfect Hat-trick) là gì và CR7 có bao nhiêu lần làm được?",
+    answer:
+      "Cú hat-trick hoàn hảo là khi một cầu thủ ghi 3 bàn thắng bằng chân trái, chân phải và đánh đầu trong cùng một trận đấu. Cristiano Ronaldo đã lập được 9 cú hat-trick hoàn hảo trong sự nghiệp.",
+  },
+  {
+    question: "Đội tuyển quốc gia nào bị Ronaldo lập hat-trick nhiều nhất?",
+    answer:
+      "Ronaldo là cầu thủ ghi nhiều hat-trick nhất lịch sử bóng đá quốc tế với 10 lần, trong đó có các đối thủ lớn như Tây Ban Nha (World Cup 2018), Thụy Điển (Play-off World Cup 2014) và Thụy Sĩ (Bán kết Nations League 2019).",
+  },
+  {
+    question: "Ở tuổi ngoài 30, Ronaldo đã ghi bao nhiêu cú hat-trick?",
+    answer:
+      "Đáng kinh ngạc là hơn một nửa số hat-trick của Ronaldo được ghi sau tuổi 30 (36 cú hat-trick), chứng minh cho thể lực và kỷ luật thép phi thường của anh.",
+  },
+];
+
+export const cr7HattrickFaqEn = [
+  {
+    question: "How many hat-tricks has Cristiano Ronaldo scored in his career?",
+    answer:
+      "To date, Cristiano Ronaldo has scored 66 official career hat-tricks, comprising 56 for his clubs and 10 for the Portugal national team.",
+  },
+  {
+    question: "How many pokers (4 goals) and 5-goal games does Ronaldo have?",
+    answer:
+      "Among his 66 hat-tricks, Ronaldo has scored 4 goals in a single game (poker) 11 times, and scored 5 goals twice for Real Madrid (vs Granada 9-1 in 2015 and vs Espanyol 6-0 in 2015).",
+  },
+  {
+    question: "What is a Perfect Hat-trick and how many has Ronaldo scored?",
+    answer:
+      "A perfect hat-trick is achieved when a player scores with their right foot, left foot, and a header in the same match. Ronaldo has achieved 9 perfect hat-tricks in his career.",
+  },
+  {
+    question: "Which opponents has Ronaldo scored international hat-tricks against?",
+    answer:
+      "Ronaldo holds the all-time international record with 10 hat-tricks for Portugal, including memorable performances against Spain (World Cup 2018), Sweden (World Cup 2014 Play-off), and Switzerland (Nations League 2019).",
+  },
+  {
+    question: "How many hat-tricks has Ronaldo scored after turning 30?",
+    answer:
+      "Remarkably, over half of Ronaldo's hat-tricks have come after his 30th birthday (36 hat-tricks), underscoring his unprecedented longevity and relentless physical conditioning.",
+  },
+];

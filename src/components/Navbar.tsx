@@ -44,14 +44,15 @@ export default function Navbar() {
   };
 
   const navLinks = [
-    { name: t.nav.countdown, href: "#countdown" },
-    { name: t.nav.journey, href: "#bio" },
-    { name: t.nav.anatomy, href: "#anatomy" },
-    { name: t.nav.hattricks, href: "#hattricks" },
-    { name: t.nav.opponents, href: "#opponents" },
-    { name: t.nav.trophies, href: "#trophies" },
-    { name: t.nav.archive, href: "#archive" },
-    ...(showFanVault ? [{ name: t.nav.shop, href: "#shop" }] : []),
+    { name: t.nav.countdown, href: "/#countdown" },
+    { name: t.nav.journey, href: "/#bio" },
+    { name: t.nav.anatomy, href: "/#anatomy" },
+    { name: t.nav.hattricks, href: "/hat-tricks" },
+    { name: t.nav.trophies, href: "/trophies" },
+    { name: language === "vi" ? "Sút Phạt" : "Free-kicks", href: "/free-kicks" },
+    { name: t.nav.opponents, href: "/#opponents" },
+    { name: t.nav.archive, href: "/#archive" },
+    ...(showFanVault ? [{ name: t.nav.shop, href: "/#shop" }] : []),
   ];
 
   const LanguageSwitcher = ({ className = "" }: { className?: string }) => (
@@ -120,7 +121,7 @@ export default function Navbar() {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Brand Logo */}
-        <a href="#countdown" className="flex items-center gap-3 group">
+        <a href="/" className="flex items-center gap-3 group">
           <div className="w-10 h-10 rounded-full bg-gradient-to-tr from-[#996515] via-[#D4AF37] to-[#F5E6A3] p-[1.5px] transition-transform duration-300 group-hover:scale-105 shadow-md shadow-[#D4AF37]/15">
             <div className="w-full h-full bg-[#08090C] rounded-full flex items-center justify-center">
               <span className="font-black text-xs tracking-wider text-[#D4AF37] font-mono">

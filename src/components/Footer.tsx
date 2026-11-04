@@ -70,15 +70,16 @@ export default function Footer() {
           <div className="md:col-span-3 space-y-3">
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">{t.footer.exploreTitle}</h4>
             <ul className="space-y-2 text-xs">
-              <li><a href="#countdown" className="hover:text-[#D4AF37] transition-colors">{t.nav.countdown}</a></li>
-              <li><a href="#bio" className="hover:text-[#D4AF37] transition-colors">{t.nav.journey}</a></li>
-              <li><a href="#anatomy" className="hover:text-[#D4AF37] transition-colors">{t.nav.anatomy}</a></li>
-              <li><a href="#hattricks" className="hover:text-[#D4AF37] transition-colors">{t.nav.hattricks}</a></li>
-              <li><a href="#opponents" className="hover:text-[#D4AF37] transition-colors">{t.nav.opponents}</a></li>
-              <li><a href="#trophies" className="hover:text-[#D4AF37] transition-colors">{t.nav.trophies}</a></li>
-              <li><a href="#archive" className="hover:text-[#D4AF37] transition-colors">{t.nav.archive}</a></li>
+              <li><Link href="/" className="hover:text-[#D4AF37] transition-colors">{t.nav.countdown}</Link></li>
+              <li><Link href="/hat-tricks" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-semibold flex items-center gap-1.5"><span className="text-[#D4AF37]">✦</span> {language === "vi" ? "66+ Cú Hat-trick" : "66+ Hat-tricks"}</Link></li>
+              <li><Link href="/trophies" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-semibold flex items-center gap-1.5"><span className="text-[#D4AF37]">✦</span> {language === "vi" ? "37 Chiếc Cúp & Danh Hiệu" : "37 Career Trophies"}</Link></li>
+              <li><Link href="/free-kicks" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-semibold flex items-center gap-1.5"><span className="text-[#D4AF37]">✦</span> {language === "vi" ? "64+ Bàn Sút Phạt (Knuckleball)" : "64+ Free-kicks"}</Link></li>
+              <li><a href="/#bio" className="hover:text-[#D4AF37] transition-colors">{t.nav.journey}</a></li>
+              <li><a href="/#anatomy" className="hover:text-[#D4AF37] transition-colors">{t.nav.anatomy}</a></li>
+              <li><a href="/#opponents" className="hover:text-[#D4AF37] transition-colors">{t.nav.opponents}</a></li>
+              <li><a href="/#archive" className="hover:text-[#D4AF37] transition-colors">{t.nav.archive}</a></li>
               {showFanVault && (
-                <li><a href="#shop" className="hover:text-[#D4AF37] transition-colors">{t.nav.shop}</a></li>
+                <li><a href="/#shop" className="hover:text-[#D4AF37] transition-colors">{t.nav.shop}</a></li>
               )}
               <li><Link href="/privacy" className="hover:text-[#D4AF37] transition-colors text-gray-400">{t.footer.privacyLink}</Link></li>
             </ul>
