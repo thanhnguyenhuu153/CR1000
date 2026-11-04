@@ -16,7 +16,7 @@ export interface BioMilestone {
   highlights: string[];
 }
 
-export const cr7BioMilestones: BioMilestone[] = [
+export const cr7BioMilestonesVi: BioMilestone[] = [
   {
     year: "1985 - 2003",
     era: "Madeira & Sporting",
@@ -184,3 +184,179 @@ export const cr7BioMilestones: BioMilestone[] = [
     ],
   },
 ];
+
+export const cr7BioMilestonesEn: BioMilestone[] = [
+  {
+    year: "1985 - 2003",
+    era: "Madeira & Sporting",
+    title: "The Island Boy with an Iron Will",
+    subtitle: "From an impoverished Funchal childhood to Sporting Lisbon's prestigious academy",
+    description:
+      "Born into a working-class family in Santo António, Funchal, Madeira. Honing his skills on steep cobblestone slopes with a worn-out ball, 12-year-old Cristiano moved alone to Lisbon. Overcoming intense loneliness and a racing heart condition at age 15, Ronaldo forged an unbreakable discipline and relentless work ethic.",
+    quote: "Talent without hard work is nothing.",
+    badge: "The Dream Begins",
+    imageUrl: "/images/cr7/era-madeira.jpg",
+    imageCaption: "Teenager Cristiano Ronaldo creating shockwaves across Portuguese football (2003-2004)",
+    stats: {
+      goals: 5,
+      matches: 31,
+      trophies: 1,
+    },
+    highlights: [
+      "1997: Joined Sporting CP youth academy for a development fee of €1,500",
+      "2002: Only player in Sporting history to feature for U16, U17, U18, B team, and First Team in a single season",
+      "07/10/2002: Scored his first official senior brace against Moreirense",
+      "06/08/2003: Dazzling display at the inauguration of Estádio José Alvalade convinced Sir Alex Ferguson to sign him immediately",
+    ],
+  },
+  {
+    year: "2003 - 2009",
+    era: "Manchester United (1st Spell)",
+    title: "The Iconic No. 7 & The First Ballon d'Or",
+    subtitle: "Forged and perfected under the visionary guidance of Sir Alex Ferguson",
+    description:
+      "Inheriting the sacred No. 7 shirt previously worn by Best, Cantona, and Beckham. Evolving from an exuberant trickster into an unstoppable goal machine. A monumental 42-goal campaign in 2007-08 propelled United to Premier League and Champions League glory, sealing his first Ballon d'Or at age 23.",
+    quote: "Sir Alex was my second father in football. He taught me the true meaning of winning.",
+    badge: "Global Ascendance",
+    imageUrl: "/images/cr7/era-manutd-1.jpg",
+    imageCaption: "Cristiano Ronaldo taking the world by storm in Manchester United red in 2008",
+    stats: {
+      goals: 118,
+      matches: 292,
+      trophies: 9,
+    },
+    highlights: [
+      "2004: Won first FA Cup silverware with Manchester United",
+      "2006-2009: Three consecutive Premier League titles",
+      "2008: UEFA Champions League triumph in Moscow (opened scoring with a towering header in the final)",
+      "2008: Ballon d'Or & FIFA World Player of the Year",
+      "2009: Inaugural FIFA Puskás Award winner for his 40-meter thunderbolt against FC Porto",
+    ],
+  },
+  {
+    year: "2009 - 2018",
+    era: "Real Madrid",
+    title: "The Immortal Dynasty & Historic Champions League Three-Peat",
+    subtitle: "450 goals in 438 matches – 4 Ballon d'Ors – 4 Champions Leagues",
+    description:
+      "Unveiled before 80,000 roaring Madridistas at the Santiago Bernabéu following a world-record €94m transfer. Nine years in the Spanish capital cemented the greatest individual prime in football history. A superhuman ratio of 1.03 goals per match demolished club records held by Raúl and Di Stéfano, bringing 'La Décima' and an unprecedented 3-peat Champions League dynasty (2016, 2017, 2018).",
+    quote: "I don't chase records. Records chase me.",
+    badge: "Immortal Legend",
+    imageUrl: "/images/cr7/era-realmadrid.jpg",
+    imageCaption: "Ronaldo and Real Madrid making history with 3 consecutive Champions League titles (Kyiv 2018)",
+    stats: {
+      goals: 450,
+      matches: 438,
+      trophies: 16,
+    },
+    highlights: [
+      "4 Champions League titles (2014, 2016, 2017, 2018) highlighted by the historic 3-year three-peat dynasty",
+      "4 Ballon d'Or honors in Real Madrid white (2013, 2014, 2016, 2017)",
+      "Real Madrid's all-time record goalscorer: 450 goals in 438 appearances (1.03 goals/game)",
+      "All-time record 17 goals in a single UEFA Champions League season (2013-14)",
+      "Gravity-defying 2.38m overhead bicycle kick against Juventus in Turin",
+    ],
+  },
+  {
+    year: "2018 - 2021",
+    era: "Juventus",
+    title: "Conquering Serie A & The Fast-Track Century",
+    subtitle: "Elite pedigree overcoming Italy's fiercest tactical defenses",
+    description:
+      "Moving to Italy at age 33 for €100m, Ronaldo demonstrated unmatched adaptability in the world's most defensive league. He became the fastest player in Juventus history to reach 100 goals (in just 131 matches), claimed two Scudettos, and delivered a physics-defying 2.56m leap with 0.92-second hang-time against Sampdoria that captivated the globe.",
+    quote: "I needed a new challenge to push my boundaries even further.",
+    badge: "Italian Conquest",
+    imageUrl: "/images/cr7/era-juventus.jpg",
+    imageCaption: "Ronaldo in the iconic black and white bianconeri stripes of Juventus",
+    stats: {
+      goals: 101,
+      matches: 134,
+      trophies: 5,
+    },
+    highlights: [
+      "2 Serie A Scudettos (2018-19, 2019-20)",
+      "Serie A Top Scorer (Capocannoniere) in 2020-21",
+      "Stunning 2.56m leap with 0.92-second hang-time header vs Sampdoria",
+      "Iconic second-leg comeback hat-trick against Atlético Madrid in the Champions League Round of 16",
+      "First player in history to win every domestic trophy in England, Spain, and Italy",
+    ],
+  },
+  {
+    year: "2021 - 2022",
+    era: "Manchester United (2nd Spell)",
+    title: "Homecoming to Old Trafford & The Electric Return",
+    subtitle: "Viva Ronaldo echoing through the Theatre of Dreams",
+    description:
+      "On September 11, 2021, Cristiano strode out onto the Old Trafford turf to a thunderous standing ovation from 74,000 spectators, announcing his return with an explosive brace against Newcastle. Despite a turbulent season, 37-year-old Ronaldo finished as United's top scorer with 24 goals across all competitions and officially crossed 800 career goals.",
+    quote: "I'm back where I belong. My love for Manchester United will never fade.",
+    badge: "Theatre Memories",
+    imageUrl: "/images/cr7/era-manutd-2.jpg",
+    imageCaption: "Ronaldo celebrating alongside Bruno Fernandes in a 4-1 triumph over Newcastle (11/09/2021)",
+    stats: {
+      goals: 27,
+      matches: 54,
+      trophies: 0,
+    },
+    highlights: [
+      "Scored a brace on his second Old Trafford debut against Newcastle United",
+      "Surpassed 800 career goals with a decisive double against Arsenal (3-2)",
+      "Premier League hat-tricks against Tottenham Hotspur and Norwich City",
+      "Named Manchester United Sir Matt Busby Player of the Year",
+    ],
+  },
+  {
+    year: "2023 - Present",
+    era: "Al Nassr",
+    title: "Pioneering the East & The Quest for 1,000 Goals",
+    subtitle: "Redrawing the global football map in his forties",
+    description:
+      "His decision to join the Saudi Pro League electrified world football and sparked an unprecedented influx of international superstars to the Middle East. Ronaldo continued scoring with ease, clinching back-to-back Golden Boots and smashing the single-season Saudi Pro League scoring record with 35 goals. The ultimate prize: The historic 1,000 official career goals summit!",
+    quote: "I want to reach 1,000 goals. If I avoid injury, that remains my ultimate destination.",
+    badge: "Road to 1,000",
+    imageUrl: "/images/cr7/era-alnassr.jpg",
+    imageCaption: "Cristiano Ronaldo shining in Al Nassr gold",
+    stats: {
+      goals: 138,
+      matches: 160,
+      trophies: 2,
+    },
+    highlights: [
+      "Saudi Pro League Champion 2025–2026 with Al Nassr",
+      "Arab Club Champions Cup 2023 champion (scored twice in the final with 10 men)",
+      "All-time record 35 goals in a single Saudi Pro League season",
+      "World Top Goalscorer of the calendar year 2023 with 54 goals at age 38",
+      "Only 15 goals away from becoming the first official 1,000-goal scorer in football history",
+    ],
+  },
+  {
+    year: "2003 - Present",
+    era: "Portugal National Team",
+    title: "Seleção das Quinas & The Eternal Captain",
+    subtitle: "From heartbreak at Euro 2004 to three continental championships",
+    description:
+      "Over two decades of selfless dedication to Portugal's badge. From the tears of a 19-year-old in the Euro 2004 final in Lisbon, Ronaldo transformed sorrow into an unrelenting competitive fire. Captaining his country with exemplary passion, he led Portugal to historic glory at Euro 2016 in Paris and two UEFA Nations League titles (2019 & 2025), reigning as the greatest international marksman in history with 146 goals.",
+    quote: "Representing Portugal is the greatest pride and honor of my life.",
+    badge: "National Monument",
+    imageUrl: "/images/cr7/era-portugal.jpg",
+    imageCaption: "The legendary captain lifting Portugal to European glory (Euro 2016)",
+    stats: {
+      goals: 146,
+      matches: 232,
+      trophies: 3,
+    },
+    highlights: [
+      "3 major international trophies: Euro 2016, UEFA Nations League 2018–19, and UEFA Nations League 2024–25",
+      "All-time top goalscorer in international football history: 146 goals",
+      "Most international caps in football history (232+ matches)",
+      "Only male player in history to score in 5 consecutive FIFA World Cups",
+      "All-time top goalscorer in UEFA European Championship history (14 goals)",
+    ],
+  },
+];
+
+export const getCr7BioMilestones = (lang: "vi" | "en"): BioMilestone[] => {
+  return lang === "en" ? cr7BioMilestonesEn : cr7BioMilestonesVi;
+};
+
+// Default export for backwards compatibility
+export const cr7BioMilestones = cr7BioMilestonesVi;

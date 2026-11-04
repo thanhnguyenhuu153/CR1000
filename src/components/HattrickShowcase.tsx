@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { cr7HattrickMatches, cr7HattrickStats, HattrickMatch } from "@/data/cr7-hattricks";
+import { getCr7HattrickMatches, cr7HattrickStats, HattrickMatch } from "@/data/cr7-hattricks";
 import { useLanguage } from "@/context/LanguageContext";
 import { Flame, Calendar, MapPin, Trophy, Shield, Sparkles, Filter, CheckCircle2 } from "lucide-react";
 
@@ -9,8 +9,9 @@ export default function HattrickShowcase() {
   const { language, t } = useLanguage();
   const [filter, setFilter] = useState<"all" | "manita" | "poker" | "iconic">("all");
   const [selectedMatch, setSelectedMatch] = useState<HattrickMatch | null>(null);
+  const matches = getCr7HattrickMatches(language);
 
-  const filteredMatches = cr7HattrickMatches.filter((match) => {
+  const filteredMatches = matches.filter((match) => {
     if (filter === "manita") return match.type === "manita";
     if (filter === "poker") return match.type === "poker";
     if (filter === "iconic") return match.isIconic === true;

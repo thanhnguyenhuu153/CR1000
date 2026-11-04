@@ -42,7 +42,7 @@ export default function HeroCountdown({ currentGoals }: HeroCountdownProps) {
           <div className="relative h-64 sm:h-80 md:h-[420px] w-full bg-[#0E1017]">
             <Image
               src={images.hero}
-              alt="Cristiano Ronaldo - Hành trình 1000 bàn thắng"
+              alt={language === "vi" ? "Cristiano Ronaldo - Hành trình 1000 bàn thắng" : "Cristiano Ronaldo - Road to 1,000 Goals"}
               width={1200}
               height={600}
               priority

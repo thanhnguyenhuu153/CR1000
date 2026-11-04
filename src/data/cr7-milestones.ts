@@ -6,13 +6,13 @@ export interface CareerMilestoneGoal {
   opponent: string;
   competition: string;
   minute: number;
-  method: "Chân phải" | "Chân trái" | "Đánh đầu" | "Phạt đền" | "Đá phạt";
+  method: string;
   description: string;
   isSpecialFinal?: boolean;
   isUpcoming?: boolean;
 }
 
-export const cr7Milestones: CareerMilestoneGoal[] = [
+export const cr7MilestonesVi: CareerMilestoneGoal[] = [
   {
     goalNumber: 1,
     date: "07/10/2002",
@@ -159,3 +159,158 @@ export const cr7Milestones: CareerMilestoneGoal[] = [
     isUpcoming: true,
   },
 ];
+
+export const cr7MilestonesEn: CareerMilestoneGoal[] = [
+  {
+    goalNumber: 1,
+    date: "07/10/2002",
+    match: "Sporting CP 3 - 0 Moreirense",
+    team: "Sporting CP",
+    opponent: "Moreirense",
+    competition: "Primeira Liga",
+    minute: 34,
+    method: "Right Foot",
+    description: "Spectacular solo run beating three defenders from midfield before chipping the goalkeeper. The goal that launched the greatest career in football history.",
+  },
+  {
+    goalNumber: 50,
+    date: "04/02/2006",
+    match: "Manchester United 4 - 2 Fulham",
+    team: "Manchester United",
+    opponent: "Fulham",
+    competition: "Premier League",
+    minute: 14,
+    method: "Right Foot",
+    description: "Lethal angled drive confirming his status as the future cornerstone of the Red Devils.",
+  },
+  {
+    goalNumber: 100,
+    date: "15/11/2008",
+    match: "Manchester United 5 - 0 Stoke City",
+    team: "Manchester United",
+    opponent: "Stoke City",
+    competition: "Premier League",
+    minute: 3,
+    method: "Direct Free-kick",
+    description: "Signature knuckleball free-kick dipping viciously into the top corner.",
+  },
+  {
+    goalNumber: 200,
+    date: "02/11/2011",
+    match: "Olympique Lyon 0 - 2 Real Madrid",
+    team: "Real Madrid",
+    opponent: "Lyon",
+    competition: "UEFA Champions League",
+    minute: 69,
+    method: "Penalty",
+    description: "Brace on French soil reaching 200 career goals in record-shattering time.",
+  },
+  {
+    goalNumber: 300,
+    date: "05/05/2012",
+    match: "Granada 1 - 2 Real Madrid",
+    team: "Real Madrid",
+    opponent: "Granada",
+    competition: "La Liga",
+    minute: 81,
+    method: "Penalty",
+    description: "Vital comeback penalty guiding Real Madrid closer to the historic 100-point La Liga title.",
+  },
+  {
+    goalNumber: 400,
+    date: "06/01/2014",
+    match: "Real Madrid 3 - 0 Celta Vigo",
+    team: "Real Madrid",
+    opponent: "Celta Vigo",
+    competition: "La Liga",
+    minute: 82,
+    method: "Right Foot",
+    description: "Clinical close-range finish dedicated in tribute to Portuguese icon Eusébio.",
+  },
+  {
+    goalNumber: 500,
+    date: "30/09/2015",
+    match: "Malmö FF 0 - 2 Real Madrid",
+    team: "Real Madrid",
+    opponent: "Malmö FF",
+    competition: "UEFA Champions League",
+    minute: 29,
+    method: "Right Foot",
+    description: "Ice-cold low drive equalling Raúl González as Real Madrid's all-time record goalscorer.",
+  },
+  {
+    goalNumber: 600,
+    date: "03/06/2017",
+    match: "Juventus 1 - 4 Real Madrid",
+    team: "Real Madrid",
+    opponent: "Juventus",
+    competition: "UEFA Champions League Final",
+    minute: 64,
+    method: "Right Foot",
+    description: "Brace in the Cardiff Champions League final, shattering the modern era's back-to-back defense curse.",
+    isSpecialFinal: true,
+  },
+  {
+    goalNumber: 700,
+    date: "14/10/2019",
+    match: "Ukraine 2 - 1 Portugal",
+    team: "Portugal",
+    opponent: "Ukraine",
+    competition: "UEFA Euro 2020 Qualifiers",
+    minute: 72,
+    method: "Penalty",
+    description: "Emphatic penalty against Ukraine seeing Ronaldo join football's legendary 700-goal club.",
+  },
+  {
+    goalNumber: 800,
+    date: "02/12/2021",
+    match: "Manchester United 3 - 2 Arsenal",
+    team: "Manchester United",
+    opponent: "Arsenal",
+    competition: "Premier League",
+    minute: 52,
+    method: "Right Foot",
+    description: "Clinical sweeping finish from Rashford's cross sending Old Trafford into raptures.",
+  },
+  {
+    goalNumber: 900,
+    date: "05/09/2024",
+    match: "Portugal 2 - 1 Croatia",
+    team: "Portugal",
+    opponent: "Croatia",
+    competition: "UEFA Nations League",
+    minute: 34,
+    method: "Right Foot",
+    description: "Met Nuno Mendes' cross with a predatory volley. Ronaldo sank to the turf in tears upon reaching 900 career goals.",
+  },
+  {
+    goalNumber: 985,
+    date: "2026",
+    match: "Al Nassr vs Opponent",
+    team: "Al Nassr",
+    opponent: "Saudi Pro League Match",
+    competition: "Saudi Pro League",
+    minute: 68,
+    method: "Right Foot",
+    description: "Latest official career strike. Ronaldo continues pushing football's all-time scoring ceiling higher into the stratosphere.",
+  },
+  {
+    goalNumber: 1000,
+    date: "Anticipating...",
+    match: "The Ultimate Goal #1000",
+    team: "Al Nassr / Portugal",
+    opponent: "TBA",
+    competition: "Official Match",
+    minute: 0,
+    method: "Right Foot",
+    description: "THE UNPRECEDENTED PINNACLE OF MODERN FOOTBALL! Just 15 official goals away from football immortality!",
+    isUpcoming: true,
+  },
+];
+
+export const getCr7Milestones = (lang: "vi" | "en"): CareerMilestoneGoal[] => {
+  return lang === "en" ? cr7MilestonesEn : cr7MilestonesVi;
+};
+
+// Default export for backwards compatibility
+export const cr7Milestones = cr7MilestonesVi;

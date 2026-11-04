@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { cr7BioMilestones } from "@/data/cr7-bio";
+import { getCr7BioMilestones } from "@/data/cr7-bio";
 import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Award, Target, Trophy, Quote, CheckCircle2, ChevronRight, Image as ImageIcon } from "lucide-react";
@@ -11,7 +11,8 @@ export default function BioSection() {
   const { images } = useSiteData();
   const { language, t } = useLanguage();
   const [activeEraIndex, setActiveEraIndex] = useState(2); // Mặc định mở Real Madrid - thời kỳ rực rỡ nhất
-  const currentEra = cr7BioMilestones[activeEraIndex];
+  const eras = getCr7BioMilestones(language);
+  const currentEra = eras[activeEraIndex];
 
   // Map to customizable images
   const eraImageMap = [
@@ -43,7 +44,7 @@ export default function BioSection() {
 
         {/* Era Navigation Pills */}
         <div className="flex items-center justify-start sm:justify-center gap-2 overflow-x-auto pb-4 mb-12 no-scrollbar">
-          {cr7BioMilestones.map((era, index) => {
+          {eras.map((era, index) => {
             const isActive = activeEraIndex === index;
             return (
               <button

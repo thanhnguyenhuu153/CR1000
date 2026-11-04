@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { cr7Trophies, cr7TrophySummary } from "@/data/cr7-trophies";
-import { cr7CareerSummary } from "@/data/cr7-stats";
+import { getCr7Trophies, cr7TrophySummary } from "@/data/cr7-trophies";
+import { getCr7CareerSummary } from "@/data/cr7-stats";
 import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Trophy, Award, Crown, Globe, Shield, Star, Sparkles, CheckCircle2 } from "lucide-react";
@@ -12,6 +12,8 @@ export default function TrophyRoomSection() {
   const { images } = useSiteData();
   const { language, t } = useLanguage();
   const [activeCategory, setActiveCategory] = useState<"club" | "international" | "individual" | "records">("club");
+  const trophies = getCr7Trophies(language);
+  const stats = getCr7CareerSummary(language);
 
   const getTrophyImage = (id: string, defaultUrl?: string) => {
     if (id === "ucl") return images.trophyUcl || defaultUrl;
@@ -46,7 +48,7 @@ export default function TrophyRoomSection() {
     return defaultUrl;
   };
 
-  const filteredTrophies = cr7Trophies.filter((tr) => {
+  const filteredTrophies = trophies.filter((tr) => {
     if (activeCategory === "records") return false;
     return tr.category === activeCategory;
   });
@@ -243,7 +245,7 @@ export default function TrophyRoomSection() {
         ) : (
           /* World Records Display */
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {cr7CareerSummary.worldRecords.map((record, index) => (
+            {stats.worldRecords.map((record, index) => (
               <div
                 key={index}
                 className="bg-[#11131C] border border-[#D4AF37]/30 rounded-2xl p-6 shadow-xl relative overflow-hidden"

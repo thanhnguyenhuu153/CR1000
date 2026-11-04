@@ -10,7 +10,7 @@ export interface OpponentStat {
   badgeSlug: string;
 }
 
-export const cr7TopOpponents: OpponentStat[] = [
+export const cr7TopOpponentsVi: OpponentStat[] = [
   {
     rank: 1,
     team: "Sevilla FC",
@@ -122,3 +122,123 @@ export const cr7TopOpponents: OpponentStat[] = [
     badgeSlug: "juventus",
   },
 ];
+
+export const cr7TopOpponentsEn: OpponentStat[] = [
+  {
+    rank: 1,
+    team: "Sevilla FC",
+    country: "Spain",
+    goals: 27,
+    matches: 18,
+    ratio: 1.50,
+    hattricks: 5,
+    notableMatch: "Scored 5 hat-tricks against Sevilla, including a 4-goal poker at Ramón Sánchez Pizjuán in 2011.",
+    badgeSlug: "sevilla",
+  },
+  {
+    rank: 2,
+    team: "Atlético Madrid",
+    country: "Spain",
+    goals: 25,
+    matches: 37,
+    ratio: 0.68,
+    hattricks: 4,
+    notableMatch: "Diego Simeone's greatest nemesis with 3 Champions League hat-tricks (2017 for Real, 2019 for Juventus).",
+    badgeSlug: "atletico-madrid",
+  },
+  {
+    rank: 3,
+    team: "Getafe CF",
+    country: "Spain",
+    goals: 23,
+    matches: 14,
+    ratio: 1.64,
+    hattricks: 3,
+    notableMatch: "Devastating ratio of nearly 1.7 goals/game with 3 hat-tricks in just 14 La Liga meetings.",
+    badgeSlug: "getafe",
+  },
+  {
+    rank: 4,
+    team: "FC Barcelona",
+    country: "Spain",
+    goals: 20,
+    matches: 34,
+    ratio: 0.59,
+    hattricks: 0,
+    notableMatch: "El Clásico peak: 103rd-minute Copa del Rey winning header in 2011 and iconic 'Calma' celebration silencing Camp Nou in 2012.",
+    badgeSlug: "barcelona",
+  },
+  {
+    rank: 5,
+    team: "Celta de Vigo",
+    country: "Spain",
+    goals: 20,
+    matches: 13,
+    ratio: 1.54,
+    hattricks: 3,
+    notableMatch: "Scored 4 goals (poker) during an emphatic 7-1 demolition at the Santiago Bernabéu in 2016.",
+    badgeSlug: "celta-vigo",
+  },
+  {
+    rank: 6,
+    team: "Athletic Bilbao",
+    country: "Spain",
+    goals: 17,
+    matches: 18,
+    ratio: 0.94,
+    hattricks: 3,
+    notableMatch: "3 hat-tricks against the Basque giants, including a commanding 5-0 victory in 2014.",
+    badgeSlug: "athletic-bilbao",
+  },
+  {
+    rank: 7,
+    team: "Málaga CF",
+    country: "Spain",
+    goals: 17,
+    matches: 19,
+    ratio: 0.89,
+    hattricks: 2,
+    notableMatch: "Scored the opening title-clinching goal on the final day of the 2016-2017 La Liga championship.",
+    badgeSlug: "malaga",
+  },
+  {
+    rank: 8,
+    team: "RCD Espanyol",
+    country: "Spain",
+    goals: 15,
+    matches: 16,
+    ratio: 0.94,
+    hattricks: 2,
+    notableMatch: "Historic 5-goal Manita plus 1 assist in an emphatic 6-0 away victory in Catalonia in 2015.",
+    badgeSlug: "espanyol",
+  },
+  {
+    rank: 9,
+    team: "Tottenham Hotspur",
+    country: "England",
+    goals: 14,
+    matches: 20,
+    ratio: 0.70,
+    hattricks: 1,
+    notableMatch: "Sensational hat-trick in 2022 to officially surpass Josef Bican as FIFA's all-time top goalscorer.",
+    badgeSlug: "tottenham",
+  },
+  {
+    rank: 10,
+    team: "Juventus FC",
+    country: "Italy",
+    goals: 10,
+    matches: 7,
+    ratio: 1.43,
+    hattricks: 0,
+    notableMatch: "Ruthless 1.43 goals/match against Gianluigi Buffon; double in the 2017 UCL final and iconic 2018 bicycle kick.",
+    badgeSlug: "juventus",
+  },
+];
+
+export const getCr7TopOpponents = (lang: "vi" | "en"): OpponentStat[] => {
+  return lang === "en" ? cr7TopOpponentsEn : cr7TopOpponentsVi;
+};
+
+// Default export for backwards compatibility
+export const cr7TopOpponents = cr7TopOpponentsVi;

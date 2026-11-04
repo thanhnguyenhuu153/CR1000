@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { cr7CareerSummary } from "@/data/cr7-stats";
+import { getCr7CareerSummary } from "@/data/cr7-stats";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   Target,
@@ -19,6 +19,7 @@ import {
 export default function AnatomySection({ currentGoals }: { currentGoals: number }) {
   const { language, t } = useLanguage();
   const [activeTab, setActiveTab] = useState<"team" | "body" | "method" | "venue">("team");
+  const stats = getCr7CareerSummary(language);
 
   return (
     <section id="anatomy" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
@@ -67,7 +68,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
               </div>
             </div>
             <div className="text-3xl sm:text-4xl lg:text-5xl font-black font-mono text-white tracking-tight">
-              {cr7CareerSummary.totalMatches.toLocaleString()}
+              {stats.totalMatches.toLocaleString()}
             </div>
             <p className="text-xs text-gray-400 mt-2">
               {language === "vi" ? "Trận đấu chính thức cấp CLB và ĐTQG" : "Official appearances across Club & Country"}
@@ -85,7 +86,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
               </div>
             </div>
             <div className="text-3xl sm:text-4xl lg:text-5xl font-black font-mono text-white tracking-tight">
-              {cr7CareerSummary.minutesPerGoal}
+              {stats.minutesPerGoal}
               <span className="text-sm font-sans font-normal text-gray-400 ml-1.5">{t.anatomy.masterRateUnit}</span>
             </div>
             <p className="text-xs text-gray-400 mt-2">
@@ -104,7 +105,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
               </div>
             </div>
             <div className="text-3xl sm:text-4xl lg:text-5xl font-black font-mono text-white tracking-tight">
-              {cr7CareerSummary.totalAssists}
+              {stats.totalAssists}
             </div>
             <p className="text-xs text-gray-400 mt-2">
               {language === "vi" ? "Đóng góp trực tiếp vào 1.240+ bàn thắng" : "Directly involved in 1,240+ goals"}
@@ -137,7 +138,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
         {/* Tab 1: By Team */}
         {activeTab === "team" && (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {cr7CareerSummary.teamBreakdown.map((t) => (
+            {stats.teamBreakdown.map((t) => (
               <div
                 key={t.team}
                 className="bg-[#0F121A]/90 border border-white/10 rounded-2xl p-6 hover:border-[#D4AF37]/40 transition-all shadow-lg flex flex-col justify-between"
@@ -149,7 +150,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
                       <span className="text-xs font-mono text-gray-400">{t.period}</span>
                     </div>
                     <div className="px-2.5 py-1 rounded-full bg-[#181B26] border border-white/10 text-xs font-mono font-bold text-[#D4AF37]">
-                      {t.ratio} bàn/trận
+                      {t.ratio} {language === "vi" ? "bàn/trận" : "goals/match"}
                     </div>
                   </div>
 
@@ -159,7 +160,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
                         {t.goals}
                       </span>
                       <span className="text-[10px] uppercase tracking-wider text-gray-400">
-                        Bàn thắng
+                        {language === "vi" ? "Bàn thắng" : "Goals"}
                       </span>
                     </div>
                     <div className="border-x border-white/[0.08]">
@@ -167,7 +168,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
                         {t.matches}
                       </span>
                       <span className="text-[10px] uppercase tracking-wider text-gray-400">
-                        Trận đấu
+                        {language === "vi" ? "Trận đấu" : "Matches"}
                       </span>
                     </div>
                     <div>
@@ -175,7 +176,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
                         {t.assists}
                       </span>
                       <span className="text-[10px] uppercase tracking-wider text-gray-400">
-                        Kiến tạo
+                        {language === "vi" ? "Kiến tạo" : "Assists"}
                       </span>
                     </div>
                   </div>
@@ -197,7 +198,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
         {/* Tab 2: By Body Part */}
         {activeTab === "body" && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {cr7CareerSummary.bodyPartBreakdown.map((part) => (
+            {stats.bodyPartBreakdown.map((part) => (
               <div
                 key={part.type}
                 className="bg-[#0F121A]/90 border border-white/10 rounded-2xl p-6 hover:border-[#D4AF37]/40 transition-all shadow-lg flex flex-col justify-between"
@@ -217,7 +218,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
 
                 <div className="mt-6 pt-4 border-t border-white/[0.08] flex items-baseline justify-between">
                   <span className="text-3xl font-black font-mono text-white">
-                    {part.goals} <span className="text-xs font-sans text-gray-400 font-normal">bàn</span>
+                    {part.goals} <span className="text-xs font-sans text-gray-400 font-normal">{language === "vi" ? "bàn" : "goals"}</span>
                   </span>
                   <span className="text-xs font-mono font-bold text-[#D4AF37] px-2 py-0.5 rounded bg-[#D4AF37]/10 border border-[#D4AF37]/25">
                     {part.percentage}%
@@ -231,7 +232,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
         {/* Tab 3: By Method */}
         {activeTab === "method" && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {cr7CareerSummary.methodBreakdown.map((method) => (
+            {stats.methodBreakdown.map((method) => (
               <div
                 key={method.type}
                 className="bg-[#0F121A]/90 border border-white/10 rounded-2xl p-6 hover:border-[#D4AF37]/40 transition-all shadow-lg flex flex-col justify-between"
@@ -244,7 +245,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
                     </span>
                   </div>
                   <div className="text-4xl font-black font-mono text-white mb-3">
-                    {method.goals} <span className="text-xs font-sans text-gray-400 font-normal">bàn</span>
+                    {method.goals} <span className="text-xs font-sans text-gray-400 font-normal">{language === "vi" ? "bàn" : "goals"}</span>
                   </div>
                   <p className="text-xs text-gray-400 leading-relaxed mb-6 font-light">
                     {method.description}
@@ -264,7 +265,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
         {/* Tab 4: By Venue */}
         {activeTab === "venue" && (
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {cr7CareerSummary.venueBreakdown.map((venue) => (
+            {stats.venueBreakdown.map((venue) => (
               <div
                 key={venue.type}
                 className="bg-[#0F121A]/90 border border-white/10 rounded-2xl p-6 hover:border-[#D4AF37]/40 transition-all shadow-lg flex flex-col justify-between"
@@ -280,7 +281,7 @@ export default function AnatomySection({ currentGoals }: { currentGoals: number 
                     </span>
                   </div>
                   <div className="text-4xl font-black font-mono text-white mb-3">
-                    {venue.goals} <span className="text-xs font-sans text-gray-400 font-normal">bàn</span>
+                    {venue.goals} <span className="text-xs font-sans text-gray-400 font-normal">{language === "vi" ? "bàn" : "goals"}</span>
                   </div>
                   <p className="text-xs text-gray-400 leading-relaxed mb-6 font-light">
                     {venue.description}

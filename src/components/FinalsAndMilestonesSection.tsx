@@ -2,8 +2,8 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { cr7FinalsAndIconicGoals, IconicGoal } from "@/data/cr7-finals-and-iconic";
-import { cr7Milestones, CareerMilestoneGoal } from "@/data/cr7-milestones";
+import { getCr7FinalsAndIconicGoals, IconicGoal } from "@/data/cr7-finals-and-iconic";
+import { getCr7Milestones, CareerMilestoneGoal } from "@/data/cr7-milestones";
 import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Trophy, Sparkles, Flame, Calendar, MapPin, Tag, Search, ExternalLink, ShieldCheck } from "lucide-react";
@@ -13,6 +13,8 @@ export default function FinalsAndMilestonesSection() {
   const { language, t } = useLanguage();
   const [subTab, setSubTab] = useState<"finals" | "milestones">("finals");
   const [filterQuery, setFilterQuery] = useState("");
+  const finalsList = getCr7FinalsAndIconicGoals(language);
+  const milestonesList = getCr7Milestones(language);
 
   const getMatchImageUrl = (id: string, defaultUrl?: string) => {
     if (id === "final-ucl-2008") return images.finalChelsea2008 || defaultUrl;
@@ -30,7 +32,7 @@ export default function FinalsAndMilestonesSection() {
     return defaultUrl;
   };
 
-  const filteredFinals = cr7FinalsAndIconicGoals.filter((item) => {
+  const filteredFinals = finalsList.filter((item) => {
     const q = filterQuery.toLowerCase();
     return (
       item.title.toLowerCase().includes(q) ||
@@ -40,7 +42,7 @@ export default function FinalsAndMilestonesSection() {
     );
   });
 
-  const filteredMilestones = cr7Milestones.filter((m) => {
+  const filteredMilestones = milestonesList.filter((m) => {
     const q = filterQuery.toLowerCase();
     return (
       m.goalNumber.toString().includes(q) ||

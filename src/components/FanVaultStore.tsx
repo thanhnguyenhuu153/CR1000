@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { cr7ShopItems as initialShopItems, ShopItem } from "@/data/cr7-shop";
+import { getCr7ShopItems, ShopItem } from "@/data/cr7-shop";
 import { useLanguage } from "@/context/LanguageContext";
 import {
   ShoppingBag,
@@ -22,13 +22,13 @@ import {
 export default function FanVaultStore() {
   const { language, t } = useLanguage();
   const [filter, setFilter] = useState<"all" | "jersey" | "boots" | "lifestyle" | "memorabilia">("all");
-  const [items, setItems] = useState<ShopItem[]>(initialShopItems);
+  const [items, setItems] = useState<ShopItem[]>(() => getCr7ShopItems(language));
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [editingItem, setEditingItem] = useState<ShopItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copiedNotification, setCopiedNotification] = useState(false);
 
-  // Load customized items from localStorage on mount
+  // Load customized items from localStorage or fallback to localized default
   useEffect(() => {
     try {
       const saved = localStorage.getItem("cr1000_shop_items");
@@ -36,10 +36,12 @@ export default function FanVaultStore() {
         const parsed = JSON.parse(saved);
         if (Array.isArray(parsed) && parsed.length > 0) {
           setItems(parsed);
+          return;
         }
       }
     } catch (e) {}
-  }, []);
+    setItems(getCr7ShopItems(language));
+  }, [language]);
 
   const saveItems = (newItems: ShopItem[]) => {
     setItems(newItems);
@@ -55,7 +57,7 @@ export default function FanVaultStore() {
       category: "jersey",
       priceText: "",
       originalPriceText: "",
-      badge: "Mới",
+      badge: language === "vi" ? "Mới" : "New",
       description: "",
       image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop",
       affiliateUrl: "https://shopee.vn/",
@@ -72,7 +74,7 @@ export default function FanVaultStore() {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi danh sách?")) {
+    if (confirm(language === "vi" ? "Bạn có chắc chắn muốn xóa sản phẩm này khỏi danh sách?" : "Are you sure you want to remove this item?")) {
       const updated = items.filter((item) => item.id !== id);
       saveItems(updated);
     }
@@ -96,8 +98,9 @@ export default function FanVaultStore() {
   };
 
   const handleResetDefault = () => {
-    if (confirm("Khôi phục danh sách sản phẩm về cài đặt gốc ban đầu?")) {
-      saveItems(initialShopItems);
+    if (confirm(language === "vi" ? "Khôi phục danh sách sản phẩm về cài đặt gốc ban đầu?" : "Reset product list to defaults?")) {
+      const defaultItems = getCr7ShopItems(language);
+      saveItems(defaultItems);
       localStorage.removeItem("cr1000_shop_items");
     }
   };
@@ -154,7 +157,7 @@ export default function FanVaultStore() {
                 <button
                   onClick={handleCopyJSON}
                   className="px-3 py-1.5 rounded-full bg-[#181B24] border border-gray-700 text-gray-300 hover:text-white text-xs font-bold flex items-center gap-1"
-                  title="Sao chép toàn bộ danh sách sản phẩm dạng JSON"
+                  title={language === "vi" ? "Sao chép toàn bộ danh sách sản phẩm dạng JSON" : "Copy full product list as JSON"}
                 >
                   <Copy className="w-3.5 h-3.5" />
                   <span>{copiedNotification ? (language === "vi" ? "Đã copy!" : "Copied!") : (language === "vi" ? "Copy mã JSON" : "Copy JSON")}</span>
@@ -162,7 +165,7 @@ export default function FanVaultStore() {
                 <button
                   onClick={handleResetDefault}
                   className="p-1.5 rounded-full bg-[#181B24] border border-gray-700 text-gray-400 hover:text-red-400 text-xs"
-                  title="Khôi phục mặc định"
+                  title={language === "vi" ? "Khôi phục mặc định" : "Reset to default"}
                 >
                   <RotateCcw className="w-3.5 h-3.5" />
                 </button>
@@ -207,14 +210,14 @@ export default function FanVaultStore() {
                   <button
                     onClick={() => handleEdit(item)}
                     className="p-1.5 rounded-lg bg-[#222736] hover:bg-[#D4AF37] text-gray-300 hover:text-black transition-all"
-                    title="Chỉnh sửa sản phẩm này"
+                    title={language === "vi" ? "Chỉnh sửa sản phẩm này" : "Edit this item"}
                   >
                     <Edit2 className="w-3.5 h-3.5" />
                   </button>
                   <button
                     onClick={() => handleDelete(item.id)}
                     className="p-1.5 rounded-lg bg-red-900/40 hover:bg-red-600 text-red-300 hover:text-white transition-all"
-                    title="Xóa sản phẩm này"
+                    title={language === "vi" ? "Xóa sản phẩm này" : "Delete this item"}
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -325,39 +328,49 @@ export default function FanVaultStore() {
 
             <h3 className="text-xl font-bold text-white mb-6 flex items-center gap-2">
               <Settings className="w-5 h-5 text-[#D4AF37]" />
-              <span>{editingItem.id.startsWith("shop-") ? "Thêm Sản Phẩm Mới" : "Chỉnh Sửa Sản Phẩm"}</span>
+              <span>
+                {editingItem.id.startsWith("shop-")
+                  ? (language === "vi" ? "Thêm Sản Phẩm Mới" : "Add New Item")
+                  : (language === "vi" ? "Chỉnh Sửa Sản Phẩm" : "Edit Item")}
+              </span>
             </h3>
 
             <form onSubmit={handleSaveModal} className="space-y-4 text-xs">
               <div>
-                <label className="block text-gray-300 font-bold mb-1">Tên sản phẩm:</label>
+                <label className="block text-gray-300 font-bold mb-1">
+                  {language === "vi" ? "Tên sản phẩm:" : "Product Name:"}
+                </label>
                 <input
                   type="text"
                   required
                   value={editingItem.name}
                   onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
                   className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                  placeholder="Ví dụ: Áo đấu Al Nassr Home Vàng #7..."
+                  placeholder={language === "vi" ? "Ví dụ: Áo đấu Al Nassr Home Vàng #7..." : "e.g. Al Nassr Home Yellow #7 Kit..."}
                 />
               </div>
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-300 font-bold mb-1">Danh mục:</label>
+                  <label className="block text-gray-300 font-bold mb-1">
+                    {language === "vi" ? "Danh mục:" : "Category:"}
+                  </label>
                   <select
                     value={editingItem.category}
                     onChange={(e) => setEditingItem({ ...editingItem, category: e.target.value as any })}
                     className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
                   >
-                    <option value="jersey">Áo đấu biểu tượng</option>
-                    <option value="boots">Giày đá bóng Mercurial</option>
-                    <option value="lifestyle">Nước hoa & Thời trang</option>
-                    <option value="memorabilia">Tranh & Kỷ vật sưu tầm</option>
+                    <option value="jersey">{language === "vi" ? "Áo đấu biểu tượng" : "Iconic Kits"}</option>
+                    <option value="boots">{language === "vi" ? "Giày đá bóng Mercurial" : "Mercurial Boots"}</option>
+                    <option value="lifestyle">{language === "vi" ? "Nước hoa & Thời trang" : "Lifestyle & Fragrance"}</option>
+                    <option value="memorabilia">{language === "vi" ? "Tranh & Kỷ vật sưu tầm" : "Memorabilia & Collectibles"}</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-bold mb-1">Sàn thương mại:</label>
+                  <label className="block text-gray-300 font-bold mb-1">
+                    {language === "vi" ? "Sàn thương mại:" : "Platform:"}
+                  </label>
                   <select
                     value={editingItem.platform}
                     onChange={(e) => setEditingItem({ ...editingItem, platform: e.target.value as any })}
@@ -374,72 +387,84 @@ export default function FanVaultStore() {
 
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-gray-300 font-bold mb-1">Giá bán hiển thị:</label>
+                  <label className="block text-gray-300 font-bold mb-1">
+                    {language === "vi" ? "Giá bán hiển thị:" : "Display Price:"}
+                  </label>
                   <input
                     type="text"
                     required
                     value={editingItem.priceText}
                     onChange={(e) => setEditingItem({ ...editingItem, priceText: e.target.value })}
                     className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                    placeholder="390.000₫ – 750.000₫"
+                    placeholder={language === "vi" ? "390.000₫ – 750.000₫" : "$45 – $85"}
                   />
                 </div>
 
                 <div>
-                  <label className="block text-gray-300 font-bold mb-1">Giá gốc (gạch ngang):</label>
+                  <label className="block text-gray-300 font-bold mb-1">
+                    {language === "vi" ? "Giá gốc (gạch ngang):" : "Original Price (strike):"}
+                  </label>
                   <input
                     type="text"
                     value={editingItem.originalPriceText || ""}
                     onChange={(e) => setEditingItem({ ...editingItem, originalPriceText: e.target.value })}
                     className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                    placeholder="1.200.000₫ (tùy chọn)"
+                    placeholder={language === "vi" ? "1.200.000₫ (tùy chọn)" : "$120 (optional)"}
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-gray-300 font-bold mb-1">Link Tiếp Thị Liên Kết (Affiliate URL):</label>
+                <label className="block text-gray-300 font-bold mb-1">
+                  {language === "vi" ? "Link Tiếp Thị Liên Kết (Affiliate URL):" : "Affiliate URL:"}
+                </label>
                 <input
                   type="url"
                   required
                   value={editingItem.affiliateUrl}
                   onChange={(e) => setEditingItem({ ...editingItem, affiliateUrl: e.target.value })}
                   className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                  placeholder="https://shopee.vn/..."
+                  placeholder="https://..."
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 font-bold mb-1">Đường dẫn hình ảnh (Image URL):</label>
+                <label className="block text-gray-300 font-bold mb-1">
+                  {language === "vi" ? "Đường dẫn hình ảnh (Image URL):" : "Image URL:"}
+                </label>
                 <input
                   type="text"
                   required
                   value={editingItem.image}
                   onChange={(e) => setEditingItem({ ...editingItem, image: e.target.value })}
                   className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                  placeholder="https://... hoặc /images/..."
+                  placeholder={language === "vi" ? "https://... hoặc /images/..." : "https://... or /images/..."}
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 font-bold mb-1">Huy hiệu tag nổi bật:</label>
+                <label className="block text-gray-300 font-bold mb-1">
+                  {language === "vi" ? "Huy hiệu tag nổi bật:" : "Badge Tag:"}
+                </label>
                 <input
                   type="text"
                   value={editingItem.badge || ""}
                   onChange={(e) => setEditingItem({ ...editingItem, badge: e.target.value })}
                   className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                  placeholder="Bán chạy nhất / Kỷ vật giới hạn..."
+                  placeholder={language === "vi" ? "Bán chạy nhất / Kỷ vật giới hạn..." : "Best Seller / Limited Edition..."}
                 />
               </div>
 
               <div>
-                <label className="block text-gray-300 font-bold mb-1">Mô tả sản phẩm:</label>
+                <label className="block text-gray-300 font-bold mb-1">
+                  {language === "vi" ? "Mô tả sản phẩm:" : "Product Description:"}
+                </label>
                 <textarea
                   rows={3}
                   value={editingItem.description}
                   onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
                   className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                  placeholder="Mô tả chất liệu, cảm hứng và chi tiết..."
+                  placeholder={language === "vi" ? "Mô tả chất liệu, cảm hứng và chi tiết..." : "Description of material, details, and heritage..."}
                 />
               </div>
 
@@ -449,14 +474,14 @@ export default function FanVaultStore() {
                   onClick={() => setIsModalOpen(false)}
                   className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 hover:text-white"
                 >
-                  Hủy bỏ
+                  {language === "vi" ? "Hủy bỏ" : "Cancel"}
                 </button>
                 <button
                   type="submit"
                   className="px-5 py-2 rounded-xl bg-[#D4AF37] text-black font-bold hover:opacity-90 flex items-center gap-1.5"
                 >
                   <Check className="w-4 h-4" />
-                  <span>Lưu thay đổi</span>
+                  <span>{language === "vi" ? "Lưu thay đổi" : "Save Changes"}</span>
                 </button>
               </div>
             </form>

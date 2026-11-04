@@ -1,12 +1,13 @@
 "use client";
 
 import React from "react";
-import { cr7TopOpponents } from "@/data/cr7-opponents";
+import { getCr7TopOpponents } from "@/data/cr7-opponents";
 import { useLanguage } from "@/context/LanguageContext";
 import { Target, Skull, Trophy, Flame } from "lucide-react";
 
 export default function OpponentsSection() {
   const { language, t } = useLanguage();
+  const opponents = getCr7TopOpponents(language);
 
   return (
     <section id="opponents" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
@@ -26,7 +27,7 @@ export default function OpponentsSection() {
 
         {/* Top 3 Victims Podium */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-          {cr7TopOpponents.slice(0, 3).map((victim, idx) => (
+          {opponents.slice(0, 3).map((victim, idx) => (
             <div
               key={victim.team}
               className="bg-[#0F121A]/90 border border-white/10 hover:border-[#D4AF37]/50 rounded-3xl p-6 sm:p-7 relative overflow-hidden transition-all duration-300 shadow-xl flex flex-col justify-between"
@@ -105,7 +106,7 @@ export default function OpponentsSection() {
           </div>
 
           <div className="divide-y divide-white/[0.06]">
-            {cr7TopOpponents.slice(3).map((item) => (
+            {opponents.slice(3).map((item) => (
               <div
                 key={item.team}
                 className="p-4 sm:p-5 hover:bg-white/[0.02] transition-colors flex flex-col sm:flex-row sm:items-center justify-between gap-3"

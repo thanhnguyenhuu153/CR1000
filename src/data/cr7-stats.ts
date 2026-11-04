@@ -58,7 +58,7 @@ export interface CR7CareerSummary {
   }[];
 }
 
-export const cr7CareerSummary: CR7CareerSummary = {
+export const cr7CareerSummaryVi: CR7CareerSummary = {
   totalGoals: 985,
   countdownTarget: 1000,
   goalsNeeded: 15,
@@ -278,3 +278,231 @@ export const cr7CareerSummary: CR7CareerSummary = {
     },
   ],
 };
+
+export const cr7CareerSummaryEn: CR7CareerSummary = {
+  totalGoals: 985,
+  countdownTarget: 1000,
+  goalsNeeded: 15,
+  totalMatches: 1341,
+  totalAssists: 256,
+  minutesPlayed: 110160,
+  minutesPerGoal: 111.8,
+  minutesPerContribution: 88.8,
+  nextMatch: {
+    competition: "Saudi Pro League / AFC Champions League",
+    homeTeam: "Al Nassr",
+    awayTeam: "Al Shabab",
+    stadium: "Al Awwal Park, Riyadh",
+    kickoffTime: "2026-11-08 20:00 (GMT+3)",
+    note: "Pursuing official career goal #986!",
+  },
+  teamBreakdown: [
+    {
+      team: "Real Madrid",
+      slug: "real-madrid",
+      period: "2009 - 2018",
+      goals: 450,
+      matches: 438,
+      assists: 131,
+      ratio: 1.03,
+      color: "#FFFFFF",
+      accentColor: "#D4AF37",
+      badgeUrl: "/badges/real-madrid.png",
+    },
+    {
+      team: "Portugal National Team",
+      slug: "portugal",
+      period: "2003 - Present",
+      goals: 146,
+      matches: 232,
+      assists: 37,
+      ratio: 0.63,
+      color: "#DC2626",
+      accentColor: "#16A34A",
+      badgeUrl: "/badges/portugal.png",
+    },
+    {
+      team: "Manchester United",
+      slug: "man-utd",
+      period: "2003-2009, 2021-2022",
+      goals: 145,
+      matches: 346,
+      assists: 64,
+      ratio: 0.42,
+      color: "#DA291C",
+      accentColor: "#FBE122",
+      badgeUrl: "/badges/man-utd.png",
+    },
+    {
+      team: "Al Nassr",
+      slug: "al-nassr",
+      period: "2023 - Present",
+      goals: 138,
+      matches: 160,
+      assists: 23,
+      ratio: 0.86,
+      color: "#EAB308",
+      accentColor: "#1E3A8A",
+      badgeUrl: "/badges/al-nassr.png",
+    },
+    {
+      team: "Juventus",
+      slug: "juventus",
+      period: "2018 - 2021",
+      goals: 101,
+      matches: 134,
+      assists: 22,
+      ratio: 0.75,
+      color: "#18181B",
+      accentColor: "#F4F4F5",
+      badgeUrl: "/badges/juventus.png",
+    },
+    {
+      team: "Sporting CP",
+      slug: "sporting-cp",
+      period: "2002 - 2003",
+      goals: 5,
+      matches: 31,
+      assists: 6,
+      ratio: 0.16,
+      color: "#15803D",
+      accentColor: "#FFFFFF",
+      badgeUrl: "/badges/sporting.png",
+    },
+  ],
+  bodyPartBreakdown: [
+    {
+      type: "Right Foot",
+      goals: 634,
+      percentage: 64.4,
+      description: "Primary lethal weapon: Instep drives, bending curlers, and thunderous screamers from 35-40 meters.",
+      icon: "Footprints",
+    },
+    {
+      type: "Left Foot",
+      goals: 188,
+      percentage: 19.1,
+      description: "The most prolific 'weak' foot in football history. Dozens of long-range rockets and first-time volleys.",
+      icon: "Zap",
+    },
+    {
+      type: "Header",
+      goals: 160,
+      percentage: 16.2,
+      description: "Air CR7: Gravity-defying 2.93m vertical leap with unmatched hang-time and heading precision.",
+      icon: "ArrowUpCircle",
+    },
+    {
+      type: "Other / Torso",
+      goals: 3,
+      percentage: 0.3,
+      description: "Scored using chest, thigh, and lightning-fast reflex reactions right on the goal-line.",
+      icon: "Sparkles",
+    },
+  ],
+  methodBreakdown: [
+    {
+      type: "Open Play",
+      goals: 735,
+      percentage: 74.6,
+      description: "Telepathic off-ball movement, clinical tap-ins, counter-attacking bursts, and devastating finishes.",
+    },
+    {
+      type: "Penalties",
+      goals: 184,
+      percentage: 18.7,
+      description: "Nerves of absolute steel from 11 meters. Unrivaled composure in high-stakes championship finals.",
+    },
+    {
+      type: "Direct Free-kick",
+      goals: 66,
+      percentage: 6.7,
+      description: "Trademark knuckleball technique with unpredictable dip, swerve, and ferocious velocity.",
+    },
+  ],
+  venueBreakdown: [
+    {
+      type: "Home",
+      goals: 508,
+      percentage: 51.6,
+      description: "Fortresses Santiago Bernabéu, Old Trafford, and Al Awwal Park echoing with iconic 'SIUUU' roars.",
+    },
+    {
+      type: "Away",
+      goals: 402,
+      percentage: 40.8,
+      description: "Hostile ground silencer. Thriving on away hostility and turning jeering crowds into awe-struck silence.",
+    },
+    {
+      type: "Neutral",
+      goals: 75,
+      percentage: 7.6,
+      description: "Clutch performer on the biggest stages: Champions League finals, World Cups, Euros, and Club World Cups.",
+    },
+  ],
+  worldRecords: [
+    {
+      title: "All-Time Official Top Goalscorer in Football History",
+      value: "985+ Goals",
+      description: "The all-time world record in official association football recognized by FIFA, IFFHS, and Guinness World Records.",
+      category: "world",
+      verifiedBy: "Guinness World Records & FIFA",
+    },
+    {
+      title: "All-Time Top International Goalscorer",
+      value: "146 Goals",
+      description: "Surpassed Ali Daei's 109-goal record to stand alone as the most prolific international marksman in history.",
+      category: "international",
+      verifiedBy: "UEFA & FIFA",
+    },
+    {
+      title: "All-Time Top Scorer in UEFA Champions League",
+      value: "140 Goals",
+      description: "The undisputed Mr. Champions League with 140 goals in 183 elite appearances.",
+      category: "ucl",
+      verifiedBy: "UEFA",
+    },
+    {
+      title: "Most Men's International Caps in World History",
+      value: "232+ Matches",
+      description: "Extraordinary longevity and dedication representing Portugal across more than two decades since 2003.",
+      category: "international",
+      verifiedBy: "FIFA",
+    },
+    {
+      title: "Scored in 5 Consecutive FIFA World Cups",
+      value: "5 World Cups",
+      description: "The only male player in football history to score in five consecutive World Cup finals tournaments (2006, 2010, 2014, 2018, 2022).",
+      category: "world",
+      verifiedBy: "FIFA",
+    },
+    {
+      title: "All-Time Top Scorer in UEFA European Championship",
+      value: "14 Goals",
+      description: "Record goalscorer across Euro tournaments (2004, 2008, 2012, 2016, 2020) and record 6 finals appearances.",
+      category: "international",
+      verifiedBy: "UEFA",
+    },
+    {
+      title: "Most International Hat-tricks in History",
+      value: "10 Hat-tricks",
+      description: "No player in international football history has recorded more 3+ goal performances than CR7.",
+      category: "international",
+      verifiedBy: "FIFA",
+    },
+    {
+      title: "Longest Consecutive Scoring Streak in Champions League",
+      value: "11 Matches",
+      description: "Scored in 11 consecutive Champions League matches during the 2017-2018 campaign, tallying 17 goals.",
+      category: "ucl",
+      verifiedBy: "UEFA",
+    },
+  ],
+};
+
+export const getCr7CareerSummary = (lang: "vi" | "en"): CR7CareerSummary => {
+  return lang === "en" ? cr7CareerSummaryEn : cr7CareerSummaryVi;
+};
+
+// Default export for backwards compatibility
+export const cr7CareerSummary = cr7CareerSummaryVi;

@@ -187,7 +187,9 @@ export default function Navbar() {
       {mobileMenuOpen && (
         <div className="xl:hidden bg-[#0D0F14]/98 border-b border-[#232733] px-5 py-4 transition-all">
           <div className="flex items-center justify-between pb-3 mb-2 border-b border-gray-800">
-            <span className="text-xs text-gray-400 uppercase font-semibold">Ngôn ngữ / Language:</span>
+            <span className="text-xs text-gray-400 uppercase font-semibold">
+              {language === "vi" ? "Ngôn ngữ:" : "Language:"}
+            </span>
             <LanguageSwitcher />
           </div>
 

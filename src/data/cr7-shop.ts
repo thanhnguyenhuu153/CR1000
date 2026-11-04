@@ -13,7 +13,7 @@ export interface ShopItem {
   reviewsCount: number;
 }
 
-export const cr7ShopItems: ShopItem[] = [
+export const cr7ShopItemsVi: ShopItem[] = [
   {
     id: "jersey-mu-2008-retro",
     name: "Áo đấu Manchester United Retro 2008 Final Moscow #7 Ronaldo (Tay dài)",
@@ -96,3 +96,94 @@ export const cr7ShopItems: ShopItem[] = [
     reviewsCount: 420,
   },
 ];
+
+export const cr7ShopItemsEn: ShopItem[] = [
+  {
+    id: "jersey-mu-2008-retro",
+    name: "Manchester United Retro 2008 Moscow Final #7 Ronaldo Long Sleeve Kit",
+    category: "jersey",
+    priceText: "$35 – $65",
+    originalPriceText: "$89",
+    badge: "Best Seller",
+    description: "Classic long-sleeve red kit from the rain in Moscow winning the 2008 Champions League. Premium breathable knit with authentic Premier League & UCL font.",
+    image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop",
+    affiliateUrl: "https://shopee.vn/search?keyword=ao+manchester+united+2008+ronaldo+7",
+    platform: "Shopee",
+    rating: 4.9,
+    reviewsCount: 1420,
+  },
+  {
+    id: "jersey-real-madrid-cardiff-2017",
+    name: "Real Madrid Final Cardiff 2017 #7 Ronaldo Purple Away Kit",
+    category: "jersey",
+    priceText: "$39 – $75",
+    originalPriceText: "$95",
+    badge: "Duodécima Relic",
+    description: "Historic purple jersey worn as Ronaldo struck a final brace to crush Juventus 4-1 and shatter the Champions League retention curse.",
+    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=600&auto=format&fit=crop",
+    affiliateUrl: "https://shopee.vn/search?keyword=ao+real+madrid+2017+cardiff+ronaldo",
+    platform: "Shopee",
+    rating: 4.9,
+    reviewsCount: 980,
+  },
+  {
+    id: "jersey-al-nassr-home",
+    name: "Al Nassr Official Home Gold #7 Ronaldo Match Jersey 2024/2025",
+    category: "jersey",
+    priceText: "$45 – $85",
+    badge: "Trending",
+    description: "Official current home kit of CR7 on the road to his 1,000th goal. Athletic fit, breathable mesh, with precision 3D embossed crest.",
+    image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=600&auto=format&fit=crop",
+    affiliateUrl: "https://shopee.vn/search?keyword=ao+al+nassr+ronaldo+7+chinh+hang",
+    platform: "Shopee",
+    rating: 4.8,
+    reviewsCount: 2150,
+  },
+  {
+    id: "boots-nike-mercurial-superfly",
+    name: "Nike Mercurial Superfly 9 / 10 Elite CR7 FG/TF Football Boots",
+    category: "boots",
+    priceText: "$95 – $285",
+    originalPriceText: "$310",
+    badge: "Lethal Weapon",
+    description: "The signature speed silo synonymous with Cristiano Ronaldo's career. Zoom Air unit for explosive acceleration with a snug Flyknit collar.",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop",
+    affiliateUrl: "https://shopee.vn/search?keyword=giay+nike+mercurial+superfly+cr7",
+    platform: "Shopee",
+    rating: 4.9,
+    reviewsCount: 840,
+  },
+  {
+    id: "perfume-cr7-fearless",
+    name: "CR7 Cristiano Ronaldo Fearless Eau de Toilette (100ml)",
+    category: "lifestyle",
+    priceText: "$45 – $65",
+    badge: "Gentleman Style",
+    description: "Masculine, empowering fragrance blending woody cedar, warm amber, and spicy cardamom, co-created by Cristiano Ronaldo.",
+    image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=600&auto=format&fit=crop",
+    affiliateUrl: "https://shopee.vn/search?keyword=nuoc+hoa+cr7+cristiano+ronaldo+chinh+hang",
+    platform: "Shopee",
+    rating: 4.9,
+    reviewsCount: 630,
+  },
+  {
+    id: "poster-cr1000-metal",
+    name: "CR1000 Road to 1,000 Goals Commemorative LED / Metal Art Canvas",
+    category: "memorabilia",
+    priceText: "$25 – $55",
+    badge: "Limited Edition",
+    description: "Luxury wall art featuring the iconic Turin bicycle kick, the Siuuu celebration, and complete gold-embossed career stats.",
+    image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=600&auto=format&fit=crop",
+    affiliateUrl: "https://shopee.vn/search?keyword=tranh+canvas+cristiano+ronaldo+cr7",
+    platform: "Shopee",
+    rating: 5.0,
+    reviewsCount: 420,
+  },
+];
+
+export const getCr7ShopItems = (lang: "vi" | "en"): ShopItem[] => {
+  return lang === "en" ? cr7ShopItemsEn : cr7ShopItemsVi;
+};
+
+// Default export for backwards compatibility
+export const cr7ShopItems = cr7ShopItemsVi;

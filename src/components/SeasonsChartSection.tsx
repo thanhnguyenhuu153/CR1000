@@ -1,15 +1,15 @@
 "use client";
 
 import React, { useState } from "react";
-import { cr7SeasonsData, YearRecord } from "@/data/cr7-seasons";
+import { getCr7SeasonsData, YearRecord } from "@/data/cr7-seasons";
 import { useLanguage } from "@/context/LanguageContext";
 import { BarChart3, TrendingUp, Crown, Calendar, Sparkles, CheckCircle2, Flame, Trophy } from "lucide-react";
 
 export default function SeasonsChartSection() {
   const { language, t } = useLanguage();
-  // Mặc định chọn năm 2013 - Đỉnh cao sự nghiệp với 69 bàn thắng
-  const defaultYear = cr7SeasonsData.find((y) => y.year === "2013") || cr7SeasonsData[11];
-  const [selectedYear, setSelectedYear] = useState<YearRecord>(defaultYear);
+  const seasons = getCr7SeasonsData(language);
+  const [selectedYearIndex, setSelectedYearIndex] = useState(11); // 2013 is index 11
+  const selectedYear = seasons[selectedYearIndex] || seasons[11];
 
   const maxGoals = 69; // Đỉnh cao năm 2013
   const totalGoals = 985;
@@ -144,7 +144,7 @@ export default function SeasonsChartSection() {
           {/* Bar Chart Representation */}
           <div className="overflow-x-auto pb-2 -mx-2 px-2 scrollbar-thin scrollbar-thumb-[#1e2230]">
             <div className="grid grid-cols-[repeat(25,minmax(0,1fr))] gap-1 sm:gap-1.5 items-end h-72 sm:h-80 pt-10 pb-2 border-b border-white/[0.08] min-w-[640px] sm:min-w-0">
-              {cr7SeasonsData.map((s) => {
+              {seasons.map((s, idx) => {
                 const isSelected = selectedYear.year === s.year;
                 const isPeak = s.isPeakYear;
                 const heightPercent = (s.goals / maxGoals) * 100;
@@ -153,7 +153,7 @@ export default function SeasonsChartSection() {
                   <button
                     key={s.year}
                     type="button"
-                    onClick={() => setSelectedYear(s)}
+                    onClick={() => setSelectedYearIndex(idx)}
                     className="flex flex-col items-center h-full justify-end group focus:outline-none relative transition-transform duration-200 hover:-translate-y-1 cursor-pointer"
                     title={language === "vi" ? `Năm ${s.year}: ${s.goals} bàn (${s.clubGoals} CLB + ${s.countryGoals} ĐTQG) / ${s.matches} trận` : `Year ${s.year}: ${s.goals} goals (${s.clubGoals} Club + ${s.countryGoals} Country) / ${s.matches} matches`}
                   >

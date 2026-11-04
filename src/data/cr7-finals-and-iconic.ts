@@ -22,7 +22,7 @@ export interface IconicGoal {
   };
 }
 
-export const cr7FinalsAndIconicGoals: IconicGoal[] = [
+export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
   // CÁC BÀN THẮNG TRONG TRẬN CHUNG KẾT ĐOẠT CÚP
   {
     id: "final-nations-league-2025",
@@ -264,3 +264,253 @@ export const cr7FinalsAndIconicGoals: IconicGoal[] = [
     impact: "Đưa Bồ Đào Nha đến World Cup và đóng vai trò quyết định giúp Ronaldo đoạt Quả bóng Vàng 2013.",
   },
 ];
+
+export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
+  // CUP FINAL MATCH-WINNING GOALS
+  {
+    id: "final-nations-league-2025",
+    category: "final",
+    title: "61st-Minute Volley in the Nations League 2025 Final – 3rd Senior International Trophy",
+    match: "Portugal 2 - 2 Spain (Pen 5-3)",
+    date: "08/06/2025",
+    competition: "UEFA Nations League Final 2025",
+    trophyOrAward: "UEFA Nations League Trophy 2024–25",
+    minute: 61,
+    scoreBefore: "1 - 2",
+    scoreFinal: "2 - 2 (Won Penalties 5-3)",
+    team: "Portugal",
+    opponent: "Spain",
+    stadium: "Allianz Arena (Munich, Germany)",
+    matchImageUrl: "/images/cr7/era-portugal.jpg",
+    description:
+      "With Spain twice ahead in Munich, Ronaldo met Nuno Mendes' lightning cross with an instinctive first-time volley into the roof of Unai Simón's net, leveling at 2-2 to spark wild Portuguese celebrations and opening the door to a 5-3 shootout triumph.",
+    impact: "Brought home Portugal's second UEFA Nations League championship (2019 & 2025), lifting CR7's major international trophy total to three.",
+    gearTag: {
+      bootName: "Nike Mercurial Superfly 10 Elite CR7",
+      description: "The championship-winning weapon in Munich",
+      affiliateKeyword: "Nike Mercurial Superfly 10 CR7",
+    },
+  },
+  {
+    id: "final-ucl-2008",
+    category: "final",
+    title: "Towering Header in Moscow Rain – First Champions League Crown",
+    match: "Manchester United 1 - 1 Chelsea (Pen 6-5)",
+    date: "21/05/2008",
+    competition: "UEFA Champions League Final",
+    trophyOrAward: "UEFA Champions League Trophy 2008",
+    minute: 26,
+    scoreBefore: "0 - 0",
+    scoreFinal: "1 - 1 (Won Penalties)",
+    team: "Manchester United",
+    opponent: "Chelsea FC",
+    stadium: "Luzhniki Stadium (Moscow, Russia)",
+    matchImageUrl: "/images/cr7/final-chelsea.jpg",
+    description:
+      "Soaring half a body above Michael Essien from Wes Brown's cross, Ronaldo hung in the air before guiding a pinpoint header into Petr Čech's bottom corner.",
+    impact: "Sealed the first Champions League triumph of his career and guaranteed his maiden 2008 Ballon d'Or.",
+    gearTag: {
+      bootName: "Nike Mercurial Vapor IV Rosa (Pink)",
+      description: "The iconic pink boots making history in the Moscow rain",
+      affiliateKeyword: "Nike Mercurial Vapor IV",
+    },
+  },
+  {
+    id: "final-copa-2011",
+    category: "final",
+    title: "103rd-Minute Leaping Header Toppling Pep Guardiola's Era",
+    match: "Real Madrid 1 - 0 Barcelona",
+    date: "20/04/2011",
+    competition: "Copa del Rey Final",
+    trophyOrAward: "Copa del Rey 2011",
+    minute: 103,
+    scoreBefore: "0 - 0",
+    scoreFinal: "1 - 0",
+    team: "Real Madrid",
+    opponent: "FC Barcelona",
+    stadium: "Mestalla (Valencia, Spain)",
+    description:
+      "Deep in extra time, Ángel Di María swung in a cross from the left. Ronaldo soared 2.65m above Adriano, looping a magnificent header into the far corner past Pinto.",
+    impact: "Ronaldo's first trophy with Real Madrid, ending Barcelona's era of absolute domestic dominance.",
+    gearTag: {
+      bootName: "Nike Mercurial Superfly II Safari",
+      description: "The legendary Safari leopard print boots of CR7",
+      affiliateKeyword: "Nike Mercurial Superfly Safari",
+    },
+  },
+  {
+    id: "final-ucl-2014",
+    category: "final",
+    title: "Sealing Historic 'La Décima' & Record 17 Goals in One Campaign",
+    match: "Real Madrid 4 - 1 Atlético Madrid",
+    date: "24/05/2014",
+    competition: "UEFA Champions League Final",
+    trophyOrAward: "UEFA Champions League Trophy 2014 (La Décima)",
+    minute: 120,
+    scoreBefore: "3 - 1",
+    scoreFinal: "4 - 1",
+    team: "Real Madrid",
+    opponent: "Atlético Madrid",
+    stadium: "Estádio da Luz (Lisbon, Portugal)",
+    description:
+      "Fouled in the penalty area in the final seconds of extra time, Ronaldo sent Courtois the wrong way from the spot, ripping off his shirt in jubilation on home soil in Lisbon.",
+    impact: "Realized Real Madrid's 12-year dream for 'La Décima' and set an all-time tournament record of 17 goals in a single season.",
+    gearTag: {
+      bootName: "Nike Mercurial Superfly IV",
+      description: "Nike's pioneering Dynamic Fit high-collar speed boot",
+      affiliateKeyword: "Nike Mercurial Superfly IV",
+    },
+  },
+  {
+    id: "final-ucl-2017",
+    category: "final",
+    title: "Cardiff Final Double Tearing Through Juventus' Defense",
+    match: "Real Madrid 4 - 1 Juventus",
+    date: "03/06/2017",
+    competition: "UEFA Champions League Final",
+    trophyOrAward: "UEFA Champions League Trophy 2017 (Duodécima)",
+    minute: 20,
+    scoreBefore: "0 - 0",
+    scoreFinal: "4 - 1",
+    team: "Real Madrid",
+    opponent: "Juventus FC",
+    stadium: "Millennium Stadium (Cardiff, Wales)",
+    matchImageUrl: "/images/cr7/era-realmadrid.jpg",
+    description:
+      "Swept home the opening goal with a clinical first-time finish from Carvajal, then ghosted to the near post to convert Modrić's cutback past Gianluigi Buffon.",
+    impact: "Made Real Madrid the first club in modern Champions League history to retain the European Cup.",
+    gearTag: {
+      bootName: "Nike Mercurial Superfly V CR7 Chapter 4",
+      description: "Forged for greatness under the roof in Cardiff",
+      affiliateKeyword: "Nike Mercurial Superfly V CR7",
+    },
+  },
+  {
+    id: "final-arab-2023",
+    category: "final",
+    title: "Heroic 10-Man Brace – First Trophy in Saudi Arabia",
+    match: "Al Nassr 2 - 1 Al Hilal",
+    date: "12/08/2023",
+    competition: "Arab Club Champions Cup Final",
+    trophyOrAward: "Arab Club Champions Cup 2023",
+    minute: 74,
+    scoreBefore: "0 - 1",
+    scoreFinal: "2 - 1",
+    team: "Al Nassr",
+    opponent: "Al Hilal",
+    stadium: "King Fahd Stadium (Taif, Saudi Arabia)",
+    description:
+      "Down to 10 men and trailing 0-1, CR7 smashed in a 74th-minute equalizer before courageously heading home the extra-time winner against rivals Al Hilal.",
+    impact: "Ronaldo's inaugural silverware in the Middle East, showcasing ageless leadership.",
+    gearTag: {
+      bootName: "Nike Mercurial Superfly 9 Elite CR7",
+      description: "The boots powering Al Nassr to championship glory",
+      affiliateKeyword: "Nike Mercurial Superfly 9 CR7",
+    },
+  },
+
+  // IMMORTAL ICONIC GOALS
+  {
+    id: "iconic-bicycle-juve-2018",
+    category: "iconic",
+    title: "The 2.38m Bicycle Kick That Brought Turin to Its Feet",
+    match: "Juventus 0 - 3 Real Madrid",
+    date: "03/04/2018",
+    competition: "UEFA Champions League (Quarter-finals)",
+    minute: 64,
+    scoreBefore: "0 - 1",
+    scoreFinal: "0 - 3",
+    team: "Real Madrid",
+    opponent: "Juventus FC",
+    stadium: "Allianz Stadium (Turin, Italy)",
+    description:
+      "Connecting with Dani Carvajal's cross, Ronaldo leaped parallel to the turf at an astounding height of 2.38m, whipping an overhead bicycle kick into the corner. The opposing Turin stadium stood as one to give him a standing ovation.",
+    impact: "Voted the greatest goal in Champions League history and sparked the mutual respect that led CR7 to Juventus.",
+    gearTag: {
+      bootName: "Nike Mercurial Superfly 360 Elite",
+      description: "The boots behind the bicycle kick of the century",
+      affiliateKeyword: "Nike Mercurial Superfly 360",
+    },
+  },
+  {
+    id: "iconic-puskas-porto-2009",
+    category: "iconic",
+    title: "The 40-Meter Rocket Winning the Inaugural FIFA Puskás Award",
+    match: "FC Porto 0 - 1 Manchester United",
+    date: "15/04/2009",
+    competition: "UEFA Champions League (Quarter-finals)",
+    minute: 6,
+    scoreBefore: "0 - 0",
+    scoreFinal: "0 - 1",
+    team: "Manchester United",
+    opponent: "FC Porto",
+    stadium: "Estádio do Dragão (Porto, Portugal)",
+    description:
+      "Picking up the ball over 40 meters out, Ronaldo unleashed a 105 km/h missile that flew like a laser straight into the top postage stamp, stunning Helton.",
+    impact: "Won the inaugural FIFA Puskás Award in world football history and sent United to the semi-finals.",
+    gearTag: {
+      bootName: "Nike Mercurial Vapor Superfly I",
+      description: "Nike's revolutionary lightweight Flywire speed boots",
+      affiliateKeyword: "Nike Mercurial Vapor Superfly",
+    },
+  },
+  {
+    id: "iconic-calma-campnou-2012",
+    category: "iconic",
+    title: "The 'Calma Calma' Celebration Silencing 98,000 at Camp Nou",
+    match: "FC Barcelona 1 - 2 Real Madrid",
+    date: "21/04/2012",
+    competition: "La Liga",
+    minute: 73,
+    scoreBefore: "1 - 1",
+    scoreFinal: "1 - 2",
+    team: "Real Madrid",
+    opponent: "FC Barcelona",
+    stadium: "Camp Nou (Barcelona, Spain)",
+    description:
+      "Mesut Özil split the Barça defense. Ronaldo sprinted past Puyol, rounded Valdés, and slotted home from a tight angle before gesturing 'Calma, I am here'.",
+    impact: "Clinched the historic 100-point La Liga title for Real Madrid under José Mourinho.",
+  },
+  {
+    id: "iconic-freekick-portsmouth-2008",
+    category: "iconic",
+    title: "The Knuckleball Masterpiece Defying the Laws of Physics",
+    match: "Manchester United 2 - 0 Portsmouth",
+    date: "30/01/2008",
+    competition: "Premier League",
+    minute: 13,
+    scoreBefore: "1 - 0",
+    scoreFinal: "2 - 0",
+    team: "Manchester United",
+    opponent: "Portsmouth FC",
+    stadium: "Old Trafford (Manchester, England)",
+    description:
+      "Standing over a 25-meter set piece in his iconic wide stance. Struck with the instep, the ball traveled with zero rotation, dipping and swerving violently into the top corner as David James stood frozen.",
+    impact: "Hailed by Sir Alex Ferguson as 'The finest free-kick in Premier League history'.",
+  },
+  {
+    id: "iconic-sweden-masterclass-2013",
+    category: "clutch",
+    title: "Solo World Cup Playoff Hat-trick Dragging Portugal to Brazil 2014",
+    match: "Sweden 2 - 3 Portugal",
+    date: "19/11/2013",
+    competition: "FIFA World Cup 2014 Qualifiers (Play-off)",
+    minute: 79,
+    scoreBefore: "2 - 2",
+    scoreFinal: "2 - 3",
+    team: "Portugal",
+    opponent: "Sweden",
+    stadium: "Friends Arena (Solna, Sweden)",
+    matchImageUrl: "/images/cr7/era-portugal.jpg",
+    description:
+      "In a high-stakes duel against Zlatan Ibrahimović's double, Ronaldo replied with a devastating second-half counter-attacking hat-trick, finishing with both feet.",
+    impact: "Sent Portugal to the World Cup and proved decisive in Ronaldo claiming his 2013 Ballon d'Or.",
+  },
+];
+
+export const getCr7FinalsAndIconicGoals = (lang: "vi" | "en"): IconicGoal[] => {
+  return lang === "en" ? cr7FinalsAndIconicGoalsEn : cr7FinalsAndIconicGoalsVi;
+};
+
+// Default export for backwards compatibility
+export const cr7FinalsAndIconicGoals = cr7FinalsAndIconicGoalsVi;
