@@ -114,8 +114,14 @@ export default function JournalManagerTab() {
     setTimeout(() => setNotification(null), 4000);
   };
 
+  // Local text buffer for rich paragraphs
+  const [viContent, setViContent] = useState("");
+  const [enContent, setEnContent] = useState("");
+
   const handleOpenCreate = () => {
     setEditingArticle(null);
+    setViContent("");
+    setEnContent("");
     setFormData({
       id: `art_${Date.now()}`,
       slug: "",
@@ -139,18 +145,8 @@ export default function JournalManagerTab() {
         { labelVi: "Bàn thắng", labelEn: "Goals", value: "985", highlight: true },
         { labelVi: "Còn lại", labelEn: "Remaining", value: "15" },
       ],
-      sectionsVi: [
-        {
-          heading: "Diễn biến sự kiện",
-          content: [""],
-        },
-      ],
-      sectionsEn: [
-        {
-          heading: "Event Breakdown",
-          content: [""],
-        },
-      ],
+      sectionsVi: [],
+      sectionsEn: [],
       faqsVi: [],
       faqsEn: [],
     });
@@ -160,6 +156,17 @@ export default function JournalManagerTab() {
   const handleOpenEdit = (article: JournalArticle) => {
     setEditingArticle(article);
     setFormData({ ...article });
+    
+    // Combine all sections paragraphs for clean editing
+    const fullVi = (article.sectionsVi || [])
+      .map((s) => s.content.join("\n\n"))
+      .join("\n\n\n");
+    const fullEn = (article.sectionsEn || [])
+      .map((s) => s.content.join("\n\n"))
+      .join("\n\n\n");
+
+    setViContent(fullVi);
+    setEnContent(fullEn);
     setIsModalOpen(true);
   };
 
@@ -218,10 +225,29 @@ export default function JournalManagerTab() {
 
     setSaving(true);
     try {
+      const viParagraphs = viContent.split("\n\n").map((p) => p.trim()).filter(Boolean);
+      const enParagraphs = enContent.split("\n\n").map((p) => p.trim()).filter(Boolean);
+
+      const payload = {
+        ...formData,
+        sectionsVi: [
+          {
+            heading: "Diễn biến sự kiện",
+            content: viParagraphs.length ? viParagraphs : [viContent],
+          },
+        ],
+        sectionsEn: [
+          {
+            heading: "Event Breakdown",
+            content: enParagraphs.length ? enParagraphs : [enContent || viContent],
+          },
+        ],
+      };
+
       const res = await fetch("/api/journal", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ article: formData }),
+        body: JSON.stringify({ article: payload }),
       });
       const data = await res.json();
 
@@ -592,30 +618,48 @@ export default function JournalManagerTab() {
                 </div>
               </div>
 
-              {/* Main Content Paragraphs (Quick Editor) */}
-              <div className="space-y-3">
-                <label className="text-xs font-bold text-gray-300">Nội dung chi tiết (Tiếng Việt)</label>
-                <textarea
-                  rows={6}
-                  value={
-                    formData.sectionsVi?.[0]?.content?.join("\n\n") || ""
-                  }
-                  onChange={(e) => {
-                    const text = e.target.value;
-                    const paragraphs = text.split("\n\n").filter(Boolean);
-                    setFormData((prev) => ({
-                      ...prev,
-                      sectionsVi: [
-                        {
-                          heading: prev.sectionsVi?.[0]?.heading || "Diễn biến sự kiện",
-                          content: paragraphs.length ? paragraphs : [text],
-                        },
-                      ],
-                    }));
-                  }}
-                  placeholder="Mỗi đoạn văn cách nhau bằng một dòng trống (Enter 2 lần)..."
-                  className="w-full p-3.5 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37] font-sans leading-relaxed"
-                />
+              {/* Main Content Paragraphs (Bilingual Editor) */}
+              <div className="space-y-4">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1 border-b border-gray-800">
+                  <label className="text-xs font-bold text-gray-200 uppercase tracking-wider">
+                    Nội dung bài viết chi tiết (Song ngữ VI & EN)
+                  </label>
+                  <span className="text-[11px] text-gray-400">
+                    Mỗi đoạn văn cách nhau bằng 1 dòng trống (Enter 2 lần)
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* VI Content */}
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                      <span>🇻🇳</span>
+                      <span>Nội dung chi tiết (Tiếng Việt)</span>
+                    </span>
+                    <textarea
+                      rows={9}
+                      value={viContent}
+                      onChange={(e) => setViContent(e.target.value)}
+                      placeholder="Nhập nội dung các đoạn văn tiếng Việt tại đây (Mỗi đoạn cách nhau 1 dòng trống)..."
+                      className="w-full p-3.5 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37] font-sans leading-relaxed"
+                    />
+                  </div>
+
+                  {/* EN Content */}
+                  <div className="space-y-1.5">
+                    <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
+                      <span>🇺🇸</span>
+                      <span>Main Content (English)</span>
+                    </span>
+                    <textarea
+                      rows={9}
+                      value={enContent}
+                      onChange={(e) => setEnContent(e.target.value)}
+                      placeholder="Enter English article paragraphs here (Separate paragraphs by an empty line)..."
+                      className="w-full p-3.5 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37] font-sans leading-relaxed"
+                    />
+                  </div>
+                </div>
               </div>
 
               {/* Submit Buttons */}
