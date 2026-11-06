@@ -454,5 +454,175 @@ export const cr7JournalArticles: JournalArticle[] = [
         answer: "Lionel Messi (Argentina) ranks second in men's international football history with 112 goals, trailing Ronaldo by 34 goals."
       }
     ]
+  },
+
+  {
+    id: "cr7-7-iconic-portugal-moments",
+    slug: "cr7-most-iconic-portugal-moments-23-years",
+    titleVi: "23 Năm Rực Rỡ Cùng Seleção: 7 Khoảnh Khắc Bất Tử Định Hình Di Sản Cristiano Ronaldo",
+    titleEn: "23 Years of Seleção Glory: 7 Immortal Moments That Defined Cristiano Ronaldo's International Legacy",
+    excerptVi: "Từ cậu thiếu niên bật khóc ở chung kết Euro 2004 đến người thủ quân giương cao 3 danh hiệu lớn và kỷ lục 146 bàn thắng, đây là 7 cột mốc vĩ đại nhất của CR7 trong màu áo Bồ Đào Nha.",
+    excerptEn: "From the heartbroken teenager of Euro 2004 to the triumphant captain hoisting three major trophies and 146 world-record goals, here are CR7's 7 most defining moments for Portugal.",
+    categoryVi: "Kỷ Lục & Di Sản",
+    categoryEn: "Legacy & Records",
+    categorySlug: "legacy",
+    publishedDate: "2026-11-06",
+    readTimeVi: "8 phút đọc",
+    readTimeEn: "8 min read",
+    author: "CR1000 Historical Archives",
+    coverImage: "/images/cr7/era-portugal.jpg",
+    isFeatured: true,
+    tags: ["Portugal", "Cristiano Ronaldo", "Euro 2016", "Nations League", "Iconic Moments", "146 Goals"],
+
+    quickTakeawayVi: "Trải dài từ màn ra mắt tháng 8/2003 đến lời giã từ ngày 5/11/2026, 23 năm cống hiến của Cristiano Ronaldo cho ĐTQG Bồ Đào Nha được khắc ghi qua 7 khoảnh khắc bất tử: Giọt nước mắt Euro 2004, cú hat-trick nghẹt thở tại Solna 2013, đêm mưa bướm vô địch Euro 2016 tại Paris, siêu phẩm sút phạt phút 88 gỡ hòa 3-3 trước Tây Ban Nha tại World Cup 2018, cú hat-trick đưa Bồ Đào Nha vô địch Nations League 2019, cú đúp không chiến phá kỷ lục thế giới của Ali Daei năm 2021, và chức vô địch Nations League 2025 khép lại trọn vẹn 146 bàn thắng trong 234 lần khoác áo.",
+    quickTakeawayEn: "Spanning from his senior debut in August 2003 to his farewell on November 5, 2026, Cristiano Ronaldo's 23-year international career for Portugal is cemented by 7 immortal milestones: The heartbreaking tears of Euro 2004, the heroic solitary hat-trick in Solna 2013, lifting Euro 2016 in Paris, the breathtaking 88th-minute free-kick hat-trick against Spain in 2018, the 2019 Nations League semi-final treble, the late header brace breaking Ali Daei's all-time world record in 2021, and captaining Portugal to the 2025 Nations League title to conclude an unmatched 146 goals in 234 caps.",
+
+    keyStats: [
+      { labelVi: "Bàn thắng quốc tế (Kỷ lục thế giới)", labelEn: "All-Time International Goals", value: "146", highlight: true },
+      { labelVi: "Số trận khoác áo tuyển", labelEn: "Total International Caps", value: "234" },
+      { labelVi: "Danh hiệu tập thể lớn", labelEn: "Major Team Trophies", value: "3 (Euro 2016, NL 2019, NL 2025)", highlight: true },
+      { labelVi: "Số năm cống hiến liên tục", labelEn: "Years of International Service", value: "23 năm (2003 - 2026)" },
+    ],
+
+    sectionsVi: [
+      {
+        heading: "1. Tháng 7/2004 (Lisbon): Nước mắt tuổi 19 và lời thề phục hận",
+        content: [
+          "Sau màn ra mắt ĐTQG vào tháng 8/2003 khi vào sân thay cho huyền thoại Luis Figo ở trận gặp Kazakhstan, chàng trai 19 tuổi mang áo số 17 đã làm nổ tung cầu trường Euro 2004 trên sân nhà. Dù khởi đầu bằng quả đánh đầu vào lưới Hy Lạp ở trận khai mạc, kết thúc giải đấu lại là một bi kịch khi Bồ Đào Nha gục ngã 0-1 trước chính đối thủ này trong trận chung kết.",
+          "Hình ảnh cậu thiếu niên Cristiano Ronaldo òa khóc nức nở giữa thảm cỏ Estádio da Luz đã trở thành biểu tượng cho nỗi đau bóng đá của cả một quốc gia. Nhưng giọt nước mắt ấy không phải là sự gục ngã, mà là ngọn lửa nhen nhóm cho một lời thề sắt đá: Một ngày nào đó, anh sẽ đích thân mang cúp vàng về cho tổ quốc."
+        ],
+        quote: {
+          text: "Tôi đã khóc rất nhiều đêm hôm đó. Nhưng tôi tự hứa với bản thân rằng bóng đá nợ tôi và đất nước tôi một chiếc cúp vô địch.",
+          author: "Cristiano Ronaldo (Nhìn lại chung kết Euro 2004)"
+        }
+      },
+      {
+        heading: "2. Ngày 19/11/2013 (Solna, Thụy Điển): Màn độc diễn kéo cả dân tộc tới World Cup",
+        content: [
+          "Nếu phải chọn ra một trận đấu thể hiện bản năng sinh tồn và khí chất 'gánh đội' tột đỉnh của một cá nhân trong lịch sử bóng đá quốc tế, không trận nào vượt qua được đêm Solna năm 2013.",
+          "Trong trận play-off lượt về tranh vé vớt dự World Cup 2014, một bên là Zlatan Ibrahimovic với cú đúp đẳng cấp, bên kia là một Ronaldo hoàn toàn đơn độc. Bằng 3 pha bứt tốc xé toạc hàng thủ Thụy Điển trong vỏn vẹn 29 phút hiệp hai, CR7 hoàn tất cú hat-trick bằng chân trái, chân phải và pha dứt điểm lạnh lùng, dập tắt mọi hy vọng của đối thủ và đưa Bồ Đào Nha hiên ngang tới Brazil."
+        ]
+      },
+      {
+        heading: "3. Ngày 10/07/2016 (Stade de France, Paris): Đêm mưa bướm và đỉnh cao Euro 2016",
+        content: [
+          "Trận chung kết Euro 2016 trước chủ nhà Pháp là thước phim kịch tính nhất sự nghiệp của Ronaldo. Sau pha vào bóng ác ý của Dimitri Payet ở phút thứ 8, Ronaldo ngã xuống trong đau đớn. Nước mắt lại rơi khi anh phải rời sân bằng cáng ở phút 25, với một chú bướm đêm đậu trên mí mắt.",
+          "Nhưng câu chuyện kỳ vĩ chỉ bắt đầu từ đây: Với cái đầu gối được băng bó chặt, người đội trưởng trở lại khu kỹ thuật, gạt phăng cơn đau để hò hét, chỉ đạo chiến thuật sát cánh bên cạnh HLV Fernando Santos. Cú nã đại bác ở phút 109 của Éder đưa Bồ Đào Nha lên đỉnh châu Âu. Ronaldo khập khiễng bước lên khán đài danh dự, giương cao chiếc cúp bạc Henri Delaunay, chính thức trả xong món nợ nước mắt 12 năm trước."
+        ]
+      },
+      {
+        heading: "4. Ngày 15/06/2018 (Sochi, Nga): Cú sút phạt phút 88 làm câm lặng Tây Ban Nha",
+        content: [
+          "Trong trận mở màn World Cup 2018 tại Sochi, Bồ Đào Nha chạm trán một Tây Ban Nha hùng mạnh đang ở đỉnh cao kiểm soát bóng. Một mình Ronaldo đã biến trận đại chiến thành sân khấu riêng của mình.",
+          "Sau khi ghi 2 bàn thắng đầu tiên, Bồ Đào Nha bị dẫn ngược 2-3 khi đồng hồ điểm sang phút 87. Ronaldo kiếm được một quả phạt trực tiếp ở cự ly 25 mét. Hít một hơi thật sâu, kéo cao ống quần, anh tung cú sút knuckleball vòng qua hàng rào găm thẳng vào góc chữ A khung thành David de Gea. Cú hat-trick kinh điển hoàn tất tỷ số 3-3, đi vào sách giáo khoa bóng đá như một trong những màn trình diễn cá nhân vĩ đại nhất lịch sử World Cup."
+        ]
+      },
+      {
+        heading: "5. Ngày 05/06/2019 (Porto): Hat-trick hủy diệt Thụy Sĩ & chiếc cúp Nations League đầu tiên",
+        content: [
+          "Tại bán kết UEFA Nations League 2019 trên sân nhà Estádio do Dragão, khi trận đấu đang bế tắc ở tỷ số 1-1 trước một Thụy Sĩ kiên cường, Ronaldo một lần nữa cất tiếng nói quyết định.",
+          "Bằng một cú nã đại bác sút phạt phút 25, một pha đệm bóng một chạm phút 88 và một cú đảo chân dứt điểm hiểm hóc phút 90, Ronaldo ghi cả 3 bàn thắng đưa Bồ Đào Nha vào chung kết, trước khi hạ gục Hà Lan để đoạt chiếc cúp Nations League đầu tiên trong lịch sử châu Âu."
+        ]
+      },
+      {
+        heading: "6. Ngày 01/09/2021 (Faro-Loulé): Cú đúp không chiến lật đổ kỷ lục thế giới của Ali Daei",
+        content: [
+          "Trước trận gặp CH Ireland tại vòng loại World Cup 2022, Ronaldo đang san bằng kỷ lục 108 bàn của huyền thoại Iran Ali Daei. Đêm đó, Bồ Đào Nha bị dẫn 0-1 đến tận phút 88 sau khi chính CR7 đá hỏng quả 11m trong hiệp một.",
+          "Và rồi điều không tưởng diễn ra: Phút 89, Ronaldo bật cao hơn mọi trung vệ đối phương đánh đầu gỡ hòa 1-1, chính thức độc chiếm kỷ lục thế giới với 110 bàn. Chưa dừng lại ở đó, ở phút bù giờ 90+6, lại là một cú lắc đầu dũng mãnh khác ấn định chiến thắng 2-1 nghẹt thở, nâng tổng số bàn lên 111. Một cái kết điện ảnh chỉ có thể xuất hiện dưới chân và cái đầu của Cristiano Ronaldo."
+        ]
+      },
+      {
+        heading: "7. Năm 2025 – 2026: Ngôi vương Nations League thứ hai và bản ballad chia tay ở tuổi 41",
+        content: [
+          "Ở giai đoạn cuối của sự nghiệp, khi nhiều người nghĩ rằng Ronaldo đã quá già cho bóng đá quốc tế đỉnh cao, anh vẫn dẫn dắt các đàn em Bruno Fernandes, Bernardo Silva và Rafael Leão bước lên ngôi vô địch UEFA Nations League 2025.",
+          "Và ngày 5/11/2026, sau khi cống hiến trọn vẹn 23 năm thanh xuân và khép lại kỳ World Cup thứ 6 trong lịch sử, Ronaldo chính thức đăng thông điệp trao lại chiếc áo số 7. Anh rời ĐTQG trong tư cách cầu thủ thi đấu nhiều trận nhất (234 trận) và ghi nhiều bàn thắng nhất lịch sử bóng đá nam (146 bàn) — một tượng đài bất tử sẽ đứng vững hàng thập kỷ."
+        ]
+      }
+    ],
+
+    sectionsEn: [
+      {
+        heading: "1. July 2004 (Lisbon): Teenage Tears and an Unbreakable Vow",
+        content: [
+          "Following his international debut in August 2003 as an 18-year-old replacing the legendary Luís Figo against Kazakhstan, Cristiano Ronaldo exploded onto the European scene at Euro 2004. Wearing the number 17 shirt, he scored his first international goal in the opening match against Greece.",
+          "Yet the tournament concluded in heartbreak as Portugal succumbed 0-1 to Greece in the final on home soil. The indelible image of a weeping teenage Ronaldo on the Estádio da Luz pitch became national folklore. But those tears were not defeat; they forged a lifelong obsession to deliver Portugal its first-ever major trophy."
+        ],
+        quote: {
+          text: "I wept bitterly that night. But I promised myself that football owed me and my nation a major international trophy.",
+          author: "Cristiano Ronaldo (Reflecting on Euro 2004)"
+        }
+      },
+      {
+        heading: "2. November 19, 2013 (Solna, Sweden): The Solitary Masterclass to Drag a Nation to Brazil",
+        content: [
+          "Few individual performances in international football history match the raw intensity of Ronaldo's display at the Friends Arena in November 2013.",
+          "Facing Zlatan Ibrahimović in a winner-takes-all 2014 World Cup playoff second leg, Ronaldo took complete command. Over 29 breathtaking second-half minutes, he ripped through Sweden's defensive lines with three lightning counter-attacks, netting a solo hat-trick with his left foot and right foot to secure Portugal's ticket to Brazil."
+        ]
+      },
+      {
+        heading: "3. July 10, 2016 (Stade de France, Paris): The Parisian Moths and Euro 2016 Glory",
+        content: [
+          "The Euro 2016 final against hosts France was the emotional zenith of Ronaldo's international voyage. Struck down by a heavy tackle from Dimitri Payet in the 8th minute, Ronaldo collapsed in agony, weeping as a moth landed on his tear-stained face before being stretchered off in the 25th minute.",
+          "What followed entered athletic legend: Heavily strapped, the captain emerged from the locker room to patrol the technical area, shouting tactical instructions alongside coach Fernando Santos. When Éder's 109th-minute screamer struck the net, Ronaldo hoisted the Henri Delaunay trophy, settling his 12-year debt of tears."
+        ]
+      },
+      {
+        heading: "4. June 15, 2018 (Sochi, Russia): The 88th-Minute Knuckleball That Silenced Spain",
+        content: [
+          "In the opening clash of the 2018 World Cup in Sochi, Portugal met a star-studded Spanish side at the height of tiki-taka dominance. Ronaldo turned the blockbuster into his private amphitheatre.",
+          "Trailing 2-3 in the 87th minute, Ronaldo won a free-kick 25 yards out. Breathing deeply, pulling up his shorts, he dispatched a curving knuckleball over the wall into David de Gea's top corner. The immortal hat-trick sealed a 3-3 draw and remains one of the greatest solo showings in World Cup lore."
+        ]
+      },
+      {
+        heading: "5. June 5, 2019 (Porto): A Virtuoso Hat-trick to Claim the Inaugural Nations League",
+        content: [
+          "In the semi-final of the inaugural 2019 UEFA Nations League at the Estádio do Dragão, a resilient Swiss side held Portugal to a tense 1-1 deadlock until Ronaldo intervened.",
+          "Opening with a stinging 25th-minute free-kick, followed by clinical 88th and 90th-minute finishes, Ronaldo bagged all three goals to propel Portugal into the final, where they defeated the Netherlands to lift the trophy."
+        ]
+      },
+      {
+        heading: "6. September 1, 2021 (Faro-Loulé): Late Aerial Heroics to Siphon Ali Daei's World Record",
+        content: [
+          "Heading into a World Cup qualifier against the Republic of Ireland, Ronaldo sat tied with Iranian legend Ali Daei on 109 international goals. Trailing 0-1 after an early penalty miss, defeat loomed as the clock hit the 88th minute.",
+          "Then, the impossible unfolded. In the 89th minute, Ronaldo soared above the defense to head home the equalizer, capturing the all-time world scoring record outright with goal #110. In the 96th minute, he rose again to power home a dramatic 2-1 winner (#111)—a script only Cristiano Ronaldo could write."
+        ]
+      },
+      {
+        heading: "7. 2025 – November 2026: A Second Nations League Crown and the Farewell at 146 Goals",
+        content: [
+          "In the twilight of his international tenure, Ronaldo captained a golden Portuguese generation to their second UEFA Nations League triumph in 2025.",
+          "On November 5, 2026, after completing his sixth World Cup campaign, Ronaldo announced his retirement from international football. He walks away as the most capped player (234) and the most prolific goalscorer (146 goals) in men's international football history—an enduring benchmark that will stand for generations."
+        ]
+      }
+    ],
+
+    faqsVi: [
+      {
+        question: "Trận đấu nào thể hiện đỉnh cao cá nhân của Ronaldo cho Bồ Đào Nha?",
+        answer: "Cú hat-trick nghẹt thở trên sân Thụy Điển tại play-off World Cup 2013 và cú hat-trick vào lưới Tây Ban Nha tại World Cup 2018 được các chuyên gia đánh giá là hai màn trình diễn cá nhân vĩ đại nhất của Ronaldo."
+      },
+      {
+        question: "Cristiano Ronaldo đã giành được bao nhiêu danh hiệu lớn cùng Bồ Đào Nha?",
+        answer: "Ronaldo giành tổng cộng 3 danh hiệu quốc tế lớn: UEFA Euro 2016, UEFA Nations League 2019 và UEFA Nations League 2025."
+      },
+      {
+        question: "Bàn thắng đầu tiên và bàn thắng cuối cùng của CR7 cho ĐTQG là vào lưới đội nào?",
+        answer: "Bàn thắng đầu tiên được ghi vào lưới Hy Lạp tại Euro 2004 (ngày 12/6/2004), và anh kết thúc sự nghiệp quốc tế ở mốc 146 bàn thắng vào tháng 11/2026."
+      }
+    ],
+    faqsEn: [
+      {
+        question: "Which match is considered Ronaldo's greatest individual performance for Portugal?",
+        answer: "His solo hat-trick away to Sweden in the 2014 World Cup playoff and his iconic hat-trick against Spain in the 2018 World Cup are widely hailed as his supreme international masterclasses."
+      },
+      {
+        question: "How many major trophies did Cristiano Ronaldo win with Portugal?",
+        answer: "Ronaldo won 3 major international championships: UEFA Euro 2016, the 2019 UEFA Nations League, and the 2025 UEFA Nations League."
+      },
+      {
+        question: "Who did Ronaldo score his first and final international goals against?",
+        answer: "His first international goal was scored against Greece at Euro 2004 (June 12, 2004), and he concluded his historic Seleção tally at 146 goals in November 2026."
+      }
+    ]
   }
 ];
