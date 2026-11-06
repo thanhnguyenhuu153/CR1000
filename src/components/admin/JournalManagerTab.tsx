@@ -32,6 +32,11 @@ export default function JournalManagerTab() {
   const [source, setSource] = useState<string>("loading");
   const [notification, setNotification] = useState<{ text: string; type: "success" | "error" } | null>(null);
 
+  // AI Generator state
+  const [aiGenerating, setAiGenerating] = useState(false);
+  const [showAiModal, setShowAiModal] = useState(false);
+  const [customTopic, setCustomTopic] = useState("");
+
   // Modal / Form state
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<JournalArticle | null>(null);
@@ -215,6 +220,38 @@ export default function JournalManagerTab() {
     loadArticles();
   };
 
+  // Trigger Autonomous AI Journalist
+  const handleTriggerAi = async (topic?: string) => {
+    setAiGenerating(true);
+    notify("AI đang kết nối Google Search để quét tin tức mới nhất về CR7...", "success");
+
+    try {
+      const res = await fetch("/api/journal/auto-generate", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ topic: topic || undefined }),
+      });
+      const data = await res.json();
+
+      if (data.success) {
+        if (data.skipped) {
+          notify(`Thông báo: ${data.message}`, "success");
+        } else {
+          notify("Thành công! AI đã tạo bài viết mới và xuất bản lên website.", "success");
+          loadArticles();
+          setShowAiModal(false);
+          setCustomTopic("");
+        }
+      } else {
+        notify(data.error || "Không thể tạo bài tự động", "error");
+      }
+    } catch (e: any) {
+      notify(e.message, "error");
+    } finally {
+      setAiGenerating(false);
+    }
+  };
+
   // Submit article
   const handleSaveArticle = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -335,6 +372,17 @@ export default function JournalManagerTab() {
           >
             <Database className="w-3.5 h-3.5" />
             <span>Đồng bộ 3 bài mẫu lên DB</span>
+          </button>
+
+          <button
+            type="button"
+            disabled={aiGenerating}
+            onClick={() => setShowAiModal(true)}
+            className="px-3.5 py-2.5 rounded-xl bg-gradient-to-r from-purple-950/80 to-indigo-950/80 hover:from-purple-900 hover:to-indigo-900 text-purple-200 border border-purple-500/50 text-xs font-bold transition-all flex items-center gap-1.5 shadow-lg shadow-purple-950/30 cursor-pointer disabled:opacity-50"
+            title="Tự động quét tin và viết bài chuẩn SEO/AIO"
+          >
+            <Sparkles className={`w-3.5 h-3.5 text-purple-400 ${aiGenerating ? "animate-spin" : ""}`} />
+            <span>{aiGenerating ? "AI đang quét & viết..." : "AI Tự Viết Bài"}</span>
           </button>
 
           <button
@@ -696,6 +744,75 @@ export default function JournalManagerTab() {
                 </div>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+
+      {/* AI AUTO-WRITER MODAL */}
+      {showAiModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+          <div className="relative w-full max-w-lg bg-[#0E111B] border border-purple-500/40 rounded-3xl shadow-2xl p-6 sm:p-7 space-y-5">
+            <div className="flex items-center justify-between pb-3 border-b border-gray-800">
+              <div className="flex items-center gap-2.5">
+                <div className="p-2 rounded-xl bg-purple-500/20 text-purple-300">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-white">AI Ký Sự Thể Thao Tự Động</h3>
+                  <p className="text-[11px] text-gray-400">Powered by Gemini & Google Search</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowAiModal(false)}
+                className="p-1.5 rounded-lg bg-gray-800 text-gray-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-3">
+              <p className="text-xs text-gray-300 leading-relaxed">
+                Bạn có thể chọn để <strong>AI tự động quét tin 24h qua</strong> theo bộ lọc chất lượng, hoặc nhập một chủ đề cụ thể để AI viết ngay:
+              </p>
+
+              <div className="space-y-1.5">
+                <label className="text-[11px] font-bold text-gray-400">
+                  Chủ đề tùy chọn (Để trống nếu muốn AI tự động quét tin):
+                </label>
+                <input
+                  type="text"
+                  value={customTopic}
+                  onChange={(e) => setCustomTopic(e.target.value)}
+                  placeholder="Ví dụ: Phân tích bàn thắng thứ 986 của Ronaldo vào lưới Al-Shabab..."
+                  className="w-full px-3.5 py-2.5 rounded-xl bg-[#141824] border border-gray-800 text-xs text-white focus:outline-none focus:border-purple-500"
+                />
+              </div>
+
+              <div className="p-3 rounded-xl bg-[#090B12] border border-gray-800 text-[11px] text-gray-400 space-y-1">
+                <span className="font-bold text-amber-400 block">✦ Bộ tiêu chuẩn chất lượng tự động:</span>
+                <span>• Song ngữ VI / EN song song • Khối AIO Snippet • FAQ Schema.org • Tự động gắn mốc đếm ngược 1000 bàn.</span>
+              </div>
+            </div>
+
+            <div className="pt-3 border-t border-gray-800 flex items-center justify-end gap-3">
+              <button
+                type="button"
+                onClick={() => setShowAiModal(false)}
+                className="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 text-xs font-bold hover:bg-gray-700"
+              >
+                Hủy bỏ
+              </button>
+
+              <button
+                type="button"
+                disabled={aiGenerating}
+                onClick={() => handleTriggerAi(customTopic)}
+                className="px-5 py-2 rounded-xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-extrabold text-xs transition-all flex items-center gap-2 shadow-lg shadow-purple-600/30 disabled:opacity-50"
+              >
+                <Sparkles className="w-4 h-4" />
+                <span>{aiGenerating ? "Đang xử lý..." : customTopic ? "Viết theo chủ đề này" : "Tự động quét tin & Viết"}</span>
+              </button>
+            </div>
           </div>
         </div>
       )}

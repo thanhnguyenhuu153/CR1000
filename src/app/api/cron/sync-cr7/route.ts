@@ -1,11 +1,12 @@
 import { NextResponse } from "next/server";
 import { cr7CareerSummary } from "@/data/cr7-stats";
+import { runAutonomousJournalist } from "@/lib/gemini-journalist";
 
 export const dynamic = "force-dynamic";
 
 /**
  * Level 3 Auto-Pilot Cron Handler
- * Triggered automatically by Vercel Cron Jobs every 4 hours,
+ * Triggered automatically by Vercel Cron Jobs daily at 22:00 UTC (05:00 AM VN)
  * or triggered on-demand via the Admin Hub.
  */
 export async function GET(request: Request) {
@@ -22,34 +23,25 @@ export async function GET(request: Request) {
     }
   }
 
+  // 1. Run Automated AI Journalist Engine (Checks for matches, goals, and breaking news)
+  let journalistResult = null;
+  try {
+    journalistResult = await runAutonomousJournalist();
+  } catch (e: any) {
+    journalistResult = { status: "error", error: e.message };
+  }
+
   const syncResult = {
     timestamp: new Date().toISOString(),
     status: "healthy",
-    source: "Football Auto-Pilot Engine v1.0",
+    source: "Football Auto-Pilot & AI Journalist Engine v2.0",
     currentOfficialGoals: cr7CareerSummary.totalGoals,
     target: cr7CareerSummary.countdownTarget,
     remaining: cr7CareerSummary.countdownTarget - cr7CareerSummary.totalGoals,
     nextMatch: cr7CareerSummary.nextMatch,
-    cronSchedule: "Daily at 22:00 UTC / 05:00 AM VN (0 22 * * *) - Sau giờ bóng lăn đêm của Al Nassr & ĐTQG",
-    activeFeeds: [
-      {
-        provider: "TheSportsDB (Free Tier)",
-        status: "active",
-        endpoint: "https://www.thesportsdb.com/api/v1/json/3/searchplayers.php?p=Cristiano_Ronaldo"
-      },
-      {
-        provider: "RapidAPI / API-Football (v3)",
-        status: process.env.RAPIDAPI_KEY ? "configured" : "pending_key",
-        playerId: 874,
-        teamId: 1045, // Al Nassr
-      },
-      {
-        provider: "GitHub GitOps Auto-Commit",
-        status: process.env.GITHUB_PAT ? "configured" : "manual_push_fallback",
-        targetRepo: "thanhnguyenhuu153/CR1000"
-      }
-    ],
-    lastCheckSummary: "Đã kiểm tra lịch thi đấu & số bàn thắng chính thức. Hiện tại CR7 đang ở mốc 985 bàn.",
+    cronSchedule: "Daily at 22:00 UTC / 05:00 AM VN (0 22 * * *)",
+    journalistEngine: journalistResult,
+    lastCheckSummary: "Đã kiểm tra lịch thi đấu, số bàn thắng chính thức và kích hoạt AI Journalist quét tin.",
   };
 
   return NextResponse.json(syncResult, {
