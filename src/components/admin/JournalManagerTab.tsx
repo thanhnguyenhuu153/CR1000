@@ -251,9 +251,9 @@ export default function JournalManagerTab() {
     }
   };
 
-  // Seed default 3 articles into Supabase if empty
+  // Seed default articles into Supabase if empty or missing
   const handleSeedDefaults = async () => {
-    if (!confirm("Hệ thống sẽ đồng bộ 3 bài viết mẫu hiện có lên database Supabase của bạn. Tiếp tục?")) {
+    if (!confirm(`Hệ thống sẽ đồng bộ toàn bộ ${cr7JournalArticles.length} bài viết chuẩn từ mã nguồn lên database Supabase của bạn. Tiếp tục?`)) {
       return;
     }
 
@@ -271,7 +271,7 @@ export default function JournalManagerTab() {
     }
 
     setSaving(false);
-    notify(`Đã đồng bộ thành công ${successCount}/3 bài viết lên Supabase!`);
+    notify(`Đã đồng bộ thành công ${successCount}/${cr7JournalArticles.length} bài viết lên Supabase!`);
     loadArticles();
   };
 
@@ -426,7 +426,7 @@ export default function JournalManagerTab() {
             className="px-3.5 py-2.5 rounded-xl bg-[#181C28] hover:bg-gray-800 text-xs font-bold text-[#D4AF37] border border-[#D4AF37]/30 transition-all flex items-center gap-1.5 cursor-pointer"
           >
             <Database className="w-3.5 h-3.5" />
-            <span>Đồng bộ 3 bài mẫu lên DB</span>
+            <span>Đồng bộ bài viết từ mã nguồn ({cr7JournalArticles.length} bài)</span>
           </button>
 
           <button
