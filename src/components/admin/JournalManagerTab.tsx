@@ -740,7 +740,7 @@ export default function JournalManagerTab() {
               <div className="space-y-3 p-4 rounded-2xl bg-[#141724] border border-[#D4AF37]/30">
                 <div className="flex items-center gap-1.5 text-xs font-bold text-[#D4AF37]">
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Tóm tắt cốt lõi AIO (Dành cho Google AI Overview trích dẫn)</span>
+                  <span>Tóm tắt sự kiện (Event Summary) — Tối ưu cho AI Search & Người đọc</span>
                 </div>
                 <div className="space-y-2">
                   <textarea

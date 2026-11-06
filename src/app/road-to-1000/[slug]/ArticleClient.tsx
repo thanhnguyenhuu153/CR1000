@@ -261,7 +261,7 @@ export default function ArticleClient({
             <div className="absolute top-0 right-0 w-32 h-32 bg-[#D4AF37]/5 rounded-full blur-2xl pointer-events-none" />
             <div className="flex items-center gap-2.5 text-xs font-black text-[#D4AF37] uppercase tracking-wider mb-2.5">
               <Sparkles className="w-4 h-4" />
-              <span>{isVi ? "Tóm tắt cốt lõi (Quick Takeaways)" : "Key Takeaways (AIO Summary)"}</span>
+              <span>{isVi ? "Tóm tắt sự kiện" : "Event Summary"}</span>
             </div>
             <p className="text-sm text-gray-200 leading-relaxed font-medium">
               {quickTakeaway}

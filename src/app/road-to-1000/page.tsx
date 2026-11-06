@@ -249,7 +249,7 @@ export default function RoadTo1000HubPage() {
                     <div className="p-3.5 rounded-xl bg-[#090B12] border border-white/5 space-y-1.5">
                       <div className="flex items-center gap-1.5 text-[11px] font-bold text-[#D4AF37] uppercase tracking-wider">
                         <Sparkles className="w-3 h-3" />
-                        <span>{isVi ? "Tóm tắt cốt lõi" : "Key Takeaway"}</span>
+                        <span>{isVi ? "Tóm tắt sự kiện" : "Event Summary"}</span>
                       </div>
                       <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed">
                         {isVi ? featuredArticle.quickTakeawayVi : featuredArticle.quickTakeawayEn}
