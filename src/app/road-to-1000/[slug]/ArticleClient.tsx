@@ -287,14 +287,14 @@ export default function ArticleClient({ slug }: { slug: string }) {
                 ))}
 
                 {sec.quote && (
-                  <blockquote className="my-6 p-5 rounded-2xl bg-[#101422] border-l-4 border-[#D4AF37] space-y-2 italic text-gray-200">
-                    <div className="flex items-start gap-3">
-                      <Quote className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5" />
-                      <p className="text-sm sm:text-base leading-relaxed font-serif">
-                        “{sec.quote.text}”
+                  <blockquote className="my-6 p-5 sm:p-6 rounded-2xl bg-[#121624] border-l-4 border-[#D4AF37] space-y-2 text-gray-200 shadow-md">
+                    <div className="flex items-start gap-3.5">
+                      <Quote className="w-5 h-5 text-[#D4AF37] shrink-0 mt-0.5 opacity-90" />
+                      <p className="text-sm sm:text-base leading-relaxed italic font-sans font-medium text-amber-50/95">
+                        &ldquo;{sec.quote.text}&rdquo;
                       </p>
                     </div>
-                    <cite className="block text-right text-xs not-italic font-bold text-[#D4AF37]">
+                    <cite className="block text-right text-xs not-italic font-bold text-[#D4AF37] tracking-wide">
                       — {sec.quote.author}
                     </cite>
                   </blockquote>

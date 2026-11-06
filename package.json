@@ -11,6 +11,7 @@
     "deploy": "git add . && git commit -m \"update site\" && git push origin main"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.119.0",
     "@vercel/analytics": "^2.0.1",
     "@vercel/speed-insights": "^2.0.0",
     "canvas-confetti": "^1.9.4",
