@@ -1,3 +1,10 @@
+export interface GeoAffiliateTarget {
+  platform: "Shopee" | "Amazon" | "Unisport" | "Nike" | "Lazada";
+  url: string;
+  priceText?: string;
+  originalPriceText?: string;
+}
+
 export interface ShopItem {
   id: string;
   name: string;
@@ -11,6 +18,11 @@ export interface ShopItem {
   platform: "Shopee" | "Lazada" | "Nike" | "Unisport" | "Amazon";
   rating: number;
   reviewsCount: number;
+  geoLinks?: {
+    VN?: GeoAffiliateTarget;
+    US?: GeoAffiliateTarget;
+    EU?: GeoAffiliateTarget;
+  };
 }
 
 export const cr7ShopItemsVi: ShopItem[] = [
@@ -22,11 +34,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "1.200.000₫",
     badge: "Bán chạy nhất",
     description: "Phiên bản áo đỏ tay dài kinh điển đêm mưa Moscow đoạt cúp C1 2008. Chất liệu dệt kim cao cấp, in font chuẩn Premier League & UCL.",
-    image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=ao+manchester+united+2008+ronaldo+7",
+    image: "/images/shop/jersey-mu-2008-retro.jpg",
+    affiliateUrl: "https://s.shopee.vn/4qGzhZDOrc",
     platform: "Shopee",
     rating: 4.9,
     reviewsCount: 1420,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/4qGzhZDOrc",
+        priceText: "450.000₫ – 890.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=ronaldo+7+manchester+united+2008+jersey",
+        priceText: "$35 – $65",
+      },
+    },
   },
   {
     id: "jersey-real-madrid-cardiff-2017",
@@ -36,11 +60,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "1.300.000₫",
     badge: "Kỷ vật Duodécima",
     description: "Chiếc áo màu tím lịch sử trong đêm Ronaldo ghi cú đúp hạ Juventus 4-1, phá vỡ lời nguyền bảo vệ chức vô địch Champions League.",
-    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=ao+real+madrid+2017+cardiff+ronaldo",
+    image: "/images/shop/jersey-real-madrid-cardiff-2017.jpg",
+    affiliateUrl: "https://s.shopee.vn/4fxZVGE2Cb",
     platform: "Shopee",
     rating: 4.9,
     reviewsCount: 980,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/4fxZVGE2Cb",
+        priceText: "490.000₫ – 950.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=ronaldo+real+madrid+purple+jersey+cardiff+2017",
+        priceText: "$39 – $75",
+      },
+    },
   },
   {
     id: "jersey-al-nassr-home",
@@ -49,11 +85,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     priceText: "390.000₫ – 750.000₫",
     badge: "Xu hướng",
     description: "Áo đấu hiện tại của CR7 trên hành trình săn bàn thứ 1000. Form chuẩn thể thao thoáng khí, logo in nổi 3D sắc nét.",
-    image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=ao+al+nassr+ronaldo+7+chinh+hang",
+    image: "/images/shop/jersey-al-nassr-home.jpg",
+    affiliateUrl: "https://s.shopee.vn/5Atq6BC8Bi",
     platform: "Shopee",
     rating: 4.8,
     reviewsCount: 2150,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/5Atq6BC8Bi",
+        priceText: "390.000₫ – 750.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=al+nassr+ronaldo+7+jersey+official",
+        priceText: "$45 – $85",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-10-munich-2025",
@@ -63,11 +111,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "7.500.000₫",
     badge: "Cúp Quốc tế 2025",
     description: "Vũ khí định đoạt trận chung kết nghẹt thở tại Allianz Arena Munich với cú vô-lê phút 61 gỡ hòa 2-2 đưa Bồ Đào Nha lên đỉnh Nations League 2025.",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+10+cr7",
+    image: "/images/shop/boots-mercurial-superfly-10-munich-2025.jpg",
+    affiliateUrl: "https://s.shopee.vn/50aPtsClWh",
     platform: "Shopee",
-    rating: 5.0,
+    rating: 5,
     reviewsCount: 840,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/50aPtsClWh",
+        priceText: "1.250.000₫ – 6.890.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+10+cr7",
+        priceText: "$85 – $280",
+      },
+    },
   },
   {
     id: "boots-mercurial-vapor-iv-rosa-2008",
@@ -77,11 +137,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "5.200.000₫",
     badge: "Mưa tuyết Moscow 2008",
     description: "Đôi giày hồng nổi loạn làm nên lịch sử dưới mưa tuyết Moscow với cú đánh đầu kinh điển hạ gục Chelsea, mở ra chức vô địch Champions League đầu tiên.",
-    image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+vapor+iv+pink+ronaldo",
+    image: "/images/shop/boots-mercurial-vapor-iv-rosa-2008.jpg",
+    affiliateUrl: "https://s.shopee.vn/2qVvJtL0vI",
     platform: "Shopee",
-    rating: 5.0,
+    rating: 5,
     reviewsCount: 920,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/2qVvJtL0vI",
+        priceText: "950.000₫ – 4.500.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+vapor+iv+pink+ronaldo",
+        priceText: "$65 – $180",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-ii-safari-2011",
@@ -91,11 +163,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "4.800.000₫",
     badge: "Da báo Safari 2011",
     description: "Đôi giày họa tiết da báo huyền thoại của CR7 trong cú bật nhảy 2.65m đánh đầu phút 103 lật đổ triều đại Barcelona thời Pep Guardiola.",
-    image: "https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+safari+cr7",
+    image: "/images/shop/boots-mercurial-superfly-ii-safari-2011.jpg",
+    affiliateUrl: "https://s.shopee.vn/6VPDgfNdjd",
     platform: "Shopee",
-    rating: 5.0,
+    rating: 5,
     reviewsCount: 1150,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6VPDgfNdjd",
+        priceText: "920.000₫ – 4.200.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+safari+cr7",
+        priceText: "$65 – $175",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-iv-2014",
@@ -105,11 +189,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "5.500.000₫",
     badge: "La Décima 17 bàn",
     description: "Đôi giày cổ cao Dynamic Fit collar đầu tiên của Nike cùng Ronaldo ấn định chiến thắng 4-1 và lập kỷ lục vô tiền khoáng hậu: 17 bàn một mùa Champions League.",
-    image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+iv+cr7",
+    image: "/images/shop/boots-mercurial-superfly-iv-2014.jpg",
+    affiliateUrl: "https://s.shopee.vn/60Sx5kPXkY",
     platform: "Shopee",
     rating: 4.9,
     reviewsCount: 890,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/60Sx5kPXkY",
+        priceText: "950.000₫ – 4.800.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+iv+cr7",
+        priceText: "$70 – $190",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-v-cardiff-2017",
@@ -119,11 +215,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "5.800.000₫",
     badge: "Cú đúp Cardiff 2017",
     description: "Đôi giày ghi dấu ấn rực rỡ với cú đúp xé toang Juventus, giúp Real Madrid trở thành đội đầu tiên bảo vệ thành công ngai vàng Champions League.",
-    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+v+cr7+chapter+4",
+    image: "/images/shop/boots-mercurial-superfly-v-cardiff-2017.jpg",
+    affiliateUrl: "https://s.shopee.vn/6AmNI3OuPb",
     platform: "Shopee",
     rating: 4.9,
     reviewsCount: 1040,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6AmNI3OuPb",
+        priceText: "980.000₫ – 5.200.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+v+cr7+chapter+4",
+        priceText: "$75 – $210",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-9-arab-2023",
@@ -133,11 +241,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "6.200.000₫",
     badge: "Cú đúp 9 người Ả Rập",
     description: "Đôi giày đồng hành cùng chiến dịch chinh phục Ả Rập: lập cú đúp quật khởi khi chơi 9 người trước Al Hilal để đoạt Cúp Vô địch Arab Champions Cup 2023.",
-    image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+9+cr7",
+    image: "/images/shop/boots-mercurial-superfly-9-arab-2023.jpg",
+    affiliateUrl: "https://s.shopee.vn/5fq6h8QoQW",
     platform: "Shopee",
     rating: 4.8,
     reviewsCount: 760,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/5fq6h8QoQW",
+        priceText: "950.000₫ – 5.490.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+9+cr7",
+        priceText: "$70 – $220",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-360-turin-2018",
@@ -147,11 +267,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "6.500.000₫",
     badge: "Xe đạp chổng ngược 2.38m",
     description: "Đôi giày trong tuyệt phẩm ngả bàn đèn 2.38m kinh điển vào lưới Buffon khiến 40.000 khán giả Allianz Stadium Turin đứng dậy vỗ tay tán thưởng.",
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+360+cr7",
+    image: "/images/shop/boots-mercurial-superfly-360-turin-2018.jpg",
+    affiliateUrl: "https://s.shopee.vn/5q9WtRQB5Z",
     platform: "Shopee",
-    rating: 5.0,
+    rating: 5,
     reviewsCount: 1580,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/5q9WtRQB5Z",
+        priceText: "990.000₫ – 5.500.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+360+cr7",
+        priceText: "$75 – $220",
+      },
+    },
   },
   {
     id: "boots-mercurial-vapor-superfly-i-2009",
@@ -161,11 +293,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "4.500.000₫",
     badge: "Giải Puskás 40 mét",
     description: "Vũ khí tốc độ mang tính cách mạng với sợi Flywire trong cú nã đại bác gần 105 km/h vào lưới Porto đoạt giải Puskás đầu tiên lịch sử.",
-    image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+1+ronaldo",
+    image: "/images/shop/boots-mercurial-vapor-superfly-i-2009.jpg",
+    affiliateUrl: "https://s.shopee.vn/6q245IHm1w",
     platform: "Shopee",
     rating: 4.9,
     reviewsCount: 680,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6q245IHm1w",
+        priceText: "890.000₫ – 3.900.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+1+ronaldo",
+        priceText: "$60 – $160",
+      },
+    },
   },
   {
     id: "boots-nike-mercurial-superfly",
@@ -175,11 +319,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     originalPriceText: "6.200.000₫",
     badge: "Vũ khí săn bàn",
     description: "Dòng giày huyền thoại gắn liền với sự nghiệp của Ronaldo. Đệm khí Air Zoom bứt tốc độ cao và thân giày dệt ôm sát bàn chân.",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=giay+nike+mercurial+superfly+cr7",
+    image: "/images/shop/boots-nike-mercurial-superfly.jpg",
+    affiliateUrl: "https://s.shopee.vn/6fidszIPMv",
     platform: "Shopee",
     rating: 4.9,
     reviewsCount: 840,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6fidszIPMv",
+        priceText: "850.000₫ – 5.490.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+cr7+football+boots",
+        priceText: "$95 – $285",
+      },
+    },
   },
   {
     id: "perfume-cr7-fearless",
@@ -188,11 +344,23 @@ export const cr7ShopItemsVi: ShopItem[] = [
     priceText: "850.000₫ – 1.450.000₫",
     badge: "Phong cách Quý ông",
     description: "Mùi hương nam tính, mạnh mẽ kết hợp giữa hương gỗ tuyết tùng, hổ phách và bạch đậu khấu do chính Ronaldo tham gia sáng tạo.",
-    image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nuoc+hoa+cr7+cristiano+ronaldo+chinh+hang",
+    image: "/images/shop/perfume-cr7-fearless.jpg",
+    affiliateUrl: "https://s.shopee.vn/7AeuTuGVM2",
     platform: "Shopee",
     rating: 4.9,
     reviewsCount: 630,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/7AeuTuGVM2",
+        priceText: "850.000₫ – 1.450.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=cr7+fearless+eau+de+toilette+cristiano+ronaldo",
+        priceText: "$45 – $65",
+      },
+    },
   },
   {
     id: "poster-cr1000-metal",
@@ -201,12 +369,24 @@ export const cr7ShopItemsVi: ShopItem[] = [
     priceText: "280.000₫ – 650.000₫",
     badge: "Sưu tầm giới hạn",
     description: "Tranh treo tường trang trí phòng cao cấp với hình ảnh khoảnh khắc ngả bàn đèn, ăn mừng Siuuu và đầy đủ thông số 1000 bàn thắng mạ vàng.",
-    image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=tranh+canvas+cristiano+ronaldo+cr7",
+    image: "/images/shop/poster-cr1000-metal.jpg",
+    affiliateUrl: "https://s.shopee.vn/70LUHbH8h1",
     platform: "Shopee",
-    rating: 5.0,
+    rating: 5,
     reviewsCount: 420,
-  },
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/70LUHbH8h1",
+        priceText: "280.000₫ – 650.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=cristiano+ronaldo+canvas+poster+wall+art",
+        priceText: "$25 – $55",
+      },
+    },
+  }
 ];
 
 export const cr7ShopItemsEn: ShopItem[] = [
@@ -218,11 +398,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$89",
     badge: "Best Seller",
     description: "Classic long-sleeve red kit from the rain in Moscow winning the 2008 Champions League. Premium breathable knit with authentic Premier League & UCL font.",
-    image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=ao+manchester+united+2008+ronaldo+7",
-    platform: "Shopee",
+    image: "/images/shop/jersey-mu-2008-retro.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=ronaldo+7+manchester+united+2008+jersey",
+    platform: "Amazon",
     rating: 4.9,
     reviewsCount: 1420,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/4qGzhZDOrc",
+        priceText: "450.000₫ – 890.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=ronaldo+7+manchester+united+2008+jersey",
+        priceText: "$35 – $65",
+      },
+    },
   },
   {
     id: "jersey-real-madrid-cardiff-2017",
@@ -232,11 +424,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$95",
     badge: "Duodécima Relic",
     description: "Historic purple jersey worn as Ronaldo struck a final brace to crush Juventus 4-1 and shatter the Champions League retention curse.",
-    image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=ao+real+madrid+2017+cardiff+ronaldo",
-    platform: "Shopee",
+    image: "/images/shop/jersey-real-madrid-cardiff-2017.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=ronaldo+real+madrid+purple+jersey+cardiff+2017",
+    platform: "Amazon",
     rating: 4.9,
     reviewsCount: 980,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/4fxZVGE2Cb",
+        priceText: "490.000₫ – 950.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=ronaldo+real+madrid+purple+jersey+cardiff+2017",
+        priceText: "$39 – $75",
+      },
+    },
   },
   {
     id: "jersey-al-nassr-home",
@@ -245,11 +449,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     priceText: "$45 – $85",
     badge: "Trending",
     description: "Official current home kit of CR7 on the road to his 1,000th goal. Athletic fit, breathable mesh, with precision 3D embossed crest.",
-    image: "https://images.unsplash.com/photo-1518091043644-c1d4457512c6?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=ao+al+nassr+ronaldo+7+chinh+hang",
-    platform: "Shopee",
+    image: "/images/shop/jersey-al-nassr-home.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=al+nassr+ronaldo+7+jersey+official",
+    platform: "Amazon",
     rating: 4.8,
     reviewsCount: 2150,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/5Atq6BC8Bi",
+        priceText: "390.000₫ – 750.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=al+nassr+ronaldo+7+jersey+official",
+        priceText: "$45 – $85",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-10-munich-2025",
@@ -259,11 +475,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$320",
     badge: "3rd International Title",
     description: "The championship weapon behind the thunderous 61st-minute volley in Munich, securing Ronaldo's 3rd major international trophy with Portugal.",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+10+cr7",
-    platform: "Shopee",
-    rating: 5.0,
+    image: "/images/shop/boots-mercurial-superfly-10-munich-2025.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+10+cr7",
+    platform: "Amazon",
+    rating: 5,
     reviewsCount: 840,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/50aPtsClWh",
+        priceText: "1.250.000₫ – 6.890.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+10+cr7",
+        priceText: "$85 – $280",
+      },
+    },
   },
   {
     id: "boots-mercurial-vapor-iv-rosa-2008",
@@ -273,11 +501,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$220",
     badge: "Moscow 2008 Legend",
     description: "The iconic pink boots making history in the Moscow rain with Ronaldo's soaring header against Chelsea to seal his maiden Champions League crown.",
-    image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+vapor+iv+pink+ronaldo",
-    platform: "Shopee",
-    rating: 5.0,
+    image: "/images/shop/boots-mercurial-vapor-iv-rosa-2008.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+vapor+iv+pink+ronaldo",
+    platform: "Amazon",
+    rating: 5,
     reviewsCount: 920,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/2qVvJtL0vI",
+        priceText: "950.000₫ – 4.500.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+vapor+iv+pink+ronaldo",
+        priceText: "$65 – $180",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-ii-safari-2011",
@@ -287,11 +527,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$210",
     badge: "Safari Print Edition",
     description: "The legendary leopard Safari print boots worn by CR7 during his gravity-defying 2.65m leap in the 103rd minute to conquer Barcelona in 2011.",
-    image: "https://images.unsplash.com/photo-1575537302964-96cd47c06b1b?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+safari+cr7",
-    platform: "Shopee",
-    rating: 5.0,
+    image: "/images/shop/boots-mercurial-superfly-ii-safari-2011.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+safari+cr7",
+    platform: "Amazon",
+    rating: 5,
     reviewsCount: 1150,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6VPDgfNdjd",
+        priceText: "920.000₫ – 4.200.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+safari+cr7",
+        priceText: "$65 – $175",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-iv-2014",
@@ -301,11 +553,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$230",
     badge: "La Décima 17 Goals",
     description: "Nike's pioneering Dynamic Fit collar boots worn as Ronaldo sealed the historic 4-1 La Décima victory and completed his 17-goal all-time UCL season record.",
-    image: "https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+iv+cr7",
-    platform: "Shopee",
+    image: "/images/shop/boots-mercurial-superfly-iv-2014.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+iv+cr7",
+    platform: "Amazon",
     rating: 4.9,
     reviewsCount: 890,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/60Sx5kPXkY",
+        priceText: "950.000₫ – 4.800.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+iv+cr7",
+        priceText: "$70 – $190",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-v-cardiff-2017",
@@ -315,11 +579,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$240",
     badge: "Cardiff Brace Legend",
     description: "The iconic boots that pulverized Juventus with a match-winning brace in Cardiff, shattering the modern Champions League title retention curse.",
-    image: "https://images.unsplash.com/photo-1560769629-975ec94e6a86?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+v+cr7+chapter+4",
-    platform: "Shopee",
+    image: "/images/shop/boots-mercurial-superfly-v-cardiff-2017.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+v+cr7+chapter+4",
+    platform: "Amazon",
     rating: 4.9,
     reviewsCount: 1040,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6AmNI3OuPb",
+        priceText: "980.000₫ – 5.200.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+v+cr7+chapter+4",
+        priceText: "$75 – $210",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-9-arab-2023",
@@ -329,11 +605,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$250",
     badge: "9-Man Comeback Brace",
     description: "The boots worn as Ronaldo engineered a heroic 9-man comeback with a legendary brace against Al Hilal to capture his maiden trophy in Saudi Arabia.",
-    image: "https://images.unsplash.com/photo-1514989940723-e8e51635b782?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+9+cr7",
-    platform: "Shopee",
+    image: "/images/shop/boots-mercurial-superfly-9-arab-2023.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+9+cr7",
+    platform: "Amazon",
     rating: 4.8,
     reviewsCount: 760,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/5fq6h8QoQW",
+        priceText: "950.000₫ – 5.490.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+9+cr7",
+        priceText: "$70 – $220",
+      },
+    },
   },
   {
     id: "boots-mercurial-superfly-360-turin-2018",
@@ -343,11 +631,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$260",
     badge: "2.38m Bicycle Kick",
     description: "Worn during the greatest bicycle kick in Champions League history: suspended 2.38m in mid-air at Turin, receiving a standing ovation from Juventus fans.",
-    image: "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+360+cr7",
-    platform: "Shopee",
-    rating: 5.0,
+    image: "/images/shop/boots-mercurial-superfly-360-turin-2018.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+360+cr7",
+    platform: "Amazon",
+    rating: 5,
     reviewsCount: 1580,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/5q9WtRQB5Z",
+        priceText: "990.000₫ – 5.500.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+360+cr7",
+        priceText: "$75 – $220",
+      },
+    },
   },
   {
     id: "boots-mercurial-vapor-superfly-i-2009",
@@ -357,11 +657,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$190",
     badge: "FIFA Puskás Award",
     description: "The revolutionary Flywire speed weapon behind Ronaldo's 40-meter 105 km/h rocket against Porto, winning the inaugural FIFA Puskás Award.",
-    image: "https://images.unsplash.com/photo-1511556532299-8f662fc26c06?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nike+mercurial+superfly+1+ronaldo",
-    platform: "Shopee",
+    image: "/images/shop/boots-mercurial-vapor-superfly-i-2009.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+1+ronaldo",
+    platform: "Amazon",
     rating: 4.9,
     reviewsCount: 680,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6q245IHm1w",
+        priceText: "890.000₫ – 3.900.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+1+ronaldo",
+        priceText: "$60 – $160",
+      },
+    },
   },
   {
     id: "boots-nike-mercurial-superfly",
@@ -371,11 +683,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     originalPriceText: "$310",
     badge: "Lethal Weapon",
     description: "The signature speed silo synonymous with Cristiano Ronaldo's career. Zoom Air unit for explosive acceleration with a snug Flyknit collar.",
-    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=giay+nike+mercurial+superfly+cr7",
-    platform: "Shopee",
+    image: "/images/shop/boots-nike-mercurial-superfly.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=nike+mercurial+superfly+cr7+football+boots",
+    platform: "Amazon",
     rating: 4.9,
     reviewsCount: 840,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/6fidszIPMv",
+        priceText: "850.000₫ – 5.490.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=nike+mercurial+superfly+cr7+football+boots",
+        priceText: "$95 – $285",
+      },
+    },
   },
   {
     id: "perfume-cr7-fearless",
@@ -384,11 +708,23 @@ export const cr7ShopItemsEn: ShopItem[] = [
     priceText: "$45 – $65",
     badge: "Gentleman Style",
     description: "Masculine, empowering fragrance blending woody cedar, warm amber, and spicy cardamom, co-created by Cristiano Ronaldo.",
-    image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=nuoc+hoa+cr7+cristiano+ronaldo+chinh+hang",
-    platform: "Shopee",
+    image: "/images/shop/perfume-cr7-fearless.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=cr7+fearless+eau+de+toilette+cristiano+ronaldo",
+    platform: "Amazon",
     rating: 4.9,
     reviewsCount: 630,
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/7AeuTuGVM2",
+        priceText: "850.000₫ – 1.450.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=cr7+fearless+eau+de+toilette+cristiano+ronaldo",
+        priceText: "$45 – $65",
+      },
+    },
   },
   {
     id: "poster-cr1000-metal",
@@ -397,12 +733,24 @@ export const cr7ShopItemsEn: ShopItem[] = [
     priceText: "$25 – $55",
     badge: "Limited Edition",
     description: "Luxury wall art featuring the iconic Turin bicycle kick, the Siuuu celebration, and complete gold-embossed career stats.",
-    image: "https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?q=80&w=600&auto=format&fit=crop",
-    affiliateUrl: "https://shopee.vn/search?keyword=tranh+canvas+cristiano+ronaldo+cr7",
-    platform: "Shopee",
-    rating: 5.0,
+    image: "/images/shop/poster-cr1000-metal.jpg",
+    affiliateUrl: "https://www.amazon.com/s?k=cristiano+ronaldo+canvas+poster+wall+art",
+    platform: "Amazon",
+    rating: 5,
     reviewsCount: 420,
-  },
+    geoLinks: {
+      VN: {
+        platform: "Shopee",
+        url: "https://s.shopee.vn/70LUHbH8h1",
+        priceText: "280.000₫ – 650.000₫",
+      },
+      US: {
+        platform: "Amazon",
+        url: "https://www.amazon.com/s?k=cristiano+ronaldo+canvas+poster+wall+art",
+        priceText: "$25 – $55",
+      },
+    },
+  }
 ];
 
 export const getCr7ShopItems = (lang: "vi" | "en"): ShopItem[] => {

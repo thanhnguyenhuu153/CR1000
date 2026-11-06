@@ -22,7 +22,6 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FloatingShareButton from "@/components/FloatingShareButton";
 import { useLanguage } from "@/context/LanguageContext";
 import { useSiteData } from "@/context/SiteDataContext";
 import { cr7JournalArticles, JournalArticle } from "@/data/cr7-journal";
@@ -461,7 +460,6 @@ export default function RoadTo1000HubPage() {
       </main>
 
       <Footer />
-      <FloatingShareButton />
     </div>
   );
 }

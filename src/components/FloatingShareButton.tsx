@@ -94,8 +94,8 @@ export default function FloatingShareButton() {
 
   return (
     <>
-      {/* Floating Trigger Button: Minimal & Compact */}
-      <div className="fixed bottom-5 right-5 sm:bottom-6 sm:right-6 z-40 print:hidden">
+      {/* Floating Trigger Button: Positioned above bottom widgets with safe margin */}
+      <div className="fixed bottom-24 sm:bottom-28 right-4 sm:right-6 z-40 print:hidden transition-all duration-300">
         <button
           onClick={() => setIsOpen(true)}
           title={language === "vi" ? "Chia sẻ đồng hồ đếm ngược CR1000" : "Share CR1000 Countdown"}

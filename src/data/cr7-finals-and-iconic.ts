@@ -19,6 +19,7 @@ export interface IconicGoal {
     bootName: string;
     description: string;
     affiliateKeyword: string;
+    affiliateUrl?: string;
   };
 }
 
@@ -46,6 +47,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly 10 Elite CR7",
       description: "Vũ khí định đoạt trận chung kết nghẹt thở tại Allianz Arena",
       affiliateKeyword: "Nike Mercurial Superfly 10 CR7",
+      affiliateUrl: "https://s.shopee.vn/50aPtsClWh",
     },
   },
   {
@@ -70,6 +72,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Vapor IV Rosa (Pink)",
       description: "Đôi giày hồng nổi loạn làm nên lịch sử dưới mưa Moscow",
       affiliateKeyword: "Nike Mercurial Vapor IV",
+      affiliateUrl: "https://s.shopee.vn/2qVvJtL0vI",
     },
   },
   {
@@ -93,6 +96,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly II Safari",
       description: "Đôi giày họa tiết da báo huyền thoại của CR7",
       affiliateKeyword: "Nike Mercurial Superfly Safari",
+      affiliateUrl: "https://s.shopee.vn/6VPDgfNdjd",
     },
   },
   {
@@ -116,6 +120,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly IV",
       description: "Đôi giày cổ cao Dynamic Fit collar đầu tiên của Nike",
       affiliateKeyword: "Nike Mercurial Superfly IV",
+      affiliateUrl: "https://s.shopee.vn/60Sx5kPXkY",
     },
   },
   {
@@ -140,6 +145,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly V CR7 Chapter 4",
       description: "Đôi giày ghi dấu ấn rực rỡ tại Cardiff",
       affiliateKeyword: "Nike Mercurial Superfly V CR7",
+      affiliateUrl: "https://s.shopee.vn/6AmNI3OuPb",
     },
   },
   {
@@ -163,6 +169,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly 9 Elite CR7",
       description: "Đôi giày đồng hành cùng chiến dịch chinh phục Ả Rập",
       affiliateKeyword: "Nike Mercurial Superfly 9 CR7",
+      affiliateUrl: "https://s.shopee.vn/5fq6h8QoQW",
     },
   },
 
@@ -187,6 +194,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly 360 Elite",
       description: "Đôi giày trong siêu phẩm ngả bàn đèn thế kỷ",
       affiliateKeyword: "Nike Mercurial Superfly 360",
+      affiliateUrl: "https://s.shopee.vn/5q9WtRQB5Z",
     },
   },
   {
@@ -209,6 +217,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
       bootName: "Nike Mercurial Vapor Superfly I",
       description: "Vũ khí tốc độ mang tính cách mạng của Nike với sợi Flywire",
       affiliateKeyword: "Nike Mercurial Vapor Superfly",
+      affiliateUrl: "https://s.shopee.vn/6q245IHm1w",
     },
   },
   {
@@ -289,6 +298,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly 10 Elite CR7",
       description: "The championship-winning weapon in Munich",
       affiliateKeyword: "Nike Mercurial Superfly 10 CR7",
+      affiliateUrl: "https://s.shopee.vn/50aPtsClWh",
     },
   },
   {
@@ -313,6 +323,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Vapor IV Rosa (Pink)",
       description: "The iconic pink boots making history in the Moscow rain",
       affiliateKeyword: "Nike Mercurial Vapor IV",
+      affiliateUrl: "https://s.shopee.vn/2qVvJtL0vI",
     },
   },
   {
@@ -336,6 +347,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly II Safari",
       description: "The legendary Safari leopard print boots of CR7",
       affiliateKeyword: "Nike Mercurial Superfly Safari",
+      affiliateUrl: "https://s.shopee.vn/6VPDgfNdjd",
     },
   },
   {
@@ -359,6 +371,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly IV",
       description: "Nike's pioneering Dynamic Fit high-collar speed boot",
       affiliateKeyword: "Nike Mercurial Superfly IV",
+      affiliateUrl: "https://s.shopee.vn/60Sx5kPXkY",
     },
   },
   {
@@ -383,6 +396,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly V CR7 Chapter 4",
       description: "Forged for greatness under the roof in Cardiff",
       affiliateKeyword: "Nike Mercurial Superfly V CR7",
+      affiliateUrl: "https://s.shopee.vn/6AmNI3OuPb",
     },
   },
   {
@@ -406,6 +420,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly 9 Elite CR7",
       description: "The boots powering Al Nassr to championship glory",
       affiliateKeyword: "Nike Mercurial Superfly 9 CR7",
+      affiliateUrl: "https://s.shopee.vn/5fq6h8QoQW",
     },
   },
 
@@ -430,6 +445,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Superfly 360 Elite",
       description: "The boots behind the bicycle kick of the century",
       affiliateKeyword: "Nike Mercurial Superfly 360",
+      affiliateUrl: "https://s.shopee.vn/5q9WtRQB5Z",
     },
   },
   {
@@ -452,6 +468,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
       bootName: "Nike Mercurial Vapor Superfly I",
       description: "Nike's revolutionary lightweight Flywire speed boots",
       affiliateKeyword: "Nike Mercurial Vapor Superfly",
+      affiliateUrl: "https://s.shopee.vn/6q245IHm1w",
     },
   },
   {

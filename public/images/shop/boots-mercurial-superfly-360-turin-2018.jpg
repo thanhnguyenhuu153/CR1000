@@ -1,0 +1,547 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-gb">
+<head prefix="og: http://ogp.me/ns# fb: http://ogp.me/ns/fb# website: http://ogp.me/ns/website#">
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-N5ZCXJ2');</script>
+    <!-- End Google Tag Manager -->
+    <!-- application insights -->
+    <script type="text/javascript">
+        !(function (cfg) { function e() { cfg.onInit && cfg.onInit(i) } var S, u, D, t, n, i, C = window, x = document, w = C.location, I = "script", b = "ingestionendpoint", E = "disableExceptionTracking", A = "ai.device."; "instrumentationKey"[S = "toLowerCase"](), u = "crossOrigin", D = "POST", t = "appInsightsSDK", n = cfg.name || "appInsights", (cfg.name || C[t]) && (C[t] = n), i = C[n] || function (l) { var d = !1, g = !1, f = { initialize: !0, queue: [], sv: "7", version: 2, config: l }; function m(e, t) { var n = {}, i = "Browser"; function a(e) { e = "" + e; return 1 === e.length ? "0" + e : e } return n[A + "id"] = i[S](), n[A + "type"] = i, n["ai.operation.name"] = w && w.pathname || "_unknown_", n["ai.internal.sdkVersion"] = "javascript:snippet_" + (f.sv || f.version), { time: (i = new Date).getUTCFullYear() + "-" + a(1 + i.getUTCMonth()) + "-" + a(i.getUTCDate()) + "T" + a(i.getUTCHours()) + ":" + a(i.getUTCMinutes()) + ":" + a(i.getUTCSeconds()) + "." + (i.getUTCMilliseconds() / 1e3).toFixed(3).slice(2, 5) + "Z", iKey: e, name: "Microsoft.ApplicationInsights." + e.replace(/-/g, "") + "." + t, sampleRate: 100, tags: n, data: { baseData: { ver: 2 } }, ver: 4, seq: "1", aiDataContract: undefined } } var h = -1, v = 0, y = ["js.monitor.azure.com", "js.cdn.applicationinsights.io", "js.cdn.monitor.azure.com", "js0.cdn.applicationinsights.io", "js0.cdn.monitor.azure.com", "js2.cdn.applicationinsights.io", "js2.cdn.monitor.azure.com", "az416426.vo.msecnd.net"], k = l.url || cfg.src; if (k) { if ((n = navigator) && (~(n = (n.userAgent || "").toLowerCase()).indexOf("msie") || ~n.indexOf("trident/")) && ~k.indexOf("ai.3") && (k = k.replace(/(\/)(ai\.3\.)([^\d]*)$/, function (e, t, n) { return t + "ai.2" + n })), !1 !== cfg.cr) for (var e = 0; e < y.length; e++)if (0 < k.indexOf(y[e])) { h = e; break } var i = function (e) { var a, t, n, i, o, r, s, c, p, u; f.queue = [], g || (0 <= h && v + 1 < y.length ? (a = (h + v + 1) % y.length, T(k.replace(/^(.*\/\/)([\w\.]*)(\/.*)$/, function (e, t, n, i) { return t + y[a] + i })), v += 1) : (d = g = !0, o = k, c = (p = function () { var e, t = {}, n = l.connectionString; if (n) for (var i = n.split(";"), a = 0; a < i.length; a++) { var o = i[a].split("="); 2 === o.length && (t[o[0][S]()] = o[1]) } return t[b] || (e = (n = t.endpointsuffix) ? t.location : null, t[b] = "https://" + (e ? e + "." : "") + "dc." + (n || "services.visualstudio.com")), t }()).instrumentationkey || l.instrumentationKey || "", p = (p = p[b]) ? p + "/v2/track" : l.endpointUrl, (u = []).push((t = "SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details)", n = o, r = p, (s = (i = m(c, "Exception")).data).baseType = "ExceptionData", s.baseData.exceptions = [{ typeName: "SDKLoadFailed", message: t.replace(/\./g, "-"), hasFullStack: !1, stack: t + "\nSnippet failed to load [" + n + "] -- Telemetry is disabled\nHelp Link: https://go.microsoft.com/fwlink/?linkid=2128109\nHost: " + (w && w.pathname || "_unknown_") + "\nEndpoint: " + r, parsedStack: [] }], i)), u.push((s = o, t = p, (r = (n = m(c, "Message")).data).baseType = "MessageData", (i = r.baseData).message = 'AI (Internal): 99 message:"' + ("SDK LOAD Failure: Failed to load Application Insights SDK script (See stack for details) (" + s + ")").replace(/\"/g, "") + '"', i.properties = { endpoint: t }, n)), o = u, c = p, JSON && ((r = C.fetch) && !cfg.useXhr ? r(c, { method: D, body: JSON.stringify(o), mode: "cors" }) : XMLHttpRequest && ((s = new XMLHttpRequest).open(D, c), s.setRequestHeader("Content-type", "application/json"), s.send(JSON.stringify(o)))))) }, a = function (e, t) { g || setTimeout(function () { !t && f.core || i() }, 500), d = !1 }, T = function (e) { var n = x.createElement(I), e = (n.src = e, cfg[u]); return !e && "" !== e || "undefined" == n[u] || (n[u] = e), n.onload = a, n.onerror = i, n.onreadystatechange = function (e, t) { "loaded" !== n.readyState && "complete" !== n.readyState || a(0, t) }, cfg.ld && cfg.ld < 0 ? x.getElementsByTagName("head")[0].appendChild(n) : setTimeout(function () { x.getElementsByTagName(I)[0].parentNode.appendChild(n) }, cfg.ld || 0), n }; T(k) } try { f.cookie = x.cookie } catch (p) { } function t(e) { for (; e.length;)!function (t) { f[t] = function () { var e = arguments; d || f.queue.push(function () { f[t].apply(f, e) }) } }(e.pop()) } var r, s, n = "track", o = "TrackPage", c = "TrackEvent", n = (t([n + "Event", n + "PageView", n + "Exception", n + "Trace", n + "DependencyData", n + "Metric", n + "PageViewPerformance", "start" + o, "stop" + o, "start" + c, "stop" + c, "addTelemetryInitializer", "setAuthenticatedUserContext", "clearAuthenticatedUserContext", "flush"]), f.SeverityLevel = { Verbose: 0, Information: 1, Warning: 2, Error: 3, Critical: 4 }, (l.extensionConfig || {}).ApplicationInsightsAnalytics || {}); return !0 !== l[E] && !0 !== n[E] && (t(["_" + (r = "onerror")]), s = C[r], C[r] = function (e, t, n, i, a) { var o = s && s(e, t, n, i, a); return !0 !== o && f["_" + r]({ message: e, url: t, lineNumber: n, columnNumber: i, error: a, evt: C.event }), o }, l.autoExceptionInstrumented = !0), f }(cfg.cfg), (C[n] = i).queue && 0 === i.queue.length ? (i.queue.push(e), i.trackPageView({})) : e(); })({
+            src: "https://js.monitor.azure.com/scripts/b/ai.3.gbl.min.js",
+            crossOrigin: "anonymous",
+            cfg: {
+                connectionString: "InstrumentationKey=f58429b7-a45f-404a-81d4-f9f9975bd25e;IngestionEndpoint=https://uksouth-1.in.applicationinsights.azure.com/;LiveEndpoint=https://uksouth.livediagnostics.monitor.azure.com/;ApplicationId=83bcf52a-822b-485e-9432-94ea8bcf15fc"
+            }
+        });
+    </script>
+    <!-- end application insights -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="title" content="An unknown error occured. - SoccerBible" />
+    <meta name="description" />
+    <meta name="keywords" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@SoccerBible" />
+    <meta property="og:title" content="An unknown error occured. - SoccerBible" />
+    <meta property="og:description" />
+    <meta property="og:site_name" content="SoccerBible" />
+    <meta property="og:type" content="Website" />
+    <meta property="og:url" content="https://www.soccerbible.com/error/" />
+    <meta property="fb:pages" content="298269803325" />
+    <meta property="fb:app_id" content="340887983739" />
+    <link rel="canonical" href="https://www.soccerbible.com/error/" />
+
+    <link href="/css/bundle.min.css?v=06052026231045" rel="stylesheet" />
+    <!-- CDF: No CSS dependencies were declared //-->
+
+    <script defer src="/scripts/fancybox.js"></script>
+    <script src="/scripts/bundle.min.js?v=06052026231045"></script>
+    <script defer src="/scripts/alpine.js"></script>
+    <script defer src="/scripts/fontawesome.js"></script>
+    <script defer src="/scripts/axios.js"></script>
+    <!-- CDF: No JS dependencies were declared //-->
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="apple-touch-icon" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon.png" />
+    <link rel="apple-touch-icon" sizes="57x57" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-57x57.png" />
+    <link rel="apple-touch-icon" sizes="72x72" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-72x72.png" />
+    <link rel="apple-touch-icon" sizes="76x76" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-76x76.png" />
+    <link rel="apple-touch-icon" sizes="114x114" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-114x114.png" />
+    <link rel="apple-touch-icon" sizes="120x120" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-120x120.png" />
+    <link rel="apple-touch-icon" sizes="144x144" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-144x144.png" />
+    <link rel="apple-touch-icon" sizes="152x152" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://blobsoccerbibleprod.blob.core.windows.net/img/apple-touch-icon-180x180.png" />
+    <link rel="icon" sizes="192x192" href="https://blobsoccerbibleprod.blob.core.windows.net/img/icon-hires.png" />
+    <link rel="icon" sizes="128x128" href="https://blobsoccerbibleprod.blob.core.windows.net/img/icon-normal.png" />
+
+    <title>An unknown error occured. - SoccerBible</title>
+</head>
+<body class="clearfix">
+    <!-- Google Tag Manager (noscript) -->
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-N5ZCXJ2"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <header
+    class="main-header"
+    x-data="{ searchOpen: false, navOpen: false }"
+    :class="searchOpen || navOpen ? 'open' : ''"
+ >
+    <div class="header">
+        <a class="logo" href="/" aria-label="Home">
+            <svg class="sb-logo" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                 viewBox="0 0 444.5 60.2" style="enable-background:new 0 0 444.5 60.2;" xml:space="preserve">
+            <path d="M38,42c0,4.9-1.7,9.2-5.1,12.8s-7.6,5.4-12.4,5.4c-1.8,0-4-0.5-6.6-1.4L0,53.7l3.4-9.5L18,49.6c0.9,0.3,1.8,0.5,2.5,0.5
+                    c2,0,3.8-0.7,5.4-2.2c1.6-1.5,2.4-3.3,2.4-5.4c0-2.3-0.8-4.1-2.5-5.5c-1.6-1.2-3.6-1.9-6.1-1.9c-5,0-9.3-1.5-12.8-4.7
+                    c-3.6-3.2-5.5-7.3-5.5-12.3c0-4.9,1.7-9.2,5.1-12.7C9.9,1.9,14.1,0.1,19,0.1c1.8,0,4,0.5,6.6,1.4l11.3,4.1l-3.4,9.6l-12-4.5
+                    c-0.9-0.3-1.8-0.5-2.5-0.5c-2.1,0-3.9,0.8-5.5,2.4c-1.5,1.6-2.3,3.5-2.3,5.8c0,2.1,0.8,3.8,2.5,5c1.6,1.2,3.5,1.8,5.9,1.8
+                    c5,0,9.4,1.6,12.9,4.7C36.2,33.1,38,37.1,38,42" />
+
+            <path d="M81.1,42.1c0,5-1.8,9.2-5.3,12.8c-3.5,3.5-7.8,5.3-12.8,5.3s-9.2-1.8-12.8-5.3c-3.5-3.5-5.3-7.8-5.3-12.8v-24
+                    c0-5,1.8-9.2,5.3-12.8C53.7,1.8,58,0,63,0s9.3,1.8,12.8,5.3s5.3,7.8,5.3,12.8V42.1z M71.4,41.7V18.5c0-2.3-0.8-4.3-2.4-5.9
+                    c-1.6-1.6-3.5-2.4-5.9-2.4c-2.3,0-4.3,0.8-5.9,2.4c-1.6,1.6-2.4,3.6-2.4,5.9v23.2c0,2.3,0.8,4.3,2.4,5.9c1.6,1.6,3.6,2.4,5.9,2.4
+                    s4.3-0.8,5.9-2.4C70.6,46,71.4,44,71.4,41.7" />
+
+            <path d="M125.1,54.6l-11.4,4.1c-2.6,0.9-4.8,1.4-6.6,1.4c-4.9,0-9-1.8-12.4-5.3s-5.1-7.8-5.1-12.7v-24c0-4.9,1.7-9.2,5.1-12.7
+                    s7.6-5.3,12.4-5.3c1.8,0,4,0.5,6.6,1.4l11.4,4.1l-3.5,9.6l-12-4.5c-0.9-0.3-1.8-0.5-2.5-0.5c-2.1,0-3.9,0.8-5.4,2.4
+                    c-1.6,1.6-2.3,3.5-2.3,5.8v23.4c0,2.3,0.8,4.2,2.3,5.8s3.4,2.4,5.4,2.4c0.8,0,1.6-0.2,2.5-0.5l12-4.4L125.1,54.6z" />
+
+            <path d="M167.7,54.6l-11.4,4.1c-2.6,0.9-4.8,1.4-6.6,1.4c-4.8,0-9-1.8-12.4-5.3s-5.1-7.8-5.1-12.7v-24c0-4.9,1.7-9.2,5.1-12.7
+                    c3.4-3.5,7.6-5.3,12.4-5.3c1.8,0,4,0.5,6.6,1.4l11.4,4.1l-3.5,9.6l-11.9-4.5c-0.9-0.3-1.8-0.5-2.6-0.5c-2.1,0-3.9,0.8-5.4,2.4
+                    c-1.6,1.6-2.3,3.5-2.3,5.8v23.4c0,2.3,0.8,4.2,2.3,5.8c1.6,1.6,3.4,2.4,5.4,2.4c0.8,0,1.6-0.2,2.6-0.5l11.9-4.4L167.7,54.6z" />
+
+            <polygon points="174.7,1 174.7,59.2 207.6,59.2 207.6,49.1 184.5,49.1 184.5,35.1 201.7,35.1 201.7,25 184.5,25 184.5,11.1
+                    207.6,11.1 207.6,1     " />
+
+            <path d="M253,59.2h-10.9l-11.2-20.5h-5.1v20.5H216V1h19.2c4.4,0,8.2,1.6,11.3,4.7c3.1,3.1,4.7,6.9,4.7,11.3v5.6
+                        c0,3.3-0.9,6.3-2.8,9s-4.3,4.7-7.2,5.8L253,59.2z M241.5,22.1v-4.5c0-1.8-0.6-3.3-1.8-4.5c-1.2-1.2-2.7-1.9-4.4-1.9H226v17.5h9.3
+                        c1.7,0,3.2-0.6,4.4-1.9C240.9,25.4,241.5,23.9,241.5,22.1" />
+
+            <path d="M296.1,42.3c0,5.1-1.8,9.3-5.3,12.8c-3.6,3.4-7.8,5.1-12.7,5.1c-4.9,0-9.1-1.7-12.6-5.2c-3.6-3.5-5.5-7.8-5.5-12.9V1h22.7
+                        c3.6,0,6.8,1.2,9.4,3.7s4,5.6,4,9.3c0,2.3-0.5,4.3-1.6,6.1c-0.3,0.5-1.2,1.8-2.8,3.9c-1,1.3-1.5,2.4-1.5,3.5
+                        c0,0.5,0.5,1.5,1.5,2.9c1.3,1.9,2.3,3.4,2.8,4.7C295.6,37.4,296.1,39.8,296.1,42.3 M286.4,41.7c0-1.8-1-4-2.9-6.5s-2.9-5-2.9-7.7
+                        c0-2.2,0.5-4.2,1.5-6c0.4-0.7,1.3-2,2.8-3.8c1-1.2,1.5-2.3,1.5-3.1c0-1-0.4-1.8-1.1-2.5s-1.5-1-2.5-1h-12.9v30.6
+                        c0,2.3,0.8,4.3,2.5,5.9c1.7,1.6,3.6,2.4,5.8,2.4c2.2,0,4.1-0.8,5.8-2.4C285.5,46,286.4,44,286.4,41.7" />
+
+            <rect x="306" y="1" width="9.8" height="58.2" />
+
+            <path d="M361.7,42.3c0,5.1-1.8,9.3-5.3,12.8c-3.6,3.4-7.8,5.1-12.7,5.1s-9.1-1.7-12.6-5.2c-3.6-3.5-5.5-7.8-5.5-12.9V1h22.7
+                        c3.6,0,6.8,1.2,9.4,3.7s4,5.6,4,9.3c0,2.3-0.5,4.3-1.6,6.1c-0.3,0.5-1.2,1.8-2.8,3.9c-1,1.3-1.6,2.4-1.6,3.5
+                        c0,0.5,0.5,1.5,1.6,2.9c1.3,1.9,2.3,3.4,2.8,4.7C361.2,37.4,361.7,39.8,361.7,42.3 M352,41.7c0-1.8-1-4-2.9-6.5s-2.9-5-2.9-7.7
+                        c0-2.2,0.5-4.2,1.5-6c0.4-0.7,1.3-2,2.8-3.8c1-1.2,1.5-2.3,1.5-3.1c0-1-0.4-1.8-1.1-2.5s-1.6-1-2.5-1h-12.9v30.6
+                        c0,2.3,0.8,4.3,2.5,5.9c1.7,1.6,3.6,2.4,5.8,2.4c2.2,0,4.1-0.8,5.8-2.4C351.2,46,352,44,352,41.7" />
+
+            <polygon points="370.2,1 370.2,59.2 403.1,59.2 403.1,49.1 380,49.1 380,1     " />
+
+            <polygon points="411.6,1 411.6,59.2 444.5,59.2 444.5,49.1 421.3,49.1 421.3,35.1 438.6,35.1 438.6,25 421.3,25 421.3,11.1
+                    444.5,11.1 444.5,1     " />
+
+            </svg>
+            <svg class="csc-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1975 664">
+                <rect x="659.86" y="26.06" width="1289.14" height="612.09" rx="306.04" ry="306.04" fill="none" stroke="#000" stroke-width="50px" />
+                <rect x="27.23" y="26.06" width="1285.75" height="612.09" rx="306.04" ry="306.04" fill="none" stroke="#000" stroke-width="50px" />
+                <path d="M781.89,413.56h138.28c4.52,36.84,32.95,54.29,77.53,54.29,26.5,0,58.8-10.34,58.8-38.13s-31-34.89-87.87-49.11c-77.55-19.38-171.23-45.87-171.23-144.09,0-105.98,86.57-146.04,190.61-146.04,95.63,0,183.52,40.06,185.45,140.87h-133.74c-3.88-25.21-21.98-41.35-58.82-41.35-29.73,0-50.39,13.57-50.39,32.31,0,27.14,39.42,31.02,108.55,47.82,77.53,18.74,155.09,49.11,155.09,147.33s-89.82,154.43-199.03,154.43c-120.18,0-211.29-51.69-213.22-158.31Z" />
+                <path d="M114.18,331.5c0-138.28,94.97-241.02,233.91-241.02,50.39,0,95.63,12.92,129.22,36.19,47.83,32.95,75.6,84.65,81.44,143.45h-135.06c-3.23-36.19-33.61-68.49-77.55-68.49-63.95,0-94.97,54.28-94.97,129.88s36.18,129.88,96.27,129.88c47.17,0,75.6-31.01,80.14-72.37h136.33c-3.88,51.05-27.14,96.28-60.09,127.94-39.42,38.13-88.52,54.92-155.72,54.92-140.87,0-233.91-102.09-233.91-240.37Z" />
+                <path d="M1863.18,330.85c0,138.28-94.97,241.02-233.91,241.02-50.39,0-95.63-12.92-129.22-36.19-47.83-32.95-75.6-84.65-81.44-143.45h135.06c3.23,36.19,33.61,68.49,77.55,68.49,63.95,0,94.97-54.28,94.97-129.88s-36.18-129.88-96.27-129.88c-47.17,0-75.6,31.01-80.14,72.37h-136.33c3.88-51.05,27.14-96.28,60.09-127.94,39.42-38.13,88.52-54.92,155.72-54.92,140.87,0,233.91,102.09,233.91,240.37Z" />
+            </svg>
+        </a>
+        <span class="tagline">Creative Soccer Culture</span>
+        <div class="search-nav-buttons">
+            <button
+                    class="search-button"
+                    x-on:click="searchOpen = !searchOpen, navOpen = false"
+                    :class="{ 'open': searchOpen }"
+                    aria-label="open search"
+            >
+                <i
+                   class="fa-regular fa-magnifying-glass search-icon"></i>
+                <i class="fa-regular fa-xmark search-close-icon"></i>
+            </button>
+            <button
+                    class="nav-button"
+                    x-on:click="navOpen = !navOpen, searchOpen = false"
+                   :class="{ 'open': navOpen }"
+                    aria-label="open navigation"
+            >
+                <i class="fa-regular fa-bars nav-icon"></i>
+                <i class="fa-regular fa-xmark nav-close-icon"></i>
+            </button>
+        </div>
+    </div>
+    <div
+         class="mega-menu"
+         :class="{ 'open': searchOpen || navOpen }"
+     >
+        <div
+             class="header-search-container"
+             :class="{ 'open': searchOpen }"
+         >
+            
+
+<div class="header-search"
+    :class="{ 'open': searchOpen }"
+>
+    <form action="/search" x-data="{ value: '' }" onsubmit="searchTracking(this.q.value)">
+        <input type="text" name="q" placeholder="Search..." x-model="value" />
+        <button type="submit" :class="{ 'active': value.length > 0 }"><i class="fa-regular fa-magnifying-glass"></i></button>
+    </form>
+    <div class="filter-categories">
+        <h3 class="filter-categories__title">Or select a Category</h3>
+        <div class="filter-categories-list">
+                <a href="/performance/" class="button outline" onclick="searchCategories({category: 'Performance'})">Performance</a>
+                        <a href="/performance/football-boots/" class="button outline" onclick="searchCategories({subCategory:'Football Boots'})">Football Boots</a>
+                        <a href="/performance/football-apparel/" class="button outline" onclick="searchCategories({subCategory:'Football Apparel'})">Football Apparel</a>
+                        <a href="/performance/interviews/" class="button outline" onclick="searchCategories({subCategory:'Interviews'})">Interviews</a>
+                <a href="/lifestyle/" class="button outline" onclick="searchCategories({category: 'Lifestyle'})">Lifestyle</a>
+                        <a href="/lifestyle/sneakers/" class="button outline" onclick="searchCategories({subCategory:'Sneakers'})">Sneakers</a>
+                        <a href="/lifestyle/clothing/" class="button outline" onclick="searchCategories({subCategory:'Clothing'})">Clothing</a>
+                <a href="/design/" class="button outline" onclick="searchCategories({category: 'Design'})">Design</a>
+                        <a href="/design/art-and-illustration/" class="button outline" onclick="searchCategories({subCategory:'Art and Illustration'})">Art and Illustration</a>
+                        <a href="/design/books-and-magazines/" class="button outline" onclick="searchCategories({subCategory:'Books and Magazines'})">Books and Magazines</a>
+                        <a href="/design/product-design/" class="button outline" onclick="searchCategories({subCategory:'Product Design'})">Product Design</a>
+                        <a href="/design/photography/" class="button outline" onclick="searchCategories({subCategory:'Photography'})">Photography</a>
+                        <a href="/design/residence/" class="button outline" onclick="searchCategories({subCategory:'Residence'})">Residence</a>
+                        <a href="/design/concept-design/" class="button outline" onclick="searchCategories({subCategory:'Concept Design'})">Concept Design</a>
+                <a href="/boot-spotting/" class="button outline" onclick="searchCategories({category: 'Boot Spotting'})">Boot Spotting</a>
+                <a href="/authors/" class="button outline" onclick="searchCategories({category: 'Authors'})">Authors</a>
+                <a href="/community/" class="button outline" onclick="searchCategories({category: 'Community'})">Community</a>
+                <a href="/events/" class="button outline" onclick="searchCategories({category: 'Events'})">Events</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function searchTracking(searchTerm)
+    {
+        window.dataLayer.push({
+            event: 'search',
+            search_term: searchTerm,
+        });
+    }
+
+    function searchCategories(options) {
+        const defaultOptions = {
+            event: 'select_tag',
+            component: 'search_tag',
+        };
+
+        const eventData = Object.assign({}, defaultOptions);
+
+        if (options.category) {
+            eventData.article_category = options.category;
+        }
+
+        if (options.subCategory) {
+            eventData.article_subcategory = options.subCategory;
+        }
+
+        window.dataLayer.push(eventData);
+    }
+</script>
+        </div>
+        <div
+             class="header-nav"
+             :class="{ 'open': navOpen }"
+         >
+            
+
+
+<div class="navigation"             
+        :class="{ 'open': navOpen }"
+>
+        <div class="navigation-section">
+            <p class="navigation-title">Disciplines</p>
+            <ul class="navigation-list">
+                    <li class="navigation-item">
+                         <a href="/performance/" onclick="navigationTracking('Disciplines', 'Product Design')">Product Design</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/design/photography/" onclick="navigationTracking('Disciplines', 'Photography')">Photography</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/design/art-and-illustration/" onclick="navigationTracking('Disciplines', 'Art &amp; Illustration')">Art &amp; Illustration</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/lifestyle/" onclick="navigationTracking('Disciplines', 'Lifestyle')">Lifestyle</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/design/" onclick="navigationTracking('Disciplines', 'Design')">Design</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/advertising-branding/" onclick="navigationTracking('Disciplines', 'Advertising &amp; Branding')">Advertising &amp; Branding</a>
+                    </li>
+
+            </ul>
+        </div>
+        <div class="navigation-section">
+            <p class="navigation-title">Popular Tags</p>
+            <ul class="navigation-list">
+                    <li class="navigation-item">
+                         <a href="/performance/" onclick="navigationTracking('Popular Tags', 'Performance')">Performance</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/news/" onclick="navigationTracking('Popular Tags', 'News')">News</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/performance/football-boots/" onclick="navigationTracking('Popular Tags', 'Football Boots')">Football Boots</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/performance/football-apparel/" onclick="navigationTracking('Popular Tags', 'Football Kits')">Football Kits</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/lifestyle/sneakers/" onclick="navigationTracking('Popular Tags', 'Sneakers')">Sneakers</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/lifestyle/clothing/" onclick="navigationTracking('Popular Tags', 'Fashion')">Fashion</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/design/concept-design/" onclick="navigationTracking('Popular Tags', 'Concept Design')">Concept Design</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/interviews/" onclick="navigationTracking('Popular Tags', 'Interviews')">Interviews</a>
+                    </li>
+
+            </ul>
+        </div>
+        <div class="navigation-section">
+            <p class="navigation-title">Series</p>
+            <ul class="navigation-list">
+                    <li class="navigation-item">
+                         <a href="/design/residence/" onclick="navigationTracking('Series', 'Residence')">Residence</a>
+                    </li>
+
+            </ul>
+        </div>
+        <div class="navigation-section">
+            <p class="navigation-title">Soccerbible</p>
+            <ul class="navigation-list">
+                    <li class="navigation-item">
+                         <a href="/information/about/" onclick="navigationTracking('Soccerbible', 'About')">About</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/information/terms-and-conditions/" onclick="navigationTracking('Soccerbible', 'Terms &amp; Conditions')">Terms &amp; Conditions</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="/information/privacy-policy/" onclick="navigationTracking('Soccerbible', 'Privacy Policy')">Privacy Policy</a>
+                    </li>
+
+            </ul>
+        </div>
+        <div class="navigation-section">
+            <p class="navigation-title">Social</p>
+            <ul class="navigation-list">
+                    <li class="navigation-item">
+                         <a href="https://twitter.com/SoccerBible" target="_blank" onclick="navigationTracking('Social', 'Twitter')">Twitter</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="https://www.facebook.com/soccerbible" target="_blank" onclick="navigationTracking('Social', 'Facebook')">Facebook</a>
+                    </li>
+                    <li class="navigation-item">
+                         <a href="https://www.instagram.com/soccerbible/" target="_blank" onclick="navigationTracking('Social', 'Instagram')">Instagram</a>
+                    </li>
+
+            </ul>
+        </div>
+</div>
+
+<script type="text/javascript">
+    function navigationTracking(title, caption) {
+        dataLayer.push({
+            event: 'navigation',
+            component: "Navigation",
+            navigation_title: title,
+            navigation_link: caption
+        });
+    }
+</script>
+        </div>
+    </div>
+</header>
+
+<style>
+    /* compiler has issue with :has pseudo, so hacky insert */
+    body:has(.mega-menu.open) {
+        overflow-y: hidden;
+    }
+</style>
+
+    <div id="content">
+        
+
+<div class="error-page">
+    <div class="error-page-text">
+        <h1 class="error-page-text__title">An unknown error occured.</h1>
+        <h3 class="error-page-text__subtitle">
+            Oops! Something went wrong.
+            <br />
+            An unknown error has occurred.
+        </h3>
+        <p class="error-page-text__message">Please check for any spelling errors in the address — If we still can’t find it, the page may have been moved, try using the menu or the category tags below.</p>
+    </div>
+
+    <div class="article-tags-collection full-width-section gutters">
+    <div class="content">
+        <h2 class="title">Categories</h2>
+        <div class="tags">
+                <a href="/performance/" class="button outline bold" onclick="tagCollectionTrackingEvent('Performance', 'category')">Performance</a>
+                        <a href="/performance/football-boots/" class="button outline bold" onclick="tagCollectionTrackingEvent('Football Boots', 'subCategory')">Football Boots</a>
+                        <a href="/performance/football-apparel/" class="button outline bold" onclick="tagCollectionTrackingEvent('Football Apparel', 'subCategory')">Football Apparel</a>
+                        <a href="/performance/interviews/" class="button outline bold" onclick="tagCollectionTrackingEvent('Interviews', 'subCategory')">Interviews</a>
+                <a href="/lifestyle/" class="button outline bold" onclick="tagCollectionTrackingEvent('Lifestyle', 'category')">Lifestyle</a>
+                        <a href="/lifestyle/sneakers/" class="button outline bold" onclick="tagCollectionTrackingEvent('Sneakers', 'subCategory')">Sneakers</a>
+                        <a href="/lifestyle/clothing/" class="button outline bold" onclick="tagCollectionTrackingEvent('Clothing', 'subCategory')">Clothing</a>
+                <a href="/design/" class="button outline bold" onclick="tagCollectionTrackingEvent('Design', 'category')">Design</a>
+                        <a href="/design/art-and-illustration/" class="button outline bold" onclick="tagCollectionTrackingEvent('Art and Illustration', 'subCategory')">Art and Illustration</a>
+                        <a href="/design/books-and-magazines/" class="button outline bold" onclick="tagCollectionTrackingEvent('Books and Magazines', 'subCategory')">Books and Magazines</a>
+                        <a href="/design/product-design/" class="button outline bold" onclick="tagCollectionTrackingEvent('Product Design', 'subCategory')">Product Design</a>
+                        <a href="/design/photography/" class="button outline bold" onclick="tagCollectionTrackingEvent('Photography', 'subCategory')">Photography</a>
+                        <a href="/design/residence/" class="button outline bold" onclick="tagCollectionTrackingEvent('Residence', 'subCategory')">Residence</a>
+                        <a href="/design/concept-design/" class="button outline bold" onclick="tagCollectionTrackingEvent('Concept Design', 'subCategory')">Concept Design</a>
+                <a href="/boot-spotting/" class="button outline bold" onclick="tagCollectionTrackingEvent('Boot Spotting', 'category')">Boot Spotting</a>
+                <a href="/community/" class="button outline bold" onclick="tagCollectionTrackingEvent('Community', 'category')">Community</a>
+                <a href="/events/" class="button outline bold" onclick="tagCollectionTrackingEvent('Events', 'category')">Events</a>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    // Function to track the tag selection event on tag collection.
+    function tagCollectionTrackingEvent(tagName, categoryType) {
+        var eventData = {
+            event: 'select_tag',
+            component: 'Category Component',
+            page_type: 'Error',
+        };
+
+        if (categoryType === 'category') {
+            eventData.article_category = tagName;
+        } else if (categoryType === 'subCategory') {
+            eventData.article_subcategory = tagName;
+        } else {
+            eventData.article_category = tagName;
+            eventData.article_subcategory = tagName;
+        }
+
+        window.dataLayer.push(eventData);
+    };
+</script>
+</div>
+        <div class="subscribe">
+    <div class="content">
+        <h2 class="title">The Creative Soccer Culture Brief</h2>
+        <p class="copy">Sign up to our newsletter and we'll keep you in the loop with everything good going on in the world of Creative Soccer Culture.</p>
+    </div>
+
+    <form novalidate name="signup" class="form" id="subscribe" action="https://prodirect-mail.com/signup.ashx" method="post">
+        <input type="hidden" name="userid" value="63594" />
+        <input class="hidden" type="checkbox" checked="checked" name="addressbook_29196638">
+        <span class="subscribe-email">
+            <input id="subscribe-email" class="email-input" type="email" name="Email" title="Your email address" placeholder="Your email address" required />
+            <span id="subscribe-email-error" class="error" aria-live="polite"></span>
+            <span class="subscribe-email-success" aria-live="polite">Thanks! You've successfully subscribed!</span>
+        </span>
+        <input type="submit" class="button button-black sign-up button-pill" value="Subscribe" />
+    </form>
+</div>
+        <footer class="main-footer">
+    <div class="main-footer-content">
+        <div class="main-footer-content-copy-container">
+            <div class="title-block">
+                    <svg class="title-block__logo" width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                            viewBox="0 0 444.5 60.2" style="enable-background:new 0 0 444.5 60.2;" xml:space="preserve">
+                    <title>footer-branding</title>
+                    <path d="M38,42c0,4.9-1.7,9.2-5.1,12.8s-7.6,5.4-12.4,5.4c-1.8,0-4-0.5-6.6-1.4L0,53.7l3.4-9.5L18,49.6c0.9,0.3,1.8,0.5,2.5,0.5
+                            c2,0,3.8-0.7,5.4-2.2c1.6-1.5,2.4-3.3,2.4-5.4c0-2.3-0.8-4.1-2.5-5.5c-1.6-1.2-3.6-1.9-6.1-1.9c-5,0-9.3-1.5-12.8-4.7
+                            c-3.6-3.2-5.5-7.3-5.5-12.3c0-4.9,1.7-9.2,5.1-12.7C9.9,1.9,14.1,0.1,19,0.1c1.8,0,4,0.5,6.6,1.4l11.3,4.1l-3.4,9.6l-12-4.5
+                            c-0.9-0.3-1.8-0.5-2.5-0.5c-2.1,0-3.9,0.8-5.5,2.4c-1.5,1.6-2.3,3.5-2.3,5.8c0,2.1,0.8,3.8,2.5,5c1.6,1.2,3.5,1.8,5.9,1.8
+                            c5,0,9.4,1.6,12.9,4.7C36.2,33.1,38,37.1,38,42" />
+                    <path d="M81.1,42.1c0,5-1.8,9.2-5.3,12.8c-3.5,3.5-7.8,5.3-12.8,5.3s-9.2-1.8-12.8-5.3c-3.5-3.5-5.3-7.8-5.3-12.8v-24
+                            c0-5,1.8-9.2,5.3-12.8C53.7,1.8,58,0,63,0s9.3,1.8,12.8,5.3s5.3,7.8,5.3,12.8V42.1z M71.4,41.7V18.5c0-2.3-0.8-4.3-2.4-5.9
+                            c-1.6-1.6-3.5-2.4-5.9-2.4c-2.3,0-4.3,0.8-5.9,2.4c-1.6,1.6-2.4,3.6-2.4,5.9v23.2c0,2.3,0.8,4.3,2.4,5.9c1.6,1.6,3.6,2.4,5.9,2.4
+                            s4.3-0.8,5.9-2.4C70.6,46,71.4,44,71.4,41.7" />
+                    <path d="M125.1,54.6l-11.4,4.1c-2.6,0.9-4.8,1.4-6.6,1.4c-4.9,0-9-1.8-12.4-5.3s-5.1-7.8-5.1-12.7v-24c0-4.9,1.7-9.2,5.1-12.7
+                            s7.6-5.3,12.4-5.3c1.8,0,4,0.5,6.6,1.4l11.4,4.1l-3.5,9.6l-12-4.5c-0.9-0.3-1.8-0.5-2.5-0.5c-2.1,0-3.9,0.8-5.4,2.4
+                            c-1.6,1.6-2.3,3.5-2.3,5.8v23.4c0,2.3,0.8,4.2,2.3,5.8s3.4,2.4,5.4,2.4c0.8,0,1.6-0.2,2.5-0.5l12-4.4L125.1,54.6z" />
+                    <path d="M167.7,54.6l-11.4,4.1c-2.6,0.9-4.8,1.4-6.6,1.4c-4.8,0-9-1.8-12.4-5.3s-5.1-7.8-5.1-12.7v-24c0-4.9,1.7-9.2,5.1-12.7
+                            c3.4-3.5,7.6-5.3,12.4-5.3c1.8,0,4,0.5,6.6,1.4l11.4,4.1l-3.5,9.6l-11.9-4.5c-0.9-0.3-1.8-0.5-2.6-0.5c-2.1,0-3.9,0.8-5.4,2.4
+                            c-1.6,1.6-2.3,3.5-2.3,5.8v23.4c0,2.3,0.8,4.2,2.3,5.8c1.6,1.6,3.4,2.4,5.4,2.4c0.8,0,1.6-0.2,2.6-0.5l11.9-4.4L167.7,54.6z" />
+                    <polygon points="174.7,1 174.7,59.2 207.6,59.2 207.6,49.1 184.5,49.1 184.5,35.1 201.7,35.1 201.7,25 184.5,25 184.5,11.1
+                            207.6,11.1 207.6,1" />
+                    <path d="M253,59.2h-10.9l-11.2-20.5h-5.1v20.5H216V1h19.2c4.4,0,8.2,1.6,11.3,4.7c3.1,3.1,4.7,6.9,4.7,11.3v5.6
+                                c0,3.3-0.9,6.3-2.8,9s-4.3,4.7-7.2,5.8L253,59.2z M241.5,22.1v-4.5c0-1.8-0.6-3.3-1.8-4.5c-1.2-1.2-2.7-1.9-4.4-1.9H226v17.5h9.3
+                                c1.7,0,3.2-0.6,4.4-1.9C240.9,25.4,241.5,23.9,241.5,22.1" />
+                    <path d="M296.1,42.3c0,5.1-1.8,9.3-5.3,12.8c-3.6,3.4-7.8,5.1-12.7,5.1c-4.9,0-9.1-1.7-12.6-5.2c-3.6-3.5-5.5-7.8-5.5-12.9V1h22.7
+                                c3.6,0,6.8,1.2,9.4,3.7s4,5.6,4,9.3c0,2.3-0.5,4.3-1.6,6.1c-0.3,0.5-1.2,1.8-2.8,3.9c-1,1.3-1.5,2.4-1.5,3.5
+                                c0,0.5,0.5,1.5,1.5,2.9c1.3,1.9,2.3,3.4,2.8,4.7C295.6,37.4,296.1,39.8,296.1,42.3 M286.4,41.7c0-1.8-1-4-2.9-6.5s-2.9-5-2.9-7.7
+                                c0-2.2,0.5-4.2,1.5-6c0.4-0.7,1.3-2,2.8-3.8c1-1.2,1.5-2.3,1.5-3.1c0-1-0.4-1.8-1.1-2.5s-1.5-1-2.5-1h-12.9v30.6
+                                c0,2.3,0.8,4.3,2.5,5.9c1.7,1.6,3.6,2.4,5.8,2.4c2.2,0,4.1-0.8,5.8-2.4C285.5,46,286.4,44,286.4,41.7" />
+                    <rect x="306" y="1" width="9.8" height="58.2" />
+                    <path d="M361.7,42.3c0,5.1-1.8,9.3-5.3,12.8c-3.6,3.4-7.8,5.1-12.7,5.1s-9.1-1.7-12.6-5.2c-3.6-3.5-5.5-7.8-5.5-12.9V1h22.7
+                                c3.6,0,6.8,1.2,9.4,3.7s4,5.6,4,9.3c0,2.3-0.5,4.3-1.6,6.1c-0.3,0.5-1.2,1.8-2.8,3.9c-1,1.3-1.6,2.4-1.6,3.5
+                                c0,0.5,0.5,1.5,1.6,2.9c1.3,1.9,2.3,3.4,2.8,4.7C361.2,37.4,361.7,39.8,361.7,42.3 M352,41.7c0-1.8-1-4-2.9-6.5s-2.9-5-2.9-7.7
+                                c0-2.2,0.5-4.2,1.5-6c0.4-0.7,1.3-2,2.8-3.8c1-1.2,1.5-2.3,1.5-3.1c0-1-0.4-1.8-1.1-2.5s-1.6-1-2.5-1h-12.9v30.6
+                                c0,2.3,0.8,4.3,2.5,5.9c1.7,1.6,3.6,2.4,5.8,2.4c2.2,0,4.1-0.8,5.8-2.4C351.2,46,352,44,352,41.7" />
+                    <polygon points="370.2,1 370.2,59.2 403.1,59.2 403.1,49.1 380,49.1 380,1" />
+                    <polygon points="411.6,1 411.6,59.2 444.5,59.2 444.5,49.1 421.3,49.1 421.3,35.1 438.6,35.1 438.6,25 421.3,25 421.3,11.1 444.5,11.1 444.5,1" />
+                </svg>
+
+                <div class="title-block__social">
+                    <a class="social-icon" href="https://www.facebook.com/soccerbible" target="_blank" rel="noopener noreferrer" aria-label="facebook">
+                        <i class="fa-brands fa-facebook-f fa-lg"></i>
+                    </a>
+                    <a class="social-icon" href="https://twitter.com/SoccerBible" target="_blank" rel="noopener noreferrer" aria-label="x">
+                        <i class="fa-brands fa-x-twitter fa-lg"></i>
+                    </a>
+                    <a class="social-icon" href="https://www.instagram.com/soccerbible/" target="_blank" rel="noopener noreferrer" aria-label="instagram">
+                        <i class="fa-brands fa-instagram fa-lg"></i>
+                    </a>
+                </div>
+            </div>
+
+            <p class="copy">
+                SoccerBible is an editorial publisher and curated platform dedicated to expanding creativity through soccer and inspiring the global ‘Creative Soccer Culture’ community.
+            </p>
+
+            <p class="copy">
+                Contact the SoccerBible team at <a class="contact-us" href="mailto:u2us@soccerbible.com">u2us@soccerbible.com</a>
+            </p>
+        </div>
+
+        <hr />
+
+        <nav class="footer-nav">
+            <div>
+                <div class="footer-nav__title">Info</div>
+                <ul class="footer-nav-list">
+                    <li class="footer-nav-list-item">
+                        <a class="footer-nav-list-item__link" href="/information/about/">About</a>
+                    </li>
+                    <li class="footer-nav-list-item">
+                        <a class="footer-nav-list-item__link" href="/information/contact/">Contact Us</a>
+                    </li>
+                </ul>
+            </div>
+
+            <div>
+                <div class="footer-nav__title">Legal</div>
+
+                <ul class="footer-nav-list">
+                    <li class="footer-nav-list-item">
+                        <a class="footer-nav-list-item__link" href="/information/terms-and-conditions/">Terms &amp; Conditions</a>
+                    </li>
+                    <li class="footer-nav-list-item">
+                        <a class="footer-nav-list-item__link" href="/information/privacy-policy/">Privacy Policy</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <h4 class="copyright">
+        &#169; SoccerBible Ltd 2026. All Rights Reserved.
+    </h4>
+</footer>
+    </div>
+
+    <script type="text/javascript">
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+        ga('create', 'UA-4720810-1', 'soccerbible.com');
+        ga('require', 'displayfeatures');
+        ga('send', 'pageview');
+    </script>
+
+    
+    <script defer src="/scripts/swiper.js"></script>
+</body>
+</html>

@@ -23,7 +23,7 @@ import {
 } from "lucide-react";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import FloatingShareButton from "@/components/FloatingShareButton";
+import ContextualGearCard from "@/components/ContextualGearCard";
 import { useLanguage } from "@/context/LanguageContext";
 import { cr7JournalArticles, JournalArticle } from "@/data/cr7-journal";
 
@@ -357,6 +357,9 @@ export default function ArticleClient({
             ))}
           </div>
 
+          {/* Contextual Gear Card (Emotion-driven monetization) */}
+          <ContextualGearCard article={article} language={language} />
+
           {/* Tags */}
           <div className="pt-8 pb-10 border-t border-gray-800 mt-12 flex flex-wrap items-center gap-2">
             <span className="text-xs font-bold text-gray-400 mr-2">
@@ -471,7 +474,6 @@ export default function ArticleClient({
       </main>
 
       <Footer />
-      <FloatingShareButton />
     </div>
   );
 }

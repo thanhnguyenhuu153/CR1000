@@ -17,18 +17,37 @@ import {
   Check,
   Copy,
   RotateCcw,
+  Sparkles,
 } from "lucide-react";
 
 export default function FanVaultStore() {
   const { language, t } = useLanguage();
   const [filter, setFilter] = useState<"all" | "jersey" | "boots" | "lifestyle" | "memorabilia">("all");
-  const [items, setItems] = useState<ShopItem[]>(() => getCr7ShopItems(language));
+  const [targetMarket, setTargetMarket] = useState<"VN" | "US">(() => (language === "vi" ? "VN" : "US"));
+  const [userFavCategory, setUserFavCategory] = useState<string | null>(null);
+  const [items, setItems] = useState<ShopItem[]>(() => getCr7ShopItems(language === "vi" ? "vi" : "en"));
   const [isAdminMode, setIsAdminMode] = useState(false);
   const [editingItem, setEditingItem] = useState<ShopItem | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [copiedNotification, setCopiedNotification] = useState(false);
 
-  // Load customized items from localStorage or fallback to localized default
+  // Sync market with language initially, or load saved preference
+  useEffect(() => {
+    try {
+      const savedCategory = localStorage.getItem("cr1000_user_fav_category");
+      if (savedCategory) {
+        setUserFavCategory(savedCategory);
+      }
+      const savedMarket = localStorage.getItem("cr1000_target_market") as "VN" | "US" | null;
+      if (savedMarket) {
+        setTargetMarket(savedMarket);
+      } else {
+        setTargetMarket(language === "vi" ? "VN" : "US");
+      }
+    } catch (e) {}
+  }, [language]);
+
+  // Load customized items or fallback to market-specific items
   useEffect(() => {
     try {
       const saved = localStorage.getItem("cr1000_shop_items");
@@ -40,8 +59,25 @@ export default function FanVaultStore() {
         }
       }
     } catch (e) {}
-    setItems(getCr7ShopItems(language));
-  }, [language]);
+    setItems(getCr7ShopItems(targetMarket === "VN" ? "vi" : "en"));
+  }, [targetMarket, language]);
+
+  const handleMarketChange = (market: "VN" | "US") => {
+    setTargetMarket(market);
+    try {
+      localStorage.setItem("cr1000_target_market", market);
+    } catch (e) {}
+  };
+
+  const handleFilterChange = (catId: "all" | "jersey" | "boots" | "lifestyle" | "memorabilia") => {
+    setFilter(catId);
+    if (catId !== "all") {
+      try {
+        localStorage.setItem("cr1000_user_fav_category", catId);
+        setUserFavCategory(catId);
+      } catch (e) {}
+    }
+  };
 
   const saveItems = (newItems: ShopItem[]) => {
     setItems(newItems);
@@ -111,16 +147,25 @@ export default function FanVaultStore() {
     setTimeout(() => setCopiedNotification(false), 2500);
   };
 
-  const filteredItems = items.filter((item) => {
-    if (filter === "all") return true;
-    return item.category === filter;
-  });
+  const filteredItems = items
+    .filter((item) => {
+      if (filter === "all") return true;
+      return item.category === filter;
+    })
+    .sort((a, b) => {
+      // Behavior-driven sorting: If user demonstrated interest in a category, rank those items first
+      if (filter === "all" && userFavCategory) {
+        if (a.category === userFavCategory && b.category !== userFavCategory) return -1;
+        if (b.category === userFavCategory && a.category !== userFavCategory) return 1;
+      }
+      return 0;
+    });
 
   return (
     <section id="shop" className="py-28 sm:py-36 bg-[#08090C] relative border-t border-white/[0.06]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center max-w-3xl mx-auto mb-16 relative">
+        <div className="text-center max-w-3xl mx-auto mb-12 relative">
           <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#121520] border border-[#D4AF37]/25 text-[#D4AF37] text-[11px] font-semibold uppercase tracking-[0.2em] mb-4">
             {t.shop.chapterBadge}
           </div>
@@ -174,6 +219,35 @@ export default function FanVaultStore() {
           </div>
         </div>
 
+        {/* Dynamic Market & Geo Selection Bar */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 mb-6">
+          <span className="text-[11px] font-bold uppercase tracking-wider text-gray-400">
+            {language === "vi" ? "Sàn phân phối:" : "Store Platform:"}
+          </span>
+          <button
+            onClick={() => handleMarketChange("VN")}
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer ${
+              targetMarket === "VN"
+                ? "bg-gradient-to-r from-orange-500/20 to-amber-500/20 text-orange-300 border-orange-500/60 shadow-lg shadow-orange-500/20"
+                : "bg-[#10131E] text-gray-400 border-gray-800 hover:text-white hover:border-gray-700"
+            }`}
+          >
+            <span>🇻🇳</span>
+            <span>Shopee Việt Nam</span>
+          </button>
+          <button
+            onClick={() => handleMarketChange("US")}
+            className={`px-3.5 py-1.5 rounded-full text-xs font-bold transition-all border flex items-center gap-1.5 cursor-pointer ${
+              targetMarket === "US"
+                ? "bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-amber-300 border-amber-500/60 shadow-lg shadow-amber-500/20"
+                : "bg-[#10131E] text-gray-400 border-gray-800 hover:text-white hover:border-gray-700"
+            }`}
+          >
+            <span>🇺🇸</span>
+            <span>Amazon US / Global</span>
+          </button>
+        </div>
+
         {/* Filter Pills */}
         <div className="flex items-center justify-center gap-2 mb-10 overflow-x-auto pb-2">
           {[
@@ -185,7 +259,7 @@ export default function FanVaultStore() {
           ].map((cat) => (
             <button
               key={cat.id}
-              onClick={() => setFilter(cat.id as any)}
+              onClick={() => handleFilterChange(cat.id as any)}
               className={`px-4 py-2 rounded-xl text-xs sm:text-sm font-bold whitespace-nowrap transition-all border cursor-pointer ${
                 filter === cat.id
                   ? "bg-[#D4AF37] text-black border-[#D4AF37] shadow-lg shadow-[#D4AF37]/20"
@@ -199,104 +273,115 @@ export default function FanVaultStore() {
 
         {/* Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {filteredItems.map((item) => (
-            <div
-              key={item.id}
-              className="bg-[#11131C] border border-gray-800 hover:border-[#D4AF37]/50 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group relative"
-            >
-              {/* Admin Actions Overlay Buttons */}
-              {isAdminMode && (
-                <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-gray-700">
-                  <button
-                    onClick={() => handleEdit(item)}
-                    className="p-1.5 rounded-lg bg-[#222736] hover:bg-[#D4AF37] text-gray-300 hover:text-black transition-all"
-                    title={language === "vi" ? "Chỉnh sửa sản phẩm này" : "Edit this item"}
-                  >
-                    <Edit2 className="w-3.5 h-3.5" />
-                  </button>
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="p-1.5 rounded-lg bg-red-900/40 hover:bg-red-600 text-red-300 hover:text-white transition-all"
-                    title={language === "vi" ? "Xóa sản phẩm này" : "Delete this item"}
-                  >
-                    <Trash2 className="w-3.5 h-3.5" />
-                  </button>
-                </div>
-              )}
+          {filteredItems.map((item) => {
+            const activeAffiliateUrl =
+              targetMarket === "VN"
+                ? item.geoLinks?.VN?.url || item.affiliateUrl
+                : item.geoLinks?.US?.url || item.affiliateUrl;
+            const activePlatform =
+              targetMarket === "VN"
+                ? item.geoLinks?.VN?.platform || item.platform || "Shopee"
+                : item.geoLinks?.US?.platform || "Amazon";
 
-              {/* Product Image Thumbnail */}
-              <div className="relative h-56 w-full overflow-hidden bg-[#181B26]">
-                <img
-                  src={item.image}
-                  alt={item.name}
-                  width={400}
-                  height={300}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                  loading="lazy"
-                  decoding="async"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#11131C] via-transparent to-transparent opacity-80" />
-
-                {item.badge && (
-                  <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#D4AF37] text-black shadow-md">
-                    {item.badge}
-                  </span>
-                )}
-
-                {!isAdminMode && (
-                  <span className="absolute top-4 right-4 px-2.5 py-1 rounded-md text-[10px] font-bold bg-black/70 backdrop-blur-md text-gray-300 border border-gray-700">
-                    {item.platform}
-                  </span>
-                )}
-              </div>
-
-              {/* Product Content */}
-              <div className="p-6 flex flex-col justify-between flex-1">
-                <div>
-                  <div className="flex items-center gap-1.5 text-xs text-amber-400 mb-2">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-current" />
-                      ))}
-                    </div>
-                    <span className="font-bold font-mono">{item.rating}</span>
-                    <span className="text-gray-500">({item.reviewsCount} {language === "vi" ? "đánh giá" : "reviews"})</span>
+            return (
+              <div
+                key={item.id}
+                className="bg-[#11131C] border border-gray-800 hover:border-[#D4AF37]/50 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300 flex flex-col justify-between group relative"
+              >
+                {/* Admin Actions Overlay Buttons */}
+                {isAdminMode && (
+                  <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5 bg-black/80 backdrop-blur-md p-1.5 rounded-xl border border-gray-700">
+                    <button
+                      onClick={() => handleEdit(item)}
+                      className="p-1.5 rounded-lg bg-[#222736] hover:bg-[#D4AF37] text-gray-300 hover:text-black transition-all"
+                      title={language === "vi" ? "Chỉnh sửa sản phẩm này" : "Edit this item"}
+                    >
+                      <Edit2 className="w-3.5 h-3.5" />
+                    </button>
+                    <button
+                      onClick={() => handleDelete(item.id)}
+                      className="p-1.5 rounded-lg bg-red-900/40 hover:bg-red-600 text-red-300 hover:text-white transition-all"
+                      title={language === "vi" ? "Xóa sản phẩm này" : "Delete this item"}
+                    >
+                      <Trash2 className="w-3.5 h-3.5" />
+                    </button>
                   </div>
+                )}
 
-                  <h3 className="text-base font-bold text-white mb-2 line-clamp-2 group-hover:text-[#D4AF37] transition-colors">
-                    {item.name}
-                  </h3>
+                {/* Product Image Thumbnail */}
+                <div className="relative h-56 w-full overflow-hidden bg-[#181B26]">
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    width={400}
+                    height={300}
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-[#11131C] via-transparent to-transparent opacity-80" />
 
-                  <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-4">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="pt-4 border-t border-gray-800/80 flex items-center justify-between">
-                  <div>
-                    <span className="text-base sm:text-lg font-black font-mono text-[#D4AF37] block">
-                      {item.priceText}
+                  {item.badge && (
+                    <span className="absolute top-4 left-4 px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#D4AF37] text-black shadow-md">
+                      {item.badge}
                     </span>
-                    {item.originalPriceText && (
-                      <span className="text-[11px] text-gray-500 line-through">
-                        {item.originalPriceText}
-                      </span>
-                    )}
+                  )}
+
+                  {filter === "all" && item.category === userFavCategory && (
+                    <span className="absolute bottom-3 left-4 px-2.5 py-0.5 rounded-full text-[9px] font-bold bg-black/80 text-amber-300 border border-amber-500/50 backdrop-blur-md">
+                      ★ {language === "vi" ? "Theo sở thích của bạn" : "Matched for you"}
+                    </span>
+                  )}
+
+                  {!isAdminMode && (
+                    <span className="absolute top-4 right-4 px-2.5 py-1 rounded-md text-[10px] font-bold bg-black/70 backdrop-blur-md text-gray-300 border border-gray-700">
+                      {activePlatform}
+                    </span>
+                  )}
+                </div>
+
+                {/* Product Content */}
+                <div className="p-6 flex flex-col justify-between flex-1">
+                  <div>
+                    <div className="flex items-center gap-1.5 text-xs text-amber-400 mb-2">
+                      <div className="flex items-center">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className="w-3.5 h-3.5 fill-current" />
+                        ))}
+                      </div>
+                      <span className="font-bold font-mono">{item.rating}</span>
+                      <span className="text-gray-500">({item.reviewsCount} {language === "vi" ? "đánh giá" : "reviews"})</span>
+                    </div>
+
+                    <h3 className="text-base font-bold text-white mb-2 line-clamp-2 group-hover:text-[#D4AF37] transition-colors">
+                      {item.name}
+                    </h3>
+
+                    <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed mb-4">
+                      {item.description}
+                    </p>
                   </div>
 
-                  <a
-                    href={item.affiliateUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] hover:opacity-90 active:scale-95 text-black font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#D4AF37]/20"
-                  >
-                    <span>{t.shop.buyNow}</span>
-                    <ExternalLink className="w-3.5 h-3.5" />
-                  </a>
+                  <div className="pt-4 border-t border-gray-800/80 flex items-center justify-between">
+                    <span className="text-xs text-gray-400 font-medium flex items-center gap-1.5">
+                      <Tag className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      <span>{language === "vi" ? "Xem ưu đãi sàn" : "Live platform deals"}</span>
+                    </span>
+
+                    <a
+                      href={activeAffiliateUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] hover:opacity-90 active:scale-95 text-black font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#D4AF37]/20"
+                    >
+                      <span>{t.shop.buyNow} ({activePlatform})</span>
+                      <ExternalLink className="w-3.5 h-3.5" />
+                    </a>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         {/* Trust & Performance Note */}
@@ -414,18 +499,125 @@ export default function FanVaultStore() {
                 </div>
               </div>
 
-              <div>
-                <label className="block text-gray-300 font-bold mb-1">
-                  {language === "vi" ? "Link Tiếp Thị Liên Kết (Affiliate URL):" : "Affiliate URL:"}
-                </label>
-                <input
-                  type="url"
-                  required
-                  value={editingItem.affiliateUrl}
-                  onChange={(e) => setEditingItem({ ...editingItem, affiliateUrl: e.target.value })}
-                  className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white focus:outline-none focus:border-[#D4AF37]"
-                  placeholder="https://..."
-                />
+              {/* Dynamic Multi-Market Geo Links */}
+              <div className="bg-[#0B0D15] p-3.5 rounded-2xl border border-[#D4AF37]/30 space-y-3">
+                <div className="flex items-center justify-between">
+                  <label className="text-gray-200 font-bold flex items-center gap-1.5 text-xs">
+                    <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>
+                      {language === "vi"
+                        ? "Link Tiếp thị liên kết Đa Quốc Gia (Dynamic Geo-Links):"
+                        : "Dynamic Geo-Affiliate Links:"}
+                    </span>
+                  </label>
+                  <span className="text-[10px] text-amber-400 font-semibold bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20">
+                    {language === "vi" ? "Tự động nhận diện User" : "Auto Geo-Routed"}
+                  </span>
+                </div>
+
+                {/* VN */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-gray-300 font-semibold text-xs flex items-center gap-1.5">
+                      <span>🇻🇳</span>
+                      <span>{language === "vi" ? "Link Shopee (Việt Nam) (*):" : "Shopee Vietnam Link (*):"}</span>
+                    </label>
+                    <span className="text-[10px] text-gray-500 font-mono">
+                      {language === "vi" ? "Khách tại VN" : "For VN Visitors"}
+                    </span>
+                  </div>
+                  <input
+                    type="url"
+                    required
+                    value={
+                      editingItem.geoLinks?.VN?.url ||
+                      (editingItem.platform === "Shopee" ? editingItem.affiliateUrl : "")
+                    }
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setEditingItem({
+                        ...editingItem,
+                        affiliateUrl: val || editingItem.affiliateUrl,
+                        geoLinks: {
+                          ...editingItem.geoLinks,
+                          VN: {
+                            platform: "Shopee",
+                            url: val,
+                          },
+                        },
+                      });
+                    }}
+                    placeholder="https://s.shopee.vn/..."
+                    className="w-full bg-[#181B26] border border-gray-700 focus:border-[#D4AF37] rounded-xl px-3 py-2 text-white text-xs font-mono"
+                  />
+                </div>
+
+                {/* US */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-gray-300 font-semibold text-xs flex items-center gap-1.5">
+                      <span>🇺🇸</span>
+                      <span>{language === "vi" ? "Link Amazon (Mỹ & Toàn Cầu):" : "Amazon US / Global Link:"}</span>
+                    </label>
+                    <span className="text-[10px] text-gray-500 font-mono">
+                      {language === "vi" ? "Khách Quốc Tế" : "Global Visitors"}
+                    </span>
+                  </div>
+                  <input
+                    type="url"
+                    value={
+                      editingItem.geoLinks?.US?.url ||
+                      (editingItem.platform === "Amazon" ? editingItem.affiliateUrl : "")
+                    }
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setEditingItem({
+                        ...editingItem,
+                        geoLinks: {
+                          ...editingItem.geoLinks,
+                          US: {
+                            platform: "Amazon",
+                            url: val,
+                          },
+                        },
+                      });
+                    }}
+                    placeholder="https://www.amazon.com/..."
+                    className="w-full bg-[#181B26] border border-gray-700 focus:border-[#D4AF37] rounded-xl px-3 py-2 text-white text-xs font-mono"
+                  />
+                </div>
+
+                {/* EU */}
+                <div>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-gray-300 font-semibold text-xs flex items-center gap-1.5">
+                      <span>🇪🇺</span>
+                      <span>{language === "vi" ? "Link Châu Âu (Tùy chọn - Unisport/Nike):" : "Europe Link (Optional):"}</span>
+                    </label>
+                    <span className="text-[10px] text-gray-500 font-mono">
+                      {language === "vi" ? "Khách Châu Âu" : "Europe Visitors"}
+                    </span>
+                  </div>
+                  <input
+                    type="url"
+                    value={editingItem.geoLinks?.EU?.url || ""}
+                    onChange={(e) => {
+                      const val = e.target.value;
+                      setEditingItem({
+                        ...editingItem,
+                        geoLinks: {
+                          ...editingItem.geoLinks,
+                          EU: {
+                            platform: "Unisport",
+                            url: val,
+                          },
+                        },
+                      });
+                    }}
+                    placeholder="https://www.unisportstore.com/... hoặc để trống"
+                    className="w-full bg-[#181B26] border border-gray-700 focus:border-[#D4AF37] rounded-xl px-3 py-2 text-white text-xs font-mono"
+                  />
+                </div>
               </div>
 
               <div>

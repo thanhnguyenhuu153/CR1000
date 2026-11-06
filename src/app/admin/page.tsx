@@ -261,11 +261,21 @@ export default function AdminPage() {
       originalPriceText: "1.200.000₫",
       badge: "Xu hướng",
       description: "Mô tả sản phẩm kỷ vật CR7...",
-      image: "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop",
-      affiliateUrl: "https://shopee.vn/",
+      image: "/images/shop/jersey-al-nassr-home.jpg",
+      affiliateUrl: "https://s.shopee.vn/",
       platform: "Shopee",
       rating: 5.0,
       reviewsCount: 150,
+      geoLinks: {
+        VN: {
+          platform: "Shopee",
+          url: "https://s.shopee.vn/",
+        },
+        US: {
+          platform: "Amazon",
+          url: "https://www.amazon.com/",
+        },
+      },
     });
     setIsShopModalOpen(true);
   };
@@ -283,19 +293,28 @@ export default function AdminPage() {
       return;
     }
 
-    const exists = localShopItems.some((i) => i.id === editingShopItem.id);
+    const itemToSave: ShopItem = {
+      ...editingShopItem,
+      affiliateUrl:
+        editingShopItem.geoLinks?.VN?.url ||
+        editingShopItem.affiliateUrl ||
+        editingShopItem.geoLinks?.US?.url ||
+        "",
+    };
+
+    const exists = localShopItems.some((i) => i.id === itemToSave.id);
     let updated: ShopItem[];
     if (exists) {
-      updated = localShopItems.map((i) => (i.id === editingShopItem.id ? editingShopItem : i));
+      updated = localShopItems.map((i) => (i.id === itemToSave.id ? itemToSave : i));
     } else {
-      updated = [editingShopItem, ...localShopItems];
+      updated = [itemToSave, ...localShopItems];
     }
 
     setLocalShopItems(updated);
     saveShopItems(updated);
     setIsShopModalOpen(false);
     setEditingShopItem(null);
-    setSaveNotification(`✓ Đã lưu sản phẩm "${editingShopItem.name}" thành công!`);
+    setSaveNotification(`✓ Đã lưu sản phẩm "${itemToSave.name}" và link đa quốc gia thành công!`);
     setTimeout(() => setSaveNotification(""), 3500);
   };
 
@@ -1163,18 +1182,46 @@ export default function AdminPage() {
                       </div>
 
                       {/* Affiliate Link Preview */}
-                      <div className="bg-[#090A10] p-2 rounded-lg border border-gray-800 text-[11px] text-gray-400 truncate mb-3 flex items-center justify-between gap-2">
-                        <span className="truncate font-mono">{item.affiliateUrl || "Chưa gắn link affiliate"}</span>
-                        {item.affiliateUrl && (
-                          <a
-                            href={item.affiliateUrl}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-[#D4AF37] hover:underline shrink-0"
-                            title="Thử mở link affiliate"
-                          >
-                            <ExternalLink className="w-3.5 h-3.5" />
-                          </a>
+                      <div className="bg-[#090A10] p-2.5 rounded-xl border border-gray-800 text-[11px] text-gray-400 mb-3 space-y-1.5">
+                        <div className="flex items-center justify-between gap-2">
+                          <span className="flex items-center gap-1.5 text-white font-semibold min-w-0">
+                            <span>🇻🇳</span>
+                            <span className="text-[10px] text-orange-400 font-bold shrink-0">Shopee VN:</span>
+                            <span className="truncate font-mono text-[10px] text-gray-300">
+                              {item.geoLinks?.VN?.url || item.affiliateUrl || "Chưa gắn link"}
+                            </span>
+                          </span>
+                          {(item.geoLinks?.VN?.url || item.affiliateUrl) && (
+                            <a
+                              href={item.geoLinks?.VN?.url || item.affiliateUrl}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-[#D4AF37] hover:underline shrink-0"
+                              title="Thử mở link Shopee VN"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          )}
+                        </div>
+                        {item.geoLinks?.US?.url && (
+                          <div className="flex items-center justify-between gap-2 pt-1 border-t border-white/5">
+                            <span className="flex items-center gap-1.5 text-white font-semibold min-w-0">
+                              <span>🇺🇸</span>
+                              <span className="text-[10px] text-amber-400 font-bold shrink-0">Amazon US:</span>
+                              <span className="truncate font-mono text-[10px] text-gray-400">
+                                {item.geoLinks.US.url}
+                              </span>
+                            </span>
+                            <a
+                              href={item.geoLinks.US.url}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="text-amber-400 hover:underline shrink-0"
+                              title="Thử mở link Amazon US"
+                            >
+                              <ExternalLink className="w-3.5 h-3.5" />
+                            </a>
+                          </div>
                         )}
                       </div>
                     </div>
@@ -1300,16 +1347,115 @@ export default function AdminPage() {
                       </div>
                     </div>
 
-                    <div>
-                      <label className="block text-gray-300 font-bold mb-1">Đường dẫn Tiếp thị liên kết (Affiliate URL) (*):</label>
-                      <input
-                        type="url"
-                        required
-                        value={editingShopItem.affiliateUrl}
-                        onChange={(e) => setEditingShopItem({ ...editingShopItem, affiliateUrl: e.target.value })}
-                        placeholder="https://shopee.vn/... hoặc link tiếp thị rút gọn"
-                        className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs font-mono focus:outline-none focus:border-[#D4AF37]"
-                      />
+                    {/* Dynamic Multi-Market Geo Links */}
+                    <div className="bg-[#0B0D15] p-3.5 rounded-2xl border border-[#D4AF37]/30 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <label className="text-gray-200 font-bold flex items-center gap-1.5">
+                          <Sparkles className="w-3.5 h-3.5 text-[#D4AF37]" />
+                          <span>Link Tiếp thị liên kết theo Quốc gia (Dynamic Geo-Links):</span>
+                        </label>
+                        <span className="text-[10px] text-amber-400 font-semibold bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20">
+                          Tự động nhận diện User
+                        </span>
+                      </div>
+
+                      {/* VN */}
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-gray-300 font-semibold flex items-center gap-1.5">
+                            <span>🇻🇳</span>
+                            <span>Link Shopee (Việt Nam) (*):</span>
+                          </label>
+                          <span className="text-[10px] text-gray-500 font-mono">Hiển thị cho khách tại VN</span>
+                        </div>
+                        <input
+                          type="url"
+                          required
+                          value={
+                            editingShopItem.geoLinks?.VN?.url ||
+                            (editingShopItem.platform === "Shopee" ? editingShopItem.affiliateUrl : "")
+                          }
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setEditingShopItem({
+                              ...editingShopItem,
+                              affiliateUrl: val || editingShopItem.affiliateUrl,
+                              geoLinks: {
+                                ...editingShopItem.geoLinks,
+                                VN: {
+                                  platform: "Shopee",
+                                  url: val,
+                                },
+                              },
+                            });
+                          }}
+                          placeholder="https://s.shopee.vn/..."
+                          className="w-full bg-[#181B26] border border-gray-700 focus:border-[#D4AF37] rounded-xl px-3 py-2 text-white text-xs font-mono"
+                        />
+                      </div>
+
+                      {/* US */}
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-gray-300 font-semibold flex items-center gap-1.5">
+                            <span>🇺🇸</span>
+                            <span>Link Amazon (Mỹ & Toàn cầu):</span>
+                          </label>
+                          <span className="text-[10px] text-gray-500 font-mono">Hiển thị cho khách Quốc tế</span>
+                        </div>
+                        <input
+                          type="url"
+                          value={
+                            editingShopItem.geoLinks?.US?.url ||
+                            (editingShopItem.platform === "Amazon" ? editingShopItem.affiliateUrl : "")
+                          }
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setEditingShopItem({
+                              ...editingShopItem,
+                              geoLinks: {
+                                ...editingShopItem.geoLinks,
+                                US: {
+                                  platform: "Amazon",
+                                  url: val,
+                                },
+                              },
+                            });
+                          }}
+                          placeholder="https://www.amazon.com/..."
+                          className="w-full bg-[#181B26] border border-gray-700 focus:border-[#D4AF37] rounded-xl px-3 py-2 text-white text-xs font-mono"
+                        />
+                      </div>
+
+                      {/* EU */}
+                      <div>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-gray-300 font-semibold flex items-center gap-1.5">
+                            <span>🇪🇺</span>
+                            <span>Link Châu Âu (Tùy chọn - Unisport / Nike):</span>
+                          </label>
+                          <span className="text-[10px] text-gray-500 font-mono">Hiển thị cho khách Châu Âu</span>
+                        </div>
+                        <input
+                          type="url"
+                          value={editingShopItem.geoLinks?.EU?.url || ""}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setEditingShopItem({
+                              ...editingShopItem,
+                              geoLinks: {
+                                ...editingShopItem.geoLinks,
+                                EU: {
+                                  platform: "Unisport",
+                                  url: val,
+                                },
+                              },
+                            });
+                          }}
+                          placeholder="https://www.unisportstore.com/... hoặc để trống"
+                          className="w-full bg-[#181B26] border border-gray-700 focus:border-[#D4AF37] rounded-xl px-3 py-2 text-white text-xs font-mono"
+                        />
+                      </div>
                     </div>
 
                     <div>

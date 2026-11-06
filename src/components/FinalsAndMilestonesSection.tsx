@@ -207,7 +207,7 @@ export default function FinalsAndMilestonesSection() {
                         </div>
                       </div>
                       <a
-                        href={`https://shopee.vn/search?keyword=${encodeURIComponent(goal.gearTag.affiliateKeyword)}`}
+                        href={goal.gearTag.affiliateUrl || `https://shopee.vn/search?keyword=${encodeURIComponent(goal.gearTag.affiliateKeyword)}`}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="px-3 py-1.5 rounded-lg bg-[#222736] hover:bg-[#D4AF37] text-gray-200 hover:text-black text-xs font-bold transition-all flex items-center gap-1 shrink-0"
