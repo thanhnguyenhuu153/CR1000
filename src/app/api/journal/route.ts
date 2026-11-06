@@ -133,3 +133,37 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
 }
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const slug = searchParams.get("slug");
+
+    if (!id && !slug) {
+      return NextResponse.json({ error: "Missing id or slug" }, { status: 400 });
+    }
+
+    const supabase = getSupabaseServerClient();
+    if (!supabase) {
+      return NextResponse.json({ error: "Supabase not configured" }, { status: 400 });
+    }
+
+    let query = supabase.from("journal_articles").delete();
+    if (id) query = query.eq("id", id);
+    else if (slug) query = query.eq("slug", slug);
+
+    const { error } = await query;
+    if (error) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    revalidatePath("/road-to-1000");
+    if (slug) revalidatePath(`/road-to-1000/${slug}`);
+    revalidatePath("/sitemap.xml");
+
+    return NextResponse.json({ success: true, message: "Bài viết đã được xóa thành công!" });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message }, { status: 500 });
+  }
+}

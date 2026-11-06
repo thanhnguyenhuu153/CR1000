@@ -32,11 +32,24 @@ export default function RoadTo1000HubPage() {
   const { goals } = useSiteData();
   const isVi = language === "vi";
 
+  const [articles, setArticles] = useState<JournalArticle[]>(cr7JournalArticles);
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
 
   const remainingGoals = Math.max(0, 1000 - goals);
+
+  // Sync with Supabase API on load if available
+  useEffect(() => {
+    fetch("/api/journal")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.articles && Array.isArray(data.articles) && data.articles.length > 0) {
+          setArticles(data.articles);
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   // Dynamic document.title update
   useEffect(() => {
@@ -46,7 +59,7 @@ export default function RoadTo1000HubPage() {
   }, [isVi]);
 
   // Filtering articles
-  const filteredArticles = cr7JournalArticles.filter((article) => {
+  const filteredArticles = articles.filter((article) => {
     const matchesCategory =
       activeCategory === "all" || article.categorySlug === activeCategory;
     const q = searchQuery.toLowerCase().trim();
@@ -60,7 +73,7 @@ export default function RoadTo1000HubPage() {
     return matchesCategory && matchesSearch;
   });
 
-  const featuredArticle = cr7JournalArticles.find((a) => a.isFeatured) || cr7JournalArticles[0];
+  const featuredArticle = articles.find((a) => a.isFeatured) || articles[0];
 
   const handleShare = (slug: string, title: string) => {
     const url = `${window.location.origin}/road-to-1000/${slug}`;
@@ -84,7 +97,7 @@ export default function RoadTo1000HubPage() {
     url: "https://www.cr1000.live/road-to-1000",
     mainEntity: {
       "@type": "ItemList",
-      itemListElement: cr7JournalArticles.map((art, idx) => ({
+      itemListElement: articles.map((art, idx) => ({
         "@type": "ListItem",
         position: idx + 1,
         url: `https://www.cr1000.live/road-to-1000/${art.slug}`,

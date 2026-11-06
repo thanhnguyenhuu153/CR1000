@@ -27,14 +27,36 @@ import FloatingShareButton from "@/components/FloatingShareButton";
 import { useLanguage } from "@/context/LanguageContext";
 import { cr7JournalArticles, JournalArticle } from "@/data/cr7-journal";
 
-export default function ArticleClient({ slug }: { slug: string }) {
+export default function ArticleClient({
+  slug,
+  initialArticle,
+}: {
+  slug: string;
+  initialArticle?: JournalArticle;
+}) {
   const { language } = useLanguage();
   const isVi = language === "vi";
 
   const [copied, setCopied] = useState(false);
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [article, setArticle] = useState<JournalArticle | undefined>(
+    initialArticle || cr7JournalArticles.find((a) => a.slug === slug)
+  );
 
-  const article = cr7JournalArticles.find((a) => a.slug === slug);
+  // If not found in memory, try fetching from api
+  useEffect(() => {
+    if (!article) {
+      fetch("/api/journal")
+        .then((res) => res.json())
+        .then((data) => {
+          if (data?.articles) {
+            const found = data.articles.find((a: JournalArticle) => a.slug === slug);
+            if (found) setArticle(found);
+          }
+        })
+        .catch(() => {});
+    }
+  }, [article, slug]);
 
   useEffect(() => {
     if (article) {

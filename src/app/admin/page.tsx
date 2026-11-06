@@ -29,7 +29,9 @@ import {
   Send,
   X,
   Tag,
+  Newspaper,
 } from "lucide-react";
+import JournalManagerTab from "@/components/admin/JournalManagerTab";
 
 export default function AdminPage() {
   const {
@@ -51,7 +53,7 @@ export default function AdminPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loginError, setLoginError] = useState("");
-  const [activeTab, setActiveTab] = useState<"images" | "stats" | "fanvault" | "autopilot" | "export">("images");
+  const [activeTab, setActiveTab] = useState<"images" | "stats" | "journal" | "fanvault" | "autopilot" | "export">("images");
 
   // Local Form States
   const [imageForm, setImageForm] = useState<CustomImages>(images);
@@ -512,6 +514,18 @@ export default function AdminPage() {
           </button>
 
           <button
+            onClick={() => setActiveTab("journal")}
+            className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shrink-0 ${
+              activeTab === "journal"
+                ? "bg-[#D4AF37] text-black shadow-lg shadow-[#D4AF37]/20"
+                : "bg-[#141720] text-gray-300 hover:text-white"
+            }`}
+          >
+            <Newspaper className="w-4 h-4" />
+            <span>3. Nhật Ký 1000 Bàn (Bài Viết)</span>
+          </button>
+
+          <button
             onClick={() => setActiveTab("fanvault")}
             className={`px-4 py-2.5 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 transition-all shrink-0 ${
               activeTab === "fanvault"
@@ -520,7 +534,7 @@ export default function AdminPage() {
             }`}
           >
             <ShoppingBag className="w-4 h-4" />
-            <span>3. Kỷ vật Fan Vault & Affiliate</span>
+            <span>4. Kỷ vật Fan Vault & Affiliate</span>
             <span
               className={`px-2 py-0.5 rounded text-[10px] font-extrabold uppercase ${
                 showFanVault
@@ -545,7 +559,7 @@ export default function AdminPage() {
             }`}
           >
             <Sparkles className="w-4 h-4" />
-            <span>4. Auto-Pilot (Cấp độ 3)</span>
+            <span>5. Auto-Pilot (Cấp độ 3)</span>
           </button>
 
           <button
@@ -557,7 +571,7 @@ export default function AdminPage() {
             }`}
           >
             <Copy className="w-4 h-4" />
-            <span>5. Xuất Code lưu trữ</span>
+            <span>6. Xuất Code lưu trữ</span>
           </button>
         </div>
 
@@ -960,7 +974,10 @@ export default function AdminPage() {
           </form>
         )}
 
-        {/* TAB 3: FAN VAULT & AFFILIATE MANAGEMENT */}
+        {/* TAB 3: JOURNAL & ARTICLES MANAGEMENT */}
+        {activeTab === "journal" && <JournalManagerTab />}
+
+        {/* TAB 4: FAN VAULT & AFFILIATE MANAGEMENT */}
         {activeTab === "fanvault" && (
           <div className="space-y-8">
             {/* Master Publishing Control Banner */}
