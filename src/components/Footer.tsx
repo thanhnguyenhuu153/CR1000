@@ -71,6 +71,7 @@ export default function Footer() {
             <h4 className="text-xs font-bold uppercase tracking-wider text-white">{t.footer.exploreTitle}</h4>
             <ul className="space-y-2 text-xs">
               <li><Link href="/" className="hover:text-[#D4AF37] transition-colors">{t.nav.countdown}</Link></li>
+              <li><Link href="/road-to-1000" className="hover:text-[#D4AF37] transition-colors text-amber-300 font-bold flex items-center gap-1.5"><span className="text-[#D4AF37]">✦</span> {language === "vi" ? "Nhật Ký Đường Tới 1000 Bàn (Mới)" : "Road to 1,000 Journal (New)"}</Link></li>
               <li><Link href="/hat-tricks" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-semibold flex items-center gap-1.5"><span className="text-[#D4AF37]">✦</span> {language === "vi" ? "66+ Cú Hat-trick" : "66+ Hat-tricks"}</Link></li>
               <li><Link href="/trophies" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-semibold flex items-center gap-1.5"><span className="text-[#D4AF37]">✦</span> {language === "vi" ? "37 Chiếc Cúp & Danh Hiệu" : "37 Career Trophies"}</Link></li>
               <li><Link href="/free-kicks" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-semibold flex items-center gap-1.5"><span className="text-[#D4AF37]">✦</span> {language === "vi" ? "64+ Bàn Sút Phạt (Knuckleball)" : "64+ Free-kicks"}</Link></li>

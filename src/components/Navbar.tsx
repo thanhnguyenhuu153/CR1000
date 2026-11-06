@@ -45,11 +45,12 @@ export default function Navbar() {
 
   const navLinks = [
     { name: t.nav.countdown, href: "/#countdown" },
+    { name: language === "vi" ? "Nhật Ký 1000 Bàn" : "Road to 1,000", href: "/road-to-1000", isNew: true },
     { name: t.nav.journey, href: "/#bio" },
-    { name: t.nav.anatomy, href: "/#anatomy" },
     { name: t.nav.hattricks, href: "/hat-tricks" },
     { name: t.nav.trophies, href: "/trophies" },
     { name: language === "vi" ? "Sút Phạt" : "Free-kicks", href: "/free-kicks" },
+    { name: t.nav.anatomy, href: "/#anatomy" },
     { name: t.nav.opponents, href: "/#opponents" },
     { name: t.nav.archive, href: "/#archive" },
     ...(showFanVault ? [{ name: t.nav.shop, href: "/#shop" }] : []),
