@@ -1313,12 +1313,54 @@ export default function AdminPage() {
                     </div>
 
                     <div>
-                      <label className="block text-gray-300 font-bold mb-1">Đường dẫn hình ảnh sản phẩm (Image URL):</label>
+                      <div className="flex items-center justify-between mb-1">
+                        <label className="block text-gray-300 font-bold">Hình ảnh sản phẩm (Image URL hoặc Tải lên):</label>
+                        <label className="text-[11px] text-[#D4AF37] hover:underline cursor-pointer flex items-center gap-1 font-semibold">
+                          <ImageIcon className="w-3.5 h-3.5" />
+                          <span>Tải ảnh từ máy</span>
+                          <input
+                            type="file"
+                            accept="image/*"
+                            className="hidden"
+                            onChange={(e) => {
+                              const file = e.target.files?.[0];
+                              if (!file) return;
+                              const reader = new FileReader();
+                              reader.onload = (event) => {
+                                const img = new Image();
+                                img.onload = () => {
+                                  const canvas = document.createElement("canvas");
+                                  const maxDim = 800;
+                                  let w = img.width;
+                                  let h = img.height;
+                                  if (w > maxDim || h > maxDim) {
+                                    if (w > h) {
+                                      h = Math.round((h * maxDim) / w);
+                                      w = maxDim;
+                                    } else {
+                                      w = Math.round((w * maxDim) / h);
+                                      h = maxDim;
+                                    }
+                                  }
+                                  canvas.width = w;
+                                  canvas.height = h;
+                                  const ctx = canvas.getContext("2d");
+                                  ctx?.drawImage(img, 0, 0, w, h);
+                                  const base64 = canvas.toDataURL("image/jpeg", 0.85);
+                                  setEditingShopItem({ ...editingShopItem, image: base64 });
+                                };
+                                img.src = event.target?.result as string;
+                              };
+                              reader.readAsDataURL(file);
+                            }}
+                          />
+                        </label>
+                      </div>
                       <input
-                        type="url"
+                        type="text"
                         value={editingShopItem.image}
                         onChange={(e) => setEditingShopItem({ ...editingShopItem, image: e.target.value })}
-                        placeholder="https://images.unsplash.com/... hoặc /images/..."
+                        placeholder="https://images.unsplash.com/... hoặc bấm 'Tải ảnh từ máy'"
                         className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-white text-xs font-mono focus:outline-none focus:border-[#D4AF37]"
                       />
                       {editingShopItem.image && (
@@ -1328,7 +1370,7 @@ export default function AdminPage() {
                             alt="Preview"
                             className="w-12 h-12 rounded-lg object-cover border border-gray-700"
                             onError={(e) => {
-                              (e.target as any).src = "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop";
+                              (e.target as any).src = "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=600&auto=format&fit=crop";
                             }}
                           />
                           <span className="text-[11px] text-gray-400">Xem trước ảnh sản phẩm</span>

@@ -164,7 +164,17 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
         const savedShop = localStorage.getItem("cr1000_shop_items");
         if (savedShop) {
           const parsed = JSON.parse(savedShop);
-          if (Array.isArray(parsed) && parsed.length > 0) setShopItems(parsed);
+          if (Array.isArray(parsed) && parsed.length > 0) {
+            const existingIds = new Set(parsed.map((p: any) => p.id));
+            const missing = defaultShopItems.filter((d) => !existingIds.has(d.id));
+            if (missing.length > 0) {
+              const merged = [...parsed, ...missing];
+              setShopItems(merged);
+              localStorage.setItem("cr1000_shop_items", JSON.stringify(merged));
+            } else {
+              setShopItems(parsed);
+            }
+          }
         }
 
         const savedNextMatch = localStorage.getItem("cr1000_next_match");
