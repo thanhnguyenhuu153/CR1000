@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -23,6 +23,8 @@ import {
   X,
   HelpCircle,
   Check,
+  Upload,
+  ImageIcon,
 } from "lucide-react";
 import { JournalArticle, cr7JournalArticles } from "@/data/cr7-journal";
 
@@ -41,6 +43,59 @@ export default function JournalManagerTab() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingArticle, setEditingArticle] = useState<JournalArticle | null>(null);
   const [saving, setSaving] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [uploadingImage, setUploadingImage] = useState(false);
+
+  // Preset Iconic CR7 Images
+  const imagePresets = [
+    { label: "Bồ Đào Nha (Tuyển)", url: "/images/cr7/era-portugal.jpg" },
+    { label: "Cúp Nations League 2025", url: "/images/cr7/final-nations-league-2025.jpeg" },
+    { label: "Hat-trick Solna 2013", url: "/images/cr7/iconic-sweden-playoff.jpeg" },
+    { label: "Sút phạt TBN 2018", url: "/images/cr7/iconic-freekick-spain.webp" },
+    { label: "Al Nassr", url: "/images/cr7/era-alnassr.jpg" },
+    { label: "Real Madrid", url: "/images/cr7/era-realmadrid.jpg" },
+    { label: "Chân dung Hero CR7", url: "/images/cr7/hero-cr7.jpg" },
+  ];
+
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      notify("Vui lòng chọn file hình ảnh hợp lệ (jpg, png, webp)!", "error");
+      return;
+    }
+
+    setUploadingImage(true);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new window.Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxWidth = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.82);
+          setFormData((prev) => ({ ...prev, coverImage: compressedDataUrl }));
+          notify(`Đã nạp ảnh thành công (${Math.round((compressedDataUrl.length * 3) / 4 / 1024)} KB)!`);
+        }
+        setUploadingImage(false);
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Form Fields
   const [formData, setFormData] = useState<Partial<JournalArticle>>({
@@ -608,16 +663,76 @@ export default function JournalManagerTab() {
                   />
                 </div>
 
-                {/* Cover Image */}
-                <div className="space-y-1.5">
-                  <label className="text-xs font-bold text-gray-300">Ảnh bìa (Đường dẫn)</label>
-                  <input
-                    type="text"
-                    value={formData.coverImage || ""}
-                    onChange={(e) => setFormData((prev) => ({ ...prev, coverImage: e.target.value }))}
-                    placeholder="/images/cr7/era-alnassr.jpg hoặc https://..."
-                    className="w-full px-4 py-2.5 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
-                  />
+                {/* Cover Image Upload & Selection */}
+                <div className="space-y-2 sm:col-span-2 p-3.5 rounded-2xl bg-[#0F121D] border border-gray-800">
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                    <label className="text-xs font-bold text-gray-200 flex items-center gap-1.5">
+                      <ImageIcon className="w-4 h-4 text-[#D4AF37]" />
+                      <span>Ảnh bìa bài viết (Cover Image)</span>
+                    </label>
+
+                    {/* Hidden file input for direct upload */}
+                    <input
+                      type="file"
+                      ref={fileInputRef}
+                      accept="image/*"
+                      onChange={handleImageUpload}
+                      className="hidden"
+                    />
+
+                    <button
+                      type="button"
+                      disabled={uploadingImage}
+                      onClick={() => fileInputRef.current?.click()}
+                      className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#D4AF37] hover:bg-[#F59E0B] text-black font-extrabold text-xs transition-all shadow-md cursor-pointer disabled:opacity-50"
+                    >
+                      <Upload className="w-3.5 h-3.5" />
+                      <span>{uploadingImage ? "Đang xử lý ảnh..." : "Tải ảnh mới từ máy / điện thoại"}</span>
+                    </button>
+                  </div>
+
+                  {/* Image Preview & URL Row */}
+                  <div className="flex items-center gap-3 pt-1">
+                    <div className="relative w-24 h-16 rounded-xl overflow-hidden border border-white/10 shrink-0 bg-black">
+                      <Image
+                        src={formData.coverImage || "/images/cr7/hero-cr7.jpg"}
+                        alt="Cover Preview"
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex-1 space-y-1">
+                      <input
+                        type="text"
+                        value={formData.coverImage || ""}
+                        onChange={(e) => setFormData((prev) => ({ ...prev, coverImage: e.target.value }))}
+                        placeholder="/images/cr7/era-alnassr.jpg hoặc https://..."
+                        className="w-full px-3 py-1.5 rounded-xl bg-[#141724] border border-gray-800 text-xs font-mono text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                      />
+                      <span className="text-[10px] text-gray-500 block">
+                        Có thể tải ảnh lên từ thiết bị, chọn nhanh từ thư viện bên dưới hoặc dán link ảnh tùy ý:
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* Preset Iconic Thumbnails */}
+                  <div className="flex flex-wrap items-center gap-1.5 pt-2 border-t border-gray-800/60">
+                    <span className="text-[10px] text-gray-400 font-bold uppercase mr-1">Gợi ý nhanh:</span>
+                    {imagePresets.map((preset, pIdx) => (
+                      <button
+                        key={pIdx}
+                        type="button"
+                        onClick={() => setFormData((prev) => ({ ...prev, coverImage: preset.url }))}
+                        className={`px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition-all cursor-pointer ${
+                          formData.coverImage === preset.url
+                            ? "bg-[#D4AF37] text-black border-[#D4AF37] font-bold"
+                            : "bg-[#141724] text-gray-300 border-gray-800 hover:text-white hover:bg-gray-800"
+                        }`}
+                      >
+                        {preset.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
 
