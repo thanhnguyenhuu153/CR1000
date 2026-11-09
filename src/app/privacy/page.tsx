@@ -13,8 +13,31 @@ export const metadata: Metadata = {
 };
 
 export default function PrivacyPolicyPage() {
+  const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Trang Chủ",
+        item: "https://www.cr1000.live",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Chính Sách Bảo Mật",
+        item: "https://www.cr1000.live/privacy",
+      },
+    ],
+  };
+
   return (
     <main className="min-h-screen bg-[#08090C] text-[#F8FAFC] py-20 px-4 sm:px-6 lg:px-8 relative selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+      />
       <div className="max-w-4xl mx-auto">
         {/* Back Button */}
         <div className="mb-10">

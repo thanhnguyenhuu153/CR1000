@@ -84,6 +84,17 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     alternates: {
       canonical: url,
     },
+    robots: {
+      index: true,
+      follow: true,
+      googleBot: {
+        index: true,
+        follow: true,
+        "max-video-preview": -1,
+        "max-image-preview": "large",
+        "max-snippet": -1,
+      },
+    },
     openGraph: {
       title: article.titleVi,
       description: article.excerptVi,
@@ -119,5 +130,89 @@ export default async function Page({ params }: PageProps) {
     notFound();
   }
 
-  return <ArticleClient slug={slug} initialArticle={article} />;
+  const articleUrl = `https://www.cr1000.live/road-to-1000/${article.slug}`;
+
+  // Server-rendered structured data for instant Google Search & Discover crawling
+  const ssrSchema = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: "Trang Chủ",
+            item: "https://www.cr1000.live",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: "Nhật Ký 1000 Bàn",
+            item: "https://www.cr1000.live/road-to-1000",
+          },
+          {
+            "@type": "ListItem",
+            position: 3,
+            name: article.titleVi,
+            item: articleUrl,
+          },
+        ],
+      },
+      {
+        "@type": "NewsArticle",
+        "@id": `${articleUrl}#article`,
+        isPartOf: {
+          "@type": "WebPage",
+          "@id": articleUrl,
+          url: articleUrl,
+          name: article.titleVi,
+        },
+        headline: article.titleVi,
+        description: article.excerptVi,
+        image: `https://www.cr1000.live${article.coverImage}`,
+        datePublished: `${article.publishedDate}T08:00:00+07:00`,
+        dateModified: `${article.publishedDate}T12:00:00+07:00`,
+        author: {
+          "@type": "Organization",
+          name: article.author,
+          url: "https://www.cr1000.live",
+        },
+        publisher: {
+          "@type": "Organization",
+          name: "CR1000 Digital Museum",
+          logo: {
+            "@type": "ImageObject",
+            url: "https://www.cr1000.live/images/cr7/og-share.jpg",
+          },
+        },
+        mainEntityOfPage: articleUrl,
+      },
+      ...(article.faqsVi && article.faqsVi.length > 0
+        ? [
+            {
+              "@type": "FAQPage",
+              mainEntity: article.faqsVi.map((f) => ({
+                "@type": "Question",
+                name: f.question,
+                acceptedAnswer: {
+                  "@type": "Answer",
+                  text: f.answer,
+                },
+              })),
+            },
+          ]
+        : []),
+    ],
+  };
+
+  return (
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ssrSchema) }}
+      />
+      <ArticleClient slug={slug} initialArticle={article} />
+    </>
+  );
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { cr7CareerSummary } from "@/data/cr7-stats";
+import { submitToIndexNow } from "@/lib/indexnow";
 
 export const dynamic = "force-dynamic";
 
@@ -88,6 +89,14 @@ export async function POST(request: Request) {
         gitOpsCommitStatus = "error_connecting_github";
       }
     }
+
+    // Ping IndexNow network immediately so search engines update the live goal count
+    submitToIndexNow([
+      "https://www.cr1000.live",
+      "https://www.cr1000.live/road-to-1000",
+      "https://www.cr1000.live/hat-tricks",
+      "https://www.cr1000.live/free-kicks",
+    ]).catch(() => {});
 
     return NextResponse.json({
       status: "success",

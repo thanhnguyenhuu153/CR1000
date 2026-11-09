@@ -1,11 +1,37 @@
 import type { MetadataRoute } from "next";
 import { cr7JournalArticles } from "@/data/cr7-journal";
+import { getSupabaseServerClient } from "@/lib/supabase";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.cr1000.live";
   const now = new Date();
 
-  const articleUrls: MetadataRoute.Sitemap = cr7JournalArticles.map((art) => ({
+  // Load live articles from Supabase with fallback to local code
+  let articles = cr7JournalArticles;
+  try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data } = await supabase
+        .from("journal_articles")
+        .select("slug, published_date, is_featured")
+        .order("published_date", { ascending: false });
+
+      if (data && data.length > 0) {
+        const dbSlugs = new Set(data.map((d: any) => d.slug));
+        const missingLocal = cr7JournalArticles.filter((a) => !dbSlugs.has(a.slug));
+        articles = [
+          ...data.map((d: any) => ({
+            slug: d.slug,
+            publishedDate: d.published_date,
+            isFeatured: Boolean(d.is_featured),
+          })),
+          ...missingLocal,
+        ] as any;
+      }
+    }
+  } catch (e) {}
+
+  const articleUrls: MetadataRoute.Sitemap = articles.map((art) => ({
     url: `${baseUrl}/road-to-1000/${art.slug}`,
     lastModified: new Date(`${art.publishedDate}T12:00:00Z`),
     changeFrequency: "daily",

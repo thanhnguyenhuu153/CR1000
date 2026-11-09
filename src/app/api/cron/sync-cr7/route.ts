@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { cr7CareerSummary } from "@/data/cr7-stats";
 import { runAutonomousJournalist } from "@/lib/gemini-journalist";
+import { submitToIndexNow } from "@/lib/indexnow";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +31,12 @@ export async function GET(request: Request) {
   } catch (e: any) {
     journalistResult = { status: "error", error: e.message };
   }
+
+  // Notify search engines of live count & data updates via IndexNow
+  submitToIndexNow([
+    "https://www.cr1000.live",
+    "https://www.cr1000.live/road-to-1000",
+  ]).catch(() => {});
 
   const syncResult = {
     timestamp: new Date().toISOString(),

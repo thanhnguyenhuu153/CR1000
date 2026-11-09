@@ -66,6 +66,22 @@ export const metadata: Metadata = {
       "Thống kê chi tiết, 66+ hattrick, các bàn thắng chung kết và kho lưu trữ bàn thắng của Cristiano Ronaldo.",
     images: ["/images/cr7/og-share.jpg"],
   },
+  alternates: {
+    canonical: "https://www.cr1000.live",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: false,
+    googleBot: {
+      index: true,
+      follow: true,
+      noimageindex: false,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function RootLayout({

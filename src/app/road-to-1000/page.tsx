@@ -85,24 +85,45 @@ export default function RoadTo1000HubPage() {
     }
   };
 
-  // Structured Data Schema.org
-  const collectionSchema = {
+  // Structured Data Schema.org with BreadcrumbList & CollectionPage
+  const hubSchema = {
     "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    name: isVi ? "Nhật Ký Đường Tới 1.000 Bàn Thắng — CR7" : "Road to 1,000 Goals Journal — CR7",
-    description: isVi
-      ? "Chuyên mục phân tích số liệu, tin tức bước ngoặt và nhật ký từng bước chân của Cristiano Ronaldo tiến về cột mốc 1.000 bàn thắng lịch sử."
-      : "In-depth sports analytics, breaking milestones, and comprehensive match journals chronicling Cristiano Ronaldo's sprint to 1,000 career goals.",
-    url: "https://www.cr1000.live/road-to-1000",
-    mainEntity: {
-      "@type": "ItemList",
-      itemListElement: articles.map((art, idx) => ({
-        "@type": "ListItem",
-        position: idx + 1,
-        url: `https://www.cr1000.live/road-to-1000/${art.slug}`,
-        name: isVi ? art.titleVi : art.titleEn,
-      })),
-    },
+    "@graph": [
+      {
+        "@type": "BreadcrumbList",
+        itemListElement: [
+          {
+            "@type": "ListItem",
+            position: 1,
+            name: isVi ? "Trang Chủ" : "Home",
+            item: "https://www.cr1000.live",
+          },
+          {
+            "@type": "ListItem",
+            position: 2,
+            name: isVi ? "Nhật Ký Đường Tới 1.000 Bàn Thắng" : "Road to 1,000 Goals Journal",
+            item: "https://www.cr1000.live/road-to-1000",
+          },
+        ],
+      },
+      {
+        "@type": "CollectionPage",
+        name: isVi ? "Nhật Ký Đường Tới 1.000 Bàn Thắng — CR7" : "Road to 1,000 Goals Journal — CR7",
+        description: isVi
+          ? "Chuyên mục phân tích số liệu, tin tức bước ngoặt và nhật ký từng bước chân của Cristiano Ronaldo tiến về cột mốc 1.000 bàn thắng lịch sử."
+          : "In-depth sports analytics, breaking milestones, and comprehensive match journals chronicling Cristiano Ronaldo's sprint to 1,000 career goals.",
+        url: "https://www.cr1000.live/road-to-1000",
+        mainEntity: {
+          "@type": "ItemList",
+          itemListElement: articles.map((art, idx) => ({
+            "@type": "ListItem",
+            position: idx + 1,
+            url: `https://www.cr1000.live/road-to-1000/${art.slug}`,
+            name: isVi ? art.titleVi : art.titleEn,
+          })),
+        },
+      },
+    ],
   };
 
   return (
@@ -110,7 +131,7 @@ export default function RoadTo1000HubPage() {
       {/* Schema.org Injection */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(hubSchema) }}
       />
 
       <Navbar />

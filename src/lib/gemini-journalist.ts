@@ -1,5 +1,6 @@
 import { getSupabaseServerClient } from "./supabase";
 import { revalidatePath } from "next/cache";
+import { submitToIndexNow } from "./indexnow";
 
 interface AutoGenerateResult {
   status: "published" | "skipped" | "error";
@@ -188,6 +189,13 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     revalidatePath("/road-to-1000");
     revalidatePath(`/road-to-1000/${payload.slug}`);
     revalidatePath("/sitemap.xml");
+
+    // IndexNow instant search engine notification
+    submitToIndexNow([
+      `https://www.cr1000.live/road-to-1000/${payload.slug}`,
+      "https://www.cr1000.live/road-to-1000",
+      "https://www.cr1000.live",
+    ]).catch(() => {});
 
     return {
       status: "published",

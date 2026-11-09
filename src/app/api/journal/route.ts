@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { getSupabaseServerClient } from "@/lib/supabase";
 import { cr7JournalArticles, JournalArticle } from "@/data/cr7-journal";
+import { submitToIndexNow } from "@/lib/indexnow";
 
 export async function GET() {
   try {
@@ -125,6 +126,13 @@ export async function POST(req: NextRequest) {
     revalidatePath("/road-to-1000");
     revalidatePath(`/road-to-1000/${article.slug}`);
     revalidatePath("/sitemap.xml");
+
+    // IndexNow Real-time Search Engine Notification
+    submitToIndexNow([
+      `https://www.cr1000.live/road-to-1000/${article.slug}`,
+      "https://www.cr1000.live/road-to-1000",
+      "https://www.cr1000.live",
+    ]).catch(() => {});
 
     return NextResponse.json({
       success: true,
