@@ -1,7 +1,7 @@
 "use client";
 
 import React, { createContext, useContext, useState, useEffect } from "react";
-import { cr7CareerSummary } from "@/data/cr7-stats";
+import { cr7CareerSummary, getUpcomingNextMatch } from "@/data/cr7-stats";
 import { cr7BioMilestones, BioMilestone } from "@/data/cr7-bio";
 import { cr7Trophies, TrophyItem } from "@/data/cr7-trophies";
 import { cr7ShopItems as defaultShopItems, ShopItem } from "@/data/cr7-shop";
@@ -132,6 +132,7 @@ interface SiteDataContextType {
   saveShopItems: (items: ShopItem[]) => void;
   nextMatch: typeof cr7CareerSummary.nextMatch;
   updateNextMatch: (match: Partial<typeof cr7CareerSummary.nextMatch>) => void;
+  resetNextMatchToSchedule: () => void;
   showFanVault: boolean;
   setShowFanVault: (val: boolean) => void;
 }
@@ -219,7 +220,24 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
         const savedNextMatch = localStorage.getItem("cr1000_next_match");
         if (savedNextMatch) {
           const parsed = JSON.parse(savedNextMatch);
-          setNextMatchState((prev) => ({ ...prev, ...parsed }));
+          // Check if saved match is stale / expired
+          const isStale =
+            !parsed ||
+            !parsed.awayTeam ||
+            parsed.awayTeam === "Al Shabab" ||
+            (parsed.kickoffTime && parsed.kickoffTime.includes("2026-11-08")) ||
+            (parsed.kickoffIso && new Date(parsed.kickoffIso).getTime() + 2.5 * 3600 * 1000 < Date.now());
+
+          if (isStale) {
+            const freshMatch = getUpcomingNextMatch("vi");
+            setNextMatchState(freshMatch);
+            localStorage.setItem("cr1000_next_match", JSON.stringify(freshMatch));
+          } else {
+            setNextMatchState((prev) => ({ ...prev, ...parsed }));
+          }
+        } else {
+          const freshMatch = getUpcomingNextMatch("vi");
+          setNextMatchState(freshMatch);
         }
 
         const savedShowFanVault = localStorage.getItem("cr1000_show_fan_vault");
@@ -309,6 +327,14 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
     });
   };
 
+  const resetNextMatchToSchedule = () => {
+    const fresh = getUpcomingNextMatch("vi");
+    setNextMatchState(fresh);
+    try {
+      localStorage.setItem("cr1000_next_match", JSON.stringify(fresh));
+    } catch (e) {}
+  };
+
   const setShowFanVault = (val: boolean) => {
     setShowFanVaultState(val);
     try {
@@ -328,6 +354,7 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
         saveShopItems,
         nextMatch,
         updateNextMatch,
+        resetNextMatchToSchedule,
         showFanVault,
         setShowFanVault,
       }}

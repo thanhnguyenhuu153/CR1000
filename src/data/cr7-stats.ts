@@ -16,6 +16,7 @@ export interface CR7CareerSummary {
     awayLogo?: string;
     stadium: string;
     kickoffTime: string;
+    kickoffIso?: string;
     note: string;
   };
   teamBreakdown: {
@@ -58,6 +59,108 @@ export interface CR7CareerSummary {
   }[];
 }
 
+export interface CR7Fixture {
+  id: string;
+  competition: string;
+  competitionEn: string;
+  homeTeam: string;
+  awayTeam: string;
+  stadium: string;
+  stadiumEn: string;
+  kickoffTime: string;
+  kickoffIso: string;
+  noteVi: string;
+  noteEn: string;
+}
+
+export const cr7UpcomingFixtures: CR7Fixture[] = [
+  {
+    id: "spl-2026-11-20-al-qadsiah",
+    competition: "Saudi Pro League (Vòng 14)",
+    competitionEn: "Saudi Pro League (Matchday 14)",
+    homeTeam: "Al Nassr",
+    awayTeam: "Al-Qadsiah",
+    stadium: "Al Awwal Park, Riyadh",
+    stadiumEn: "Al Awwal Park, Riyadh",
+    kickoffTime: "2026-11-20 20:00 (GMT+3)",
+    kickoffIso: "2026-11-20T17:00:00Z",
+    noteVi: "00:00 21/11 (VN) • Săn bàn thắng chính thức thứ 986!",
+    noteEn: "Pursuing official career goal #986!",
+  },
+  {
+    id: "acl-2026-11-24-al-sadd",
+    competition: "AFC Champions League Elite",
+    competitionEn: "AFC Champions League Elite",
+    homeTeam: "Al Nassr",
+    awayTeam: "Al-Sadd",
+    stadium: "Al Awwal Park, Riyadh",
+    stadiumEn: "Al Awwal Park, Riyadh",
+    kickoffTime: "2026-11-24 21:15 (GMT+3)",
+    kickoffIso: "2026-11-24T18:15:00Z",
+    noteVi: "01:15 25/11 (VN) • Vòng bảng AFC Champions League Elite",
+    noteEn: "AFC Champions League Elite matchday",
+  },
+  {
+    id: "spl-2026-11-29-al-khaleej",
+    competition: "Saudi Pro League (Vòng 15)",
+    competitionEn: "Saudi Pro League (Matchday 15)",
+    homeTeam: "Al-Khaleej",
+    awayTeam: "Al Nassr",
+    stadium: "Prince Mohamed bin Fahd Stadium, Dammam",
+    stadiumEn: "Prince Mohamed bin Fahd Stadium, Dammam",
+    kickoffTime: "2026-11-29 17:30 (GMT+3)",
+    kickoffIso: "2026-11-29T14:30:00Z",
+    noteVi: "21:30 29/11 (VN) • Chuyến làm khách tại Dammam",
+    noteEn: "Away match at Dammam",
+  },
+  {
+    id: "acl-2026-12-02-al-gharafa",
+    competition: "AFC Champions League Elite",
+    competitionEn: "AFC Champions League Elite",
+    homeTeam: "Al-Gharafa",
+    awayTeam: "Al Nassr",
+    stadium: "Al Bayt Stadium, Al Khor",
+    stadiumEn: "Al Bayt Stadium, Al Khor",
+    kickoffTime: "2026-12-02 19:00 (GMT+3)",
+    kickoffIso: "2026-12-02T16:00:00Z",
+    noteVi: "23:00 02/12 (VN) • Cúp C1 châu Á",
+    noteEn: "AFC Champions League Elite",
+  },
+  {
+    id: "spl-2026-12-06-al-ittihad",
+    competition: "Saudi Pro League (Vòng 16)",
+    competitionEn: "Saudi Pro League (Matchday 16)",
+    homeTeam: "Al Nassr",
+    awayTeam: "Al-Ittihad",
+    stadium: "Al Awwal Park, Riyadh",
+    stadiumEn: "Al Awwal Park, Riyadh",
+    kickoffTime: "2026-12-06 20:00 (GMT+3)",
+    kickoffIso: "2026-12-06T17:00:00Z",
+    noteVi: "00:00 07/12 (VN) • Siêu kinh điển Saudi: CR7 vs Benzema",
+    noteEn: "Saudi Superclasico: CR7 vs Benzema",
+  },
+];
+
+export function getUpcomingNextMatch(lang: "vi" | "en" = "vi", refDate?: Date) {
+  const now = (refDate || new Date()).getTime();
+  // Find fixture where kickoff time + 2.5 hours is still in the future
+  const upcoming = cr7UpcomingFixtures.find((fix) => {
+    const kickoffMs = new Date(fix.kickoffIso).getTime();
+    return kickoffMs + 2.5 * 3600 * 1000 > now;
+  });
+
+  const selected = upcoming || cr7UpcomingFixtures[0];
+  return {
+    competition: lang === "vi" ? selected.competition : selected.competitionEn,
+    homeTeam: selected.homeTeam,
+    awayTeam: selected.awayTeam,
+    stadium: lang === "vi" ? selected.stadium : selected.stadiumEn,
+    kickoffTime: selected.kickoffTime,
+    kickoffIso: selected.kickoffIso,
+    note: lang === "vi" ? selected.noteVi : selected.noteEn,
+  };
+}
+
 export const cr7CareerSummaryVi: CR7CareerSummary = {
   totalGoals: 985,
   countdownTarget: 1000,
@@ -68,12 +171,13 @@ export const cr7CareerSummaryVi: CR7CareerSummary = {
   minutesPerGoal: 111.8,
   minutesPerContribution: 88.8,
   nextMatch: {
-    competition: "Saudi Pro League / AFC Champions League",
+    competition: "Saudi Pro League (Vòng 14)",
     homeTeam: "Al Nassr",
-    awayTeam: "Al Shabab",
+    awayTeam: "Al-Qadsiah",
     stadium: "Al Awwal Park, Riyadh",
-    kickoffTime: "2026-11-08 20:00 (GMT+3)",
-    note: "Săn bàn thắng chính thức thứ 986!",
+    kickoffTime: "2026-11-20 20:00 (GMT+3)",
+    kickoffIso: "2026-11-20T17:00:00Z",
+    note: "00:00 21/11 (VN) • Săn bàn thắng chính thức thứ 986!",
   },
   teamBreakdown: [
     {
@@ -289,11 +393,12 @@ export const cr7CareerSummaryEn: CR7CareerSummary = {
   minutesPerGoal: 111.8,
   minutesPerContribution: 88.8,
   nextMatch: {
-    competition: "Saudi Pro League / AFC Champions League",
+    competition: "Saudi Pro League (Matchday 14)",
     homeTeam: "Al Nassr",
-    awayTeam: "Al Shabab",
+    awayTeam: "Al-Qadsiah",
     stadium: "Al Awwal Park, Riyadh",
-    kickoffTime: "2026-11-08 20:00 (GMT+3)",
+    kickoffTime: "2026-11-20 20:00 (GMT+3)",
+    kickoffIso: "2026-11-20T17:00:00Z",
     note: "Pursuing official career goal #986!",
   },
   teamBreakdown: [
@@ -501,7 +606,11 @@ export const cr7CareerSummaryEn: CR7CareerSummary = {
 };
 
 export const getCr7CareerSummary = (lang: "vi" | "en"): CR7CareerSummary => {
-  return lang === "en" ? cr7CareerSummaryEn : cr7CareerSummaryVi;
+  const base = lang === "en" ? cr7CareerSummaryEn : cr7CareerSummaryVi;
+  return {
+    ...base,
+    nextMatch: getUpcomingNextMatch(lang),
+  };
 };
 
 // Default export for backwards compatibility

@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cr7CareerSummary } from "@/data/cr7-stats";
+import { cr7CareerSummary, getUpcomingNextMatch } from "@/data/cr7-stats";
 import { cr7HattrickStats } from "@/data/cr7-hattricks";
 import { cr7TrophySummary } from "@/data/cr7-trophies";
 
@@ -24,7 +24,7 @@ export async function GET() {
     minutesPerGoal: cr7CareerSummary.minutesPerGoal,
     hattricks: cr7HattrickStats,
     trophies: cr7TrophySummary,
-    nextMatch: cr7CareerSummary.nextMatch,
+    nextMatch: getUpcomingNextMatch("vi"),
     verification: "FIFA, UEFA, IFFHS & RSSSF Certified",
   }, {
     headers: {

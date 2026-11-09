@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { useSiteData, defaultImages, CustomImages } from "@/context/SiteDataContext";
+import { cr7UpcomingFixtures, getUpcomingNextMatch, CR7Fixture } from "@/data/cr7-stats";
 import { ShopItem, cr7ShopItems as defaultShopItems } from "@/data/cr7-shop";
 import {
   Lock,
@@ -44,6 +45,7 @@ export default function AdminPage() {
     saveShopItems,
     nextMatch,
     updateNextMatch,
+    resetNextMatchToSchedule,
     showFanVault,
     setShowFanVault,
   } = useSiteData();
@@ -72,7 +74,7 @@ export default function AdminPage() {
   const [cronLoading, setCronLoading] = useState(false);
   const [cronResponse, setCronResponse] = useState<any>(null);
   const [webhookGoals, setWebhookGoals] = useState("986");
-  const [webhookMatch, setWebhookMatch] = useState("Al Nassr vs Al Feiha");
+  const [webhookMatch, setWebhookMatch] = useState("Al Nassr vs Al-Qadsiah");
   const [webhookLoading, setWebhookLoading] = useState(false);
   const [webhookResult, setWebhookResult] = useState<any>(null);
 
@@ -205,6 +207,12 @@ export default function AdminPage() {
     }
   };
 
+  useEffect(() => {
+    if (nextMatch) {
+      setMatchForm(nextMatch);
+    }
+  }, [nextMatch]);
+
   const handleSaveStats = (e: React.FormEvent) => {
     e.preventDefault();
     const val = parseInt(goalsInput, 10);
@@ -213,6 +221,30 @@ export default function AdminPage() {
     }
     updateNextMatch(matchForm);
     setSaveNotification("Đã cập nhật số bàn thắng và trận đấu tiếp theo!");
+    setTimeout(() => setSaveNotification(""), 3500);
+  };
+
+  const handleAutoSyncFixture = () => {
+    const fresh = getUpcomingNextMatch("vi");
+    setMatchForm(fresh);
+    updateNextMatch(fresh);
+    setSaveNotification(`⚡ Đã tự động đồng bộ lịch mới nhất: ${fresh.homeTeam} vs ${fresh.awayTeam} (${fresh.kickoffTime})`);
+    setTimeout(() => setSaveNotification(""), 4000);
+  };
+
+  const handleSelectFixture = (fix: CR7Fixture) => {
+    const selected = {
+      competition: fix.competition,
+      homeTeam: fix.homeTeam,
+      awayTeam: fix.awayTeam,
+      stadium: fix.stadium,
+      kickoffTime: fix.kickoffTime,
+      kickoffIso: fix.kickoffIso,
+      note: fix.noteVi,
+    };
+    setMatchForm(selected);
+    updateNextMatch(selected);
+    setSaveNotification(`✅ Đã chọn trận đấu: ${fix.homeTeam} vs ${fix.awayTeam} (${fix.kickoffTime})`);
     setTimeout(() => setSaveNotification(""), 3500);
   };
 
@@ -928,10 +960,54 @@ export default function AdminPage() {
               </div>
             </div>
 
-            <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-4">
-              <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
-                Thông Tin Trận Đấu Sắp Tới
-              </h3>
+            <div className="bg-[#11131C] border border-gray-800 rounded-2xl p-6 space-y-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-gray-800">
+                <div>
+                  <h3 className="text-sm font-bold text-white uppercase tracking-wider text-[#D4AF37]">
+                    Thông Tin Trận Đấu Sắp Tới
+                  </h3>
+                  <p className="text-[11px] text-gray-400 mt-0.5">
+                    Hệ thống tự động lăn bánh theo thời gian thực hoặc bạn có thể chọn nhanh trận đấu bên dưới.
+                  </p>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleAutoSyncFixture}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-[#D4AF37]/15 border border-[#D4AF37]/30 text-xs font-bold text-[#D4AF37] hover:bg-[#D4AF37]/25 transition-colors shrink-0"
+                  title="Tự động đồng bộ trận đấu tiếp theo theo lịch thi đấu chính thức"
+                >
+                  <Sparkles className="w-3.5 h-3.5" />
+                  Đồng bộ lịch mới nhất (Auto-Sync)
+                </button>
+              </div>
+
+              {/* Quick Select Fixture Pills */}
+              <div className="space-y-2">
+                <span className="text-[11px] font-semibold text-gray-400 block uppercase tracking-wider">
+                  Chọn nhanh từ lịch thi đấu Al Nassr sắp tới:
+                </span>
+                <div className="flex flex-wrap gap-2">
+                  {cr7UpcomingFixtures.map((fix) => {
+                    const isSelected = matchForm.awayTeam === fix.awayTeam;
+                    return (
+                      <button
+                        key={fix.id}
+                        type="button"
+                        onClick={() => handleSelectFixture(fix)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-medium border transition-all text-left ${
+                          isSelected
+                            ? "bg-[#D4AF37] text-black border-[#D4AF37] font-bold shadow-md shadow-[#D4AF37]/20"
+                            : "bg-[#181B26] text-gray-300 border-gray-700 hover:border-[#D4AF37]/50 hover:text-white"
+                        }`}
+                      >
+                        <span className="font-bold">{fix.homeTeam} vs {fix.awayTeam}</span>
+                        <span className="ml-1.5 opacity-80 text-[10px]">({fix.kickoffTime.split(" ")[0]})</span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
               <div className="grid grid-cols-2 gap-4">
                 <div>
                   <label className="block text-xs font-semibold text-gray-300 mb-1">Đội nhà:</label>
@@ -979,6 +1055,17 @@ export default function AdminPage() {
                   type="text"
                   value={matchForm.kickoffTime}
                   onChange={(e) => setMatchForm({ ...matchForm, kickoffTime: e.target.value })}
+                  className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-semibold text-gray-300 mb-1">Ghi chú trận đấu / Mục tiêu:</label>
+                <input
+                  type="text"
+                  value={matchForm.note || ""}
+                  onChange={(e) => setMatchForm({ ...matchForm, note: e.target.value })}
+                  placeholder="Ví dụ: Săn bàn thắng chính thức thứ 986!"
                   className="w-full bg-[#181B26] border border-gray-700 rounded-xl px-3 py-2 text-xs text-white"
                 />
               </div>

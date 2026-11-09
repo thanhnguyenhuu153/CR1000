@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { cr7CareerSummary } from "@/data/cr7-stats";
+import { cr7CareerSummary, getUpcomingNextMatch } from "@/data/cr7-stats";
 import { runAutonomousJournalist } from "@/lib/gemini-journalist";
 import { submitToIndexNow } from "@/lib/indexnow";
 
@@ -45,7 +45,7 @@ export async function GET(request: Request) {
     currentOfficialGoals: cr7CareerSummary.totalGoals,
     target: cr7CareerSummary.countdownTarget,
     remaining: cr7CareerSummary.countdownTarget - cr7CareerSummary.totalGoals,
-    nextMatch: cr7CareerSummary.nextMatch,
+    nextMatch: getUpcomingNextMatch("vi"),
     cronSchedule: "Daily at 22:00 UTC / 05:00 AM VN (0 22 * * *)",
     journalistEngine: journalistResult,
     lastCheckSummary: "Đã kiểm tra lịch thi đấu, số bàn thắng chính thức và kích hoạt AI Journalist quét tin.",
