@@ -30,6 +30,8 @@ export interface JournalArticle {
   sectionsVi: {
     heading?: string;
     content: string[]; // paragraphs
+    image?: string;
+    imageCaption?: string;
     quote?: {
       text: string;
       author: string;
@@ -42,6 +44,8 @@ export interface JournalArticle {
   sectionsEn: {
     heading?: string;
     content: string[];
+    image?: string;
+    imageCaption?: string;
     quote?: {
       text: string;
       author: string;
@@ -78,7 +82,7 @@ export const cr7JournalArticles: JournalArticle[] = [
     readTimeVi: "6 phút đọc",
     readTimeEn: "6 min read",
     author: "CR1000 Sports Analytics",
-    coverImage: "/images/cr7/era-portugal.jpg",
+    coverImage: "/images/cr7/era-portugal.webp",
     isFeatured: true,
     tags: ["Ronaldo", "Portugal", "Retirement", "1000 Goals", "Euro 2016", "Al Nassr"],
     
@@ -470,7 +474,7 @@ export const cr7JournalArticles: JournalArticle[] = [
     readTimeVi: "8 phút đọc",
     readTimeEn: "8 min read",
     author: "CR1000 Historical Archives",
-    coverImage: "/images/cr7/era-portugal.jpg",
+    coverImage: "/images/cr7/final-nations-league-2025.jpeg",
     isFeatured: true,
     tags: ["Portugal", "Cristiano Ronaldo", "Euro 2016", "Nations League", "Iconic Moments", "146 Goals"],
 

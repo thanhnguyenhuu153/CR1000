@@ -46,16 +46,91 @@ export default function JournalManagerTab() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [uploadingImage, setUploadingImage] = useState(false);
 
-  // Preset Iconic CR7 Images
+  // Preset Iconic CR7 Images (curated high-res library)
   const imagePresets = [
-    { label: "Bồ Đào Nha (Tuyển)", url: "/images/cr7/era-portugal.jpg" },
+    { label: "Bồ Đào Nha (Euro)", url: "/images/cr7/era-portugal.webp" },
     { label: "Cúp Nations League 2025", url: "/images/cr7/final-nations-league-2025.jpeg" },
     { label: "Hat-trick Solna 2013", url: "/images/cr7/iconic-sweden-playoff.jpeg" },
     { label: "Sút phạt TBN 2018", url: "/images/cr7/iconic-freekick-spain.webp" },
     { label: "Al Nassr", url: "/images/cr7/era-alnassr.jpg" },
-    { label: "Real Madrid", url: "/images/cr7/era-realmadrid.jpg" },
-    { label: "Chân dung Hero CR7", url: "/images/cr7/hero-cr7.jpg" },
+    { label: "Real Madrid (La Decima)", url: "/images/cr7/era-realmadrid.webp" },
+    { label: "Man Utd (2008)", url: "/images/cr7/era-manutd.webp" },
+    { label: "Juventus", url: "/images/cr7/era-juventus.webp" },
+    { label: "Xe đạp chổng ngược", url: "/images/cr7/iconic-bicycle-juve.jpg" },
+    { label: "Calma Camp Nou", url: "/images/cr7/iconic-calma-camp-nou.webp" },
+    { label: "Chân dung Hero CR7", url: "/images/cr7/hero-cr7.webp" },
   ];
+
+  // Structured Section Editor State (preserves headings, quotes, tables, and in-article images)
+  interface EditableSection {
+    headingVi: string;
+    headingEn: string;
+    contentVi: string;
+    contentEn: string;
+    image: string;
+    imageCaptionVi: string;
+    imageCaptionEn: string;
+    quoteVi?: { text: string; author: string };
+    quoteEn?: { text: string; author: string };
+    tableVi?: { headers: string[]; rows: string[][] };
+    tableEn?: { headers: string[]; rows: string[][] };
+  }
+
+  const [editableSections, setEditableSections] = useState<EditableSection[]>([
+    {
+      headingVi: "Diễn biến sự kiện",
+      headingEn: "Event Breakdown",
+      contentVi: "",
+      contentEn: "",
+      image: "",
+      imageCaptionVi: "",
+      imageCaptionEn: "",
+    },
+  ]);
+  const sectionFileInputRefs = useRef<{ [key: number]: HTMLInputElement | null }>({});
+  const [uploadingSectionIdx, setUploadingSectionIdx] = useState<number | null>(null);
+
+  const handleSectionImageUpload = (idx: number, e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      notify("Vui lòng chọn file hình ảnh hợp lệ (jpg, png, webp)!", "error");
+      return;
+    }
+
+    setUploadingSectionIdx(idx);
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const img = new window.Image();
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        const maxWidth = 1200;
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0, width, height);
+          const compressedDataUrl = canvas.toDataURL("image/jpeg", 0.82);
+          setEditableSections((prev) =>
+            prev.map((sec, i) => (i === idx ? { ...sec, image: compressedDataUrl } : sec))
+          );
+          notify(`Đã tải ảnh vào mục #${idx + 1} thành công (${Math.round((compressedDataUrl.length * 3) / 4 / 1024)} KB)!`);
+        }
+        setUploadingSectionIdx(null);
+      };
+      img.src = event.target?.result as string;
+    };
+    reader.readAsDataURL(file);
+  };
 
   const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -174,14 +249,19 @@ export default function JournalManagerTab() {
     setTimeout(() => setNotification(null), 4000);
   };
 
-  // Local text buffer for rich paragraphs
-  const [viContent, setViContent] = useState("");
-  const [enContent, setEnContent] = useState("");
-
   const handleOpenCreate = () => {
     setEditingArticle(null);
-    setViContent("");
-    setEnContent("");
+    setEditableSections([
+      {
+        headingVi: "Diễn biến sự kiện",
+        headingEn: "Event Breakdown",
+        contentVi: "",
+        contentEn: "",
+        image: "",
+        imageCaptionVi: "",
+        imageCaptionEn: "",
+      },
+    ]);
     setFormData({
       id: `art_${Date.now()}`,
       slug: "",
@@ -196,7 +276,7 @@ export default function JournalManagerTab() {
       readTimeVi: "5 phút đọc",
       readTimeEn: "5 min read",
       author: "CR1000 Editorial Team",
-      coverImage: "/images/cr7/hero-cr7.jpg",
+      coverImage: "/images/cr7/hero-cr7.webp",
       isFeatured: false,
       tags: ["Ronaldo", "CR7", "1000 Goals"],
       quickTakeawayVi: "",
@@ -216,17 +296,31 @@ export default function JournalManagerTab() {
   const handleOpenEdit = (article: JournalArticle) => {
     setEditingArticle(article);
     setFormData({ ...article });
-    
-    // Combine all sections paragraphs for clean editing
-    const fullVi = (article.sectionsVi || [])
-      .map((s) => s.content.join("\n\n"))
-      .join("\n\n\n");
-    const fullEn = (article.sectionsEn || [])
-      .map((s) => s.content.join("\n\n"))
-      .join("\n\n\n");
 
-    setViContent(fullVi);
-    setEnContent(fullEn);
+    const secsVi = article.sectionsVi || [];
+    const secsEn = article.sectionsEn || [];
+    const maxLen = Math.max(secsVi.length, secsEn.length, 1);
+
+    const mapped: EditableSection[] = [];
+    for (let i = 0; i < maxLen; i++) {
+      const sVi = secsVi[i];
+      const sEn = secsEn[i];
+      mapped.push({
+        headingVi: sVi?.heading || "",
+        headingEn: sEn?.heading || sVi?.heading || "",
+        contentVi: (sVi?.content || []).join("\n\n"),
+        contentEn: (sEn?.content || []).join("\n\n"),
+        image: sVi?.image || sEn?.image || "",
+        imageCaptionVi: sVi?.imageCaption || "",
+        imageCaptionEn: sEn?.imageCaption || sVi?.imageCaption || "",
+        quoteVi: sVi?.quote,
+        quoteEn: sEn?.quote,
+        tableVi: sVi?.table,
+        tableEn: sEn?.table,
+      });
+    }
+
+    setEditableSections(mapped);
     setIsModalOpen(true);
   };
 
@@ -251,15 +345,23 @@ export default function JournalManagerTab() {
     }
   };
 
-  // Seed default articles into Supabase if empty or missing
+  // Seed only missing default articles into Supabase without overwriting existing Supabase articles
   const handleSeedDefaults = async () => {
-    if (!confirm(`Hệ thống sẽ đồng bộ toàn bộ ${cr7JournalArticles.length} bài viết chuẩn từ mã nguồn lên database Supabase của bạn. Tiếp tục?`)) {
+    const existingSlugs = new Set(articles.map((a) => a.slug));
+    const missingArticles = cr7JournalArticles.filter((a) => !existingSlugs.has(a.slug));
+
+    if (missingArticles.length === 0) {
+      notify("Tất cả các bài viết gốc đều đã có trên Supabase (Không ghi đè lên các bài viết hiện tại của bạn)!");
+      return;
+    }
+
+    if (!confirm(`Hệ thống sẽ bổ sung ${missingArticles.length} bài viết còn thiếu lên Supabase (Giữ nguyên 100% các bài viết hiện có). Tiếp tục?`)) {
       return;
     }
 
     setSaving(true);
     let successCount = 0;
-    for (const art of cr7JournalArticles) {
+    for (const art of missingArticles) {
       try {
         const res = await fetch("/api/journal", {
           method: "POST",
@@ -271,7 +373,7 @@ export default function JournalManagerTab() {
     }
 
     setSaving(false);
-    notify(`Đã đồng bộ thành công ${successCount}/${cr7JournalArticles.length} bài viết lên Supabase!`);
+    notify(`Đã bổ sung thành công ${successCount}/${missingArticles.length} bài viết lên Supabase!`);
     loadArticles();
   };
 
@@ -317,23 +419,42 @@ export default function JournalManagerTab() {
 
     setSaving(true);
     try {
-      const viParagraphs = viContent.split("\n\n").map((p) => p.trim()).filter(Boolean);
-      const enParagraphs = enContent.split("\n\n").map((p) => p.trim()).filter(Boolean);
+      const builtSectionsVi = editableSections.map((sec) => {
+        const viParagraphs = sec.contentVi
+          .split("\n\n")
+          .map((p) => p.trim())
+          .filter(Boolean);
+        return {
+          ...(sec.headingVi ? { heading: sec.headingVi } : {}),
+          content: viParagraphs.length ? viParagraphs : [sec.contentVi || ""],
+          ...(sec.image ? { image: sec.image } : {}),
+          ...(sec.imageCaptionVi ? { imageCaption: sec.imageCaptionVi } : {}),
+          ...(sec.quoteVi ? { quote: sec.quoteVi } : {}),
+          ...(sec.tableVi ? { table: sec.tableVi } : {}),
+        };
+      });
+
+      const builtSectionsEn = editableSections.map((sec) => {
+        const enParagraphs = (sec.contentEn || sec.contentVi)
+          .split("\n\n")
+          .map((p) => p.trim())
+          .filter(Boolean);
+        return {
+          ...(sec.headingEn || sec.headingVi ? { heading: sec.headingEn || sec.headingVi } : {}),
+          content: enParagraphs.length ? enParagraphs : [sec.contentEn || sec.contentVi || ""],
+          ...(sec.image ? { image: sec.image } : {}),
+          ...(sec.imageCaptionEn || sec.imageCaptionVi
+            ? { imageCaption: sec.imageCaptionEn || sec.imageCaptionVi }
+            : {}),
+          ...(sec.quoteEn || sec.quoteVi ? { quote: sec.quoteEn || sec.quoteVi } : {}),
+          ...(sec.tableEn || sec.tableVi ? { table: sec.tableEn || sec.tableVi } : {}),
+        };
+      });
 
       const payload = {
         ...formData,
-        sectionsVi: [
-          {
-            heading: "Diễn biến sự kiện",
-            content: viParagraphs.length ? viParagraphs : [viContent],
-          },
-        ],
-        sectionsEn: [
-          {
-            heading: "Event Breakdown",
-            content: enParagraphs.length ? enParagraphs : [enContent || viContent],
-          },
-        ],
+        sectionsVi: builtSectionsVi,
+        sectionsEn: builtSectionsEn,
       };
 
       const res = await fetch("/api/journal", {
@@ -781,47 +902,290 @@ export default function JournalManagerTab() {
                 </div>
               </div>
 
-              {/* Main Content Paragraphs (Bilingual Editor) */}
-              <div className="space-y-4">
-                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1 border-b border-gray-800">
-                  <label className="text-xs font-bold text-gray-200 uppercase tracking-wider">
-                    Nội dung bài viết chi tiết (Song ngữ VI & EN)
-                  </label>
-                  <span className="text-[11px] text-gray-400">
-                    Mỗi đoạn văn cách nhau bằng 1 dòng trống (Enter 2 lần)
-                  </span>
+              {/* Structured Sections & In-Article Images Editor */}
+              <div className="space-y-5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pb-2 border-b border-gray-800">
+                  <div>
+                    <label className="text-xs font-bold text-gray-200 uppercase tracking-wider flex items-center gap-2">
+                      <span>Các phần nội dung & Hình ảnh bên trong bài viết ({editableSections.length} phần)</span>
+                    </label>
+                    <span className="text-[11px] text-gray-400 block mt-0.5">
+                      Bạn có thể chỉnh sửa tiêu đề, nội dung từng phần và chèn/thay đổi hình ảnh minh họa ngay bên trong từng phần của bài viết.
+                    </span>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={() =>
+                      setEditableSections((prev) => [
+                        ...prev,
+                        {
+                          headingVi: `Phần ${prev.length + 1}`,
+                          headingEn: `Section ${prev.length + 1}`,
+                          contentVi: "",
+                          contentEn: "",
+                          image: "",
+                          imageCaptionVi: "",
+                          imageCaptionEn: "",
+                        },
+                      ])
+                    }
+                    className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#D4AF37]/15 hover:bg-[#D4AF37] text-[#D4AF37] hover:text-black border border-[#D4AF37]/40 text-xs font-bold transition-all cursor-pointer shrink-0"
+                  >
+                    <Plus className="w-3.5 h-3.5" />
+                    <span>Thêm phần nội dung / hình ảnh mới</span>
+                  </button>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {/* VI Content */}
-                  <div className="space-y-1.5">
-                    <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
-                      <span>🇻🇳</span>
-                      <span>Nội dung chi tiết (Tiếng Việt)</span>
-                    </span>
-                    <textarea
-                      rows={9}
-                      value={viContent}
-                      onChange={(e) => setViContent(e.target.value)}
-                      placeholder="Nhập nội dung các đoạn văn tiếng Việt tại đây (Mỗi đoạn cách nhau 1 dòng trống)..."
-                      className="w-full p-3.5 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37] font-sans leading-relaxed"
-                    />
-                  </div>
+                <div className="space-y-6">
+                  {editableSections.map((sec, sIdx) => (
+                    <div
+                      key={sIdx}
+                      className="p-4 sm:p-5 rounded-2xl bg-[#101420] border border-gray-800/90 space-y-4 relative"
+                    >
+                      {/* Section Top Bar */}
+                      <div className="flex items-center justify-between gap-2 pb-2.5 border-b border-gray-800/70">
+                        <span className="px-2.5 py-1 rounded-lg bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/30 text-xs font-extrabold">
+                          Phần #{sIdx + 1} {sec.headingVi ? `— ${sec.headingVi}` : ""}
+                        </span>
 
-                  {/* EN Content */}
-                  <div className="space-y-1.5">
-                    <span className="text-xs font-bold text-amber-300 flex items-center gap-1.5">
-                      <span>🇺🇸</span>
-                      <span>Main Content (English)</span>
-                    </span>
-                    <textarea
-                      rows={9}
-                      value={enContent}
-                      onChange={(e) => setEnContent(e.target.value)}
-                      placeholder="Enter English article paragraphs here (Separate paragraphs by an empty line)..."
-                      className="w-full p-3.5 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37] font-sans leading-relaxed"
-                    />
-                  </div>
+                        {editableSections.length > 1 && (
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setEditableSections((prev) => prev.filter((_, i) => i !== sIdx))
+                            }
+                            className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-red-950/50 hover:bg-red-600 text-red-400 hover:text-white text-[11px] font-bold transition-colors cursor-pointer"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                            <span>Xóa phần này</span>
+                          </button>
+                        )}
+                      </div>
+
+                      {/* Section Headings (VI & EN) */}
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-gray-300">
+                            Tiêu đề phần #{sIdx + 1} (Tiếng Việt)
+                          </label>
+                          <input
+                            type="text"
+                            value={sec.headingVi}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setEditableSections((prev) =>
+                                prev.map((item, i) => (i === sIdx ? { ...item, headingVi: val } : item))
+                              );
+                            }}
+                            placeholder="VD: 1. Đêm mưa bướm và đỉnh cao Euro 2016..."
+                            className="w-full px-3 py-2 rounded-xl bg-[#141724] border border-gray-800 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37]"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <label className="text-[11px] font-bold text-gray-300">
+                            Tiêu đề phần #{sIdx + 1} (English Heading)
+                          </label>
+                          <input
+                            type="text"
+                            value={sec.headingEn}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setEditableSections((prev) =>
+                                prev.map((item, i) => (i === sIdx ? { ...item, headingEn: val } : item))
+                              );
+                            }}
+                            placeholder="e.g. 1. The Parisian Moths and Euro 2016 Glory..."
+                            className="w-full px-3 py-2 rounded-xl bg-[#141724] border border-gray-800 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37]"
+                          />
+                        </div>
+                      </div>
+
+                      {/* Section Paragraphs (VI & EN) */}
+                      <div className="grid grid-cols-1 lg:grid-cols-2 gap-3">
+                        <div className="space-y-1">
+                          <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
+                            <span>🇻🇳</span>
+                            <span>Nội dung phần #{sIdx + 1} (Mỗi đoạn cách nhau 1 dòng trống)</span>
+                          </span>
+                          <textarea
+                            rows={5}
+                            value={sec.contentVi}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setEditableSections((prev) =>
+                                prev.map((item, i) => (i === sIdx ? { ...item, contentVi: val } : item))
+                              );
+                            }}
+                            placeholder="Nhập các đoạn văn tiếng Việt của phần này..."
+                            className="w-full p-3 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37] leading-relaxed"
+                          />
+                        </div>
+
+                        <div className="space-y-1">
+                          <span className="text-[11px] font-bold text-amber-300 flex items-center gap-1.5">
+                            <span>🇺🇸</span>
+                            <span>English Content (Section #{sIdx + 1})</span>
+                          </span>
+                          <textarea
+                            rows={5}
+                            value={sec.contentEn}
+                            onChange={(e) => {
+                              const val = e.target.value;
+                              setEditableSections((prev) =>
+                                prev.map((item, i) => (i === sIdx ? { ...item, contentEn: val } : item))
+                              );
+                            }}
+                            placeholder="Enter English paragraphs for this section..."
+                            className="w-full p-3 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37] leading-relaxed"
+                          />
+                        </div>
+                      </div>
+
+                      {/* IN-ARTICLE IMAGE FOR THIS SECTION */}
+                      <div className="p-3.5 rounded-xl bg-[#0B0E17] border border-gray-800/90 space-y-3">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <label className="text-xs font-bold text-[#D4AF37] flex items-center gap-1.5">
+                            <ImageIcon className="w-3.5 h-3.5" />
+                            <span>Hình ảnh minh họa bên trong Phần #{sIdx + 1} (Tùy chọn)</span>
+                          </label>
+
+                          <div className="flex items-center gap-2">
+                            <input
+                              type="file"
+                              ref={(el) => {
+                                sectionFileInputRefs.current[sIdx] = el;
+                              }}
+                              accept="image/*"
+                              onChange={(e) => handleSectionImageUpload(sIdx, e)}
+                              className="hidden"
+                            />
+                            <button
+                              type="button"
+                              disabled={uploadingSectionIdx === sIdx}
+                              onClick={() => sectionFileInputRefs.current[sIdx]?.click()}
+                              className="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#D4AF37] hover:bg-[#F59E0B] text-black font-extrabold text-[11px] transition-all cursor-pointer disabled:opacity-50"
+                            >
+                              <Upload className="w-3 h-3" />
+                              <span>
+                                {uploadingSectionIdx === sIdx
+                                  ? "Đang tải..."
+                                  : "Tải ảnh từ máy vào phần này"}
+                              </span>
+                            </button>
+
+                            {sec.image && (
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setEditableSections((prev) =>
+                                    prev.map((item, i) =>
+                                      i === sIdx
+                                        ? { ...item, image: "", imageCaptionVi: "", imageCaptionEn: "" }
+                                        : item
+                                    )
+                                  )
+                                }
+                                className="px-2.5 py-1 rounded-lg bg-red-950/60 hover:bg-red-600 text-red-300 hover:text-white text-[11px] font-bold transition-colors cursor-pointer"
+                              >
+                                Xóa ảnh
+                              </button>
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
+                          {sec.image ? (
+                            <div className="relative w-28 h-20 rounded-xl overflow-hidden border border-[#D4AF37]/40 shrink-0 bg-black">
+                              <img
+                                src={sec.image}
+                                alt={`Section ${sIdx + 1}`}
+                                className="w-full h-full object-cover"
+                              />
+                            </div>
+                          ) : (
+                            <div className="w-28 h-20 rounded-xl border border-dashed border-gray-700 flex items-center justify-center text-[10px] text-gray-500 shrink-0 bg-[#111420]">
+                              Chưa có ảnh
+                            </div>
+                          )}
+
+                          <div className="flex-1 w-full space-y-2">
+                            <input
+                              type="text"
+                              value={sec.image}
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                setEditableSections((prev) =>
+                                  prev.map((item, i) => (i === sIdx ? { ...item, image: val } : item))
+                                );
+                              }}
+                              placeholder="Dán link ảnh (/images/cr7/... hoặc https://...) hoặc bấm 'Tải ảnh từ máy' ở trên"
+                              className="w-full px-3 py-1.5 rounded-lg bg-[#141724] border border-gray-800 text-xs font-mono text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                            />
+
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                              <input
+                                type="text"
+                                value={sec.imageCaptionVi}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setEditableSections((prev) =>
+                                    prev.map((item, i) =>
+                                      i === sIdx ? { ...item, imageCaptionVi: val } : item
+                                    )
+                                  );
+                                }}
+                                placeholder="Chú thích dưới ảnh (Tiếng Việt)..."
+                                className="w-full px-3 py-1.5 rounded-lg bg-[#141724] border border-gray-800 text-[11px] text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                              />
+                              <input
+                                type="text"
+                                value={sec.imageCaptionEn}
+                                onChange={(e) => {
+                                  const val = e.target.value;
+                                  setEditableSections((prev) =>
+                                    prev.map((item, i) =>
+                                      i === sIdx ? { ...item, imageCaptionEn: val } : item
+                                    )
+                                  );
+                                }}
+                                placeholder="Image Caption (English)..."
+                                className="w-full px-3 py-1.5 rounded-lg bg-[#141724] border border-gray-800 text-[11px] text-gray-300 focus:outline-none focus:border-[#D4AF37]"
+                              />
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Quick Preset Picker for Section Image */}
+                        <div className="flex flex-wrap items-center gap-1.5 pt-1">
+                          <span className="text-[10px] text-gray-400 font-bold uppercase mr-1">
+                            Chọn ảnh có sẵn:
+                          </span>
+                          {imagePresets.map((preset, pIdx) => (
+                            <button
+                              key={pIdx}
+                              type="button"
+                              onClick={() =>
+                                setEditableSections((prev) =>
+                                  prev.map((item, i) =>
+                                    i === sIdx ? { ...item, image: preset.url } : item
+                                  )
+                                )
+                              }
+                              className={`px-2 py-0.5 rounded-md text-[10px] font-semibold border transition-all cursor-pointer ${
+                                sec.image === preset.url
+                                  ? "bg-[#D4AF37] text-black border-[#D4AF37] font-bold"
+                                  : "bg-[#141724] text-gray-400 border-gray-800 hover:text-white hover:bg-gray-800"
+                              }`}
+                            >
+                              {preset.label}
+                            </button>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 

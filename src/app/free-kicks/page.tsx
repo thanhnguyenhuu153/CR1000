@@ -276,48 +276,70 @@ export default function FreeKicksPage() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {iconicKicks.map((fk) => (
-            <div
-              key={fk.id}
-              className="bg-[#0F121A]/90 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl p-6 shadow-xl transition-all duration-300 flex flex-col justify-between group"
-            >
-              <div>
-                <div className="flex items-center justify-between text-[11px] mb-3">
-                  <span className="px-2.5 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 font-bold uppercase font-mono">
-                    {fk.technique.toUpperCase()}
-                  </span>
-                  <span className="text-gray-400 font-mono flex items-center gap-1">
-                    <Calendar className="w-3 h-3 text-[#D4AF37]" />
-                    {fk.date}
-                  </span>
-                </div>
+          {iconicKicks.map((fk) => {
+            const dynamicImg =
+              fk.id === "fk-portsmouth-2008"
+                ? images.iconicFreekickPortsmouth || fk.imageUrl
+                : fk.id === "fk-spain-2018"
+                ? images.iconicFreekickSpain || fk.imageUrl
+                : fk.imageUrl;
 
-                <h3 className="text-lg font-extrabold text-white group-hover:text-[#D4AF37] transition-colors">
-                  {fk.team} vs {fk.opponent}
-                </h3>
-                <div className="text-xs font-mono font-bold text-[#D4AF37] mt-0.5">
-                  {fk.competition} • {language === "vi" ? "Tỷ số" : "Score"}: {fk.matchScore}
-                </div>
-
-                <p className="text-xs text-gray-300 leading-relaxed mt-3">
-                  {fk.description}
-                </p>
-              </div>
-
-              <div className="pt-4 mt-5 border-t border-white/5 flex items-center justify-between text-xs font-mono">
-                <span className="text-gray-400 flex items-center gap-1">
-                  <Target className="w-3.5 h-3.5 text-[#D4AF37]" />
-                  {language === "vi" ? "Cự ly:" : "Distance:"} <strong className="text-white">{fk.distanceMeters}m</strong>
-                </span>
-                {fk.speedKmh && (
-                  <span className="text-gray-400 flex items-center gap-1">
-                    <Gauge className="w-3.5 h-3.5 text-[#D4AF37]" />
-                    {language === "vi" ? "Tốc độ:" : "Speed:"} <strong className="text-[#D4AF37]">{fk.speedKmh} km/h</strong>
-                  </span>
+            return (
+              <div
+                key={fk.id}
+                className="bg-[#0F121A]/90 border border-white/10 hover:border-[#D4AF37]/50 rounded-2xl overflow-hidden shadow-xl transition-all duration-300 flex flex-col justify-between group"
+              >
+                {dynamicImg && (
+                  <div className="relative h-48 w-full overflow-hidden border-b border-white/10">
+                    <Image
+                      src={dynamicImg}
+                      alt={`${fk.team} vs ${fk.opponent}`}
+                      fill
+                      className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F121A] via-transparent to-black/20" />
+                  </div>
                 )}
+                <div className="p-6 flex-1 flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between text-[11px] mb-3">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#D4AF37]/15 text-[#D4AF37] border border-[#D4AF37]/30 font-bold uppercase font-mono">
+                        {fk.technique.toUpperCase()}
+                      </span>
+                      <span className="text-gray-400 font-mono flex items-center gap-1">
+                        <Calendar className="w-3 h-3 text-[#D4AF37]" />
+                        {fk.date}
+                      </span>
+                    </div>
+
+                    <h3 className="text-lg font-extrabold text-white group-hover:text-[#D4AF37] transition-colors">
+                      {fk.team} vs {fk.opponent}
+                    </h3>
+                    <div className="text-xs font-mono font-bold text-[#D4AF37] mt-0.5">
+                      {fk.competition} • {language === "vi" ? "Tỷ số" : "Score"}: {fk.matchScore}
+                    </div>
+
+                    <p className="text-xs text-gray-300 leading-relaxed mt-3">
+                      {fk.description}
+                    </p>
+                  </div>
+
+                  <div className="pt-4 mt-5 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                    <span className="text-gray-400 flex items-center gap-1">
+                      <Target className="w-3.5 h-3.5 text-[#D4AF37]" />
+                      {language === "vi" ? "Cự ly:" : "Distance:"} <strong className="text-white">{fk.distanceMeters}m</strong>
+                    </span>
+                    {fk.speedKmh && (
+                      <span className="text-gray-400 flex items-center gap-1">
+                        <Gauge className="w-3.5 h-3.5 text-[#D4AF37]" />
+                        {language === "vi" ? "Tốc độ:" : "Speed:"} <strong className="text-[#D4AF37]">{fk.speedKmh} km/h</strong>
+                      </span>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       </section>
 

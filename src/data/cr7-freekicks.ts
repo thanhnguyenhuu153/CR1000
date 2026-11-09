@@ -104,6 +104,7 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
       "From nearly 40 yards out at Emirates Stadium, Ronaldo unleashed a trademark knuckleball thunderbolt that beat Manuel Almunia at his near post.",
     technique: "knuckleball",
     isIconic: true,
+    imageUrl: "/images/cr7/iconic-porto-40m.jpg",
   },
   {
     id: "fk-wolfsburg-2016",
@@ -126,6 +127,7 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
       "In the 77th minute at Bernabeu, Ronaldo guided a clever free-kick through the Wolfsburg wall to complete an iconic comeback hat-trick.",
     technique: "power-drive",
     isIconic: true,
+    imageUrl: "/images/cr7/era-realmadrid.webp",
   },
   {
     id: "fk-atletico-2012",
@@ -148,6 +150,7 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
       "A dipping 35-yard knuckleball that fooled a young Thibaut Courtois with its unpredictable lateral swerve during the Madrid derby.",
     technique: "knuckleball",
     isIconic: true,
+    imageUrl: "/images/cr7/final-ucl-2014.webp",
   },
   {
     id: "fk-abha-2023",
@@ -170,6 +173,7 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
       "A 35-meter rocket at Al Awwal Park, marking Ronaldo's first free-kick goal in Saudi Arabia and igniting a dramatic comeback win.",
     technique: "knuckleball",
     isIconic: true,
+    imageUrl: "/images/cr7/era-alnassr.jpg",
   },
   {
     id: "fk-marseille-2009",
@@ -192,6 +196,7 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
       "From 33 meters out at the Stade Vélodrome, curling powerfully away from Steve Mandanda into the top corner.",
     technique: "knuckleball",
     isIconic: true,
+    imageUrl: "/images/cr7/iconic-calma-camp-nou.webp",
   },
   {
     id: "fk-torino-2020",
@@ -214,6 +219,7 @@ export const cr7IconicFreeKicks: FreeKickGoal[] = [
       "A sublime curling effort over the wall in the Derby della Mole, sealing his first free-kick goal for Juventus.",
     technique: "curl",
     isIconic: true,
+    imageUrl: "/images/cr7/era-juventus.webp",
   },
 ];
 

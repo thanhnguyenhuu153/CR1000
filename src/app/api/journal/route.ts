@@ -52,51 +52,11 @@ export async function GET() {
       faqsEn: row.faqs_en || [],
     }));
 
-    // Smart Merge: Tự động gom bài viết từ Supabase và bất kỳ bài viết mới nào trong mã nguồn
-    const dbSlugs = new Set(formatted.map((a) => a.slug));
-    const missingLocal = cr7JournalArticles.filter((a) => !dbSlugs.has(a.slug));
-
-    // Auto-upsert missing articles to Supabase in the background
-    if (missingLocal.length > 0) {
-      for (const missing of missingLocal) {
-        try {
-          await supabase.from("journal_articles").upsert({
-            id: missing.id,
-            slug: missing.slug,
-            title_vi: missing.titleVi,
-            title_en: missing.titleEn,
-            excerpt_vi: missing.excerptVi,
-            excerpt_en: missing.excerptEn,
-            category_vi: missing.categoryVi,
-            category_en: missing.categoryEn,
-            category_slug: missing.categorySlug,
-            published_date: missing.publishedDate,
-            read_time_vi: missing.readTimeVi,
-            read_time_en: missing.readTimeEn,
-            author: missing.author,
-            cover_image: missing.coverImage,
-            is_featured: missing.isFeatured,
-            tags: missing.tags,
-            quick_takeaway_vi: missing.quickTakeawayVi,
-            quick_takeaway_en: missing.quickTakeawayEn,
-            key_stats: missing.keyStats,
-            sections_vi: missing.sectionsVi,
-            sections_en: missing.sectionsEn,
-            faqs_vi: missing.faqsVi,
-            faqs_en: missing.faqsEn,
-            updated_at: new Date().toISOString(),
-          }, { onConflict: "slug" });
-        } catch {
-          // Ignore background sync errors
-        }
-      }
-    }
-
-    const allArticles = [...missingLocal, ...formatted];
-
+    // Supabase là nguồn dữ liệu độc lập 100% (Single Source of Truth) khi đã có bài viết.
+    // Tuyệt đối không tự động ghi đè hay gộp từ mã nguồn vào Supabase khi tải danh sách.
     return NextResponse.json({
       source: "supabase",
-      articles: allArticles,
+      articles: formatted,
     });
   } catch (err: any) {
     return NextResponse.json(

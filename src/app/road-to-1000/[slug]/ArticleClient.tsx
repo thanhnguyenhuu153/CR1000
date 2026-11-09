@@ -42,21 +42,21 @@ export default function ArticleClient({
   const [article, setArticle] = useState<JournalArticle | undefined>(
     initialArticle || cr7JournalArticles.find((a) => a.slug === slug)
   );
+  const [allArticles, setAllArticles] = useState<JournalArticle[]>(cr7JournalArticles);
 
-  // If not found in memory, try fetching from api
+  // Luôn đồng bộ với dữ liệu mới nhất trên Supabase (độc lập khỏi mã nguồn)
   useEffect(() => {
-    if (!article) {
-      fetch("/api/journal")
-        .then((res) => res.json())
-        .then((data) => {
-          if (data?.articles) {
-            const found = data.articles.find((a: JournalArticle) => a.slug === slug);
-            if (found) setArticle(found);
-          }
-        })
-        .catch(() => {});
-    }
-  }, [article, slug]);
+    fetch("/api/journal")
+      .then((res) => res.json())
+      .then((data) => {
+        if (data?.articles && Array.isArray(data.articles) && data.articles.length > 0) {
+          setAllArticles(data.articles);
+          const found = data.articles.find((a: JournalArticle) => a.slug === slug);
+          if (found) setArticle(found);
+        }
+      })
+      .catch(() => {});
+  }, [slug]);
 
   useEffect(() => {
     if (article) {
@@ -87,7 +87,7 @@ export default function ArticleClient({
     }
   };
 
-  const relatedArticles = cr7JournalArticles.filter((a) => a.slug !== slug);
+  const relatedArticles = allArticles.filter((a) => a.slug !== slug);
 
   // Schema.org Article & FAQPage JSON-LD
   const articleSchema = {
@@ -302,11 +302,51 @@ export default function ArticleClient({
                   </h2>
                 )}
 
-                {sec.content.map((p, pIdx) => (
-                  <p key={pIdx} className="leading-relaxed text-gray-300">
-                    {p}
-                  </p>
-                ))}
+                {sec.content.map((p, pIdx) => {
+                  const inlineImgMatch = p.match(/^\[IMAGE:\s*([^|\]]+?)(?:\s*\|\s*([^\]]+))?\]$/i);
+                  if (inlineImgMatch) {
+                    const imgSrc = inlineImgMatch[1].trim();
+                    const imgCap = inlineImgMatch[2]?.trim();
+                    return (
+                      <figure key={pIdx} className="my-6 space-y-2.5">
+                        <div className="relative w-full h-[240px] sm:h-[380px] rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-[#0B0E17]">
+                          <img
+                            src={imgSrc}
+                            alt={imgCap || sec.heading || title}
+                            className="w-full h-full object-cover object-center"
+                          />
+                        </div>
+                        {imgCap && (
+                          <figcaption className="text-center text-xs text-gray-400 italic">
+                            {imgCap}
+                          </figcaption>
+                        )}
+                      </figure>
+                    );
+                  }
+                  return (
+                    <p key={pIdx} className="leading-relaxed text-gray-300">
+                      {p}
+                    </p>
+                  );
+                })}
+
+                {sec.image && (
+                  <figure className="my-6 space-y-2.5">
+                    <div className="relative w-full h-[240px] sm:h-[400px] rounded-2xl overflow-hidden border border-white/10 shadow-xl bg-[#0B0E17]">
+                      <img
+                        src={sec.image}
+                        alt={sec.imageCaption || sec.heading || title}
+                        className="w-full h-full object-cover object-center"
+                      />
+                    </div>
+                    {sec.imageCaption && (
+                      <figcaption className="text-center text-xs text-gray-400 italic">
+                        {sec.imageCaption}
+                      </figcaption>
+                    )}
+                  </figure>
+                )}
 
                 {sec.quote && (
                   <blockquote className="my-6 p-5 sm:p-6 rounded-2xl bg-[#121624] border-l-4 border-[#D4AF37] space-y-2 text-gray-200 shadow-md">

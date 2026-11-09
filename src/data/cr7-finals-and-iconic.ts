@@ -39,7 +39,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Bồ Đào Nha",
     opponent: "Tây Ban Nha",
     stadium: "Allianz Arena (Munich, Đức)",
-    matchImageUrl: "/images/cr7/era-portugal.jpg",
+    matchImageUrl: "/images/cr7/final-nations-league-2025.jpeg",
     description:
       "Tây Ban Nha hai lần vượt lên dẫn trước tại Munich. Phút 61, từ quả tạt sấm sét của Nuno Mendes, Ronaldo băng cắt đệm bóng cận thành tung nóc lưới Unai Simón gỡ hòa 2-2 trong sự vỡ òa của hàng vạn CĐV Bồ Đào Nha, mở đường cho chiến thắng 5-3 ở loạt luân lưu.",
     impact: "Mang về danh hiệu Nations League thứ 2 trong lịch sử bóng đá Bồ Đào Nha (2019 & 2025), đưa tổng số danh hiệu quốc tế của CR7 lên con số 3.",
@@ -64,7 +64,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Manchester United",
     opponent: "Chelsea FC",
     stadium: "Luzhniki Stadium (Moscow, Nga)",
-    matchImageUrl: "/images/cr7/final-chelsea.jpg",
+    matchImageUrl: "/images/cr7/final-chelsea-2008.jpeg",
     description:
       "Từ quả tạt của Wes Brown, Ronaldo bật nhảy cao hơn Michael Essien nửa thân người, dừng lại trên không trung một khoảnh khắc rồi lắc đầu găm bóng vào góc hiểm của Petr Čech.",
     impact: "Mở ra chức vô địch Champions League đầu tiên trong sự nghiệp và đảm bảo Quả bóng Vàng 2008.",
@@ -89,6 +89,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "FC Barcelona",
     stadium: "Mestalla (Valencia, Tây Ban Nha)",
+    matchImageUrl: "/images/cr7/final-barca-2011.jpeg",
     description:
       "Hiệp phụ thứ nhất, Angel Di Maria tạt bóng từ cánh trái. Ronaldo bật nhảy cao 2.65m vượt qua Adriano, đánh đầu cầu âu thẳng vào góc xa khiến Pinto hoàn toàn bất lực.",
     impact: "Danh hiệu đầu tiên của Ronaldo cùng Real Madrid, chấm dứt chuỗi thống trị tuyệt đối của Barcelona thời kỳ đỉnh cao tiki-taka.",
@@ -113,6 +114,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "Atlético Madrid",
     stadium: "Estádio da Luz (Lisbon, Bồ Đào Nha)",
+    matchImageUrl: "/images/cr7/final-ucl-2014.webp",
     description:
       "Bị phạm lỗi trong vòng cấm ở những giây cuối hiệp phụ, Ronaldo lạnh lùng đánh lừa Courtois trên chấm 11m, rồi cởi áo khoe cơ bắp ăn mừng nghẹt thở trên quê hương Bồ Đào Nha.",
     impact: "Hiện thực hóa giấc mơ La Décima (chiếc cúp C1 thứ 10) sau 12 năm chờ đợi của Real Madrid và lập kỷ lục vô tiền khoáng hậu: 17 bàn trong 1 mùa giải Champions League.",
@@ -137,7 +139,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "Juventus FC",
     stadium: "Millennium Stadium (Cardiff, Xứ Wales)",
-    matchImageUrl: "/images/cr7/era-realmadrid.jpg",
+    matchImageUrl: "/images/cr7/final-ucl-2017.jpeg",
     description:
       "Ghi bàn mở tỷ số với pha đệm bóng một chạm đẳng cấp từ đường chuyền của Carvajal, sau đó nâng tỷ số lên 3-1 với pha băng cắt tinh quái hạ gục thủ thành Gianluigi Buffon.",
     impact: "Giúp Real Madrid trở thành đội bóng đầu tiên trong lịch sử bảo vệ thành công chức vô địch Champions League trong kỷ nguyên hiện đại.",
@@ -162,6 +164,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Al Nassr",
     opponent: "Al Hilal",
     stadium: "King Fahd Stadium (Taif, Ả Rập Xê Út)",
+    matchImageUrl: "/images/cr7/final-arab-2023.webp",
     description:
       "Trong thế trận Al Nassr bị đuổi người và đang bị dẫn 0-1, CR7 ghi bàn gỡ hòa 1-1 ở phút 74, rồi đánh đầu quả cảm ấn định chiến thắng 2-1 ở hiệp phụ trước khi rời sân vì chấn thương.",
     impact: "Danh hiệu đầu tiên của Ronaldo tại Trung Đông, khẳng định bản lĩnh thủ lĩnh không tuổi.",
@@ -187,6 +190,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "Juventus FC",
     stadium: "Allianz Stadium (Turin, Ý)",
+    matchImageUrl: "/images/cr7/iconic-bicycle-juve.jpg",
     description:
       "Đón đường tạt bóng của Dani Carvajal, Ronaldo ngả người song song với mặt đất ở độ cao 2.38m, tung cú móc bóng bằng chân phải hoàn hảo găm thẳng góc chết. Cả sân vận động đối phương đứng dậy vỗ tay tán thưởng một kiệt tác lịch sử.",
     impact: "Khoảnh khắc được bình chọn là bàn thắng đẹp nhất lịch sử Champions League và là cơ duyên đưa CR7 tới Juventus sau này.",
@@ -210,6 +214,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Manchester United",
     opponent: "FC Porto",
     stadium: "Estádio do Dragão (Porto, Bồ Đào Nha)",
+    matchImageUrl: "/images/cr7/iconic-porto-40m.jpg",
     description:
       "Nhận bóng ở cự ly hơn 40 mét (gần nửa sân), Ronaldo tung cú đại bác sấm sét với vận tốc gần 105 km/h. Trái bóng bay căng như kẻ chỉ găm thẳng vào góc chữ A trong sự bàng hoàng của thủ thành Helton.",
     impact: "Đoạt giải thưởng FIFA Puskás đầu tiên trong lịch sử cho bàn thắng đẹp nhất năm 2009 và đưa MU vào bán kết C1.",
@@ -233,6 +238,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "FC Barcelona",
     stadium: "Camp Nou (Barcelona, Tây Ban Nha)",
+    matchImageUrl: "/images/cr7/iconic-calma-camp-nou.webp",
     description:
       "Mesut Özil chọc khe xé toang hàng thủ Barca. Ronaldo bứt tốc loại bỏ Puyol và thủ thành Valdés trước khi dứt điểm góc hẹp tinh tế rồi làm cử chỉ 'Bình tĩnh nào, đã có tôi ở đây'.",
     impact: "Định đoạt chức vô địch La Liga 100 điểm lịch sử của Real Madrid dưới trướng José Mourinho.",
@@ -250,6 +256,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Manchester United",
     opponent: "Portsmouth FC",
     stadium: "Old Trafford (Manchester, Anh)",
+    matchImageUrl: "/images/cr7/iconic-freekick-portsmouth.jpeg",
     description:
       "Đứng trước quả phạt cách khung thành 25m với dáng đứng bành chân trứ danh. Cú sút bằng mu bàn chân khiến trái bóng không hề xoáy, lắc lư dữ dội trên không trung rồi rơi thẳng góc chữ A làm David James chỉ biết chôn chân đứng nhìn.",
     impact: "Được Sir Alex Ferguson ca ngợi là 'Quả đá phạt trực tiếp hoàn hảo nhất lịch sử Premier League'.",
@@ -267,7 +274,7 @@ export const cr7FinalsAndIconicGoalsVi: IconicGoal[] = [
     team: "Bồ Đào Nha",
     opponent: "Thụy Điển",
     stadium: "Friends Arena (Solna, Thụy Điển)",
-    matchImageUrl: "/images/cr7/era-portugal.jpg",
+    matchImageUrl: "/images/cr7/iconic-sweden-playoff.jpeg",
     description:
       "Trong trận đấu sinh tử trước 2 bàn thắng của Zlatan Ibrahimovic, Ronaldo đáp trả bằng 3 pha bứt tốc phản công chớp nhoáng với 3 cú dứt điểm lạnh lùng bằng chân trái và chân phải.",
     impact: "Đưa Bồ Đào Nha đến World Cup và đóng vai trò quyết định giúp Ronaldo đoạt Quả bóng Vàng 2013.",
@@ -290,7 +297,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Portugal",
     opponent: "Spain",
     stadium: "Allianz Arena (Munich, Germany)",
-    matchImageUrl: "/images/cr7/era-portugal.jpg",
+    matchImageUrl: "/images/cr7/final-nations-league-2025.jpeg",
     description:
       "With Spain twice ahead in Munich, Ronaldo met Nuno Mendes' lightning cross with an instinctive first-time volley into the roof of Unai Simón's net, leveling at 2-2 to spark wild Portuguese celebrations and opening the door to a 5-3 shootout triumph.",
     impact: "Brought home Portugal's second UEFA Nations League championship (2019 & 2025), lifting CR7's major international trophy total to three.",
@@ -315,7 +322,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Manchester United",
     opponent: "Chelsea FC",
     stadium: "Luzhniki Stadium (Moscow, Russia)",
-    matchImageUrl: "/images/cr7/final-chelsea.jpg",
+    matchImageUrl: "/images/cr7/final-chelsea-2008.jpeg",
     description:
       "Soaring half a body above Michael Essien from Wes Brown's cross, Ronaldo hung in the air before guiding a pinpoint header into Petr Čech's bottom corner.",
     impact: "Sealed the first Champions League triumph of his career and guaranteed his maiden 2008 Ballon d'Or.",
@@ -340,6 +347,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "FC Barcelona",
     stadium: "Mestalla (Valencia, Spain)",
+    matchImageUrl: "/images/cr7/final-barca-2011.jpeg",
     description:
       "Deep in extra time, Ángel Di María swung in a cross from the left. Ronaldo soared 2.65m above Adriano, looping a magnificent header into the far corner past Pinto.",
     impact: "Ronaldo's first trophy with Real Madrid, ending Barcelona's era of absolute domestic dominance.",
@@ -364,6 +372,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "Atlético Madrid",
     stadium: "Estádio da Luz (Lisbon, Portugal)",
+    matchImageUrl: "/images/cr7/final-ucl-2014.webp",
     description:
       "Fouled in the penalty area in the final seconds of extra time, Ronaldo sent Courtois the wrong way from the spot, ripping off his shirt in jubilation on home soil in Lisbon.",
     impact: "Realized Real Madrid's 12-year dream for 'La Décima' and set an all-time tournament record of 17 goals in a single season.",
@@ -388,7 +397,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "Juventus FC",
     stadium: "Millennium Stadium (Cardiff, Wales)",
-    matchImageUrl: "/images/cr7/era-realmadrid.jpg",
+    matchImageUrl: "/images/cr7/final-ucl-2017.jpeg",
     description:
       "Swept home the opening goal with a clinical first-time finish from Carvajal, then ghosted to the near post to convert Modrić's cutback past Gianluigi Buffon.",
     impact: "Made Real Madrid the first club in modern Champions League history to retain the European Cup.",
@@ -413,6 +422,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Al Nassr",
     opponent: "Al Hilal",
     stadium: "King Fahd Stadium (Taif, Saudi Arabia)",
+    matchImageUrl: "/images/cr7/final-arab-2023.webp",
     description:
       "Down to 10 men and trailing 0-1, CR7 smashed in a 74th-minute equalizer before courageously heading home the extra-time winner against rivals Al Hilal.",
     impact: "Ronaldo's inaugural silverware in the Middle East, showcasing ageless leadership.",
@@ -438,6 +448,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "Juventus FC",
     stadium: "Allianz Stadium (Turin, Italy)",
+    matchImageUrl: "/images/cr7/iconic-bicycle-juve.jpg",
     description:
       "Connecting with Dani Carvajal's cross, Ronaldo leaped parallel to the turf at an astounding height of 2.38m, whipping an overhead bicycle kick into the corner. The opposing Turin stadium stood as one to give him a standing ovation.",
     impact: "Voted the greatest goal in Champions League history and sparked the mutual respect that led CR7 to Juventus.",
@@ -461,6 +472,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Manchester United",
     opponent: "FC Porto",
     stadium: "Estádio do Dragão (Porto, Portugal)",
+    matchImageUrl: "/images/cr7/iconic-porto-40m.jpg",
     description:
       "Picking up the ball over 40 meters out, Ronaldo unleashed a 105 km/h missile that flew like a laser straight into the top postage stamp, stunning Helton.",
     impact: "Won the inaugural FIFA Puskás Award in world football history and sent United to the semi-finals.",
@@ -484,6 +496,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Real Madrid",
     opponent: "FC Barcelona",
     stadium: "Camp Nou (Barcelona, Spain)",
+    matchImageUrl: "/images/cr7/iconic-calma-camp-nou.webp",
     description:
       "Mesut Özil split the Barça defense. Ronaldo sprinted past Puyol, rounded Valdés, and slotted home from a tight angle before gesturing 'Calma, I am here'.",
     impact: "Clinched the historic 100-point La Liga title for Real Madrid under José Mourinho.",
@@ -501,6 +514,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Manchester United",
     opponent: "Portsmouth FC",
     stadium: "Old Trafford (Manchester, England)",
+    matchImageUrl: "/images/cr7/iconic-freekick-portsmouth.jpeg",
     description:
       "Standing over a 25-meter set piece in his iconic wide stance. Struck with the instep, the ball traveled with zero rotation, dipping and swerving violently into the top corner as David James stood frozen.",
     impact: "Hailed by Sir Alex Ferguson as 'The finest free-kick in Premier League history'.",
@@ -518,7 +532,7 @@ export const cr7FinalsAndIconicGoalsEn: IconicGoal[] = [
     team: "Portugal",
     opponent: "Sweden",
     stadium: "Friends Arena (Solna, Sweden)",
-    matchImageUrl: "/images/cr7/era-portugal.jpg",
+    matchImageUrl: "/images/cr7/iconic-sweden-playoff.jpeg",
     description:
       "In a high-stakes duel against Zlatan Ibrahimović's double, Ronaldo replied with a devastating second-half counter-attacking hat-trick, finishing with both feet.",
     impact: "Sent Portugal to the World Cup and proved decisive in Ronaldo claiming his 2013 Ballon d'Or.",

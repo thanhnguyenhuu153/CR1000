@@ -155,24 +155,63 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
           if (!isNaN(parsed) && parsed >= 985) setGoalsState(parsed);
         }
 
+        const legacyPlaceholders = new Set([
+          "/images/cr7/hero-cr7.jpg",
+          "/images/cr7/era-madeira.jpg",
+          "/images/cr7/era-manutd.jpg",
+          "/images/cr7/era-juventus.jpg",
+          "/images/cr7/era-portugal.jpg",
+          "/images/cr7/final-chelsea.jpg",
+          "/images/trophies/premier-league.png",
+          "/images/trophies/premier-league.jpg",
+          "/images/trophies/ucl.jpg",
+          "/images/trophies/euro-trophy.jpg",
+          "/images/trophies/golden-shoe.jpg",
+          "/images/trophies/cr7-ballon-dor.jpg",
+          "/images/trophies/ballon-dor.png",
+        ]);
+
         const savedImages = localStorage.getItem("cr1000_custom_images");
         if (savedImages) {
           const parsed = JSON.parse(savedImages);
-          setImages((prev) => ({ ...prev, ...parsed }));
+          let needsMigration = false;
+          const cleaned: Record<string, string> = {};
+          for (const [k, v] of Object.entries(parsed)) {
+            const key = k as keyof CustomImages;
+            if (typeof v === "string" && legacyPlaceholders.has(v) && defaultImages[key]) {
+              cleaned[key] = defaultImages[key] as string;
+              needsMigration = true;
+            } else if (typeof v === "string" && v.trim() !== "") {
+              cleaned[key] = v;
+            }
+          }
+          const mergedImages = { ...defaultImages, ...cleaned };
+          setImages(mergedImages);
+          if (needsMigration) {
+            localStorage.setItem("cr1000_custom_images", JSON.stringify(mergedImages));
+          }
         }
 
         const savedShop = localStorage.getItem("cr1000_shop_items");
         if (savedShop) {
           const parsed = JSON.parse(savedShop);
           if (Array.isArray(parsed) && parsed.length > 0) {
-            const existingIds = new Set(parsed.map((p: any) => p.id));
+            let shopModified = false;
+            const defaultMap = new Map(defaultShopItems.map((d) => [d.id, d]));
+            const migrated = parsed.map((item: ShopItem) => {
+              const def = defaultMap.get(item.id);
+              if (def && item.image && item.image.includes("images.unsplash.com")) {
+                shopModified = true;
+                return { ...item, image: def.image };
+              }
+              return item;
+            });
+            const existingIds = new Set(migrated.map((p: any) => p.id));
             const missing = defaultShopItems.filter((d) => !existingIds.has(d.id));
-            if (missing.length > 0) {
-              const merged = [...parsed, ...missing];
-              setShopItems(merged);
-              localStorage.setItem("cr1000_shop_items", JSON.stringify(merged));
-            } else {
-              setShopItems(parsed);
+            const finalShop = missing.length > 0 ? [...migrated, ...missing] : migrated;
+            setShopItems(finalShop);
+            if (shopModified || missing.length > 0) {
+              localStorage.setItem("cr1000_shop_items", JSON.stringify(finalShop));
             }
           }
         }
