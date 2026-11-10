@@ -10,6 +10,26 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.cr1000.live/privacy",
   },
+  openGraph: {
+    title: "Chính Sách Bảo Mật & Điều Khoản Sử Dụng — CR1000",
+    description:
+      "Chính sách bảo mật, cookie và điều khoản sử dụng của Bảo tàng số CR1000.",
+    url: "https://www.cr1000.live/privacy",
+    siteName: "CR1000 Live Museum",
+    locale: "vi_VN",
+    type: "website",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
 };
 
 export default function PrivacyPolicyPage() {
