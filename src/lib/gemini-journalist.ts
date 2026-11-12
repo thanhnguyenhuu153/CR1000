@@ -19,7 +19,7 @@ export async function runAutonomousJournalist(forceTopic?: string): Promise<Auto
     };
   }
 
-  const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
+  const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
   // 1. Fetch recent articles from Supabase / fallback to provide dynamic deduplication memory
   let recentArticlesList: { titleVi: string; categoryVi: string; excerptVi: string }[] = [];
@@ -137,7 +137,9 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
   try {
     // 1. Dynamically query available models for this API key to guarantee 100% compatibility
     let candidateModels = [
-      process.env.GEMINI_MODEL || "gemini-2.0-flash",
+      process.env.GEMINI_MODEL || "gemini-3.8-flash",
+      "gemini-3.8-flash",
+      "gemini-2.0-flash",
       "gemini-2.0-flash-001",
       "gemini-1.5-flash-002",
       "gemini-1.5-flash-001",
@@ -163,6 +165,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
         if (availableGenerateModels.length > 0) {
           // Put preferred text models first
           const preferred = [
+            "gemini-3.8-flash",
             "gemini-2.0-flash",
             "gemini-2.0-flash-001",
             "gemini-1.5-flash-002",
