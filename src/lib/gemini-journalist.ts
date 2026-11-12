@@ -135,15 +135,32 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     : `Dựa vào danh sách các bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng được khai thác (tránh trùng lặp với các bài cũ). Hãy chọn một chủ đề hấp dẫn từ các Trụ cột (chiến thuật, các trận cầu lịch sử ngược dòng, so sánh số liệu với các huyền thoại, hoặc khoa học sút phạt/không chiến). Viết một bài ký sự thể thao xuất sắc đạt điểm 10 về chuyên môn và thu hút độc giả.`;
 
   try {
-    const candidateModels = Array.from(
-      new Set([
-        process.env.GEMINI_MODEL || "gemini-2.0-flash",
-        "gemini-1.5-flash",
-        "gemini-1.5-flash-latest",
-        "gemini-2.5-flash",
-        "gemini-1.5-pro",
-      ])
-    );
+    // 1. Dynamically query available models for this API key to guarantee 100% compatibility
+    let candidateModels = [
+      process.env.GEMINI_MODEL || "gemini-2.0-flash",
+      "gemini-2.0-flash-001",
+      "gemini-1.5-flash-002",
+      "gemini-1.5-flash-001",
+      "gemini-1.5-pro-002",
+      "gemini-1.5-pro-001",
+    ];
+
+    try {
+      const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+      if (listRes.ok) {
+        const listData = await listRes.json();
+        const availableGenerateModels = (listData.models || [])
+          .filter((m: any) => m.supportedGenerationMethods?.includes("generateContent"))
+          .map((m: any) => m.name.replace(/^models\//, ""));
+
+        if (availableGenerateModels.length > 0) {
+          // Put preferred models first, then all remaining available models
+          const preferred = ["gemini-2.0-flash", "gemini-2.0-flash-001", "gemini-1.5-flash-002", "gemini-1.5-flash-001", "gemini-1.5-pro-002"];
+          const matchedPreferred = preferred.filter((p) => availableGenerateModels.includes(p));
+          candidateModels = Array.from(new Set([...matchedPreferred, ...availableGenerateModels]));
+        }
+      }
+    } catch (e) {}
 
     const requestBody = {
       contents: [
@@ -174,8 +191,8 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
           const errText = await response.text();
           lastError = `[${currentModel}] (${response.status}): ${errText}`;
           console.warn(`[Gemini Journalist] Model ${currentModel} returned ${response.status}. Attempting next model...`);
-          // Retry next model if overloaded (503, 429, 500, 504)
-          if (response.status === 503 || response.status === 429 || response.status >= 500) {
+          // Retry next model if overloaded or not found (503, 429, 404, 500, 504)
+          if (response.status === 503 || response.status === 429 || response.status === 404 || response.status >= 500) {
             continue;
           } else {
             return {
