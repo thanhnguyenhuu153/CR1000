@@ -135,7 +135,15 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     : `Dựa vào danh sách các bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng được khai thác (tránh trùng lặp với các bài cũ). Hãy chọn một chủ đề hấp dẫn từ các Trụ cột (chiến thuật, các trận cầu lịch sử ngược dòng, so sánh số liệu với các huyền thoại, hoặc khoa học sút phạt/không chiến). Viết một bài ký sự thể thao xuất sắc đạt điểm 10 về chuyên môn và thu hút độc giả.`;
 
   try {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+    const candidateModels = Array.from(
+      new Set([
+        process.env.GEMINI_MODEL || "gemini-2.0-flash",
+        "gemini-1.5-flash",
+        "gemini-1.5-flash-latest",
+        "gemini-2.5-flash",
+        "gemini-1.5-pro",
+      ])
+    );
 
     const requestBody = {
       contents: [
@@ -150,21 +158,51 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       },
     };
 
-    const response = await fetch(url, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(requestBody),
-    });
+    let data: any = null;
+    let lastError = "";
 
-    if (!response.ok) {
-      const errText = await response.text();
+    for (const currentModel of candidateModels) {
+      try {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:generateContent?key=${apiKey}`;
+        const response = await fetch(url, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(requestBody),
+        });
+
+        if (!response.ok) {
+          const errText = await response.text();
+          lastError = `[${currentModel}] (${response.status}): ${errText}`;
+          console.warn(`[Gemini Journalist] Model ${currentModel} returned ${response.status}. Attempting next model...`);
+          // Retry next model if overloaded (503, 429, 500, 504)
+          if (response.status === 503 || response.status === 429 || response.status >= 500) {
+            continue;
+          } else {
+            return {
+              status: "error",
+              error: `Lỗi gọi Gemini API: ${lastError}`,
+            };
+          }
+        }
+
+        const resJson = await response.json();
+        const content = resJson.candidates?.[0]?.content?.parts?.[0]?.text;
+        if (content) {
+          data = resJson;
+          break;
+        }
+      } catch (reqErr: any) {
+        lastError = reqErr.message;
+      }
+    }
+
+    if (!data) {
       return {
         status: "error",
-        error: `Lỗi gọi Gemini API (${response.status}): ${errText}`,
+        error: `Tất cả mô hình AI đang tạm thời quá tải hoặc không phản hồi. Lỗi gần nhất: ${lastError}`,
       };
     }
 
-    const data = await response.json();
     const rawContent = data.candidates?.[0]?.content?.parts?.[0]?.text;
 
     if (!rawContent) {
@@ -174,7 +212,22 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       };
     }
 
-    const articleData = JSON.parse(rawContent);
+    let cleanJson = rawContent.trim();
+    if (cleanJson.startsWith("```json")) {
+      cleanJson = cleanJson.replace(/^```json\s*/, "").replace(/\s*```$/, "");
+    } else if (cleanJson.startsWith("```")) {
+      cleanJson = cleanJson.replace(/^```\s*/, "").replace(/\s*```$/, "");
+    }
+
+    let articleData: any;
+    try {
+      articleData = JSON.parse(cleanJson);
+    } catch (parseErr: any) {
+      return {
+        status: "error",
+        error: `Lỗi đọc định dạng JSON từ AI: ${parseErr.message}`,
+      };
+    }
 
     if (articleData.skip) {
       return {
@@ -192,9 +245,29 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       };
     }
 
+    // Ensure clean, unique slug
+    let finalSlug = (articleData.slug || `cr7-article-${Date.now()}`)
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]/g, "-")
+      .replace(/-+/g, "-")
+      .replace(/^-|-$/g, "");
+
+    try {
+      const { data: existingSlug } = await supabase
+        .from("journal_articles")
+        .select("slug")
+        .eq("slug", finalSlug)
+        .maybeSingle();
+
+      if (existingSlug) {
+        finalSlug = `${finalSlug}-${Date.now().toString().slice(-4)}`;
+      }
+    } catch (e) {}
+
     const payload = {
       id: `art_auto_${Date.now()}`,
-      slug: articleData.slug,
+      slug: finalSlug,
       title_vi: articleData.titleVi,
       title_en: articleData.titleEn,
       excerpt_vi: articleData.excerptVi,

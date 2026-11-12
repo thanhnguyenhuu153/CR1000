@@ -4,6 +4,9 @@ import { getSupabaseServerClient } from "@/lib/supabase";
 import { cr7JournalArticles, JournalArticle } from "@/data/cr7-journal";
 import { submitToIndexNow } from "@/lib/indexnow";
 
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
 export async function GET() {
   try {
     const supabase = getSupabaseServerClient();
@@ -58,6 +61,10 @@ export async function GET() {
     return NextResponse.json({
       source: "supabase",
       articles: formatted,
+    }, {
+      headers: {
+        "Cache-Control": "no-store, no-cache, must-revalidate, max-age=0",
+      },
     });
   } catch (err: any) {
     return NextResponse.json(

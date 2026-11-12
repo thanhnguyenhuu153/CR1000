@@ -38,6 +38,7 @@ export default function JournalManagerTab() {
   const [aiGenerating, setAiGenerating] = useState(false);
   const [showAiModal, setShowAiModal] = useState(false);
   const [customTopic, setCustomTopic] = useState("");
+  const [aiError, setAiError] = useState("");
 
   // Modal / Form state
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -226,7 +227,9 @@ export default function JournalManagerTab() {
   const loadArticles = async () => {
     setLoading(true);
     try {
-      const res = await fetch("/api/journal");
+      const res = await fetch(`/api/journal?_t=${Date.now()}`, {
+        cache: "no-store",
+      });
       const data = await res.json();
       if (data?.articles) {
         setArticles(data.articles);
@@ -380,6 +383,7 @@ export default function JournalManagerTab() {
   // Trigger Autonomous AI Journalist
   const handleTriggerAi = async (topic?: string) => {
     setAiGenerating(true);
+    setAiError("");
     notify("AI đang kết nối Google Search để quét tin tức mới nhất về CR7...", "success");
 
     try {
@@ -398,11 +402,15 @@ export default function JournalManagerTab() {
           loadArticles();
           setShowAiModal(false);
           setCustomTopic("");
+          setAiError("");
         }
       } else {
-        notify(data.error || "Không thể tạo bài tự động", "error");
+        const errorMsg = data.error || "Không thể tạo bài tự động";
+        setAiError(errorMsg);
+        notify(errorMsg, "error");
       }
     } catch (e: any) {
+      setAiError(e.message || "Lỗi kết nối");
       notify(e.message, "error");
     } finally {
       setAiGenerating(false);
@@ -1301,6 +1309,16 @@ export default function JournalManagerTab() {
                 <span className="font-bold text-amber-400 block">✦ Bộ tiêu chuẩn chất lượng & Chống lặp tự động:</span>
                 <span>• Tự động đối chiếu 10 bài gần nhất để không lặp góc nhìn • Song ngữ VI / EN song song • Khối AIO Snippet • FAQ Schema.org • Tự động gắn mốc đếm ngược 1000 bàn.</span>
               </div>
+
+              {aiError && (
+                <div className="p-3 rounded-xl bg-red-950/80 border border-red-500/50 text-red-200 text-xs flex items-start gap-2.5 animate-fadeIn">
+                  <AlertCircle className="w-4 h-4 shrink-0 text-red-400 mt-0.5" />
+                  <div className="space-y-0.5">
+                    <span className="font-bold block text-red-300">Không thể tạo bài:</span>
+                    <span className="text-[11px] text-red-200/90 leading-relaxed block">{aiError}</span>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="pt-3 border-t border-gray-800 flex items-center justify-end gap-3">
