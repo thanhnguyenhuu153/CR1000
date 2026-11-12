@@ -1,6 +1,7 @@
 import { getSupabaseServerClient } from "./supabase";
 import { revalidatePath } from "next/cache";
 import { submitToIndexNow } from "./indexnow";
+import { cr7JournalArticles } from "@/data/cr7-journal";
 
 interface AutoGenerateResult {
   status: "published" | "skipped" | "error";
@@ -20,19 +21,63 @@ export async function runAutonomousJournalist(forceTopic?: string): Promise<Auto
 
   const model = process.env.GEMINI_MODEL || "gemini-2.0-flash";
 
+  // 1. Fetch recent articles from Supabase / fallback to provide dynamic deduplication memory
+  let recentArticlesList: { titleVi: string; categoryVi: string; excerptVi: string }[] = [];
+  try {
+    const supabase = getSupabaseServerClient();
+    if (supabase) {
+      const { data: dbArticles } = await supabase
+        .from("journal_articles")
+        .select("title_vi, category_vi, excerpt_vi")
+        .order("published_date", { ascending: false })
+        .limit(10);
+      if (dbArticles && dbArticles.length > 0) {
+        recentArticlesList = dbArticles.map((a: any) => ({
+          titleVi: a.title_vi,
+          categoryVi: a.category_vi,
+          excerptVi: a.excerpt_vi,
+        }));
+      }
+    }
+  } catch (e) {}
+
+  if (recentArticlesList.length === 0) {
+    recentArticlesList = cr7JournalArticles.slice(0, 5).map((a) => ({
+      titleVi: a.titleVi,
+      categoryVi: a.categoryVi,
+      excerptVi: a.excerptVi,
+    }));
+  }
+
+  const existingArticlesContext = recentArticlesList
+    .map((a, i) => `${i + 1}. [${a.categoryVi}] "${a.titleVi}"\n   - Tóm tắt: ${a.excerptVi}`)
+    .join("\n\n");
+
   // System prompt enforcing strict anti-AI tone, sports journalism, and GEO/AIO criteria
   const systemPrompt = `
 Bạn là Trưởng ban Biên tập thể thao của bảo tàng số quốc tế CR1000 (cr1000.live) - nơi theo dõi hành trình lịch sử tới 1.000 bàn thắng của Cristiano Ronaldo.
 Nhiệm vụ của bạn: Sản xuất các bài viết ký sự thể thao chuyên sâu song ngữ (Tiếng Việt & English) bao quát TOÀN BỘ sự nghiệp vĩ đại của Cristiano Ronaldo (Sporting CP, Manchester United, Real Madrid, Juventus, Al Nassr và ĐTQG Bồ Đào Nha), đạt chuẩn SEO & AIO/GEO (Generative Engine Optimization).
 
-TIÊU CHUẨN BIÊN TẬP BẮT BUỘC:
-1. ĐA DẠNG CHỦ ĐỀ & KHÔNG BỊ GIỚI HẠN:
-   - Bạn có thể khai thác bất kỳ khía cạnh nào trong sự nghiệp 23+ năm của CR7: Các trận đấu mới nhất, dư âm các sự kiện nóng (như giã từ ĐTQG Bồ Đào Nha), phân tích chiến thuật, giải mã kỹ năng cơ học (bật nhảy 2.56m, knuckleball), so sánh số liệu với các huyền thoại (Pele, Messi, Romario), hoặc phân tích xác suất chạm mốc 1.000 bàn.
-   - Nếu hôm nay không có trận đấu mới, hãy chọn một góc nhìn phân tích lịch sử hoặc chuyên đề số liệu độc bản có tính trường tồn (Evergreen & Data-driven) để độc giả luôn có nội dung chất lượng cao.
+=============================================================
+DANH SÁCH CÁC BÀI VIẾT ĐÃ XUẤT BẢN GẦN ĐÂY (BẮT BUỘC ĐỌC ĐỂ KHÔNG TRÙNG LẶP):
+${existingArticlesContext}
+=============================================================
+
+TIÊU CHUẨN BIÊN TẬP & QUY TẮC CHỐNG TRÙNG LẶP (TOPIC ROTATION):
+1. ĐỐI CHIẾU DANH SÁCH BÀI CŨ & XOAY TRỤC CHỦ ĐỀ:
+   - TUYỆT ĐỐI CẤM chọn lại chủ đề, góc nhìn (angle) hoặc luận điểm tương tự các bài gần đây!
+   - ĐẶC BIỆT: Nếu danh sách bài gần đây đã viết về "Tuổi sinh học", "Giấc ngủ", "Dinh dưỡng" hay "Cơ chế sinh học / trao đổi chất", BẠN BỊ CẤM TUYỆT ĐỐI viết thêm bất kỳ bài nào liên quan tới sinh học, tuổi sinh học hay y học thể thao nữa!
+   - BẮT BUỘC CHỌN 1 TRONG CÁC TRỤ CỘT CHUYÊN MÔN MỚI SAU ĐÂY:
+     + Trụ cột 1 (Tiến hóa chiến thuật): Từ Winger rê dắt tốc độ (MU 2003-2006) -> Máy ghi bàn toàn năng (Real Madrid 2009-2018) -> Sát thủ vòng cấm tối thượng (Poacher / Fox in the Box tại Juve & Al Nassr). Nghệ thuật di chuyển không bóng, khai thác điểm mù (blind-side run).
+     + Trụ cột 2 (Ký sự trận cầu kinh điển & Chung kết): Hat-trick lật ngược thế cờ vs Atletico Madrid 2019, Siêu phẩm xe đạp chổng ngược vs Juventus 2018, Hat-trick kinh điển play-off World Cup vs Thụy Điển 2013, Hat-trick vs Tây Ban Nha World Cup 2018, hoặc Chung kết Champions League 2008 / 2014 / 2017.
+     + Trụ cột 3 (Đối sánh số liệu lịch sử): So sánh hiệu suất bàn thắng xG sau tuổi 30 của CR7 với các huyền thoại (Pele, Messi, Romario, Ibrahimovic, Lewandowski, Gerd Muller). Tỷ lệ ghi bàn phút 75-90+ và bản lĩnh "Clutch Player" định đoạt trận cầu lớn.
+     + Trụ cột 4 (Khoa học kỹ thuật sút phạt & Không chiến): Vật lý học khí động học Knuckleball (hiệu ứng xoáy ngược Magnus), lực sút 105+ km/h, hoặc kỹ năng bật nhảy cao 2.56m (sức bật thẳng đứng 78cm - vượt trội trung bình NBA), thời gian dừng trên không (hang time).
+     + Trụ cột 5 (Đối thủ ưa thích & Nạn nhân lớn nhất): Ký sự về các đội bóng từng nếm trải nhiều bàn thua nhất từ CR7: Atletico Madrid (25 bàn), Sevilla (27 bàn), Barcelona (20 bàn), Tottenham, Bayern Munich...
+     + Trụ cột 6 (Nhịp thở hiện tại & Lộ trình 1.000 bàn): Phân tích trận đấu kế tiếp của Al Nassr (Al-Qadsiah tại Saudi Pro League, Al-Sadd tại AFC Champions League Elite) hoặc mô hình xác suất chạm mốc 1.000 bàn thắng.
 
 2. PHONG CÁCH VIẾT BÁO CHÍ THỂ THAO CAO CẤP (ANTI-AI TONE):
    - CẤM TUYỆT ĐỐI các cụm từ sáo rỗng AI: "Trong thế giới bóng đá", "Không thể phủ nhận rằng", "Tóm lại", "Một huyền thoại sống", "Hãy cùng bước vào hành trình".
-   - BẮT BUỘC dùng văn phong ký sự thể thao giàu chuyên môn và nhịp thở sân cỏ (tương đương The Athletic, L'Équipe, Reuters): Sử dụng thuật ngữ chuyên môn (xG, cự ly dứt điểm, cú sút knuckleball, pressing, chạm bóng bước một, box-to-box, poacher, quãng nghỉ chuyển hóa metabolic...).
+   - BẮT BUỘC dùng văn phong ký sự thể thao giàu chuyên môn và nhịp thở sân cỏ (tương đương The Athletic, L'Équipe, Reuters): Sử dụng thuật ngữ chuyên môn (xG, cự ly dứt điểm, cú sút knuckleball, pressing, chạm bóng bước một, box-to-box, poacher, bản đồ nhiệt heatmap, bứt tốc high-intensity, clutch player...).
 
 3. AIO & GEO (GENERATIVE ENGINE OPTIMIZATION):
    - quickTakeaway: Đoạn "Tóm tắt sự kiện" 2-3 câu ngắn gọn, trả lời trực diện facts (thời gian, đối thủ/kỷ lục, số liệu cụ thể, số bàn còn lại tới mốc 1.000). Đây là phần Google AI Overview và Perplexity sẽ trích nguồn.
@@ -87,7 +132,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
 
   const userQuery = forceTopic
     ? `Hãy viết một bài báo phân tích chuyên sâu về chủ đề sau: "${forceTopic}". Đảm bảo tuân thủ mọi nguyên tắc phong cách thể thao đỉnh cao, AIO và cấu trúc JSON.`
-    : `Hãy quét toàn bộ dòng tin tức và các chủ đề thể thao nóng nhất xung quanh Cristiano Ronaldo (bao gồm các trận đấu mới nhất của Al Nassr, dư âm quyết định giã từ ĐTQG Bồ Đào Nha, các cột mốc kỷ lục hoặc phân tích cuộc đua tới 1.000 bàn thắng). Chọn ra một chủ đề hấp dẫn nhất và viết một bài ký sự thể thao chuyên sâu đạt điểm 10 về chất lượng nội dung.`;
+    : `Dựa vào danh sách các bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng được khai thác (tránh trùng lặp với các bài cũ). Hãy chọn một chủ đề hấp dẫn từ các Trụ cột (chiến thuật, các trận cầu lịch sử ngược dòng, so sánh số liệu với các huyền thoại, hoặc khoa học sút phạt/không chiến). Viết một bài ký sự thể thao xuất sắc đạt điểm 10 về chuyên môn và thu hút độc giả.`;
 
   try {
     const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
@@ -101,7 +146,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       ],
       generationConfig: {
         responseMimeType: "application/json",
-        temperature: 0.3,
+        temperature: forceTopic ? 0.6 : 0.8,
       },
     };
 

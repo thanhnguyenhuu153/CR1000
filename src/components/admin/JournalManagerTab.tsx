@@ -1256,20 +1256,50 @@ export default function JournalManagerTab() {
 
               <div className="space-y-1.5">
                 <label className="text-[11px] font-bold text-gray-400">
-                  Chủ đề tùy chọn (Để trống nếu muốn AI tự động quét tin):
+                  Chủ đề tùy chọn (Để trống nếu muốn AI tự động quét tin & chống lặp):
                 </label>
                 <input
                   type="text"
                   value={customTopic}
                   onChange={(e) => setCustomTopic(e.target.value)}
-                  placeholder="Ví dụ: Phân tích bàn thắng thứ 986 của Ronaldo vào lưới Al-Shabab..."
+                  placeholder="Ví dụ: Phân tích cú hat-trick ngược dòng vs Atletico Madrid 2019..."
                   className="w-full px-3.5 py-2.5 rounded-xl bg-[#141824] border border-gray-800 text-xs text-white focus:outline-none focus:border-purple-500"
                 />
               </div>
 
+              {/* Quick Topic Suggestions */}
+              <div className="space-y-1.5">
+                <span className="text-[10px] font-semibold text-gray-400 uppercase tracking-wider block">
+                  Gợi ý chủ đề chuyên sâu (bấm để chọn nhanh):
+                </span>
+                <div className="flex flex-wrap gap-1.5">
+                  {[
+                    "Tiến hóa chiến thuật: Từ Winger MU sang Poacher vòng cấm",
+                    "Ký sự kinh điển: Hat-trick lật ngược thế cờ vs Atletico 2019",
+                    "Khoa học không chiến: Cú bật nhảy 2.56m và thời gian dừng trên không",
+                    "Đối sánh lịch sử: Hiệu suất sau tuổi 30 so với Messi & Pele",
+                    "Vật lý học Knuckleball: Quỹ đạo bóng đảo chiều ở 105 km/h",
+                    "Xem trước trận Al Nassr vs Al-Qadsiah & săn bàn thắng thứ 986",
+                  ].map((topic, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setCustomTopic(topic)}
+                      className={`px-2.5 py-1 rounded-lg text-[11px] transition-colors border text-left ${
+                        customTopic === topic
+                          ? "bg-purple-600 text-white border-purple-400 font-bold"
+                          : "bg-[#141824] text-gray-300 border-gray-800 hover:border-purple-500/50 hover:text-white"
+                      }`}
+                    >
+                      {topic}
+                    </button>
+                  ))}
+                </div>
+              </div>
+
               <div className="p-3 rounded-xl bg-[#090B12] border border-gray-800 text-[11px] text-gray-400 space-y-1">
-                <span className="font-bold text-amber-400 block">✦ Bộ tiêu chuẩn chất lượng tự động:</span>
-                <span>• Song ngữ VI / EN song song • Khối AIO Snippet • FAQ Schema.org • Tự động gắn mốc đếm ngược 1000 bàn.</span>
+                <span className="font-bold text-amber-400 block">✦ Bộ tiêu chuẩn chất lượng & Chống lặp tự động:</span>
+                <span>• Tự động đối chiếu 10 bài gần nhất để không lặp góc nhìn • Song ngữ VI / EN song song • Khối AIO Snippet • FAQ Schema.org • Tự động gắn mốc đếm ngược 1000 bàn.</span>
               </div>
             </div>
 
