@@ -150,12 +150,26 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       if (listRes.ok) {
         const listData = await listRes.json();
         const availableGenerateModels = (listData.models || [])
-          .filter((m: any) => m.supportedGenerationMethods?.includes("generateContent"))
+          .filter(
+            (m: any) =>
+              m.supportedGenerationMethods?.includes("generateContent") &&
+              !m.name.includes("tts") &&
+              !m.name.includes("audio") &&
+              !m.name.includes("embedding") &&
+              !m.name.includes("imagen")
+          )
           .map((m: any) => m.name.replace(/^models\//, ""));
 
         if (availableGenerateModels.length > 0) {
-          // Put preferred models first, then all remaining available models
-          const preferred = ["gemini-2.0-flash", "gemini-2.0-flash-001", "gemini-1.5-flash-002", "gemini-1.5-flash-001", "gemini-1.5-pro-002"];
+          // Put preferred text models first
+          const preferred = [
+            "gemini-2.0-flash",
+            "gemini-2.0-flash-001",
+            "gemini-1.5-flash-002",
+            "gemini-1.5-flash-001",
+            "gemini-1.5-pro-002",
+            "gemini-1.5-pro-001",
+          ];
           const matchedPreferred = preferred.filter((p) => availableGenerateModels.includes(p));
           candidateModels = Array.from(new Set([...matchedPreferred, ...availableGenerateModels]));
         }
@@ -191,15 +205,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
           const errText = await response.text();
           lastError = `[${currentModel}] (${response.status}): ${errText}`;
           console.warn(`[Gemini Journalist] Model ${currentModel} returned ${response.status}. Attempting next model...`);
-          // Retry next model if overloaded or not found (503, 429, 404, 500, 504)
-          if (response.status === 503 || response.status === 429 || response.status === 404 || response.status >= 500) {
-            continue;
-          } else {
-            return {
-              status: "error",
-              error: `Lỗi gọi Gemini API: ${lastError}`,
-            };
-          }
+          continue;
         }
 
         const resJson = await response.json();
