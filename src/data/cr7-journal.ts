@@ -15,6 +15,7 @@ export interface JournalArticle {
   coverImage: string;
   isFeatured?: boolean;
   tags: string[];
+  relatedProductId?: string; // ID của món đồ kỷ vật / affiliate được gán cho bài viết
   
   // AIO (AI Overview) & Featured Snippet optimized fields
   quickTakeawayVi: string;

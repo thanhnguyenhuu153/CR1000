@@ -31,6 +31,11 @@ import {
   X,
   Tag,
   Newspaper,
+  MousePointerClick,
+  TrendingUp,
+  BarChart3,
+  ArrowUpDown,
+  Crown,
 } from "lucide-react";
 import JournalManagerTab from "@/components/admin/JournalManagerTab";
 
@@ -69,6 +74,62 @@ export default function AdminPage() {
   const [editingShopItem, setEditingShopItem] = useState<ShopItem | null>(null);
   const [isShopModalOpen, setIsShopModalOpen] = useState(false);
   const [shopCategoryFilter, setShopCategoryFilter] = useState<"all" | "jersey" | "boots" | "lifestyle" | "memorabilia">("all");
+  const [productClicks, setProductClicks] = useState<Record<string, number>>({});
+  const [loadingClicks, setLoadingClicks] = useState(false);
+  const [shopSortBy, setShopSortBy] = useState<"clicks-desc" | "clicks-asc" | "default">("clicks-desc");
+
+  const loadProductClicks = async () => {
+    setLoadingClicks(true);
+    try {
+      const res = await fetch(`/api/shop/clicks?_t=${Date.now()}`, { cache: "no-store" });
+      const data = await res.json();
+      const serverClicks: Record<string, number> = data?.clicks || {};
+
+      let localClicks: Record<string, number> = {};
+      try {
+        const raw = localStorage.getItem("cr1000_product_clicks");
+        if (raw) localClicks = JSON.parse(raw);
+      } catch (e) {}
+
+      const merged: Record<string, number> = { ...serverClicks };
+      for (const [k, v] of Object.entries(localClicks)) {
+        merged[k] = Math.max(merged[k] || 0, v);
+      }
+      setProductClicks(merged);
+    } catch (e) {
+      try {
+        const raw = localStorage.getItem("cr1000_product_clicks");
+        if (raw) setProductClicks(JSON.parse(raw));
+      } catch (err) {}
+    } finally {
+      setLoadingClicks(false);
+    }
+  };
+
+  useEffect(() => {
+    if (activeTab === "fanvault") {
+      loadProductClicks();
+    }
+  }, [activeTab]);
+
+  // Affiliate Performance Computations
+  const totalAffiliateClicks = Object.values(productClicks).reduce((a, b) => a + b, 0);
+  const maxProductClicks = Math.max(1, ...Object.values(productClicks));
+  const sortedShopItems = [...localShopItems]
+    .filter((item) => (shopCategoryFilter === "all" ? true : item.category === shopCategoryFilter))
+    .sort((a, b) => {
+      const clickA = productClicks[a.id] || 0;
+      const clickB = productClicks[b.id] || 0;
+      if (shopSortBy === "clicks-desc") return clickB - clickA;
+      if (shopSortBy === "clicks-asc") return clickA - clickB;
+      return 0;
+    });
+
+  const topPerformingItem = localShopItems.reduce(
+    (prev, curr) => ((productClicks[curr.id] || 0) > (productClicks[prev?.id || ""] || 0) ? curr : prev),
+    localShopItems[0]
+  );
+  const itemsWithClicksCount = localShopItems.filter((i) => (productClicks[i.id] || 0) > 0).length;
 
   // Auto-Pilot States
   const [cronLoading, setCronLoading] = useState(false);
@@ -1146,6 +1207,96 @@ export default function AdminPage() {
               </div>
             </div>
 
+            {/* Real-time Affiliate Performance Analytics Banner */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {/* Card 1: Tổng Lượt Click */}
+              <div className="p-5 rounded-2xl bg-[#0F121E] border border-[#D4AF37]/30 shadow-lg relative overflow-hidden flex flex-col justify-between">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Tổng Lượt Click Affiliate</span>
+                  <span className="p-2 rounded-xl bg-[#D4AF37]/15 text-[#D4AF37]">
+                    <MousePointerClick className="w-4 h-4" />
+                  </span>
+                </div>
+                <div>
+                  <div className="text-3xl font-black text-white font-mono flex items-baseline gap-2">
+                    <span>{totalAffiliateClicks}</span>
+                    <span className="text-xs font-bold text-gray-400">lượt nhấp</span>
+                  </div>
+                  <p className="text-[11px] text-gray-400 mt-1">Toàn bộ link Shopee & Amazon trên web</p>
+                </div>
+              </div>
+
+              {/* Card 2: Top Sản Phẩm Hot Nhất */}
+              <div className="p-5 rounded-2xl bg-[#0F121E] border border-amber-500/30 shadow-lg relative overflow-hidden flex flex-col justify-between">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-amber-400 uppercase tracking-wider">Món Được Click Nhiều Nhất</span>
+                  <span className="p-2 rounded-xl bg-amber-500/15 text-amber-400">
+                    <Crown className="w-4 h-4" />
+                  </span>
+                </div>
+                <div>
+                  <div className="text-sm font-black text-white line-clamp-1">
+                    {topPerformingItem ? topPerformingItem.name : "Chưa có dữ liệu"}
+                  </div>
+                  <div className="text-xs font-bold text-[#D4AF37] font-mono mt-1 flex items-center gap-2">
+                    <span>🔥 {productClicks[topPerformingItem?.id || ""] || 0} lượt click</span>
+                    {totalAffiliateClicks > 0 && (
+                      <span className="text-[10px] text-gray-400 font-normal">
+                        ({Math.round(((productClicks[topPerformingItem?.id || ""] || 0) / totalAffiliateClicks) * 100)}% tổng click)
+                      </span>
+                    )}
+                  </div>
+                </div>
+              </div>
+
+              {/* Card 3: Sản Phẩm Có Click */}
+              <div className="p-5 rounded-2xl bg-[#0F121E] border border-emerald-500/30 shadow-lg relative overflow-hidden flex flex-col justify-between">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Mặt Hàng Có Tương Tác</span>
+                  <span className="p-2 rounded-xl bg-emerald-500/15 text-emerald-400">
+                    <TrendingUp className="w-4 h-4" />
+                  </span>
+                </div>
+                <div>
+                  <div className="text-3xl font-black text-white font-mono flex items-baseline gap-2">
+                    <span>{itemsWithClicksCount}</span>
+                    <span className="text-xs font-bold text-gray-400">/ {localShopItems.length} món</span>
+                  </div>
+                  <p className="text-[11px] text-gray-400 mt-1">
+                    {Math.round((itemsWithClicksCount / (localShopItems.length || 1)) * 100)}% danh mục đã phát sinh lượt click
+                  </p>
+                </div>
+              </div>
+
+              {/* Card 4: Trạng Thái Đồng Bộ & Refresh */}
+              <div className="p-5 rounded-2xl bg-[#0F121E] border border-gray-800 shadow-lg relative overflow-hidden flex flex-col justify-between">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-xs font-bold text-gray-400 uppercase tracking-wider">Đồng Bộ Số Liệu</span>
+                  <button
+                    type="button"
+                    onClick={loadProductClicks}
+                    disabled={loadingClicks}
+                    className="p-2 rounded-xl bg-gray-800 hover:bg-[#D4AF37] text-gray-300 hover:text-black transition-all cursor-pointer disabled:opacity-50"
+                    title="Làm mới số liệu click"
+                  >
+                    <RefreshCw className={`w-4 h-4 ${loadingClicks ? "animate-spin" : ""}`} />
+                  </button>
+                </div>
+                <div>
+                  <div className="text-xs font-bold text-gray-300">
+                    {loadingClicks ? "Đang cập nhật từ server..." : "Dữ liệu thời gian thực"}
+                  </div>
+                  <button
+                    type="button"
+                    onClick={loadProductClicks}
+                    className="mt-2 text-[11px] text-[#D4AF37] hover:underline flex items-center gap-1 font-bold cursor-pointer"
+                  >
+                    <span>Cập nhật số liệu mới nhất</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
             {/* Catalog Toolbar */}
             <div className="bg-[#10131E] border border-gray-800 rounded-2xl p-5 shadow-lg">
               <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-4 pb-4 border-b border-gray-800">
@@ -1189,60 +1340,117 @@ export default function AdminPage() {
                 </div>
               </div>
 
-              {/* Category Filter Tabs */}
-              <div className="flex items-center gap-2 overflow-x-auto pb-2">
-                {[
-                  { id: "all", label: "Tất cả sản phẩm" },
-                  { id: "jersey", label: "Áo đấu thi đấu" },
-                  { id: "boots", label: "Giày bóng đá" },
-                  { id: "lifestyle", label: "Thời trang CR7" },
-                  { id: "memorabilia", label: "Kỷ vật lưu niệm" },
-                ].map((tab) => (
-                  <button
-                    key={tab.id}
-                    type="button"
-                    onClick={() => setShopCategoryFilter(tab.id as any)}
-                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all shrink-0 cursor-pointer ${
-                      shopCategoryFilter === tab.id
-                        ? "bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40"
-                        : "bg-[#161924] text-gray-400 hover:text-white border border-transparent"
-                    }`}
+              {/* Category Filter Tabs & Sort Control */}
+              <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 pt-2">
+                <div className="flex items-center gap-2 overflow-x-auto pb-1">
+                  {[
+                    { id: "all", label: "Tất cả sản phẩm" },
+                    { id: "jersey", label: "Áo đấu thi đấu" },
+                    { id: "boots", label: "Giày bóng đá" },
+                    { id: "lifestyle", label: "Thời trang CR7" },
+                    { id: "memorabilia", label: "Kỷ vật lưu niệm" },
+                  ].map((tab) => (
+                    <button
+                      key={tab.id}
+                      type="button"
+                      onClick={() => setShopCategoryFilter(tab.id as any)}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all shrink-0 cursor-pointer ${
+                        shopCategoryFilter === tab.id
+                          ? "bg-[#D4AF37]/20 text-[#D4AF37] border border-[#D4AF37]/40"
+                          : "bg-[#161924] text-gray-400 hover:text-white border border-transparent"
+                      }`}
+                    >
+                      {tab.label}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex items-center gap-2 self-end shrink-0">
+                  <span className="text-xs text-gray-400 flex items-center gap-1 font-bold">
+                    <ArrowUpDown className="w-3.5 h-3.5 text-[#D4AF37]" />
+                    <span>Sắp xếp:</span>
+                  </span>
+                  <select
+                    value={shopSortBy}
+                    onChange={(e) => setShopSortBy(e.target.value as any)}
+                    className="px-3 py-1.5 rounded-lg bg-[#161924] border border-gray-700 text-xs font-bold text-white focus:outline-none focus:border-[#D4AF37] cursor-pointer"
                   >
-                    {tab.label}
-                  </button>
-                ))}
+                    <option value="clicks-desc">🔥 Nhiều click nhất (Top)</option>
+                    <option value="clicks-asc">Ít click nhất</option>
+                    <option value="default">Mặc định danh mục</option>
+                  </select>
+                </div>
               </div>
             </div>
 
             {/* Products Grid */}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              {localShopItems
-                .filter((item) => (shopCategoryFilter === "all" ? true : item.category === shopCategoryFilter))
-                .map((item) => (
-                  <div
-                    key={item.id}
-                    className="bg-[#0F121C] border border-gray-800 hover:border-[#D4AF37]/40 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between group shadow-lg"
-                  >
-                    <div>
-                      {/* Thumbnail & Badges */}
-                      <div className="relative aspect-video rounded-xl overflow-hidden bg-black/50 mb-3 border border-white/5">
-                        <img
-                          src={item.image}
-                          alt={item.name}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                          onError={(e) => {
-                            (e.target as any).src = "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop";
-                          }}
-                        />
-                        {item.badge && (
-                          <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-[#D4AF37] text-black text-[10px] font-black uppercase tracking-wider shadow">
-                            {item.badge}
-                          </span>
-                        )}
-                        <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur text-white text-[10px] font-bold border border-white/10">
-                          {item.platform}
+              {sortedShopItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="bg-[#0F121C] border border-gray-800 hover:border-[#D4AF37]/40 rounded-2xl p-4 transition-all duration-300 flex flex-col justify-between group shadow-lg"
+                >
+                  <div>
+                    {/* Thumbnail & Badges */}
+                    <div className="relative aspect-video rounded-xl overflow-hidden bg-black/50 mb-3 border border-white/5">
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        onError={(e) => {
+                          (e.target as any).src = "https://images.unsplash.com/photo-1577223625816-7546f13df25d?q=80&w=600&auto=format&fit=crop";
+                        }}
+                      />
+                      {item.badge && (
+                        <span className="absolute top-2 left-2 px-2 py-0.5 rounded-md bg-[#D4AF37] text-black text-[10px] font-black uppercase tracking-wider shadow">
+                          {item.badge}
                         </span>
-                      </div>
+                      )}
+                      <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/80 backdrop-blur text-white text-[10px] font-bold border border-white/10">
+                        {item.platform}
+                      </span>
+                    </div>
+
+                    {/* Click Performance Metric Counter */}
+                    {(() => {
+                      const clicks = productClicks[item.id] || 0;
+                      const isTop = clicks > 0 && clicks === maxProductClicks;
+                      const percentage = totalAffiliateClicks > 0 ? Math.round((clicks / totalAffiliateClicks) * 100) : 0;
+                      return (
+                        <div className="mb-3 p-2.5 rounded-xl bg-[#141826] border border-gray-800">
+                          <div className="flex items-center justify-between gap-2">
+                            <div className="flex items-center gap-1.5">
+                              <span className={`p-1 rounded-lg ${clicks > 0 ? "bg-[#D4AF37]/20 text-[#D4AF37]" : "bg-gray-800 text-gray-500"}`}>
+                                <MousePointerClick className="w-3.5 h-3.5" />
+                              </span>
+                              <span className="text-xs font-black text-white font-mono">
+                                {clicks}{" "}
+                                <span className="text-[10px] text-gray-400 font-normal">lượt click</span>
+                              </span>
+                            </div>
+                            {isTop && (
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-black bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                                <Crown className="w-3 h-3 text-amber-400" />
+                                Top 1 Hot
+                              </span>
+                            )}
+                            {clicks > 0 && !isTop && (
+                              <span className="text-[10px] font-bold text-gray-400">
+                                {percentage}% tổng click
+                              </span>
+                            )}
+                          </div>
+                          <div className="w-full bg-gray-800/80 rounded-full h-1.5 mt-2 overflow-hidden">
+                            <div
+                              className={`h-full rounded-full transition-all duration-500 ${
+                                isTop ? "bg-gradient-to-r from-amber-400 to-[#D4AF37]" : "bg-[#D4AF37]/70"
+                              }`}
+                              style={{ width: `${maxProductClicks > 0 ? Math.max((clicks / maxProductClicks) * 100, clicks > 0 ? 8 : 0) : 0}%` }}
+                            />
+                          </div>
+                        </div>
+                      );
+                    })()}
 
                       {/* Title & Category */}
                       <div className="mb-2">

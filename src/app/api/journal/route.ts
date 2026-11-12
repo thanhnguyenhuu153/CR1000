@@ -54,6 +54,12 @@ export async function GET() {
       sectionsEn: row.sections_en || [],
       faqsVi: row.faqs_vi || [],
       faqsEn: row.faqs_en || [],
+      relatedProductId:
+        row.related_product_id ||
+        (Array.isArray(row.tags)
+          ? row.tags.find((t: string) => t.startsWith("gear:"))?.replace("gear:", "")
+          : undefined) ||
+        undefined,
     }));
 
     // Supabase là nguồn dữ liệu độc lập 100% (Single Source of Truth) khi đã có bài viết.
@@ -93,7 +99,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const payload = {
+    const tagsWithGear = [...(article.tags || []).filter((t: string) => !t.startsWith("gear:"))];
+    if (article.relatedProductId) {
+      tagsWithGear.push(`gear:${article.relatedProductId}`);
+    }
+
+    let payload: any = {
       id: article.id || `art_${Date.now()}`,
       slug: article.slug,
       title_vi: article.titleVi,
@@ -109,7 +120,7 @@ export async function POST(req: NextRequest) {
       author: article.author || "CR1000 Editorial Team",
       cover_image: article.coverImage || "/images/cr7/hero-cr7.jpg",
       is_featured: Boolean(article.isFeatured),
-      tags: article.tags || [],
+      tags: tagsWithGear,
       quick_takeaway_vi: article.quickTakeawayVi,
       quick_takeaway_en: article.quickTakeawayEn,
       key_stats: article.keyStats || [],
@@ -117,13 +128,25 @@ export async function POST(req: NextRequest) {
       sections_en: article.sectionsEn || [],
       faqs_vi: article.faqsVi || [],
       faqs_en: article.faqsEn || [],
+      related_product_id: article.relatedProductId || null,
       updated_at: new Date().toISOString(),
     };
 
-    const { data, error } = await supabase
+    let { data, error } = await supabase
       .from("journal_articles")
       .upsert(payload, { onConflict: "slug" })
       .select();
+
+    // If column related_product_id does not exist yet in Supabase, retry safely
+    if (error && error.message?.includes("related_product_id")) {
+      delete payload.related_product_id;
+      const retry = await supabase
+        .from("journal_articles")
+        .upsert(payload, { onConflict: "slug" })
+        .select();
+      data = retry.data;
+      error = retry.error;
+    }
 
     if (error) {
       return NextResponse.json({ error: error.message }, { status: 500 });

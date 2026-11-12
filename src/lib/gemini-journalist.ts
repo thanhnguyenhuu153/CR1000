@@ -288,7 +288,26 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       }
     } catch (e) {}
 
-    const payload = {
+    // Intelligently resolve the most contextual memorabilia/shop item
+    const textCorpus = `${articleData.titleVi || ""} ${articleData.titleEn || ""} ${finalSlug}`.toLowerCase();
+    let suggestedGearId = "poster-cr1000-metal";
+    if (textCorpus.includes("knuckleball") || textCorpus.includes("sút phạt") || textCorpus.includes("free kick")) {
+      suggestedGearId = "boots-mercurial-superfly-iv-gala-2014";
+    } else if (textCorpus.includes("bật nhảy") || textCorpus.includes("jump") || textCorpus.includes("aerial") || textCorpus.includes("không chiến") || textCorpus.includes("turin") || textCorpus.includes("bicycle")) {
+      suggestedGearId = "boots-mercurial-superfly-360-turin-2018";
+    } else if (textCorpus.includes("portugal") || textCorpus.includes("bồ đào nha") || textCorpus.includes("seleção")) {
+      suggestedGearId = "boots-mercurial-superfly-10-munich-2025";
+    } else if (textCorpus.includes("al-nassr") || textCorpus.includes("al nassr") || textCorpus.includes("saudi")) {
+      suggestedGearId = "jersey-al-nassr-home";
+    } else if (textCorpus.includes("manchester") || textCorpus.includes("mu ") || textCorpus.includes("moscow") || textCorpus.includes("2008")) {
+      suggestedGearId = "jersey-mu-2008-retro";
+    } else if (textCorpus.includes("real madrid") || textCorpus.includes("cardiff") || textCorpus.includes("champions league")) {
+      suggestedGearId = "jersey-real-madrid-cardiff-2017";
+    }
+
+    const tagsWithGear = ["Ronaldo", "CR7", "1000 Goals", "Al Nassr", `gear:${suggestedGearId}`];
+
+    let payload: any = {
       id: `art_auto_${Date.now()}`,
       slug: finalSlug,
       title_vi: articleData.titleVi,
@@ -304,7 +323,8 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       author: "CR1000 AI Sports Analytics",
       cover_image: articleData.coverImage || "/images/cr7/era-alnassr.jpg",
       is_featured: false,
-      tags: ["Ronaldo", "CR7", "1000 Goals", "Al Nassr"],
+      tags: tagsWithGear,
+      related_product_id: suggestedGearId,
       quick_takeaway_vi: articleData.quickTakeawayVi,
       quick_takeaway_en: articleData.quickTakeawayEn,
       key_stats: articleData.keyStats || [],
@@ -315,9 +335,18 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       updated_at: new Date().toISOString(),
     };
 
-    const { error: dbError } = await supabase
+    let { error: dbError } = await supabase
       .from("journal_articles")
       .upsert(payload, { onConflict: "slug" });
+
+    // Fallback if related_product_id column does not exist yet in Supabase
+    if (dbError && dbError.message?.includes("related_product_id")) {
+      delete payload.related_product_id;
+      const retry = await supabase
+        .from("journal_articles")
+        .upsert(payload, { onConflict: "slug" });
+      dbError = retry.error;
+    }
 
     if (dbError) {
       return {

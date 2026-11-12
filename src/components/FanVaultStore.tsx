@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { getCr7ShopItems, ShopItem } from "@/data/cr7-shop";
 import { useLanguage } from "@/context/LanguageContext";
+import { trackAffiliateClick } from "@/lib/track-affiliate";
 import {
   ShoppingBag,
   Star,
@@ -372,6 +373,7 @@ export default function FanVaultStore() {
                       href={activeAffiliateUrl}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => trackAffiliateClick(item.id, activePlatform, "fanvault_store")}
                       className="px-4 py-2 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] hover:opacity-90 active:scale-95 text-black font-bold text-xs flex items-center gap-1.5 transition-all shadow-md shadow-[#D4AF37]/20"
                     >
                       <span>{t.shop.buyNow} ({activePlatform})</span>

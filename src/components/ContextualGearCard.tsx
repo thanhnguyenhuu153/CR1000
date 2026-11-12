@@ -5,6 +5,7 @@ import Image from "next/image";
 import { ShoppingBag, Star, ExternalLink, X, Sparkles, ShieldCheck } from "lucide-react";
 import { getCr7ShopItems, ShopItem } from "@/data/cr7-shop";
 import { JournalArticle } from "@/data/cr7-journal";
+import { trackAffiliateClick } from "@/lib/track-affiliate";
 
 interface ContextualGearCardProps {
   article: JournalArticle;
@@ -78,7 +79,9 @@ function findMatchingGear(article: JournalArticle, items: ShopItem[]): ShopItem 
 export default function ContextualGearCard({ article, language }: ContextualGearCardProps) {
   const isVi = language === "vi";
   const items = getCr7ShopItems(language);
-  const gear = findMatchingGear(article, items);
+  const gear =
+    (article.relatedProductId && items.find((i) => i.id === article.relatedProductId)) ||
+    findMatchingGear(article, items);
 
   const [showFloatingBar, setShowFloatingBar] = useState(false);
   const [isDismissed, setIsDismissed] = useState(false);
@@ -221,7 +224,10 @@ export default function ContextualGearCard({ article, language }: ContextualGear
                 href={activeAffiliateUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={recordInterest}
+                onClick={() => {
+                  recordInterest();
+                  trackAffiliateClick(gear.id, activePlatform, "article_card");
+                }}
                 className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#F59E0B] hover:opacity-90 active:scale-95 text-black font-extrabold text-xs flex items-center justify-center gap-2 transition-all shadow-lg shadow-[#D4AF37]/20"
               >
                 <ShoppingBag className="w-3.5 h-3.5" />
@@ -266,7 +272,10 @@ export default function ContextualGearCard({ article, language }: ContextualGear
               href={activeAffiliateUrl}
               target="_blank"
               rel="noopener noreferrer"
-              onClick={recordInterest}
+              onClick={() => {
+                recordInterest();
+                trackAffiliateClick(gear.id, activePlatform, "article_floating_bar");
+              }}
               className="px-3 py-2 rounded-xl bg-[#D4AF37] hover:bg-[#F59E0B] text-black font-black text-xs shrink-0 flex items-center gap-1 shadow-md transition-all active:scale-95"
             >
               <span>{isVi ? "Xem" : "Buy"}</span>

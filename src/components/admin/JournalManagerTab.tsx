@@ -25,8 +25,10 @@ import {
   Check,
   Upload,
   ImageIcon,
+  ShoppingBag,
 } from "lucide-react";
 import { JournalArticle, cr7JournalArticles } from "@/data/cr7-journal";
+import { cr7ShopItemsVi, ShopItem } from "@/data/cr7-shop";
 
 export default function JournalManagerTab() {
   const [articles, setArticles] = useState<JournalArticle[]>([]);
@@ -282,6 +284,7 @@ export default function JournalManagerTab() {
       coverImage: "/images/cr7/hero-cr7.webp",
       isFeatured: false,
       tags: ["Ronaldo", "CR7", "1000 Goals"],
+      relatedProductId: "",
       quickTakeawayVi: "",
       quickTakeawayEn: "",
       keyStats: [
@@ -627,6 +630,19 @@ export default function JournalManagerTab() {
                         <Calendar className="w-3 h-3" />
                         {art.publishedDate}
                       </span>
+                      {art.relatedProductId ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-bold bg-amber-500/10 text-amber-300 border border-amber-500/30">
+                          <ShoppingBag className="w-2.5 h-2.5 text-amber-400" />
+                          <span className="max-w-[140px] sm:max-w-[200px] truncate">
+                            {cr7ShopItemsVi.find((i) => i.id === art.relatedProductId)?.name || art.relatedProductId}
+                          </span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded text-[10px] font-semibold bg-gray-800/80 text-gray-400 border border-gray-700/60">
+                          <Sparkles className="w-2.5 h-2.5 text-amber-400/70" />
+                          <span>Kỷ vật: AI tự động</span>
+                        </span>
+                      )}
                     </div>
 
                     <h3 className="text-sm sm:text-base font-bold text-white line-clamp-1">
@@ -863,6 +879,117 @@ export default function JournalManagerTab() {
                     ))}
                   </div>
                 </div>
+              </div>
+
+              {/* Contextual Gear & Memorabilia Selector */}
+              <div className="space-y-3 p-4 rounded-2xl bg-[#0F121E] border border-amber-500/30">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <label className="text-xs font-bold text-gray-200 flex items-center gap-1.5">
+                    <ShoppingBag className="w-4 h-4 text-[#D4AF37]" />
+                    <span>Kỷ vật / Sản phẩm gắn kèm bài viết (Affiliate Showcase)</span>
+                  </label>
+                  {formData.relatedProductId && (
+                    <button
+                      type="button"
+                      onClick={() => setFormData((prev) => ({ ...prev, relatedProductId: "" }))}
+                      className="text-[11px] text-[#D4AF37] hover:underline flex items-center gap-1 cursor-pointer"
+                    >
+                      <RotateCcw className="w-3 h-3" />
+                      <span>Đặt lại về AI Tự Động</span>
+                    </button>
+                  )}
+                </div>
+
+                <p className="text-[11px] text-gray-400">
+                  Lựa chọn món đồ kỷ vật, áo đấu hoặc giày thi đấu xuất hiện làm thẻ gợi ý mua hàng giữa bài viết. Sau khi AI soạn bài, bạn có thể tự do đổi sang bất kỳ món nào.
+                </p>
+
+                <select
+                  value={formData.relatedProductId || ""}
+                  onChange={(e) => setFormData((prev) => ({ ...prev, relatedProductId: e.target.value }))}
+                  className="w-full px-4 py-2.5 rounded-xl bg-[#141724] border border-gray-800 text-xs text-white focus:outline-none focus:border-[#D4AF37]"
+                >
+                  <option value="">✨ Tự động theo ngữ cảnh bài viết (AI đề xuất)</option>
+                  
+                  <optgroup label="👕 Áo đấu huyền thoại">
+                    {cr7ShopItemsVi
+                      .filter((i) => i.category === "jersey")
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name} ({item.priceText})
+                        </option>
+                      ))}
+                  </optgroup>
+
+                  <optgroup label="👟 Giày bóng đá thi đấu">
+                    {cr7ShopItemsVi
+                      .filter((i) => i.category === "boots")
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name} ({item.priceText})
+                        </option>
+                      ))}
+                  </optgroup>
+
+                  <optgroup label="🏆 Kỷ vật lưu niệm & Thời trang">
+                    {cr7ShopItemsVi
+                      .filter((i) => i.category === "memorabilia" || i.category === "lifestyle")
+                      .map((item) => (
+                        <option key={item.id} value={item.id}>
+                          {item.name} ({item.priceText})
+                        </option>
+                      ))}
+                  </optgroup>
+                </select>
+
+                {/* Selected Item Preview Box */}
+                {(() => {
+                  const selectedItem = cr7ShopItemsVi.find((i) => i.id === formData.relatedProductId);
+                  if (!selectedItem) {
+                    return (
+                      <div className="p-3 rounded-xl bg-[#141724] border border-dashed border-gray-800 flex items-center gap-2.5 text-xs text-gray-400">
+                        <Sparkles className="w-4 h-4 text-amber-400 shrink-0" />
+                        <span>Chế độ tự động: Hệ thống sẽ quét từ khóa trong bài viết để tự chọn món phù hợp nhất (VD: nhắc tới Bồ Đào Nha sẽ tự chọn Superfly 10, nhắc tới MU 2008 sẽ tự chọn áo đỏ Moscow).</span>
+                      </div>
+                    );
+                  }
+                  return (
+                    <div className="p-3 rounded-xl bg-[#141724] border border-[#D4AF37]/40 flex items-center gap-3">
+                      <div className="relative w-14 h-14 rounded-lg overflow-hidden bg-black shrink-0 border border-white/10">
+                        <img
+                          src={selectedItem.image}
+                          alt={selectedItem.name}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <div className="flex items-center gap-2">
+                          <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase tracking-wider bg-[#D4AF37] text-black">
+                            {selectedItem.platform}
+                          </span>
+                          <span className="text-[10px] text-gray-400 font-bold uppercase">
+                            {selectedItem.category === "jersey" ? "Áo đấu" : selectedItem.category === "boots" ? "Giày thi đấu" : "Kỷ vật"}
+                          </span>
+                        </div>
+                        <h4 className="text-xs font-bold text-white truncate mt-0.5">
+                          {selectedItem.name}
+                        </h4>
+                        <span className="text-xs font-extrabold text-[#D4AF37] font-mono">
+                          {selectedItem.priceText}
+                        </span>
+                      </div>
+                      <a
+                        href={selectedItem.geoLinks?.VN?.url || selectedItem.affiliateUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-2.5 py-1.5 rounded-lg bg-gray-800 hover:bg-[#D4AF37] text-gray-300 hover:text-black text-xs font-bold transition-all shrink-0 flex items-center gap-1"
+                      >
+                        <span>Xem link</span>
+                        <ExternalLink className="w-3 h-3" />
+                      </a>
+                    </div>
+                  );
+                })()}
               </div>
 
               {/* AIO Quick Takeaway Box */}

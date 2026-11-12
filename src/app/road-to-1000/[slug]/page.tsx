@@ -53,6 +53,12 @@ async function getArticle(slug: string): Promise<JournalArticle | null> {
           sectionsEn: data.sections_en || [],
           faqsVi: data.faqs_vi || [],
           faqsEn: data.faqs_en || [],
+          relatedProductId:
+            data.related_product_id ||
+            (Array.isArray(data.tags)
+              ? data.tags.find((t: string) => t.startsWith("gear:"))?.replace("gear:", "")
+              : undefined) ||
+            undefined,
         };
       }
     }

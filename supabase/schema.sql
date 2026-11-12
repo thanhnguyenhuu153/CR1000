@@ -29,8 +29,12 @@ CREATE TABLE IF NOT EXISTS public.journal_articles (
     faqs_vi JSONB DEFAULT '[]'::jsonb,
     faqs_en JSONB DEFAULT '[]'::jsonb,
     created_at TIMESTAMPTZ DEFAULT NOW(),
-    updated_at TIMESTAMPTZ DEFAULT NOW()
+    updated_at TIMESTAMPTZ DEFAULT NOW(),
+    related_product_id TEXT
 );
+
+-- Bổ sung cột related_product_id nếu bảng đã tồn tại từ trước
+ALTER TABLE public.journal_articles ADD COLUMN IF NOT EXISTS related_product_id TEXT;
 
 -- 2. Đặt chỉ mục (Indexes) để tìm kiếm và truy vấn tốc độ cao
 CREATE INDEX IF NOT EXISTS idx_journal_slug ON public.journal_articles(slug);
@@ -54,3 +58,34 @@ FOR ALL
 TO anon, authenticated, service_role
 USING (true)
 WITH CHECK (true);
+
+-- ==============================================================================
+-- 6. Bảng theo dõi số lượt Click Affiliate của từng sản phẩm Fan Vault & Giày
+-- ==============================================================================
+CREATE TABLE IF NOT EXISTS public.product_clicks (
+    product_id TEXT PRIMARY KEY,
+    click_count INTEGER NOT NULL DEFAULT 1,
+    platform TEXT,
+    source TEXT,
+    last_clicked_at TIMESTAMPTZ DEFAULT NOW(),
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+CREATE INDEX IF NOT EXISTS idx_clicks_count ON public.product_clicks(click_count DESC);
+
+ALTER TABLE public.product_clicks ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read access to product_clicks"
+ON public.product_clicks
+FOR SELECT
+TO public
+USING (true);
+
+CREATE POLICY "Allow anon insert and update to product_clicks"
+ON public.product_clicks
+FOR ALL
+TO anon, authenticated, service_role
+USING (true)
+WITH CHECK (true);
+

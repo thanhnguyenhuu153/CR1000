@@ -7,6 +7,7 @@ import { getCr7Milestones, CareerMilestoneGoal } from "@/data/cr7-milestones";
 import { useSiteData } from "@/context/SiteDataContext";
 import { useLanguage } from "@/context/LanguageContext";
 import { Trophy, Sparkles, Flame, Calendar, MapPin, Tag, Search, ExternalLink, ShieldCheck } from "lucide-react";
+import { trackAffiliateClick } from "@/lib/track-affiliate";
 
 export default function FinalsAndMilestonesSection() {
   const { images } = useSiteData();
@@ -210,6 +211,7 @@ export default function FinalsAndMilestonesSection() {
                         href={goal.gearTag.affiliateUrl || `https://shopee.vn/search?keyword=${encodeURIComponent(goal.gearTag.affiliateKeyword)}`}
                         target="_blank"
                         rel="noopener noreferrer"
+                        onClick={() => trackAffiliateClick(goal.gearTag?.bootName || "cr7-boot", "Shopee", "chapter7_milestones")}
                         className="px-3 py-1.5 rounded-lg bg-[#222736] hover:bg-[#D4AF37] text-gray-200 hover:text-black text-xs font-bold transition-all flex items-center gap-1 shrink-0"
                       >
                         <span>{language === "vi" ? "Khám phá" : "Explore"}</span>
