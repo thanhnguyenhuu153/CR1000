@@ -148,7 +148,9 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     ];
 
     try {
-      const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+      const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`, {
+        signal: AbortSignal.timeout(5000),
+      });
       if (listRes.ok) {
         const listData = await listRes.json();
         const availableGenerateModels = (listData.models || [])
@@ -202,6 +204,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(requestBody),
+          signal: AbortSignal.timeout(18000),
         });
 
         if (!response.ok) {
