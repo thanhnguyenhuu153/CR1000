@@ -136,16 +136,22 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
 
   try {
     // 1. Dynamically query available models for this API key to guarantee 100% compatibility
-    let candidateModels = [
-      process.env.GEMINI_MODEL || "gemini-3.8-flash",
-      "gemini-2.0-flash",
-      "gemini-1.5-flash-002",
-      "gemini-1.5-flash-001",
-    ];
+    const userPreferredModel = process.env.GEMINI_MODEL || "gemini-3.8-flash";
+    let candidateModels = Array.from(
+      new Set([
+        userPreferredModel,
+        "gemini-3.8-flash",
+        "gemini-2.0-flash",
+        "gemini-2.0-flash-001",
+        "gemini-1.5-flash-002",
+        "gemini-1.5-flash-001",
+        "gemini-1.5-pro-002",
+      ])
+    );
 
     try {
       const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`, {
-        signal: AbortSignal.timeout(3000),
+        signal: AbortSignal.timeout(4000),
       });
       if (listRes.ok) {
         const listData = await listRes.json();
@@ -161,19 +167,17 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
           .map((m: any) => m.name.replace(/^models\//, ""));
 
         if (availableGenerateModels.length > 0) {
-          const preferred = [
+          const priorityOrder = [
+            userPreferredModel,
             "gemini-3.8-flash",
             "gemini-2.0-flash",
             "gemini-2.0-flash-001",
             "gemini-1.5-flash-002",
             "gemini-1.5-flash-001",
+            "gemini-1.5-pro-002",
           ];
-          const matchedPreferred = preferred.filter((p) => availableGenerateModels.includes(p));
-          if (matchedPreferred.length > 0) {
-            candidateModels = matchedPreferred;
-          } else {
-            candidateModels = availableGenerateModels;
-          }
+          const matchedPriority = priorityOrder.filter((p) => availableGenerateModels.includes(p));
+          candidateModels = Array.from(new Set([...matchedPriority, ...priorityOrder, ...availableGenerateModels]));
         }
       }
     } catch (e) {}
@@ -201,7 +205,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(requestBody),
-          signal: AbortSignal.timeout(8000),
+          signal: AbortSignal.timeout(25000),
         });
 
         if (!response.ok) {
