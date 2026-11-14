@@ -4,6 +4,7 @@ import { runAutonomousJournalist } from "@/lib/gemini-journalist";
 import { submitToIndexNow } from "@/lib/indexnow";
 
 export const dynamic = "force-dynamic";
+export const maxDuration = 60;
 
 /**
  * Level 3 Auto-Pilot Cron Handler
