@@ -3,6 +3,7 @@
 import React from "react";
 import Navbar from "@/components/Navbar";
 import HeroCountdown from "@/components/HeroCountdown";
+import HomeJournalSection from "@/components/HomeJournalSection";
 import BioSection from "@/components/BioSection";
 import AnatomySection from "@/components/AnatomySection";
 import HattrickShowcase from "@/components/HattrickShowcase";
@@ -24,6 +25,9 @@ export default function HomePage() {
 
       {/* Hero Section: The Countdown Chamber */}
       <HeroCountdown currentGoals={goals} />
+
+      {/* Editorial Showcase: Road to 1,000 Analysis & Methodology */}
+      <HomeJournalSection />
 
       {/* Chapter 1: Bio & Eras */}
       <BioSection />

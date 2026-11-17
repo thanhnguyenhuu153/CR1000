@@ -22,17 +22,18 @@ export async function runAutonomousJournalist(forceTopic?: string): Promise<Auto
   const model = process.env.GEMINI_MODEL || "gemini-3.8-flash";
 
   // 1. Fetch recent articles from Supabase / fallback to provide dynamic deduplication memory
-  let recentArticlesList: { titleVi: string; categoryVi: string; excerptVi: string }[] = [];
+  let recentArticlesList: { slug?: string; titleVi: string; categoryVi: string; excerptVi: string }[] = [];
   try {
     const supabase = getSupabaseServerClient();
     if (supabase) {
       const { data: dbArticles } = await supabase
         .from("journal_articles")
-        .select("title_vi, category_vi, excerpt_vi")
+        .select("slug, title_vi, category_vi, excerpt_vi")
         .order("published_date", { ascending: false })
-        .limit(10);
+        .limit(15);
       if (dbArticles && dbArticles.length > 0) {
         recentArticlesList = dbArticles.map((a: any) => ({
+          slug: a.slug,
           titleVi: a.title_vi,
           categoryVi: a.category_vi,
           excerptVi: a.excerpt_vi,
@@ -43,6 +44,7 @@ export async function runAutonomousJournalist(forceTopic?: string): Promise<Auto
 
   if (recentArticlesList.length === 0) {
     recentArticlesList = cr7JournalArticles.slice(0, 5).map((a) => ({
+      slug: a.slug,
       titleVi: a.titleVi,
       categoryVi: a.categoryVi,
       excerptVi: a.excerptVi,
@@ -50,7 +52,7 @@ export async function runAutonomousJournalist(forceTopic?: string): Promise<Auto
   }
 
   const existingArticlesContext = recentArticlesList
-    .map((a, i) => `${i + 1}. [${a.categoryVi}] "${a.titleVi}"\n   - Tóm tắt: ${a.excerptVi}`)
+    .map((a, i) => `${i + 1}. [${a.categoryVi}] "${a.titleVi}" (slug: ${a.slug || "n/a"})\n   - Tóm tắt: ${a.excerptVi}`)
     .join("\n\n");
 
   // System prompt enforcing strict anti-AI tone, sports journalism, and GEO/AIO criteria
@@ -64,31 +66,33 @@ ${existingArticlesContext}
 =============================================================
 
 TIÊU CHUẨN BIÊN TẬP & QUY TẮC CHỐNG TRÙNG LẶP (TOPIC ROTATION):
-1. ĐỐI CHIẾU DANH SÁCH BÀI CŨ & XOAY TRỤC CHỦ ĐỀ:
-   - TUYỆT ĐỐI CẤM chọn lại chủ đề, góc nhìn (angle) hoặc luận điểm tương tự các bài gần đây!
-   - ĐẶC BIỆT: Nếu danh sách bài gần đây đã viết về "Tuổi sinh học", "Giấc ngủ", "Dinh dưỡng" hay "Cơ chế sinh học / trao đổi chất", BẠN BỊ CẤM TUYỆT ĐỐI viết thêm bất kỳ bài nào liên quan tới sinh học, tuổi sinh học hay y học thể thao nữa!
-   - BẮT BUỘC CHỌN 1 TRONG CÁC TRỤ CỘT CHUYÊN MÔN MỚI SAU ĐÂY:
+1. ĐỐI CHIẾU DANH SÁCH 15 BÀI CŨ & XOAY TRỤC CHỦ ĐỀ:
+   - TUYỆT ĐỐI CẤM chọn lại chủ đề, góc nhìn (angle), tiêu đề, slug hoặc luận điểm tương tự bất kỳ bài nào trong danh sách đã xuất bản ở trên!
+   - ĐẶC BIỆT CẤM LẶP LẠI các chủ đề đã khai thác gần đây: "Tuổi sinh học / Cơ sinh học tuổi 40", "ADN Clutch Player & 25 nạn nhân", "Vật lý sút phạt Knuckleball & bật nhảy 2m56". Nếu chủ đề nào đã có trong danh sách 15 bài gần đây, PHẢI CHỌN GÓC NHÌN HOÀN TOÀN KHÁC (ví dụ: sự nghiệp Sporting CP/MU thời trẻ, đối đầu Barcelona ở El Clásico, trận play-off Thụy Điển 2013, kỷ lục EURO qua 6 kỳ, chiến thuật dưới thời Ancelotti/Zidane, hiệu suất tại AFC Champions League...).
+   - BẮT BUỘC CHỌN 1 TRONG CÁC TRỤ CỘT CHUYÊN MÔN CHƯA BỊ TRÙNG:
      + Trụ cột 1 (Tiến hóa chiến thuật): Từ Winger rê dắt tốc độ (MU 2003-2006) -> Máy ghi bàn toàn năng (Real Madrid 2009-2018) -> Sát thủ vòng cấm tối thượng (Poacher / Fox in the Box tại Juve & Al Nassr). Nghệ thuật di chuyển không bóng, khai thác điểm mù (blind-side run).
      + Trụ cột 2 (Ký sự trận cầu kinh điển & Chung kết): Hat-trick lật ngược thế cờ vs Atletico Madrid 2019, Siêu phẩm xe đạp chổng ngược vs Juventus 2018, Hat-trick kinh điển play-off World Cup vs Thụy Điển 2013, Hat-trick vs Tây Ban Nha World Cup 2018, hoặc Chung kết Champions League 2008 / 2014 / 2017.
-     + Trụ cột 3 (Đối sánh số liệu lịch sử): So sánh hiệu suất bàn thắng xG sau tuổi 30 của CR7 với các huyền thoại (Pele, Messi, Romario, Ibrahimovic, Lewandowski, Gerd Muller). Tỷ lệ ghi bàn phút 75-90+ và bản lĩnh "Clutch Player" định đoạt trận cầu lớn.
-     + Trụ cột 4 (Khoa học kỹ thuật sút phạt & Không chiến): Vật lý học khí động học Knuckleball (hiệu ứng xoáy ngược Magnus), lực sút 105+ km/h, hoặc kỹ năng bật nhảy cao 2.56m (sức bật thẳng đứng 78cm - vượt trội trung bình NBA), thời gian dừng trên không (hang time).
-     + Trụ cột 5 (Đối thủ ưa thích & Nạn nhân lớn nhất): Ký sự về các đội bóng từng nếm trải nhiều bàn thua nhất từ CR7: Atletico Madrid (25 bàn), Sevilla (27 bàn), Barcelona (20 bàn), Tottenham, Bayern Munich...
-     + Trụ cột 6 (Nhịp thở hiện tại & Lộ trình 1.000 bàn): Phân tích trận đấu kế tiếp của Al Nassr (Al-Qadsiah tại Saudi Pro League, Al-Sadd tại AFC Champions League Elite) hoặc mô hình xác suất chạm mốc 1.000 bàn thắng.
+     + Trụ cột 3 (Đối sánh số liệu lịch sử): So sánh hiệu suất bàn thắng xG và cự ly dứt điểm của CR7 với các huyền thoại (Pele, Messi, Romario, Ibrahimovic, Lewandowski, Gerd Muller, Josef Bican) tại các giải đấu đỉnh cao châu Âu.
+     + Trụ cột 4 (Di sản tại các giải đấu & Huấn luyện viên): Dấu ấn chiến thuật dưới thời Sir Alex Ferguson, José Mourinho, Carlo Ancelotti, Zinedine Zidane hay kỷ lục 140 bàn tại UEFA Champions League.
+     + Trụ cột 5 (Đối thủ ưa thích & Cuộc đối đầu kinh điển): Ký sự chuyên sâu về các đại chiến El Clásico, Derby Madrid hoặc các trận cầu trước Sevilla (27 bàn), Bayern Munich (9 bàn), Juventus (10 bàn)...
+     + Trụ cột 6 (Nhịp thở hiện tại & Lộ trình 1.000 bàn): Phân tích chiến thuật, phong độ và lịch thi đấu sắp tới của Al Nassr (Al-Qadsiah tại Saudi Pro League, Al-Sadd tại AFC Champions League Elite) cùng mô hình xác suất chạm mốc 1.000 bàn thắng.
 
-2. PHONG CÁCH VIẾT BÁO CHÍ THỂ THAO CAO CẤP (ANTI-AI TONE):
+2. PHONG CÁCH & ĐỘ DÀI BÁO CHÍ CHUYÊN SÂU (LONG-FORM STANDARD — BẮT BUỘC):
    - CẤM TUYỆT ĐỐI các cụm từ sáo rỗng AI: "Trong thế giới bóng đá", "Không thể phủ nhận rằng", "Tóm lại", "Một huyền thoại sống", "Hãy cùng bước vào hành trình".
-   - BẮT BUỘC dùng văn phong ký sự thể thao giàu chuyên môn và nhịp thở sân cỏ (tương đương The Athletic, L'Équipe, Reuters): Sử dụng thuật ngữ chuyên môn (xG, cự ly dứt điểm, cú sút knuckleball, pressing, chạm bóng bước một, box-to-box, poacher, bản đồ nhiệt heatmap, bứt tốc high-intensity, clutch player...).
+   - ĐỘ DÀI BẮT BUỘC (CHỐNG THIN CONTENT): Bài viết Tiếng Việt PHẢI đạt **900 – 1.300+ từ** (và bản Tiếng Anh tương đương). Phải có **tối thiểu 4–5 phân đoạn lớn** (\`sectionsVi\` & \`sectionsEn\`), mỗi phân đoạn có **2–3 đoạn văn sâu sắc, chi tiết**, phân tích số liệu cụ thể thay vì viết tóm tắt ngắn.
+   - BẮT BUỘC nhúng ít nhất **1 bảng số liệu đối chiếu (\`table\`)** và ít nhất **1 trích dẫn kinh điển (\`quote\`)** ngay trong các phân đoạn nội dung, cùng **3–4 câu hỏi FAQ (\`faqsVi\` / \`faqsEn\`)**.
+   - Văn phong tương đương The Athletic, L'Équipe, Reuters: giàu chuyên môn (xG, pressing, blind-side run, heatmap, box-to-box, half-space...).
 
 3. AIO & GEO (GENERATIVE ENGINE OPTIMIZATION):
-   - quickTakeaway: Đoạn "Tóm tắt sự kiện" 2-3 câu ngắn gọn, trả lời trực diện facts (thời gian, đối thủ/kỷ lục, số liệu cụ thể, số bàn còn lại tới mốc 1.000). Đây là phần Google AI Overview và Perplexity sẽ trích nguồn.
-   - Luôn liên kết với "Cuộc đua 1.000 bàn thắng" (Hiện tại đã ghi 985 bàn, còn 15 bàn nữa).
+   - quickTakeaway: Đoạn "Tóm tắt sự kiện" 2-3 câu ngắn gọn, trả lời trực diện facts (thời gian, đối thủ/kỷ lục, số liệu cụ thể, số bàn còn lại tới mốc 1.000).
+   - Luôn liên kết tự nhiên với "Cuộc đua 1.000 bàn thắng" (Hiện tại đã ghi 985 bàn, còn 15 bàn nữa).
 
 4. ĐỊNH DẠNG ĐẦU RA BẮT BUỘC (JSON ONLY):
 Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
 {
   "titleVi": "Tiêu đề tiếng Việt sắc sảo, có số liệu và góc nhìn báo chí",
   "titleEn": "English Title in high-end sports journalism style",
-  "slug": "duong-dan-tinh-khong-dau-ngan-gon-viet-lien-bang-dau-gach-ngang",
+  "slug": "duong-dan-tinh-khong-dau-doc-nhat-chua-tung-co-trong-danh-sach-bai-cu",
   "categoryVi": "Tin Nóng & Bước Ngoặt" | "Phân Tích Số Liệu" | "Kỷ Lục & Di Sản",
   "categoryEn": "Breaking & Milestones" | "Data & Forecast" | "Legacy & Records",
   "categorySlug": "breaking" | "data" | "legacy",
@@ -99,40 +103,86 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
   "coverImage": "/images/cr7/era-portugal.jpg" (hoặc /images/cr7/era-alnassr.jpg, /images/cr7/era-realmadrid.jpg, /images/cr7/final-nations-league-2025.jpeg, /images/cr7/hero-cr7.jpg),
   "keyStats": [
     { "labelVi": "Chỉ số 1", "labelEn": "Stat 1", "value": "Giá trị", "highlight": true },
-    { "labelVi": "Chỉ số 2", "labelEn": "Stat 2", "value": "Giá trị" }
+    { "labelVi": "Chỉ số 2", "labelEn": "Stat 2", "value": "Giá trị" },
+    { "labelVi": "Chỉ số 3", "labelEn": "Stat 3", "value": "Giá trị" },
+    { "labelVi": "Chỉ số 4", "labelEn": "Stat 4", "value": "Giá trị" }
   ],
   "sectionsVi": [
     {
-      "heading": "Tiêu đề phân đoạn 1",
-      "content": ["Đoạn văn 1...", "Đoạn văn 2..."]
+      "heading": "Tiêu đề phân đoạn 1 (Bối cảnh & Dữ liệu cốt lõi)",
+      "content": ["Đoạn văn phân tích chi tiết 1 (80-120 từ)...", "Đoạn văn phân tích chi tiết 2 (80-120 từ)..."]
     },
     {
-      "heading": "Tiêu đề phân đoạn 2",
-      "content": ["Đoạn văn 3...", "Đoạn văn 4..."]
+      "heading": "Tiêu đề phân đoạn 2 (Giải phẫu chiến thuật & Bảng đối chiếu)",
+      "content": ["Đoạn văn phân tích chi tiết 3...", "Đoạn văn phân tích chi tiết 4..."],
+      "table": {
+        "headers": ["Chỉ số / Giai đoạn", "Giá trị CR7", "Chuẩn đối chiếu / Bối cảnh"],
+        "rows": [
+          ["Hàng dữ liệu 1", "Số liệu 1", "Ghi chú chuyên môn 1"],
+          ["Hàng dữ liệu 2", "Số liệu 2", "Ghi chú chuyên môn 2"],
+          ["Hàng dữ liệu 3", "Số liệu 3", "Ghi chú chuyên môn 3"]
+        ]
+      }
+    },
+    {
+      "heading": "Tiêu đề phân đoạn 3 (Góc nhìn chuyên gia & Bước ngoặt)",
+      "content": ["Đoạn văn phân tích chi tiết 5...", "Đoạn văn phân tích chi tiết 6..."],
+      "quote": {
+        "text": "Trích dẫn thực tế tiêu biểu hoặc nhận định chuyên môn đắt giá",
+        "author": "Tên nhân vật / Chuyên gia"
+      }
+    },
+    {
+      "heading": "Tiêu đề phân đoạn 4 (Tác động tới hành trình 1.000 bàn thắng)",
+      "content": ["Đoạn văn phân tích chi tiết 7...", "Đoạn văn phân tích chi tiết 8..."]
     }
   ],
   "sectionsEn": [
     {
       "heading": "Section Heading 1",
-      "content": ["Paragraph 1...", "Paragraph 2..."]
+      "content": ["Detailed paragraph 1...", "Detailed paragraph 2..."]
     },
     {
       "heading": "Section Heading 2",
-      "content": ["Paragraph 3...", "Paragraph 4..."]
+      "content": ["Detailed paragraph 3...", "Detailed paragraph 4..."],
+      "table": {
+        "headers": ["Metric / Era", "CR7 Value", "Benchmark / Context"],
+        "rows": [
+          ["Row 1", "Value 1", "Note 1"],
+          ["Row 2", "Value 2", "Note 2"],
+          ["Row 3", "Value 3", "Note 3"]
+        ]
+      }
+    },
+    {
+      "heading": "Section Heading 3",
+      "content": ["Detailed paragraph 5...", "Detailed paragraph 6..."],
+      "quote": {
+        "text": "Authentic notable quote",
+        "author": "Author Name"
+      }
+    },
+    {
+      "heading": "Section Heading 4",
+      "content": ["Detailed paragraph 7...", "Detailed paragraph 8..."]
     }
   ],
   "faqsVi": [
-    { "question": "Câu hỏi thường gặp 1?", "answer": "Câu trả lời ngắn gọn, chuẩn xác..." }
+    { "question": "Câu hỏi thường gặp 1?", "answer": "Câu trả lời chi tiết, chuẩn xác..." },
+    { "question": "Câu hỏi thường gặp 2?", "answer": "Câu trả lời chi tiết, chuẩn xác..." },
+    { "question": "Câu hỏi thường gặp 3?", "answer": "Câu trả lời chi tiết, chuẩn xác..." }
   ],
   "faqsEn": [
-    { "question": "Frequently asked question 1?", "answer": "Direct factual answer..." }
+    { "question": "Frequently asked question 1?", "answer": "Direct factual answer..." },
+    { "question": "Frequently asked question 2?", "answer": "Direct factual answer..." },
+    { "question": "Frequently asked question 3?", "answer": "Direct factual answer..." }
   ]
 }
 `;
 
   const userQuery = forceTopic
-    ? `Hãy viết một bài báo phân tích chuyên sâu về chủ đề sau: "${forceTopic}". Đảm bảo tuân thủ mọi nguyên tắc phong cách thể thao đỉnh cao, AIO và cấu trúc JSON.`
-    : `Dựa vào danh sách các bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng được khai thác (tránh trùng lặp với các bài cũ). Hãy chọn một chủ đề hấp dẫn từ các Trụ cột (chiến thuật, các trận cầu lịch sử ngược dòng, so sánh số liệu với các huyền thoại, hoặc khoa học sút phạt/không chiến). Viết một bài ký sự thể thao xuất sắc đạt điểm 10 về chuyên môn và thu hút độc giả.`;
+    ? `Hãy viết một bài báo phân tích chuyên sâu dài 900–1.300 từ (tối thiểu 4 phân đoạn, kèm 1 bảng số liệu và 1 trích dẫn) về chủ đề sau: "${forceTopic}". Đảm bảo tuân thủ mọi nguyên tắc phong cách thể thao đỉnh cao, AIO và cấu trúc JSON.`
+    : `Dựa vào danh sách 15 bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng xuất hiện (tuyệt đối không lặp lại tuổi sinh học, ADN clutch player 25 nạn nhân hay knuckleball bật nhảy). Viết một bài ký sự thể thao chuyên sâu dài 900–1.300 từ gồm tối thiểu 4 phân đoạn lớn, có bảng số liệu đối chiếu, trích dẫn và 3 câu hỏi FAQ đạt điểm 10 về chuyên môn.`;
 
   try {
     // 1. Dynamically query available models for this API key to guarantee 100% compatibility

@@ -2,6 +2,8 @@ import React from "react";
 import Link from "next/link";
 import { ArrowLeft, Shield, Lock, FileText, ExternalLink, HelpCircle } from "lucide-react";
 import type { Metadata } from "next";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Chính Sách Bảo Mật & Điều Khoản Sử Dụng — CR1000",
@@ -53,12 +55,13 @@ export default function PrivacyPolicyPage() {
   };
 
   return (
-    <main className="min-h-screen bg-[#08090C] text-[#F8FAFC] py-20 px-4 sm:px-6 lg:px-8 relative selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">
+    <main className="min-h-screen bg-[#08090C] text-[#F8FAFC] relative selection:bg-[#D4AF37]/30 selection:text-[#FFF7D6]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
-      <div className="max-w-4xl mx-auto">
+      <Navbar />
+      <div className="max-w-4xl mx-auto pt-28 pb-20 px-4 sm:px-6 lg:px-8">
         {/* Back Button */}
         <div className="mb-10">
           <Link
@@ -192,16 +195,35 @@ export default function PrivacyPolicyPage() {
           </section>
         </div>
 
-        {/* Footer Back */}
-        <div className="mt-14 pt-8 border-t border-white/10 flex justify-center">
+        {/* Footer Back & Related Trust Pages */}
+        <div className="mt-14 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-4">
+          <Link
+            href="/about"
+            className="px-5 py-2.5 rounded-xl bg-[#121520] hover:bg-[#1C2132] text-gray-200 font-semibold border border-white/10 transition-all text-xs"
+          >
+            Về CR1000 &amp; Phương pháp luận
+          </Link>
+          <Link
+            href="/terms"
+            className="px-5 py-2.5 rounded-xl bg-[#121520] hover:bg-[#1C2132] text-gray-200 font-semibold border border-white/10 transition-all text-xs"
+          >
+            Điều khoản sử dụng &amp; Miễn trừ
+          </Link>
+          <Link
+            href="/contact"
+            className="px-5 py-2.5 rounded-xl bg-[#121520] hover:bg-[#1C2132] text-gray-200 font-semibold border border-white/10 transition-all text-xs"
+          >
+            Liên hệ Ban biên tập
+          </Link>
           <Link
             href="/"
-            className="px-6 py-3 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-black font-bold hover:brightness-110 transition-all text-sm shadow-lg shadow-[#D4AF37]/20"
+            className="px-6 py-2.5 rounded-xl bg-gradient-to-r from-[#D4AF37] to-[#B8860B] text-black font-bold hover:brightness-110 transition-all text-xs shadow-lg shadow-[#D4AF37]/20"
           >
-            Quay lại Trang chủ Bảo tàng CR1000
+            Quay lại Trang chủ CR1000
           </Link>
         </div>
       </div>
+      <Footer />
     </main>
   );
 }

@@ -28,6 +28,10 @@ export async function GET(req: NextRequest) {
       `https://${INDEXNOW_HOST}/hat-tricks`,
       `https://${INDEXNOW_HOST}/trophies`,
       `https://${INDEXNOW_HOST}/free-kicks`,
+      `https://${INDEXNOW_HOST}/about`,
+      `https://${INDEXNOW_HOST}/contact`,
+      `https://${INDEXNOW_HOST}/terms`,
+      `https://${INDEXNOW_HOST}/privacy`,
     ];
 
     // Collect article slugs from Supabase or fallback

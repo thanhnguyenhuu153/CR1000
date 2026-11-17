@@ -12,7 +12,7 @@ interface LanguageContextType {
 const LanguageContext = createContext<LanguageContextType | null>(null);
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [language, setLanguageState] = useState<LocaleType>("en"); // Temporary fallback before detection
+  const [language, setLanguageState] = useState<LocaleType>("vi"); // Default matches <html lang="vi"> SSR metadata
   const [isDetected, setIsDetected] = useState(false);
 
   useEffect(() => {

@@ -1,5 +1,9 @@
 import type { Metadata } from "next";
 import RoadTo1000Client from "./RoadTo1000Client";
+import { getSupabaseServerClient } from "@/lib/supabase";
+import { cr7JournalArticles, JournalArticle } from "@/data/cr7-journal";
+
+export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Nhật Ký Đường Tới 1.000 Bàn Thắng — Cristiano Ronaldo (CR1000)",
@@ -45,6 +49,57 @@ export const metadata: Metadata = {
   },
 };
 
-export default function Page() {
-  return <RoadTo1000Client />;
+async function getServerArticles(): Promise<JournalArticle[]> {
+  try {
+    const supabase = getSupabaseServerClient();
+    if (!supabase) return cr7JournalArticles;
+
+    const { data, error } = await supabase
+      .from("journal_articles")
+      .select("*")
+      .order("published_date", { ascending: false });
+
+    if (error || !data || data.length === 0) {
+      return cr7JournalArticles;
+    }
+
+    return data.map((row: any) => ({
+      id: row.id,
+      slug: row.slug,
+      titleVi: row.title_vi,
+      titleEn: row.title_en,
+      excerptVi: row.excerpt_vi,
+      excerptEn: row.excerpt_en,
+      categoryVi: row.category_vi,
+      categoryEn: row.category_en,
+      categorySlug: row.category_slug,
+      publishedDate: row.published_date,
+      readTimeVi: row.read_time_vi,
+      readTimeEn: row.read_time_en,
+      author: row.author,
+      coverImage: row.cover_image,
+      isFeatured: row.is_featured,
+      tags: row.tags || [],
+      quickTakeawayVi: row.quick_takeaway_vi,
+      quickTakeawayEn: row.quick_takeaway_en,
+      keyStats: row.key_stats || [],
+      sectionsVi: row.sections_vi || [],
+      sectionsEn: row.sections_en || [],
+      faqsVi: row.faqs_vi || [],
+      faqsEn: row.faqs_en || [],
+      relatedProductId:
+        row.related_product_id ||
+        (Array.isArray(row.tags)
+          ? row.tags.find((t: string) => t.startsWith("gear:"))?.replace("gear:", "")
+          : undefined) ||
+        undefined,
+    }));
+  } catch (e) {
+    return cr7JournalArticles;
+  }
+}
+
+export default async function Page() {
+  const articles = await getServerArticles();
+  return <RoadTo1000Client initialArticles={articles} />;
 }

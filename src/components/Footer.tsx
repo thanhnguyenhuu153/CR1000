@@ -82,6 +82,9 @@ export default function Footer() {
               {showFanVault && (
                 <li><a href="/#shop" className="hover:text-[#D4AF37] transition-colors">{t.nav.shop}</a></li>
               )}
+              <li><Link href="/about" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-medium">{language === "vi" ? "Về CR1000 & Phương pháp luận" : "About & Methodology"}</Link></li>
+              <li><Link href="/contact" className="hover:text-[#D4AF37] transition-colors text-gray-300 font-medium">{language === "vi" ? "Liên hệ & Hiệu đính" : "Contact & Corrections"}</Link></li>
+              <li><Link href="/terms" className="hover:text-[#D4AF37] transition-colors text-gray-400">{language === "vi" ? "Điều khoản sử dụng" : "Terms of Use"}</Link></li>
               <li><Link href="/privacy" className="hover:text-[#D4AF37] transition-colors text-gray-400">{t.footer.privacyLink}</Link></li>
             </ul>
           </div>
@@ -124,12 +127,20 @@ export default function Footer() {
             <p className="text-gray-500 text-[11px]">
               © {new Date().getFullYear()} {t.footer.copyright}
             </p>
-            <div className="flex items-center gap-3 text-[11px] text-gray-500">
+            <div className="flex flex-wrap items-center justify-center sm:justify-start gap-3 text-[11px] text-gray-500">
+              <Link href="/about" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
+                {language === "vi" ? "Giới thiệu" : "About Us"}
+              </Link>
+              <span>•</span>
+              <Link href="/contact" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
+                {language === "vi" ? "Liên hệ" : "Contact"}
+              </Link>
+              <span>•</span>
               <Link href="/privacy" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
                 {language === "vi" ? "Chính sách bảo mật" : "Privacy Policy"}
               </Link>
               <span>•</span>
-              <Link href="/privacy#terms" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
+              <Link href="/terms" className="hover:text-[#D4AF37] transition-colors underline-offset-2 hover:underline">
                 {language === "vi" ? "Điều khoản & Miễn trừ" : "Terms & Disclaimer"}
               </Link>
             </div>

@@ -26,12 +26,18 @@ import { useLanguage } from "@/context/LanguageContext";
 import { useSiteData } from "@/context/SiteDataContext";
 import { cr7JournalArticles, JournalArticle } from "@/data/cr7-journal";
 
-export default function RoadTo1000Client() {
+export default function RoadTo1000Client({
+  initialArticles,
+}: {
+  initialArticles?: JournalArticle[];
+}) {
   const { language } = useLanguage();
   const { goals } = useSiteData();
   const isVi = language === "vi";
 
-  const [articles, setArticles] = useState<JournalArticle[]>(cr7JournalArticles);
+  const [articles, setArticles] = useState<JournalArticle[]>(
+    initialArticles && initialArticles.length > 0 ? initialArticles : cr7JournalArticles
+  );
   const [activeCategory, setActiveCategory] = useState<string>("all");
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [copiedId, setCopiedId] = useState<string | null>(null);
