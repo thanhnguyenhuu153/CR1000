@@ -190,7 +190,7 @@ export default function PrivacyPolicyPage() {
               Nếu quý vị có bất kỳ câu hỏi nào liên quan đến Chính sách bảo mật hoặc muốn đóng góp dữ liệu cho bảo tàng số, xin vui lòng gửi thư về:
             </p>
             <div className="mt-3 p-4 rounded-xl bg-[#08090C] border border-white/10 inline-block font-mono text-sm text-[#D4AF37]">
-              contact@cr1000.live
+              thanhnguyenhuu153@live.com
             </div>
           </section>
         </div>

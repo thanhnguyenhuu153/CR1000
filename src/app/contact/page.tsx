@@ -124,7 +124,7 @@ export default function ContactPage() {
           <div className="bg-[#0F121A]/80 border border-white/10 rounded-2xl p-5 space-y-2">
             <Mail className="w-5 h-5 text-[#D4AF37]" />
             <h2 className="text-sm font-bold text-white">Hộp thư chính thức</h2>
-            <p className="text-xs font-mono text-[#D4AF37]">contact@cr1000.live</p>
+            <p className="text-xs font-mono text-[#D4AF37]">thanhnguyenhuu153@live.com</p>
             <p className="text-xs text-gray-400">Hỗ trợ cả Tiếng Việt &amp; Tiếng Anh.</p>
           </div>
 
@@ -184,7 +184,7 @@ export default function ContactPage() {
             </div>
             <p>
               CR1000 tôn trọng quyền sở hữu trí tuệ của mọi cá nhân, nhiếp ảnh gia và đơn vị giữ bản quyền hình ảnh thể thao. Nếu bạn là chủ sở hữu hợp pháp của bất kỳ tư liệu nào xuất hiện trên website và muốn yêu cầu ghi nguồn bổ sung hoặc gỡ bỏ, vui lòng gửi thông báo qua email{" "}
-              <strong className="text-white font-mono">contact@cr1000.live</strong> kèm đường dẫn URL cụ thể và thông tin xác minh quyền sở hữu. Chúng tôi cam kết xử lý và phản hồi trong thời gian sớm nhất.
+              <strong className="text-white font-mono">thanhnguyenhuu153@live.com</strong> kèm đường dẫn URL cụ thể và thông tin xác minh quyền sở hữu. Chúng tôi cam kết xử lý và phản hồi trong thời gian sớm nhất.
             </p>
           </section>
 

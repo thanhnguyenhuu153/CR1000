@@ -217,7 +217,7 @@ export default function TermsPage() {
               <Link href="/contact" className="text-[#D4AF37] hover:underline font-medium">
                 Liên hệ chính thức
               </Link>{" "}
-              hoặc email <span className="font-mono text-white">contact@cr1000.live</span>.
+              hoặc email <span className="font-mono text-white">thanhnguyenhuu153@live.com</span>.
             </p>
           </section>
         </div>

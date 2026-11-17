@@ -11,7 +11,7 @@ export default function ContactForm() {
   const [copied, setCopied] = useState(false);
   const [submittedNotice, setSubmittedNotice] = useState(false);
 
-  const contactEmail = "contact@cr1000.live";
+  const contactEmail = "thanhnguyenhuu153@live.com";
 
   const topicLabels: Record<string, string> = {
     "data-correction": "Hiệu đính số liệu bàn thắng / Trận đấu",
