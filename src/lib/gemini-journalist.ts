@@ -185,23 +185,20 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     : `Dựa vào danh sách 15 bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng xuất hiện (tuyệt đối không lặp lại tuổi sinh học, ADN clutch player 25 nạn nhân hay knuckleball bật nhảy). Viết một bài ký sự thể thao chuyên sâu dài 900–1.300 từ gồm tối thiểu 4 phân đoạn lớn, có bảng số liệu đối chiếu, trích dẫn và 3 câu hỏi FAQ đạt điểm 10 về chuyên môn.`;
 
   try {
-    // 1. Dynamically query available models for this API key to guarantee 100% compatibility
+    // 1. Dynamically query available fast Flash models for this API key
     const userPreferredModel = process.env.GEMINI_MODEL || "gemini-3.8-flash";
     let candidateModels = Array.from(
       new Set([
         userPreferredModel,
-        "gemini-3.8-flash",
+        "gemini-2.5-flash",
         "gemini-2.0-flash",
-        "gemini-2.0-flash-001",
         "gemini-1.5-flash-002",
-        "gemini-1.5-flash-001",
-        "gemini-1.5-pro-002",
       ])
     );
 
     try {
       const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`, {
-        signal: AbortSignal.timeout(4000),
+        signal: AbortSignal.timeout(2500),
       });
       if (listRes.ok) {
         const listData = await listRes.json();
@@ -220,14 +217,17 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
           const priorityOrder = [
             userPreferredModel,
             "gemini-3.8-flash",
+            "gemini-2.5-flash",
             "gemini-2.0-flash",
             "gemini-2.0-flash-001",
             "gemini-1.5-flash-002",
             "gemini-1.5-flash-001",
-            "gemini-1.5-pro-002",
           ];
           const matchedPriority = priorityOrder.filter((p) => availableGenerateModels.includes(p));
-          candidateModels = Array.from(new Set([...matchedPriority, ...priorityOrder, ...availableGenerateModels]));
+          if (matchedPriority.length > 0) {
+            // Keep only top 3 verified fast models to avoid Vercel 60s timeout
+            candidateModels = Array.from(new Set(matchedPriority)).slice(0, 3);
+          }
         }
       }
     } catch (e) {}
@@ -413,6 +413,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     }
 
     // Instant revalidation
+    revalidatePath("/");
     revalidatePath("/road-to-1000");
     revalidatePath(`/road-to-1000/${payload.slug}`);
     revalidatePath("/sitemap.xml");

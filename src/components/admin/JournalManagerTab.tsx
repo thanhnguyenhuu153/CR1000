@@ -395,7 +395,20 @@ export default function JournalManagerTab() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ topic: topic || undefined }),
       });
-      const data = await res.json();
+
+      const rawText = await res.text();
+      let data: any = {};
+      try {
+        data = JSON.parse(rawText);
+      } catch {
+        const timeoutMsg =
+          res.status === 504 || rawText.includes("FUNCTION_INVOCATION_TIMEOUT")
+            ? "Máy chủ xử lý quá thời gian (Timeout 60s) do bài viết quá dài hoặc API AI phản hồi chậm. Vui lòng thử bấm tạo lại."
+            : `Máy chủ trả về lỗi (${res.status}): ${rawText.slice(0, 140)}`;
+        setAiError(timeoutMsg);
+        notify(timeoutMsg, "error");
+        return;
+      }
 
       if (data.success) {
         if (data.skipped) {
