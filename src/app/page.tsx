@@ -12,6 +12,7 @@ import TrophyRoomSection from "@/components/TrophyRoomSection";
 import SeasonsChartSection from "@/components/SeasonsChartSection";
 import FinalsAndMilestonesSection from "@/components/FinalsAndMilestonesSection";
 import FanVaultStore from "@/components/FanVaultStore";
+import EditorialStandardsBanner from "@/components/EditorialStandardsBanner";
 import Footer from "@/components/Footer";
 import { useSiteData } from "@/context/SiteDataContext";
 
@@ -52,6 +53,9 @@ export default function HomePage() {
 
       {/* Chapter 8: Fan Vault & Memorabilia Store (Controlled via Admin) */}
       {showFanVault && <FanVaultStore />}
+
+      {/* Editorial Standards & Verification Banner (Bottom of Homepage) */}
+      <EditorialStandardsBanner />
 
       {/* Footer & SEO FAQ */}
       <Footer />
