@@ -185,52 +185,17 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     : `Dựa vào danh sách 15 bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng xuất hiện (tuyệt đối không lặp lại tuổi sinh học, ADN clutch player 25 nạn nhân hay knuckleball bật nhảy). Viết một bài ký sự thể thao chuyên sâu dài 900–1.300 từ gồm tối thiểu 4 phân đoạn lớn, có bảng số liệu đối chiếu, trích dẫn và 3 câu hỏi FAQ đạt điểm 10 về chuyên môn.`;
 
   try {
-    // 1. Dynamically query available fast Flash models for this API key
+    // 1. Prioritize Gemini 3.8 Flash (and user env override) with fast verified fallbacks
     const userPreferredModel = process.env.GEMINI_MODEL || "gemini-3.8-flash";
-    let candidateModels = Array.from(
+    const candidateModels = Array.from(
       new Set([
         userPreferredModel,
-        "gemini-2.5-flash",
+        "gemini-3.8-flash",
+        "gemini-3.6-flash",
         "gemini-2.0-flash",
         "gemini-1.5-flash-002",
       ])
     );
-
-    try {
-      const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`, {
-        signal: AbortSignal.timeout(2500),
-      });
-      if (listRes.ok) {
-        const listData = await listRes.json();
-        const availableGenerateModels = (listData.models || [])
-          .filter(
-            (m: any) =>
-              m.supportedGenerationMethods?.includes("generateContent") &&
-              !m.name.includes("tts") &&
-              !m.name.includes("audio") &&
-              !m.name.includes("embedding") &&
-              !m.name.includes("imagen")
-          )
-          .map((m: any) => m.name.replace(/^models\//, ""));
-
-        if (availableGenerateModels.length > 0) {
-          const priorityOrder = [
-            userPreferredModel,
-            "gemini-3.8-flash",
-            "gemini-2.5-flash",
-            "gemini-2.0-flash",
-            "gemini-2.0-flash-001",
-            "gemini-1.5-flash-002",
-            "gemini-1.5-flash-001",
-          ];
-          const matchedPriority = priorityOrder.filter((p) => availableGenerateModels.includes(p));
-          if (matchedPriority.length > 0) {
-            // Keep only top 3 verified fast models to avoid Vercel 60s timeout
-            candidateModels = Array.from(new Set(matchedPriority)).slice(0, 3);
-          }
-        }
-      }
-    } catch (e) {}
 
     const requestBody = {
       contents: [
@@ -242,20 +207,32 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       generationConfig: {
         responseMimeType: "application/json",
         temperature: forceTopic ? 0.6 : 0.8,
+        maxOutputTokens: 4096,
       },
     };
 
     let data: any = null;
     let lastError = "";
+    const startedAt = Date.now();
+    const TOTAL_BUDGET_MS = 52000; // Leave 8s buffer before Vercel 60s maxDuration
 
-    for (const currentModel of candidateModels) {
+    for (let i = 0; i < candidateModels.length; i++) {
+      const currentModel = candidateModels[i];
+      const remainingMs = TOTAL_BUDGET_MS - (Date.now() - startedAt);
+      if (remainingMs < 5000) {
+        lastError = lastError || "Hết quỹ thời gian xử lý trước ngưỡng 60s của Vercel.";
+        break;
+      }
+
+      const attemptTimeoutMs = Math.min(i === 0 ? 28000 : 20000, remainingMs);
+
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:generateContent?key=${apiKey}`;
         const response = await fetch(url, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(requestBody),
-          signal: AbortSignal.timeout(25000),
+          signal: AbortSignal.timeout(attemptTimeoutMs),
         });
 
         if (!response.ok) {

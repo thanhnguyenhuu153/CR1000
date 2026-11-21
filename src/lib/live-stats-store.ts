@@ -120,7 +120,14 @@ Return ONLY valid JSON (no markdown fences) with this exact schema:
   "matchSummary": "Short summary e.g. Al-Ahli 3-1 Al-Nassr (2026-11-20): Ronaldo scored 1 goal in min 14"
 }`;
 
-  const groundingModels = ["gemini-2.5-flash", "gemini-2.0-flash"];
+  const groundingModels = Array.from(
+    new Set([
+      process.env.GEMINI_MODEL || "gemini-3.8-flash",
+      "gemini-3.8-flash",
+      "gemini-3.6-flash",
+      "gemini-2.0-flash",
+    ])
+  );
 
   for (const modelName of groundingModels) {
     try {
