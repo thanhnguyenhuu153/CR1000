@@ -3,19 +3,21 @@
 import React, { useState } from "react";
 import { getCr7SeasonsData, YearRecord } from "@/data/cr7-seasons";
 import { useLanguage } from "@/context/LanguageContext";
+import { useSiteData } from "@/context/SiteDataContext";
 import { BarChart3, TrendingUp, Crown, Calendar, Sparkles, CheckCircle2, Flame, Trophy } from "lucide-react";
 
 export default function SeasonsChartSection() {
   const { language, t } = useLanguage();
+  const { goals } = useSiteData();
   const seasons = getCr7SeasonsData(language);
   const [selectedYearIndex, setSelectedYearIndex] = useState(11); // 2013 is index 11
   const selectedYear = seasons[selectedYearIndex] || seasons[11];
 
   const maxGoals = 69; // Đỉnh cao năm 2013
-  const totalGoals = 985;
-  const totalMatches = 1341;
-  const totalClubGoals = 839;
+  const totalGoals = goals;
+  const totalMatches = 1342 + Math.max(0, goals - 986);
   const totalCountryGoals = 146;
+  const totalClubGoals = Math.max(0, goals - totalCountryGoals);
 
   return (
     <section className="py-24 sm:py-32 bg-[#08090C] relative border-t border-white/[0.06] overflow-hidden">

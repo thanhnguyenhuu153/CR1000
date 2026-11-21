@@ -85,7 +85,7 @@ TIÊU CHUẨN BIÊN TẬP & QUY TẮC CHỐNG TRÙNG LẶP (TOPIC ROTATION):
 
 3. AIO & GEO (GENERATIVE ENGINE OPTIMIZATION):
    - quickTakeaway: Đoạn "Tóm tắt sự kiện" 2-3 câu ngắn gọn, trả lời trực diện facts (thời gian, đối thủ/kỷ lục, số liệu cụ thể, số bàn còn lại tới mốc 1.000).
-   - Luôn liên kết tự nhiên với "Cuộc đua 1.000 bàn thắng" (Hiện tại đã ghi 985 bàn, còn 15 bàn nữa).
+   - Luôn liên kết tự nhiên với "Cuộc đua 1.000 bàn thắng" (Hiện tại đã ghi 986 bàn, còn 14 bàn nữa).
 
 4. ĐỊNH DẠNG ĐẦU RA BẮT BUỘC (JSON ONLY):
 Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:

@@ -89,3 +89,27 @@ TO anon, authenticated, service_role
 USING (true)
 WITH CHECK (true);
 
+-- ==============================================================================
+-- 7. Bảng lưu trữ cấu hình & số liệu live (Tổng số bàn thắng chính thức CR7)
+-- ==============================================================================
+CREATE TABLE IF NOT EXISTS public.site_settings (
+    key TEXT PRIMARY KEY,
+    value JSONB NOT NULL,
+    updated_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+ALTER TABLE public.site_settings ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow public read access to site_settings"
+ON public.site_settings
+FOR SELECT
+TO public
+USING (true);
+
+CREATE POLICY "Allow anon insert and update to site_settings"
+ON public.site_settings
+FOR ALL
+TO anon, authenticated, service_role
+USING (true)
+WITH CHECK (true);
+

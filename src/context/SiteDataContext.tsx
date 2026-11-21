@@ -153,7 +153,9 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
         const savedGoals = localStorage.getItem("cr1000_goals_count");
         if (savedGoals) {
           const parsed = parseInt(savedGoals, 10);
-          if (!isNaN(parsed) && parsed >= 985) setGoalsState(parsed);
+          if (!isNaN(parsed) && parsed >= cr7CareerSummary.totalGoals) {
+            setGoalsState(parsed);
+          }
         }
 
         const legacyPlaceholders = new Set([
@@ -249,6 +251,17 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
 
     loadFromStorage();
 
+    // Fetch live shared official goal count from server/Supabase for all visitors
+    fetch("/api/cr7", { cache: "no-store" })
+      .then((res) => res.json())
+      .then((data) => {
+        const liveTotal = Number(data?.goals?.officialTotal);
+        if (!isNaN(liveTotal) && liveTotal >= cr7CareerSummary.totalGoals) {
+          setGoalsState((prev) => Math.max(prev, liveTotal));
+        }
+      })
+      .catch(() => {});
+
     // Listen to changes made in other tabs (e.g. from /admin tab to / home tab)
     const handleStorageChange = (e: StorageEvent) => {
       if (e.key === "cr1000_custom_images" && e.newValue) {
@@ -282,6 +295,11 @@ export function SiteDataProvider({ children }: { children: React.ReactNode }) {
       try {
         localStorage.setItem("cr1000_goals_count", nextVal.toString());
       } catch (e) {}
+      fetch("/api/cr7", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ goals: nextVal }),
+      }).catch(() => {});
       return nextVal;
     });
   };
