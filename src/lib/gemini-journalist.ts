@@ -181,21 +181,57 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
 `;
 
   const userQuery = forceTopic
-    ? `Hãy viết một bài báo phân tích chuyên sâu dài 900–1.300 từ (tối thiểu 4 phân đoạn, kèm 1 bảng số liệu và 1 trích dẫn) về chủ đề sau: "${forceTopic}". Đảm bảo tuân thủ mọi nguyên tắc phong cách thể thao đỉnh cao, AIO và cấu trúc JSON.`
-    : `Dựa vào danh sách 15 bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng xuất hiện (tuyệt đối không lặp lại tuổi sinh học, ADN clutch player 25 nạn nhân hay knuckleball bật nhảy). Viết một bài ký sự thể thao chuyên sâu dài 900–1.300 từ gồm tối thiểu 4 phân đoạn lớn, có bảng số liệu đối chiếu, trích dẫn và 3 câu hỏi FAQ đạt điểm 10 về chuyên môn.`;
+    ? `Hãy viết một bài báo phân tích chuyên sâu dài 750–950 từ (4 phân đoạn, kèm 1 bảng số liệu và 1 trích dẫn) về chủ đề sau: "${forceTopic}". Đảm bảo tuân thủ mọi nguyên tắc phong cách thể thao đỉnh cao, AIO và cấu trúc JSON.`
+    : `Dựa vào danh sách 15 bài viết gần đây ở trên, hãy CHỦ ĐỘNG CHỌN MỘT GÓC NHÌN HOÀN TOÀN MỚI MẺ chưa từng xuất hiện (tuyệt đối không lặp lại tuổi sinh học, ADN clutch player 25 nạn nhân hay knuckleball bật nhảy). Viết một bài ký sự thể thao chuyên sâu dài 750–950 từ gồm 4 phân đoạn lớn, có bảng số liệu đối chiếu, trích dẫn và 3 câu hỏi FAQ đạt điểm 10 về chuyên môn.`;
 
   try {
-    // 1. Prioritize Gemini 3.8 Flash (and user env override) with fast verified fallbacks
+    // 1. Prioritize Gemini 3.8 Flash + query live available Flash models on this API key (avoids 404 models)
     const userPreferredModel = process.env.GEMINI_MODEL || "gemini-3.8-flash";
-    const candidateModels = Array.from(
+    let candidateModels = Array.from(
       new Set([
         userPreferredModel,
         "gemini-3.8-flash",
         "gemini-3.6-flash",
         "gemini-2.0-flash",
-        "gemini-1.5-flash-002",
       ])
     );
+
+    try {
+      const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`, {
+        signal: AbortSignal.timeout(2500),
+      });
+      if (listRes.ok) {
+        const listData = await listRes.json();
+        const availableTextModels: string[] = (listData.models || [])
+          .filter(
+            (m: any) =>
+              m.supportedGenerationMethods?.includes("generateContent") &&
+              !m.name.includes("tts") &&
+              !m.name.includes("audio") &&
+              !m.name.includes("embedding") &&
+              !m.name.includes("imagen")
+          )
+          .map((m: any) => m.name.replace(/^models\//, ""));
+
+        if (availableTextModels.length > 0) {
+          const preferred = [
+            userPreferredModel,
+            "gemini-3.8-flash",
+            "gemini-3.6-flash",
+            "gemini-2.0-flash",
+            "gemini-2.0-flash-001",
+          ];
+          const matchedPreferred = preferred.filter((p) => availableTextModels.includes(p));
+          const otherFlash = availableTextModels.filter(
+            (m) => m.includes("flash") && !matchedPreferred.includes(m)
+          );
+          const merged = Array.from(new Set([...matchedPreferred, ...otherFlash, ...availableTextModels]));
+          if (merged.length > 0) {
+            candidateModels = merged.slice(0, 4);
+          }
+        }
+      }
+    } catch (e) {}
 
     const requestBody = {
       contents: [
@@ -212,7 +248,7 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
     };
 
     let data: any = null;
-    let lastError = "";
+    const errors: string[] = [];
     const startedAt = Date.now();
     const TOTAL_BUDGET_MS = 52000; // Leave 8s buffer before Vercel 60s maxDuration
 
@@ -220,11 +256,11 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
       const currentModel = candidateModels[i];
       const remainingMs = TOTAL_BUDGET_MS - (Date.now() - startedAt);
       if (remainingMs < 5000) {
-        lastError = lastError || "Hết quỹ thời gian xử lý trước ngưỡng 60s của Vercel.";
+        errors.push(`Hết quỹ thời gian (${Math.round((Date.now() - startedAt) / 1000)}s/52s)`);
         break;
       }
 
-      const attemptTimeoutMs = Math.min(i === 0 ? 28000 : 20000, remainingMs);
+      const attemptTimeoutMs = Math.min(i === 0 ? 30000 : 18000, remainingMs);
 
       try {
         const url = `https://generativelanguage.googleapis.com/v1beta/models/${currentModel}:generateContent?key=${apiKey}`;
@@ -237,7 +273,12 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
 
         if (!response.ok) {
           const errText = await response.text();
-          lastError = `[${currentModel}] (${response.status}): ${errText}`;
+          let shortMsg = errText.slice(0, 140);
+          try {
+            const errJson = JSON.parse(errText);
+            shortMsg = errJson?.error?.message || shortMsg;
+          } catch {}
+          errors.push(`[${currentModel} (${response.status})]: ${shortMsg}`);
           console.warn(`[Gemini Journalist] Model ${currentModel} returned ${response.status}. Attempting next model...`);
           continue;
         }
@@ -247,16 +288,18 @@ Trả về duy nhất 1 chuỗi JSON hợp lệ với cấu trúc sau:
         if (content) {
           data = resJson;
           break;
+        } else {
+          errors.push(`[${currentModel}]: Phản hồi rỗng`);
         }
       } catch (reqErr: any) {
-        lastError = reqErr.message;
+        errors.push(`[${currentModel} (timeout/err)]: ${reqErr.message}`);
       }
     }
 
     if (!data) {
       return {
         status: "error",
-        error: `Tất cả mô hình AI đang tạm thời quá tải hoặc không phản hồi. Lỗi gần nhất: ${lastError}`,
+        error: `Không gọi được mô hình AI. Chi tiết: ${errors.join(" | ")}`,
       };
     }
 
